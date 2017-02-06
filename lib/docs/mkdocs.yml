@@ -1,0 +1,23 @@
+site_name: Documentation
+site_dir: ../../docs
+use_directory_urls: false
+theme: cosmo
+pages:
+  - [index.md, Installation]
+  - [workflow/gulp.md, Workflow, Gulp]
+  - [workflow/grunt.md, Workflow, Grunt]
+  - [code/structure.md, Code, Structure]
+  - [code/bower.md, Code, Bower]
+  - [code/include-paths.md, Code, Include paths]
+  - [code/less.md, Code, Less]
+  - [code/swig.md, Code, Swig]
+  - [code/browserify.md, Code, Browserify]
+  - [code/rtl.md, Code, Right-to-Left]
+  - [code/angular.md, Code, AngularJS]
+  - [reference/layout.md, Reference, Layout]
+  - [reference/sidebar.md, Reference, Sidebar]
+  - [reference/navbar.md, Reference, Navbar]
+  - [reference/essential.md, Reference, Essential]
+  - [reference/material.md, Reference, Material]
+  - [reference/colors.md, Reference, Colors]
+  - [reference/maps.md, Reference, Maps]

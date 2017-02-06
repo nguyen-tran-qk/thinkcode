@@ -1,0 +1,8 @@
+{
+	"build": "js/app/material.js",
+	"cwd": "lib/material/js",
+	"files": [
+		"_forms.js",
+		"_ripple.js"
+	]
+}

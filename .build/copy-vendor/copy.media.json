@@ -1,0 +1,25 @@
+[
+	{
+		"task": "copy-vendor-media-scripts",
+		"cwd": "bower_components",
+		"src": [
+			"owl.carousel/dist/owl.carousel.js",
+			"slick.js/slick/slick.js"
+		],
+		"dest": "js/vendor/media",
+		"flatten": true
+	},
+	{
+		"task": "slick-fonts",
+		"cwd": "bower_components/slick.js/slick",
+		"src": ["fonts/*"],
+		"dest": "css/vendor/fonts",
+		"flatten": true
+	},
+	{
+		"task": "slick-images",
+		"cwd": "bower_components/slick.js/slick",
+		"src": ["*.gif"],
+		"dest": "css/vendor"
+	}
+]

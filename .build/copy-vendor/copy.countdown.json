@@ -1,0 +1,10 @@
+{
+	"task": "copy-vendor-countdown",
+	"cwd": "bower_components/kbwood_countdown",
+	"src": [
+		"jquery.plugin.js",
+		"jquery.countdown.js"
+	],
+	"dest": "js/vendor/countdown",
+	"flatten": true
+}

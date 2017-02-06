@@ -1,0 +1,8 @@
+{
+	"build": "js/vendor/tables/all.js",
+	"cwd": "$THEME_DIR/js/vendor/tables",
+	"files": [
+		"jquery.dataTables.js",
+		"dataTables.bootstrap.js"
+	]
+}

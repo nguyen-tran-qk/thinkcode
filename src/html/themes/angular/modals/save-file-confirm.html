@@ -1,0 +1,30 @@
+<!-- Standard Bootstrap markup -->
+<div class="modal fade" id="confirmFileSaving">
+  <div class="modal-dialog">
+    <!-- Additionally, wrap the .modal-content into a .v-cell container -->
+    <!-- to center the content vertically -->
+    <!-- This works because we've modified the .modal-overlay -->
+    <!-- class to have display: table; -->
+    <div class="v-cell">
+      <!-- Standard Bootstrap markup -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+          </button>
+          <!-- <h4 class="modal-title">Modal title</h4> -->
+        </div>
+        <div class="modal-body">
+          Save changes to ::file.label:: before closing?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close without Saving</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
+        </div>
+      </div>
+    </div>
+    <!-- // END .v-cell -->
+  </div>
+</div>

@@ -1,0 +1,29 @@
+[
+	{
+		"task": "copy-vendor-forms-scripts",
+		"cwd": "bower_components",
+		"src": [
+			"seiyria-bootstrap-slider/js/bootstrap-slider.js",
+			"bootstrap-select/dist/js/bootstrap-select.js",
+			"bootstrap-switch/dist/js/bootstrap-switch.js",
+			"bootstrap-datepicker/js/bootstrap-datepicker.js",
+			"moment/min/moment.min.js",
+			"bootstrap-daterangepicker/daterangepicker.js",
+			"jquery-minicolors/jquery.minicolors.js",
+			"bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js",
+			"select2/select2.js",
+			"summernote/dist/summernote.js"
+		],
+		"dest": "js/vendor/forms",
+		"flatten": true
+	},
+	{
+		"task": "select2-images",
+		"cwd": "bower_components/select2",
+		"src": [
+			"*.png",
+			"*.gif"
+		],
+		"dest": "css/vendor"
+	}
+]

@@ -1,0 +1,31 @@
+[
+	{
+		"task": "copy-vendor-css",
+		"cwd": "$ROOT_DIR",
+		"src": [
+			"lib/icons/pictoicons/css/picto.css",
+			"bower_components/material-design-iconic-font/css/material-design-iconic-font.css",
+			"bower_components/bootstrap-datepicker/css/datepicker3.css",
+			"bower_components/jquery-minicolors/jquery.minicolors.css",
+			"bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.css",
+			"bower_components/highlightjs/styles/railscasts.css",
+			"bower_components/owl.carousel/dist/assets/owl.carousel.css",
+			"bower_components/slick.js/slick/slick.css",
+			"bower_components/bootstrap-daterangepicker/daterangepicker-bs3.css",
+			"bower_components/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.css",
+			"bower_components/select2/select2.css",
+			"bower_components/kbwood_countdown/jquery.countdown.css",
+			"bower_components/codemirror/lib/codemirror.css",
+			"bower_components/codemirror/addon/fold/*.css",
+			"bower_components/codemirror/addon/hint/*.css",
+			"bower_components/codemirror/theme/**/*.css",
+			"bower_components/angular-ivh-treeview/dist/ivh-treeview.css",
+			"bower_components/angular-ivh-treeview/dist/ivh-treeview-theme-basic.css",
+			"bower_components/angular-material/angular-material.css",
+			"bower_components/angular-bootstrap-nav-tree/dist/abn_tree.css",
+			"bower_components/angular-bootstrap/ui-bootstrap-csp.css"
+		],
+		"dest": "css/vendor",
+		"flatten": true
+	}
+]

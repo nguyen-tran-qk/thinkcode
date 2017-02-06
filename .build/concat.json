@@ -1,0 +1,38 @@
+[
+	{
+		"build": "js/app/all.js",
+		"cwd": "$THEME_DIR/js/app",
+		"files": [
+			"media.js",
+			"messages.js",
+			"essentials.js",
+			"layout.js",
+			"sidebar.js",
+			"maps.js",
+			"charts.js",
+			"material.js"
+		]
+	},
+	{
+		"build": "js/vendor/all.js",
+		"cwd": "$THEME_DIR/js/vendor",
+		"files": [
+			"core/all.js",
+			"tables/all.js",
+			"forms/all.js",
+			"media/slick.js",
+			"charts/flot/all.js",
+			"nestable/jquery.nestable.js",
+			"countdown/all.js"
+		]
+	},
+	{
+		"build": "js/vendor/all.js",
+		"cwd": "$THEME_DIR/js/vendor",
+		"files": [
+			"all.js",
+			"angular/all.js"
+		],
+		"themes": ["angular"]
+	}
+]

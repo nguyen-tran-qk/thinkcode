@@ -1,0 +1,13 @@
+[
+	{
+		"build": "js/vendor/charts/flot/all.js",
+		"cwd": "$THEME_DIR/js/vendor/charts/flot",
+		"files": [
+			"jquery.flot.js",
+			"jquery.flot.pie.js",
+			"jquery.flot.resize.js",
+			"jquery.flot.orderBars.js",
+			"jquery.flot.stack.js"
+		]
+	}
+]

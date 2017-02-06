@@ -1,0 +1,7 @@
+{
+	"task": "copy-vendor-nestable-scripts",
+	"cwd": "bower_components/",
+	"src": ["nestable/jquery.nestable.js"],
+	"dest": "js/vendor/nestable",
+	"flatten": true
+}

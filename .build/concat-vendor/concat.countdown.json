@@ -1,0 +1,8 @@
+{
+	"build": "js/vendor/countdown/all.js",
+	"cwd": "$THEME_DIR/js/vendor/countdown",
+	"files": [
+		"jquery.plugin.js",
+		"jquery.countdown.js"
+	]
+}

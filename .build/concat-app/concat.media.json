@@ -1,0 +1,8 @@
+{
+	"build": "js/app/media.js",
+	"cwd": "lib/media/js/",
+	"files": [
+		"_responsive-videos.js",
+		"carousel/slick/_default.js"
+	]
+}

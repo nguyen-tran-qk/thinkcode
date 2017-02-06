@@ -1,0 +1,45 @@
+[
+	{
+		"task": "copy-vendor-core-scripts",
+		"cwd": "bower_components",
+		"src": [
+			"modernizr/modernizr.js",
+			"jquery/dist/jquery.js",
+			"bootstrap/dist/js/bootstrap.js",
+			"jquery.breakpoints/breakpoints.js",
+			"jquery.nicescroll/jquery.nicescroll.js",
+			"Grid-A-Licious/jquery.grid-a-licious.js",
+			"isotope/dist/isotope.pkgd.js",
+			"isotope-packery/packery-mode.pkgd.js",
+			"jquery.cookie/jquery.cookie.js",
+			"holderjs/holder.js",
+			"handlebars/handlebars.js",
+			"jquery.hotkeys/jquery.hotkeys.js",
+			"load_image/load_image.js",
+			"jquery-smartresize/jquery.debouncedresize.js",
+			"velocity/velocity.js",
+	        "codemirror/lib/codemirror.js",
+			"firebase/firebase.js",
+			"firepad/dist/firepad.js"
+		],
+		"dest": "js/vendor/core",
+		"flatten": true
+	},
+	{
+	    "task": "copy-vendor-codemirror-scripts",
+	    "cwd": "bower_components/codemirror",
+	    "src": [
+			"mode/javascript/*.js",
+	        "mode/htmlmixed/*.js",
+	        "mode/xml/*.js",
+	        "mode/css/*.js",
+	        "mode/python/*.js",
+	        "addon/fold/*.js",
+			"addon/edit/*.js",
+        	"addon/hint/*.js",
+			"addon/selection/active-line.js"
+	    ],
+	    "dest": "js/vendor/core/codemirror",
+	    "flatten": true
+	}
+]

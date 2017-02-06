@@ -1,0 +1,13 @@
+{
+	"task": "copy-vendor-charts-flot-scripts",
+	"cwd": "bower_components",
+	"src": [
+		"flot/jquery.flot.js",
+		"flot/jquery.flot.pie.js",
+		"flot/jquery.flot.resize.js",
+		"flot-orderBars/js/jquery.flot.orderBars.js",
+		"flot/jquery.flot.stack.js"
+	],
+	"dest": "js/vendor/charts/flot",
+	"flatten": true
+}

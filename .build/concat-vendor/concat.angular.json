@@ -1,0 +1,18 @@
+{
+	"build": "js/vendor/angular/all.js",
+	"cwd": "$THEME_DIR/js/vendor/angular",
+	"files": [
+		"angular.js",
+		"angular-resource.js",
+		"angular-sanitize.js",
+		"angular-ui-router.js",
+		"ui-utils.js",
+		"angular-animate.js",
+		"angular-aria.js",
+		"angular-messages.js",
+		"angular-material.js",
+		"ui-bootstrap.js",
+		"abn_tree_directive.js"
+	],
+	"themes": ["angular"]
+}

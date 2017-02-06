@@ -1,0 +1,5 @@
+{
+	"build": "css/vendor/all.css",
+	"cwd": "$THEME_DIR/css/vendor",
+	"files": ["*.css", "!*.min.css"]
+}

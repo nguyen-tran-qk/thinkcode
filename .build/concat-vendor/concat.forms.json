@@ -1,0 +1,16 @@
+{
+	"build": "js/vendor/forms/all.js",
+	"cwd": "$THEME_DIR/js/vendor/forms",
+	"files": [
+		"bootstrap-slider.js",
+		"bootstrap-select.js",
+		"bootstrap-switch.js",
+		"bootstrap-datepicker.js",
+		"moment.min.js",
+		"daterangepicker.js",
+		"jquery.minicolors.js",
+		"jquery.bootstrap-touchspin.js",
+		"select2.js",
+		"summernote.js"
+	]
+}

@@ -1,0 +1,20 @@
+[
+	{
+		"task": "jquery-ui-map",
+		"cwd": "bower_components/jquery-ui-map/ui",
+		"src": "*",
+		"dest": "js/vendor/maps/google/jquery-ui-map/ui"
+	},
+	{
+		"task": "jquery-ui-map-markerclusterer",
+		"cwd": "bower_components/jquery-ui-map/demos/js/markerclustererplus-2.0.6",
+		"src": ["*.js"],
+		"dest": "js/vendor/maps/google/jquery-ui-map/addons"
+	},
+	{
+		"task": "gmaps-infobox",
+		"cwd": "bower_components/gmaps-infobox/1.1.13/src",
+		"src": ["*.js"],
+		"dest": "js/vendor/maps/google/jquery-ui-map/addons"
+	}
+]

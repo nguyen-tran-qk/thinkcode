@@ -1,0 +1,33 @@
+[
+	{
+        "build": "js/vendor/core/codemirror.custom.js",
+        "cwd": "$THEME_DIR/js/vendor/core/codemirror",
+        "files": [
+            "*.js"
+        ]
+    },
+	{
+		"build": "js/vendor/core/all.js",
+		"cwd": "$THEME_DIR/js/vendor/core",
+		"files": [
+			"jquery.js",
+			"bootstrap.js",
+			"breakpoints.js",
+			"jquery.nicescroll.js",
+			"jquery.grid-a-licious.js",
+			"isotope.pkgd.js",
+			"packery-mode.pkgd.js",
+			"jquery.cookie.js",
+			"holder.js",
+			"handlebars.js",
+			"jquery.hotkeys.js",
+			"load_image.js",
+			"jquery.debouncedresize.js",
+			"velocity.js",
+			"codemirror.js",
+			"codemirror.custom.js",
+			"firebase.js",
+			"firepad.js"
+		]
+	}
+]

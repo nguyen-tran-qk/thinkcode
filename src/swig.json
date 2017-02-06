@@ -1,0 +1,87 @@
+{
+	"site": {
+		"name": "Learning",
+		"version": "1.1.0",
+		"description": "Learning Management System",
+		"author": "mosaicpro",
+		"email": "contact@mosaicpro.biz"
+	},
+	"css_vendor": [
+		"vendor/bootstrap",
+		"vendor/font-awesome",
+		"vendor/picto",
+		"vendor/material-design-iconic-font",
+		"vendor/datepicker3",
+		"vendor/jquery.minicolors",
+		"vendor/railscasts",
+		"vendor/owl.carousel",
+		"vendor/slick",
+		"vendor/daterangepicker-bs3",
+		"vendor/jquery.bootstrap-touchspin",
+		"vendor/select2",
+		"vendor/jquery.countdown"
+	],
+	"js_vendor": [
+		{
+			"name": "vendor/core/all",
+			"themes": []
+		},
+		"vendor/core/jquery",
+		"vendor/core/bootstrap",
+		"vendor/core/breakpoints",
+		"vendor/core/jquery.nicescroll",
+		"vendor/core/isotope.pkgd",
+		"vendor/core/packery-mode.pkgd",
+		"vendor/core/jquery.grid-a-licious",
+		"vendor/core/jquery.cookie",
+		"vendor/core/jquery-ui.custom",
+		"vendor/core/jquery.hotkeys",
+		"vendor/core/handlebars",
+		"vendor/core/jquery.hotkeys",
+		"vendor/core/load_image",
+		"vendor/core/jquery.debouncedresize",
+		"vendor/core/modernizr",
+		"vendor/core/velocity",
+		"vendor/tables/all",
+		"vendor/forms/all",
+		"vendor/media/slick",
+		"vendor/charts/flot/all",
+		"vendor/nestable/jquery.nestable",
+		"vendor/countdown/all",
+		{
+			"name": "vendor/angular/all",
+			"themes": ["angular"]
+		}
+	],
+	"js_modules": [
+		"app/essentials",
+		"app/material",
+		"app/layout",
+		"app/sidebar",
+		"app/media",
+		"app/messages",
+		"app/maps",
+		"app/charts"
+	],
+	"css_modules": [
+		"app/essentials",
+		"app/material",
+		"app/layout",
+		"app/sidebar",
+		"app/sidebar-skins",
+		"app/navbar",
+		"app/messages",
+		"app/media",
+		"app/charts",
+		"app/maps",
+		"app/colors-alerts",
+		"app/colors-background",
+		"app/colors-buttons",
+		"app/colors-text"
+	],
+	"js_theme_core": [
+		"html",
+        "choose",
+		"angular"
+	]
+}

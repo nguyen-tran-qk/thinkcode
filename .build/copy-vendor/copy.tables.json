@@ -1,0 +1,10 @@
+{
+	"task": "copy-vendor-tables-scripts",
+	"cwd": "bower_components",
+	"src": [
+		"datatables/media/js/jquery.dataTables.js",
+		"datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.js"
+	],
+	"dest": "js/vendor/tables",
+	"flatten": true
+}
