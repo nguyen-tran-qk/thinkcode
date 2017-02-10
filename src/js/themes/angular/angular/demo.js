@@ -14,6 +14,8 @@
         vm.my_data = [];
         vm.firebaseApp = Utils.firebaseApp;
         vm.firepadRefs = Utils.firepadRefs;
+        vm.userId = Math.floor(Math.random() * 999999999).toString();
+        vm.fileRef = {};
 
         var defaultMode, defaultBranch, firepadElement, cmConsoleElement, defaultText, cmEditorOptions, cmConsoleOptions;
         defaultText = '# Happy coding!';
@@ -31,15 +33,15 @@
         cmEditorOptions = {
           lineNumbers: true,
           lineWrapping: true,
-          tabSize: 2,
+          tabSize: vm.mode === 'python' ? 4 : 2,
           extraKeys: {
             "Ctrl-Space": "autocomplete",
           },
           mode: vm.mode ? vm.mode : defaultMode,
           foldGutter: true,
           gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-          styleActiveLine: true,
-          theme: 'material'
+          styleActiveLine: false,
+          theme: 'Pacific'
         };
         cmConsoleOptions = {
           lineNumbers: false,
@@ -89,8 +91,6 @@
         };
 
         vm.init = function(file) {
-          //// Get Firebase Database reference.
-          var fileRef = getExampleRef(file.data.id);
           var fileContent = defaultText;
 
           //// Create CodeMirror (with line numbers and the default python mode).
@@ -103,17 +103,29 @@
           initCmEditor(); // initiate Code Mirror with current mode aka engine
           initCmConsole();
 
-          if (file.label !== 'untitled') {
-            DemoService.loadFile(22, file.data.relative_path, function(res) {
-              fileContent = res.data.content;
-              //// Create Firepad (with our desired userId).
-              vm.firepad = Firepad.fromCodeMirror(fileRef, vm.codeMirror, {
-                // userId: vm.userId,
-                defaultText: fileContent
-              }); //// this makes the editor not clean anymore
-              vm.codeMirror.markClean(); //// therefore, mark the editor as clean
-            });
-          }
+          //// Get Firebase Database reference.
+          vm.fileRef = getExampleRef(file.data.id);
+          vm.fileRef.once('value', function(snapshot) {
+            if (!snapshot.child('users').exists()) {
+              if (file.label !== 'untitled') {
+                DemoService.loadFile(22, file.data.relative_path, function(res) {
+                  fileContent = res.data.content;
+                  //// Create Firepad (with our desired userId).
+                  vm.firepad = Firepad.fromCodeMirror(vm.fileRef, vm.codeMirror, {
+                    userId: vm.userId
+                  });
+                  vm.firepad.on('ready', function() {
+                    vm.firepad.setText(fileContent); //// this makes the editor not clean anymore
+                  });
+                });
+              }
+            } else {
+              vm.firepad = Firepad.fromCodeMirror(vm.fileRef, vm.codeMirror, {
+                userId: vm.userId
+              });
+            }
+          });
+          vm.codeMirror.markClean(); //// mark the editor as clean
 
           //// Create FirepadUserList (with our desired userId).
           // var firepadUserList = FirepadUserList.fromDiv(fileRef.child('users'),
@@ -134,9 +146,7 @@
 
         // Helper to get hash from end of URL or generate a random one.
         function getExampleRef(fileId) {
-          var ref = firebase.database().ref('firepadInstances');
-          ref = ref.child(fileId);
-          return ref;
+          return firebase.database().ref(fileId);
         }
         // Helper to traverse the tree and add extra data to files
         function analyzeTree(tree, parent) {
@@ -180,28 +190,28 @@
         vm.openTab = function(tab) { // tab = branch aka leaf = file
           if (tab.uid !== vm.currentBranch.uid) {
             vm.mode = tab.data.mode || defaultMode;
-            vm.currentBranch = tab;
-            tree.select_branch(vm.currentBranch);
+            // vm.currentBranch = tab;
+            tree.select_branch(tab);
             // vm.init(tab);
           }
         };
 
         vm.closeFile = function() {
-          var fileRef = getExampleRef(vm.currentBranch.data.id);
-          fileRef.remove()
-            .then(function() {
-              removeTabsByUid(vm.currentBranch.uid);
-              if (!vm.tabs.length) {
-                vm.tabs.push(defaultBranch);
-                openFile(vm.tabs[vm.tabs.length - 1]);
-                tree.select_branch(defaultBranch);
-              } else {
-                tree.select_branch(vm.tabs[vm.tabs.length - 1]);
-              }
-            })
-            .catch(function(error) {
-              console.log("Remove failed: " + error.message)
-            });
+          vm.fileRef.child('/users/' + vm.userId).remove();
+          removeTabsByUid(vm.currentBranch.uid);
+          if (!vm.tabs.length) {
+            vm.tabs.push(defaultBranch);
+            openFile(vm.tabs[vm.tabs.length - 1]);
+            tree.select_branch(defaultBranch);
+          } else {
+            tree.select_branch(vm.tabs[vm.tabs.length - 1]);
+          }
+          // fileRef.remove()
+          //   .then(function() {
+          //   })
+          //   .catch(function(error) {
+          //     console.log("Remove failed: " + error.message)
+          //   });
         };
 
         //// retrieve workspace structure

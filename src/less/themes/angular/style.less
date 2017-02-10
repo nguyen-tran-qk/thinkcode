@@ -1,6 +1,37 @@
+
+@font-face {
+  font-family: 'Menlo';
+  src: url('../fonts/Menlo-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Monaco';
+  src: url('../fonts/Monaco-Linux.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* override container styles */
+@media (min-width: 768px) {
+  .container {
+    width: 100%;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 100%;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 100%;
+  }
+}
+
 /* tree control */
 .file-tree {
-	min-height: 300px;
+	min-height: 540px; // 500px of .CodeMirror + 38px of .console-panel-heading, see below
 }
 
 /* buttons of editor */
@@ -15,3 +46,40 @@
 .console-panel-heading {
 	min-height: 38px;
 }
+
+/* Theme: Pacific */
+.CodeMirror {
+  /* Set height, width, borders, and global font properties here */
+  font-family: Menlo, Monaco, monospace, sans-serif !important;
+  height: 500px;
+  color: black;
+}
+
+.cm-s-Pacific.CodeMirror { color: #f8f8f2; }
+.cm-s-Pacific.CodeMirror { background: #354551; }
+.cm-s-Pacific .CodeMirror-gutters {
+  background: #354551;
+  color: #f8f8f2;
+  border: none;
+}
+.cm-s-Pacific .CodeMirror-cursor { border-left: 2px solid #AEAFAD; }
+.cm-s-Pacific .CodeMirror-activeline-background { background: #2a3034 !important; }
+.cm-s-Pacific div.CodeMirror-selected { background: #2a3034; }
+.cm-s-Pacific.CodeMirror-focused div.CodeMirror-selected { background: #2a3034; }
+.cm-s-Pacific .CodeMirror-line::selection, .cm-s-Pacific .CodeMirror-line > span::selection, .cm-s-Pacific .CodeMirror-line > span > span::selection { background: #2a3034; }
+.cm-s-Pacific .CodeMirror-line::-moz-selection, .cm-s-Pacific .CodeMirror-line > span::-moz-selection, .cm-s-Pacific .CodeMirror-line > span > span::-moz-selection { background: #2a3034; }
+.cm-s-Pacific .cm-comment { color: #969896; }
+.cm-s-Pacific .cm-string { color: #B5BD68; }
+.cm-s-Pacific .cm-string-2 { color: #a4cccb; }
+.cm-s-Pacific .cm-builtin { color: #B294BB; }
+.cm-s-Pacific .cm-property { color: #ffffff; fontStyle:  italic ; }
+.cm-s-Pacific .cm-qualifier { font-style: italic; color: #c5e88c; }
+.cm-s-Pacific .cm-tag { color: #ff8973; }
+.cm-s-Pacific .cm-attribute { color: #c5e88c; }
+.cm-s-Pacific .cm-number { color: #DE935F; }
+.cm-s-Pacific .cm-keyword { color: #B294BB; }
+.cm-s-Pacific .cm-operator { color: #ffe083; }
+.cm-s-Pacific .cm-error { background: #ffe083; color: #354551; }
+.cm-s-Pacific .cm-invalidchar { background: #ffe083; color: #354551; }
+.cm-s-Pacific .cm-variable { color: #ffffff; }
+.cm-s-Pacific .cm-variable-2 { font-style: italic; color: #c5e88c; }

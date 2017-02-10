@@ -5,7 +5,8 @@
 		"bower_components/font-awesome/fonts/*",
 		"lib/icons/pictoicons/fonts/*",
 		"bower_components/material-design-iconic-font/fonts/*",
-		"bower_components/bootstrap/fonts/*"
+		"bower_components/bootstrap/fonts/*",
+		"src/fonts/*"
 	],
 	"dest": "css/fonts",
 	"flatten": true

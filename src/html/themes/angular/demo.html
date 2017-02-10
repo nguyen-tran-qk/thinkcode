@@ -1,6 +1,6 @@
 {% extends "src/html/themes/angular/website/_layout-instructor.html" %} {% block content %}
 <!-- <div id="userlist" class="col-md-2"></div> -->
-<div class="panel panel-default col-md-3 file-tree">
+<div class="panel panel-default col-md-2 file-tree">
   <div class="panel-body">
     <abn-tree ng-if="vm.treeLoaded" tree-data="vm.my_data" tree-control="vm.my_tree" icon-leaf="md-insert-drive-file" icon-expand="md-folder-open" icon-collapse="md-folder" expand-level="3"></abn-tree>
     <br/>
@@ -11,7 +11,7 @@
   </div>
 </div>
 <!-- Tabbable Widget -->
-<div class="tabbable col-md-6" ng-show="vm.tabs.length">
+<div class="tabbable col-md-7" ng-show="vm.tabs.length">
   <!-- Tabs -->
   <ul class="nav nav-tabs">
     <li ng-repeat="tab in vm.tabs track by tab.data.id" ng-class="{'active': tab.data.id === vm.currentBranch.data.id}">
