@@ -11,11 +11,12 @@
   </div>
 </div>
 <!-- Tabbable Widget -->
-<div class="tabbable col-md-7" ng-show="vm.tabs.length">
+<div class="editor-tabs tabbable col-md-7" ng-show="vm.tabs.length">
   <!-- Tabs -->
   <ul class="nav nav-tabs">
     <li ng-repeat="tab in vm.tabs track by tab.data.id" ng-class="{'active': tab.data.id === vm.currentBranch.data.id}">
       <a href ng-click="vm.openTab(tab)"><i class="fa fa-fw fa-code"></i> ::tab.label::</a>
+			<i class="btn-close md md-close" ng-if="tab.uid !== -1" ng-click="vm.closeFile(tab)"></i>
     </li>
   </ul>
   <!-- // END Tabs -->
@@ -26,18 +27,14 @@
     <div class="editor-actions" ng-if="vm.currentBranch.uid !== -1">
       <button class="btn btn-success btn-sm" ng-click="vm.saveFile()">Save</button>
       <button class="btn btn-primary btn-sm" ng-click="vm.runFile()">Run</button>
-      <button class="btn btn-default btn-sm" ng-click="vm.closeFile()">Close</button>
+      <!-- <button class="btn btn-default btn-sm" ng-click="vm.closeFile()">Close</button> -->
     </div>
   </div>
   <!-- // END Panes -->
 </div>
-<div class="panel panel-default col-md-3 padding-none">
-    <div class="panel-heading console-panel-heading">
-        <h4 class="panel-title">Console</h4>
-    </div>
-    <div id="console" class="">
-    </div>
+<div class="panel panel-default col-md-3 padding-none console-panel">
+  <div id="console" class="">
+  </div>
 </div>
 <!-- // END Tabbable Widget -->
-{% include "src/html/themes/angular/modals/save-file-success.html" %}
-{% endblock %}
+{% include "src/html/themes/angular/modals/save-file-success.html" %} {% endblock %}

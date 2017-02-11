@@ -17,7 +17,7 @@
         vm.userId = Math.floor(Math.random() * 999999999).toString();
         vm.fileRef = {};
 
-        var defaultMode, defaultBranch, firepadElement, cmConsoleElement, defaultText, cmEditorOptions, cmConsoleOptions;
+        var defaultMode, defaultBranch, firepadElement, cmConsoleElement, defaultText, cmEditorOptions, cmConsoleOptions, saveFile;
         defaultText = '# Happy coding!';
         defaultMode = 'python';
         defaultBranch = {
@@ -36,6 +36,7 @@
           tabSize: vm.mode === 'python' ? 4 : 2,
           extraKeys: {
             "Ctrl-Space": "autocomplete",
+            "Ctrl-S": "saveFile",
           },
           mode: vm.mode ? vm.mode : defaultMode,
           foldGutter: true,
@@ -48,7 +49,7 @@
           lineWrapping: false,
           mode: vm.mode ? vm.mode : defaultMode,
           readOnly: 'nocursor',
-          theme: 'material'
+          theme: 'thinkcode-console'
         };
 
         function initCmEditor() {
@@ -67,13 +68,26 @@
             }
           }
         }
+        saveFile = function(callback) {
+          if (vm.currentBranch.uid !== -1) {
+            var content = vm.codeMirror.getValue();
+            DemoService.saveFile(22, vm.currentBranch.data.relative_path, encodeURIComponent(content), function(res) {
+              vm.codeMirror.markClean();
+              if (callback) {
+                callback();
+              } else {
+                $('#saveFileSuccess').modal({
+                  backdrop: 'static',
+                  show: true
+                });
+              }
+            });
+          }
+        }
 
-        initCmConsole();
-        vm.currentBranch = defaultBranch;
-        vm.tabs.push(defaultBranch);
-        initCmEditor();
-        vm.codeMirror.setValue(defaultText);
-        vm.codeMirror.markClean();
+        CodeMirror.commands.saveFile = function(cm) {
+          saveFile();
+        };
         CodeMirror.commands.autocomplete = function(cm) {
           var doc = cm.getDoc();
           var POS = doc.getCursor();
@@ -89,6 +103,12 @@
             CodeMirror.showHint(cm, CodeMirror.hint.python);
           }
         };
+        initCmConsole();
+        vm.currentBranch = defaultBranch;
+        vm.tabs.push(defaultBranch);
+        initCmEditor();
+        vm.codeMirror.setValue(defaultText);
+        vm.codeMirror.markClean();
 
         vm.init = function(file) {
           var fileContent = defaultText;
@@ -118,6 +138,8 @@
                     vm.firepad.setText(fileContent); //// this makes the editor not clean anymore
                   });
                 });
+              } else {
+                vm.codeMirror.setValue(defaultText);
               }
             } else {
               vm.firepad = Firepad.fromCodeMirror(vm.fileRef, vm.codeMirror, {
@@ -125,6 +147,7 @@
               });
             }
           });
+          vm.codeMirror.options.tabSize = vm.mode === 'python' ? 4 : 2;
           vm.codeMirror.markClean(); //// mark the editor as clean
 
           //// Create FirepadUserList (with our desired userId).
@@ -196,12 +219,13 @@
           }
         };
 
-        vm.closeFile = function() {
-          vm.fileRef.child('/users/' + vm.userId).remove();
-          removeTabsByUid(vm.currentBranch.uid);
+        vm.closeFile = function(branch) {
+          var fileRef = getExampleRef(branch.data.id)
+          fileRef.child('/users/' + vm.userId).remove();
+          removeTabsByUid(branch.uid);
           if (!vm.tabs.length) {
             vm.tabs.push(defaultBranch);
-            openFile(vm.tabs[vm.tabs.length - 1]);
+            openFile(defaultBranch);
             tree.select_branch(defaultBranch);
           } else {
             tree.select_branch(vm.tabs[vm.tabs.length - 1]);
@@ -231,20 +255,7 @@
           });
         };
 
-        vm.saveFile = function(callback) {
-          var content = vm.codeMirror.getValue();
-          DemoService.saveFile(22, vm.currentBranch.data.relative_path, encodeURIComponent(content), function(res) {
-            vm.codeMirror.markClean();
-            if (callback) {
-              callback();
-            } else {
-              $('#saveFileSuccess').modal({
-                backdrop: 'static',
-                show: true
-              });
-            }
-          });
-        };
+        vm.saveFile = saveFile;
 
       }
     ]);

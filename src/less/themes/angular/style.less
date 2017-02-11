@@ -1,4 +1,8 @@
+/* variables */
+@editor-height: 500px;
+@editor-wrap-height: 540px;
 
+/* fonts */
 @font-face {
   font-family: 'Menlo';
   src: url('../fonts/Menlo-Regular.ttf') format('truetype');
@@ -29,9 +33,33 @@
   }
 }
 
+/* tabs */
+.editor-tabs {
+	.nav.nav-tabs {
+		height: 40px;
+		li > a {
+			display: inline-block;
+			padding: 10px 30px 10px 15px;
+			& + i.btn-close {
+				position: absolute;
+				right: 10px;
+				top: 10px;
+				&:before {
+					font-size: 16px;
+				}
+				&:hover {
+					&:before {
+						color: red;
+					}
+				}
+			}
+		}
+	}
+}
+
 /* tree control */
 .file-tree {
-	min-height: 540px; // 500px of .CodeMirror + 38px of .console-panel-heading, see below
+	min-height: @editor-wrap-height; // 500px of .CodeMirror + 38px of .console-panel-heading, see below
 }
 
 /* buttons of editor */
@@ -43,6 +71,9 @@
 }
 
 /* console */
+.console-panel {
+	height: @editor-wrap-height;
+}
 .console-panel-heading {
 	min-height: 38px;
 }
@@ -51,7 +82,7 @@
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
   font-family: Menlo, Monaco, monospace, sans-serif !important;
-  height: 500px;
+  height: @editor-height;
   color: black;
 }
 
@@ -81,5 +112,8 @@
 .cm-s-Pacific .cm-operator { color: #ffe083; }
 .cm-s-Pacific .cm-error { background: #ffe083; color: #354551; }
 .cm-s-Pacific .cm-invalidchar { background: #ffe083; color: #354551; }
-.cm-s-Pacific .cm-variable { color: #ffffff; }
+.cm-s-Pacific .cm-variable { color: #C5C8C6; }
 .cm-s-Pacific .cm-variable-2 { font-style: italic; color: #c5e88c; }
+
+.cm-s-thinkcode-console.CodeMirror { color: #939598; min-height: @editor-wrap-height; }
+.cm-s-thinkcode-console.CodeMirror { background: #000000; }
