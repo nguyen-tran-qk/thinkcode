@@ -7,6 +7,7 @@
 
         $scope.app.settings.htmlClass = 'transition-navbar-scroll top-navbar-xlarge bottom-footer';
         $scope.app.settings.bodyClass = '';
+        $scope.loading = true;
 
         var vm = this;
         vm.$state = $state;
@@ -19,7 +20,7 @@
 
         var defaultMode, defaultBranch, firepadElement, cmConsoleElement, defaultText, cmEditorOptions, cmConsoleOptions, saveFile;
         defaultText = '# Happy coding!';
-        defaultMode = 'python';
+        defaultMode = 'text/plain';
         defaultBranch = {
           label: 'untitled',
           uid: -1,
@@ -33,12 +34,12 @@
         cmEditorOptions = {
           lineNumbers: true,
           lineWrapping: true,
-          tabSize: vm.mode === 'python' ? 4 : 2,
+          tabSize: 4,
           extraKeys: {
             "Ctrl-Space": "autocomplete",
             "Ctrl-S": "saveFile",
           },
-          mode: vm.mode ? vm.mode : defaultMode,
+          mode: defaultMode,
           foldGutter: true,
           gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
           styleActiveLine: false,
@@ -46,8 +47,8 @@
         };
         cmConsoleOptions = {
           lineNumbers: false,
-          lineWrapping: false,
-          mode: vm.mode ? vm.mode : defaultMode,
+          lineWrapping: true,
+          mode: 'text/plain',
           readOnly: 'nocursor',
           theme: 'thinkcode-console'
         };
@@ -69,6 +70,7 @@
           }
         }
         saveFile = function(callback) {
+          $scope.waiting = true;
           if (vm.currentBranch.uid !== -1) {
             var content = vm.codeMirror.getValue();
             DemoService.saveFile(22, vm.currentBranch.data.relative_path, encodeURIComponent(content), function(res) {
@@ -76,6 +78,7 @@
               if (callback) {
                 callback();
               } else {
+                $scope.waiting = false;
                 $('#saveFileSuccess').modal({
                   backdrop: 'static',
                   show: true
@@ -111,6 +114,7 @@
         vm.codeMirror.markClean();
 
         vm.init = function(file) {
+          $scope.waiting = true;
           var fileContent = defaultText;
 
           //// Create CodeMirror (with line numbers and the default python mode).
@@ -126,28 +130,34 @@
           //// Get Firebase Database reference.
           vm.fileRef = getExampleRef(file.data.id);
           vm.fileRef.once('value', function(snapshot) {
-            if (!snapshot.child('users').exists()) {
-              if (file.label !== 'untitled') {
-                DemoService.loadFile(22, file.data.relative_path, function(res) {
-                  fileContent = res.data.content;
-                  //// Create Firepad (with our desired userId).
-                  vm.firepad = Firepad.fromCodeMirror(vm.fileRef, vm.codeMirror, {
-                    userId: vm.userId
+            $timeout(function() {
+              if (!snapshot.child('users').exists()) {
+                if (file.label !== 'untitled') {
+                  DemoService.loadFile(22, file.data.relative_path, function(res) {
+                    fileContent = res.data.content;
+                    //// Create Firepad (with our desired userId).
+                    vm.firepad = Firepad.fromCodeMirror(vm.fileRef, vm.codeMirror, {
+                      userId: vm.userId
+                    });
+                    vm.firepad.on('ready', function() {
+                      vm.firepad.setText(fileContent); //// this makes the editor not clean anymore
+                    });
+                    $scope.waiting = false;
                   });
-                  vm.firepad.on('ready', function() {
-                    vm.firepad.setText(fileContent); //// this makes the editor not clean anymore
-                  });
-                });
+                } else {
+                  vm.codeMirror.setValue(defaultText);
+                  $scope.waiting = false;
+                }
               } else {
-                vm.codeMirror.setValue(defaultText);
+                vm.firepad = Firepad.fromCodeMirror(vm.fileRef, vm.codeMirror, {
+                  userId: vm.userId
+                });
+                $scope.waiting = false;
               }
-            } else {
-              vm.firepad = Firepad.fromCodeMirror(vm.fileRef, vm.codeMirror, {
-                userId: vm.userId
-              });
-            }
+            });
           });
-          vm.codeMirror.options.tabSize = vm.mode === 'python' ? 4 : 2;
+          // vm.codeMirror.options.tabSize = 4;
+          vm.codeMirror.setOption('mode', vm.mode); // codemirror'mode is not two way binding with vm.mode therefore we have to update it
           vm.codeMirror.markClean(); //// mark the editor as clean
 
           //// Create FirepadUserList (with our desired userId).
@@ -171,10 +181,19 @@
         function getExampleRef(fileId) {
           return firebase.database().ref(fileId);
         }
+
+        // Helper to get file's extension
+        function getFileExtension(filename) {
+          var regex = /[^\\]*\.(\w+)$/;
+          var matchGroups = filename.match(regex);
+          return matchGroups ? matchGroups[1] : null;
+        }
+
         // Helper to traverse the tree and add extra data to files
         function analyzeTree(tree, parent) {
           var relative_path = '';
           var workspaceId = 22; // later API has to return this id
+          var fileExt, fileMode = 'text/plain';
           if (parent) {
             relative_path += parent + '/';
           }
@@ -182,12 +201,26 @@
             if (tree[i].children) {
               analyzeTree(tree[i].children, relative_path + tree[i].label);
             } else {
-              tree[i].data = {
-                id: workspaceId + '_' + tree[i].label.replace(/\./, '_'),
-                mode: 'python', // will handle multiple file types later
-                relative_path: relative_path + tree[i].label
-              };
-              tree[i].onSelect = openFile;
+              if (!tree[i].noLeaf) {
+                fileExt = getFileExtension(tree[i].label);
+                if (fileExt) {
+                  if (fileExt === 'py') {
+                    fileMode = 'python';
+                  } else if (fileExt === 'js') {
+                    fileMode = 'javascript';
+                  } else if (fileExt === 'css') {
+                    fileMode = 'css';
+                  } else if (fileExt === 'html') {
+                    fileMode = 'xml';
+                  }
+                }
+                tree[i].data = {
+                  id: workspaceId + '_' + tree[i].label.replace(/\./, '_'),
+                  mode: fileMode, // will handle multiple file types later
+                  relative_path: relative_path + tree[i].label
+                };
+                tree[i].onSelect = openFile;
+              }
             }
           }
           return tree;
@@ -239,11 +272,10 @@
         };
 
         //// retrieve workspace structure
-        vm.treeLoaded = false;
         DemoService.getWorkspaceById(22, function(res) { // using id 22 for demo purpose
           $timeout(function() {
             vm.my_data = analyzeTree(res.data);
-            vm.treeLoaded = true;
+            $scope.loading = false;
           });
         });
 
@@ -251,6 +283,7 @@
           vm.saveFile(function() {
             DemoService.execute(22, vm.currentBranch.data.relative_path, vm.mode, function(res) {
               vm.cmConsole.setValue(res.data.result);
+              $scope.waiting = false;
             });
           });
         };

@@ -2,6 +2,7 @@
   'use strict';
 
   angular.module('app')
+    // .constant('API_URL', 'http://ec2-35-165-39-222.us-west-2.compute.amazonaws.com/api/v1')
     .constant('API_URL', 'https://thinkcode.herokuapp.com/api/v1')
     .factory('DemoService', ['API_URL', '$http', function(API_URL, $http) {
       return {

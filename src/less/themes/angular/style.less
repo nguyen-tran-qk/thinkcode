@@ -1,3 +1,8 @@
+/* common */
+.powered-by-firepad {
+	display: none;
+}
+
 /* variables */
 @editor-height: 500px;
 @editor-wrap-height: 540px;
@@ -66,8 +71,11 @@
 .editor-actions {
 	position: absolute;
 	bottom: 3%;
-	right: 7%;
+	right: 3%;
 	z-index: 101;
+	.btn {
+		margin-left: 5px;
+	}
 }
 
 /* console */
@@ -117,3 +125,121 @@
 
 .cm-s-thinkcode-console.CodeMirror { color: #939598; min-height: @editor-wrap-height; }
 .cm-s-thinkcode-console.CodeMirror { background: #000000; }
+
+/* material preloader, credit to https://codepen.io/anon/pen/oBJrZE */
+// Functions/mixins
+.colour(@value) {
+	background-color: extract(@colours, @value);
+}
+
+// Variables
+@nav-bar-height: 80px;
+@preloader-height: 5px;
+@colours: #159756, #da4733, #3b78e7, #fdba2c; // green, red, blue, yellow
+@animation-duration: 3.5s;
+
+#preloader {
+  position: absolute;
+  top: @nav-bar-height;
+  left: 0;
+  padding-top: @preloader-height;
+  width: 100%;
+  .colour(1);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, .2);
+  z-index: 101;
+  animation: preloader-background linear @animation-duration infinite;
+  
+  &::before,
+  &::after {
+    display: block;
+    position: absolute;
+    top: 0;
+    z-index: 102;
+    width: 0;
+    height: @preloader-height;
+    background: #afa;
+    animation: preloader-front linear @animation-duration infinite;
+    content: '';
+  }
+  
+  &::before {
+    right: 50%;
+  }
+  
+  &::after {
+    left: 50%;
+  }
+}
+
+// screen overlay
+.loading-overlay {
+  background: rgba(255,255,255,0.9);
+	width: 100%;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+
+// Animations
+@keyframes preloader-background {
+  0%, 24.9% {
+    .colour(1);
+  }
+  
+  25%, 49.9% {
+    .colour(2);
+  }
+  
+  50%, 74.9% {
+    .colour(3);
+  }
+  
+  75%, 100% {
+    .colour(4);
+  }
+}
+
+@keyframes preloader-front {
+  0% {
+    width: 0;
+    .colour(2);
+  }
+  
+  24.9% {
+    width: 50%;
+    .colour(2);
+  }
+  
+  25% {
+    width: 0;
+    .colour(3);
+  }
+  
+  49.9% {
+    width: 50%;
+    .colour(3);
+  }
+  
+  50% {
+    width: 0;
+    .colour(4);
+  }
+  
+  74.9% {
+    width: 50%;
+    .colour(4);
+  }
+  
+  75% {
+    width: 0%;
+    .colour(1);
+  }
+  
+  
+  100% {
+    width: 50%;
+    .colour(1);
+  }
+}

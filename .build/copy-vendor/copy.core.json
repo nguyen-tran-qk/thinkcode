@@ -37,7 +37,8 @@
 	        "addon/fold/*.js",
 			"addon/edit/*.js",
         	"addon/hint/*.js",
-			"addon/selection/active-line.js"
+			"addon/selection/active-line.js",
+			"addon/wrap/hardwrap.js"
 	    ],
 	    "dest": "js/vendor/core/codemirror",
 	    "flatten": true
