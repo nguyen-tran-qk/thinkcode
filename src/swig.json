@@ -1,10 +1,10 @@
 {
 	"site": {
-		"name": "Learning",
+		"name": "ThinkCode",
 		"version": "1.1.0",
-		"description": "Learning Management System",
-		"author": "mosaicpro",
-		"email": "contact@mosaicpro.biz"
+		"description": "Online Interactive Learning System",
+		"author": "nguyentran",
+		"email": "kevtran07@gmail.com"
 	},
 	"css_vendor": [
 		"vendor/bootstrap",

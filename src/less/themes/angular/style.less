@@ -37,44 +37,45 @@
     width: 100%;
   }
 }
-
-/* tabs */
-.editor-tabs {
-	.nav.nav-tabs {
-		height: 40px;
-		li > a {
-			display: inline-block;
-			padding: 10px 30px 10px 15px;
-			& + i.btn-close {
-				position: absolute;
-				right: 10px;
-				top: 10px;
-				&:before {
-					font-size: 16px;
-				}
-				&:hover {
+#demo {
+	/* tabs */
+	.editor-tabs {
+		.nav.nav-tabs {
+			height: 40px;
+			li > a {
+				display: inline-block;
+				padding: 10px 30px 10px 15px;
+				& + i.btn-close {
+					position: absolute;
+					right: 10px;
+					top: 10px;
 					&:before {
-						color: red;
+						font-size: 16px;
+					}
+					&:hover {
+						&:before {
+							color: red;
+						}
 					}
 				}
 			}
 		}
 	}
-}
 
-/* tree control */
-.file-tree {
-	min-height: @editor-wrap-height; // 500px of .CodeMirror + 38px of .console-panel-heading, see below
-}
+	/* tree control */
+	.file-tree {
+		min-height: @editor-wrap-height; // 500px of .CodeMirror + 38px of .console-panel-heading, see below
+	}
 
-/* buttons of editor */
-.editor-actions {
-	position: absolute;
-	bottom: 3%;
-	right: 3%;
-	z-index: 101;
-	.btn {
-		margin-left: 5px;
+	/* buttons of editor */
+	.editor-actions {
+		position: absolute;
+		bottom: 3%;
+		right: 3%;
+		z-index: 101;
+		.btn {
+			margin-left: 5px;
+		}
 	}
 }
 
@@ -173,6 +174,11 @@
   
   &::after {
     left: 50%;
+  }
+
+  & + .progress {
+  	height: 7px;
+  	line-height: 7px;
   }
 }
 

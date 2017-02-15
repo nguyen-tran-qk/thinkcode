@@ -2,8 +2,8 @@
   "use strict";
 
   angular.module('app')
-    .controller('DemoController', ['$scope', '$state', '$timeout', '$filter', 'Utils', 'DemoService',
-      function($scope, $state, $timeout, $filter, Utils, DemoService) {
+    .controller('DemoController', ['$scope', '$state', '$timeout', '$filter', 'Utils', 'DemoService', 'Upload',
+      function($scope, $state, $timeout, $filter, Utils, DemoService, Upload) {
 
         $scope.app.settings.htmlClass = 'transition-navbar-scroll top-navbar-xlarge bottom-footer';
         $scope.app.settings.bodyClass = '';
@@ -11,12 +11,14 @@
 
         var vm = this;
         vm.$state = $state;
+        vm.workspaceId = vm.$state.params.workspaceId ? vm.$state.params.workspaceId : 3;
         vm.tabs = []; //// array to store files aka. branchs to display as tabs
         vm.my_data = [];
         vm.firebaseApp = Utils.firebaseApp;
         vm.firepadRefs = Utils.firepadRefs;
         vm.userId = Math.floor(Math.random() * 999999999).toString();
         vm.fileRef = {};
+        // vm.uploading = '30%';
 
         var defaultMode, defaultBranch, firepadElement, cmConsoleElement, defaultText, cmEditorOptions, cmConsoleOptions, saveFile;
         defaultText = '# Happy coding!';
@@ -70,11 +72,19 @@
             }
           }
         }
+
+        function showErrorModal() {
+          $('#workspaceErrorModal').modal({
+            backdrop: 'static',
+            show: true
+          });
+        }
+
         saveFile = function(callback) {
           $scope.waiting = true;
           if (vm.currentBranch.uid !== -1) {
             var content = vm.codeMirror.getValue();
-            DemoService.saveFile(3, vm.currentBranch.data.relative_path, encodeURIComponent(content), function(res) {
+            DemoService.saveFile(vm.workspaceId, vm.currentBranch.data.relative_path, encodeURIComponent(content), function(res) {
               vm.codeMirror.markClean();
               if (callback) {
                 callback();
@@ -85,9 +95,11 @@
                   show: true
                 });
               }
+            }, function(res) {
+              showErrorModal();
             });
           }
-        }
+        };
 
         CodeMirror.commands.saveFile = function(cm) {
           saveFile();
@@ -134,7 +146,7 @@
             $timeout(function() {
               if (!snapshot.child('users').exists()) {
                 if (file.label !== 'untitled') {
-                  DemoService.loadFile(3, file.data.relative_path, function(res) {
+                  DemoService.loadFile(vm.workspaceId, file.data.relative_path, function(res) {
                     fileContent = res.data.content;
                     //// Create Firepad (with our desired userId).
                     vm.firepad = Firepad.fromCodeMirror(vm.fileRef, vm.codeMirror, {
@@ -144,6 +156,8 @@
                       vm.firepad.setText(fileContent); //// this makes the editor not clean anymore
                     });
                     $scope.waiting = false;
+                  }, function(res) {
+                    showErrorModal();
                   });
                 } else {
                   vm.codeMirror.setValue(defaultText);
@@ -193,12 +207,7 @@
         // Helper to traverse the tree and add extra data to files
         function analyzeTree(tree, parent) {
           var relative_path = '';
-          var workspaceId = 3; // later API has to return this id
-<<<<<<< HEAD
-          var fileExt, fileMode = 'text/plain';
-=======
           var fileExt, fileMode;
->>>>>>> 45e1bc3edee05b19809b314f6b8daeb2e6493b15
           if (parent) {
             relative_path += parent + '/';
           }
@@ -221,7 +230,7 @@
                   }
                 }
                 tree[i].data = {
-                  id: workspaceId + '_' + tree[i].label.replace(/\./, '_'),
+                  id: vm.workspaceId + '_' + tree[i].label.replace(/\./, '_'),
                   mode: fileMode, // will handle multiple file types later
                   relative_path: relative_path + tree[i].label
                 };
@@ -245,7 +254,7 @@
             vm.init(branch);
             vm.currentBranch = branch;
           });
-        }
+        };
 
         vm.my_tree = tree = {};
 
@@ -259,7 +268,7 @@
         };
 
         vm.closeFile = function(branch) {
-          var fileRef = getExampleRef(branch.data.id)
+          var fileRef = getExampleRef(branch.data.id);
           fileRef.child('/users/' + vm.userId).remove();
           removeTabsByUid(branch.uid);
           if (!vm.tabs.length) {
@@ -278,7 +287,7 @@
         };
 
         //// retrieve workspace structure
-        DemoService.getWorkspaceById(3, function(res) { // using id 3 for demo purpose
+        DemoService.getWorkspaceById(vm.workspaceId, function(res) {
           $timeout(function() {
             vm.my_data = analyzeTree(res.data);
             $scope.loading = false;
@@ -287,15 +296,33 @@
 
         vm.runFile = function() {
           vm.saveFile(function() {
-            DemoService.execute(3, vm.currentBranch.data.relative_path, vm.mode, function(res) {
+            DemoService.execute(vm.workspaceId, vm.currentBranch.data.relative_path, vm.mode, function(res) {
               vm.cmConsole.setValue(res.data.result);
               $scope.waiting = false;
+            }, function(res) {
+              showErrorModal();
             });
           });
         };
 
         vm.saveFile = saveFile;
 
+        vm.upload = function(file) {
+          $scope.uploading = '5%';
+          DemoService.uploadTemplate(vm.workspaceId, file, function(res) {
+            if (res.status < 300) {
+              $timeout(function() {
+                vm.$state.reload();
+              }, 500);
+            }
+          }, function(res) {
+            showErrorModal();
+          }, function(percentage) {
+            $timeout(function() {
+              $scope.uploading = percentage + '%';
+            });
+          });
+        };
       }
     ]);
 

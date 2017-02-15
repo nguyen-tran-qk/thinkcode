@@ -12,7 +12,8 @@
 		"angular-messages/angular-messages.js",
 		"angular-material/angular-material.js",
 		"angular-bootstrap/ui-bootstrap.js",
-		"angular-bootstrap-nav-tree/dist/abn_tree_directive.js"
+		"angular-bootstrap-nav-tree/dist/abn_tree_directive.js",
+		"ng-file-upload/ng-file-upload.js"
 	],
 	"dest": "js/vendor/angular",
 	"flatten": true,

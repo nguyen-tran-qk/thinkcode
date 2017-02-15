@@ -66,7 +66,8 @@
     "angular-aria": "^1.5.0",
     "angular-material": "1.0.5",
     "angular-bootstrap-nav-tree": "*",
-    "angular-bootstrap": "^2.5.0"
+    "angular-bootstrap": "^2.5.0",
+    "ng-file-upload": "^12.2.13"
   },
   "resolutions": {
     "bootstrap": "3.3.4",

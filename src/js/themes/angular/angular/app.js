@@ -12,15 +12,16 @@
     'ui.bootstrap',
     'ngMaterial',
     'angularBootstrapNavTree',
+    'ngFileUpload',
     'utils'
   ]).constant("$MD_THEME_CSS","default");
 
   var app = angular.module('app')
     .config(
       ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$interpolateProvider',
-        '$mdThemingProvider',
+        '$mdThemingProvider', '$httpProvider',
         function($controllerProvider, $compileProvider, $filterProvider, $provide, $interpolateProvider,
-          $mdThemingProvider) {
+          $mdThemingProvider, $httpProvider) {
           app.controller = $controllerProvider.register;
           app.directive = $compileProvider.directive;
           app.filter = $filterProvider.register;
@@ -34,6 +35,7 @@
           $interpolateProvider.startSymbol('::');
           $interpolateProvider.endSymbol('::');
 
+          $httpProvider.defaults.withCredentials = true;
         }
       ]);
 

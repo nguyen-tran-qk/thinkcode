@@ -30,7 +30,7 @@
 
           $stateProvider
             .state('demo', {
-              url: '/demo',
+              url: '/demo?workspaceId',
               templateUrl: 'demo.html',
               controller: 'DemoController',
               controllerAs: 'vm'
