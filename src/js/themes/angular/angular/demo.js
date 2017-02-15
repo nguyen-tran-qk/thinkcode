@@ -35,6 +35,7 @@
           lineNumbers: true,
           lineWrapping: true,
           tabSize: 4,
+          indentUnit: 4,
           extraKeys: {
             "Ctrl-Space": "autocomplete",
             "Ctrl-S": "saveFile",
@@ -73,7 +74,7 @@
           $scope.waiting = true;
           if (vm.currentBranch.uid !== -1) {
             var content = vm.codeMirror.getValue();
-            DemoService.saveFile(22, vm.currentBranch.data.relative_path, encodeURIComponent(content), function(res) {
+            DemoService.saveFile(3, vm.currentBranch.data.relative_path, encodeURIComponent(content), function(res) {
               vm.codeMirror.markClean();
               if (callback) {
                 callback();
@@ -133,7 +134,7 @@
             $timeout(function() {
               if (!snapshot.child('users').exists()) {
                 if (file.label !== 'untitled') {
-                  DemoService.loadFile(22, file.data.relative_path, function(res) {
+                  DemoService.loadFile(3, file.data.relative_path, function(res) {
                     fileContent = res.data.content;
                     //// Create Firepad (with our desired userId).
                     vm.firepad = Firepad.fromCodeMirror(vm.fileRef, vm.codeMirror, {
@@ -192,8 +193,8 @@
         // Helper to traverse the tree and add extra data to files
         function analyzeTree(tree, parent) {
           var relative_path = '';
-          var workspaceId = 22; // later API has to return this id
-          var fileExt, fileMode = 'text/plain';
+          var workspaceId = 3; // later API has to return this id
+          var fileExt, fileMode;
           if (parent) {
             relative_path += parent + '/';
           }
@@ -202,6 +203,7 @@
               analyzeTree(tree[i].children, relative_path + tree[i].label);
             } else {
               if (!tree[i].noLeaf) {
+                fileMode = 'text/plain';
                 fileExt = getFileExtension(tree[i].label);
                 if (fileExt) {
                   if (fileExt === 'py') {
@@ -272,7 +274,7 @@
         };
 
         //// retrieve workspace structure
-        DemoService.getWorkspaceById(22, function(res) { // using id 22 for demo purpose
+        DemoService.getWorkspaceById(3, function(res) { // using id 3 for demo purpose
           $timeout(function() {
             vm.my_data = analyzeTree(res.data);
             $scope.loading = false;
@@ -281,7 +283,7 @@
 
         vm.runFile = function() {
           vm.saveFile(function() {
-            DemoService.execute(22, vm.currentBranch.data.relative_path, vm.mode, function(res) {
+            DemoService.execute(3, vm.currentBranch.data.relative_path, vm.mode, function(res) {
               vm.cmConsole.setValue(res.data.result);
               $scope.waiting = false;
             });
