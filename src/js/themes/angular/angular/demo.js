@@ -35,6 +35,7 @@
           lineNumbers: true,
           lineWrapping: true,
           tabSize: 4,
+          indentUnit: 4,
           extraKeys: {
             "Ctrl-Space": "autocomplete",
             "Ctrl-S": "saveFile",
@@ -193,7 +194,11 @@
         function analyzeTree(tree, parent) {
           var relative_path = '';
           var workspaceId = 3; // later API has to return this id
+<<<<<<< HEAD
           var fileExt, fileMode = 'text/plain';
+=======
+          var fileExt, fileMode;
+>>>>>>> 45e1bc3edee05b19809b314f6b8daeb2e6493b15
           if (parent) {
             relative_path += parent + '/';
           }
@@ -202,6 +207,7 @@
               analyzeTree(tree[i].children, relative_path + tree[i].label);
             } else {
               if (!tree[i].noLeaf) {
+                fileMode = 'text/plain';
                 fileExt = getFileExtension(tree[i].label);
                 if (fileExt) {
                   if (fileExt === 'py') {
