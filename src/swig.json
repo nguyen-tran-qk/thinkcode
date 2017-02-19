@@ -1,7 +1,7 @@
 {
 	"site": {
 		"name": "ThinkCode",
-		"version": "1.1.0",
+		"version": "1.0.0",
 		"description": "Online Interactive Learning System",
 		"author": "nguyentran",
 		"email": "kevtran07@gmail.com"
@@ -19,7 +19,13 @@
 		"vendor/daterangepicker-bs3",
 		"vendor/jquery.bootstrap-touchspin",
 		"vendor/select2",
-		"vendor/jquery.countdown"
+		"vendor/jquery.countdown",
+		"vendor/codemirror",
+		"vendor/angular-material",
+		"vendor/abn_tree",
+		"vendor/ui-bootstrap-csp",
+		"vendor/codemirror-custom",
+		"vendor/angular-resizable"
 	],
 	"js_vendor": [
 		{
@@ -34,14 +40,16 @@
 		"vendor/core/packery-mode.pkgd",
 		"vendor/core/jquery.grid-a-licious",
 		"vendor/core/jquery.cookie",
-		"vendor/core/jquery-ui.custom",
 		"vendor/core/jquery.hotkeys",
 		"vendor/core/handlebars",
 		"vendor/core/jquery.hotkeys",
 		"vendor/core/load_image",
 		"vendor/core/jquery.debouncedresize",
-		"vendor/core/modernizr",
 		"vendor/core/velocity",
+		"vendor/core/codemirror",
+		"vendor/core/codemirror.custom",
+		"vendor/core/firebase",
+		"vendor/core/firepad",
 		"vendor/tables/all",
 		"vendor/forms/all",
 		"vendor/media/slick",
@@ -60,7 +68,6 @@
 		"app/sidebar",
 		"app/media",
 		"app/messages",
-		"app/maps",
 		"app/charts"
 	],
 	"css_modules": [
@@ -73,11 +80,12 @@
 		"app/messages",
 		"app/media",
 		"app/charts",
-		"app/maps",
 		"app/colors-alerts",
 		"app/colors-background",
 		"app/colors-buttons",
-		"app/colors-text"
+		"app/colors-text",
+		"app/main",
+		"app/style"
 	],
 	"js_theme_core": [
 		"html",

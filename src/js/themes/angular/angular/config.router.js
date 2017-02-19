@@ -26,7 +26,7 @@
           };
 
           $urlRouterProvider
-            .otherwise('/demo');
+            .otherwise('/login');
 
           $stateProvider
             .state('demo', {

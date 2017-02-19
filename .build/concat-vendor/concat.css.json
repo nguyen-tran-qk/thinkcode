@@ -1,5 +1,12 @@
-{
-	"build": "css/vendor/all.css",
-	"cwd": "$THEME_DIR/css/vendor",
-	"files": ["*.css", "!*.min.css"]
-}
+[
+	{
+		"build": "css/vendor/all.css",
+		"cwd": "$THEME_DIR/css/vendor",
+		"files": ["*.css", "!*.min.css"]
+	},
+	{
+		"build": "css/vendor/codemirror-custom.css",
+		"cwd": "$THEME_DIR/css/vendor/codemirror-custom",
+		"files": ["*.css"]
+	}
+]

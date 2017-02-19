@@ -26,7 +26,7 @@
 
                 {%- if !module|array_key_exists("themes") and !module|array_key_exists("exclude") -%}
                     {%- if bundle -%}
-                        <!-- <script src="{{ cwd }}js/{{ module.name }}{% if config.minify %}.min{% endif %}.js"></script> -->
+                        <script src="{{ cwd }}js/{{ module.name }}{% if config.minify %}.min{% endif %}.js"></script>
                     {%- else -%}
                         <script src="{{ cwd }}js/{{ module.name }}{% if config.minify %}.min{% endif %}.js"></script>
                     {%- endif -%}
@@ -34,7 +34,7 @@
 
                 {%- if module.themes|inArray(config.theme) or (module|array_key_exists("exclude") and !module.exclude|inArray(config.theme)) -%}
                     {%- if bundle -%}
-                        <!-- <script src="{{ cwd }}js/{{ module.name }}{% if config.minify %}.min{% endif %}.js"></script> -->
+                        <script src="{{ cwd }}js/{{ module.name }}{% if config.minify %}.min{% endif %}.js"></script>
                     {%- else -%}
                         <script src="{{ cwd }}js/{{ module.name }}{% if config.minify %}.min{% endif %}.js"></script>
                     {%- endif -%}
@@ -44,7 +44,7 @@
 
             {%- else -%}
                 {%- if bundle -%}
-                    <!-- <script src="{{ cwd }}js/{{ module }}{% if config.minify %}.min{% endif %}.js"></script> -->
+                    <script src="{{ cwd }}js/{{ module }}{% if config.minify %}.min{% endif %}.js"></script>
                 {%- else -%}
                     <script src="{{ cwd }}js/{{ module }}{% if config.minify %}.min{% endif %}.js"></script>
                 {%- endif -%}
@@ -73,7 +73,7 @@
 
         {%- if !module|array_key_exists("themes") and !module|array_key_exists("exclude") -%}
             {%- if bundle -%}
-            <!-- <script src="{{ cwd }}js/{{ module.name }}{% if config.minify %}.min{% endif %}.js"></script> -->
+            <script src="{{ cwd }}js/{{ module.name }}{% if config.minify %}.min{% endif %}.js"></script>
             {%- else -%}
             <script src="{{ cwd }}js/{{ module.name }}{% if config.minify %}.min{% endif %}.js"></script>
             {%- endif -%}
@@ -81,7 +81,7 @@
 
         {%- if module.themes|inArray(config.theme) or (module|array_key_exists("exclude") and !module.exclude|inArray(config.theme)) -%}
             {%- if bundle -%}
-            <!-- <script src="{{ cwd }}js/{{ module.name }}{% if config.minify %}.min{% endif %}.js"></script> -->
+            <script src="{{ cwd }}js/{{ module.name }}{% if config.minify %}.min{% endif %}.js"></script>
             {%- else -%}
             <script src="{{ cwd }}js/{{ module.name }}{% if config.minify %}.min{% endif %}.js"></script>
             {%- endif -%}
@@ -91,7 +91,7 @@
 
         {%- else -%}
             {%- if bundle -%}
-            <!-- <script src="{{ cwd }}js/{{ module }}{% if config.minify %}.min{% endif %}.js"></script> -->
+            <script src="{{ cwd }}js/{{ module }}{% if config.minify %}.min{% endif %}.js"></script>
             {%- else -%}
             <script src="{{ cwd }}js/{{ module }}{% if config.minify %}.min{% endif %}.js"></script>
             {%- endif -%}
@@ -109,7 +109,7 @@
         app.js already includes main.js so this should be loaded
         ONLY when using the standalone modules; -->
         {%- if bundle -%}
-        <!-- <script src="{{ cwd }}js/app/main{% if config.minify %}.min{% endif %}.js"></script> -->
+        <script src="{{ cwd }}js/app/main{% if config.minify %}.min{% endif %}.js"></script>
         {%- else -%}
         <script src="{{ cwd }}js/app/main{% if config.minify %}.min{% endif %}.js"></script>
         {%- endif -%}

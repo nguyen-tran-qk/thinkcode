@@ -21,7 +21,6 @@ require('./angular/main.js');
 require('essential/js/angular/main');
 require('layout/js/angular/main');
 require('sidebar/js/angular/main');
-require('maps/js/angular/_google-maps');
 require('media/js/angular/main');
 require('material/js/angular/main');
 

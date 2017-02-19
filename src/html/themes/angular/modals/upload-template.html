@@ -1,0 +1,16 @@
+<div class="modal-header">
+  <h3 class="modal-title text-danger">Upload Template</h3>
+</div>
+<div class="modal-body">
+  <div class="progress" ng-if="vm.uploading">
+    <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" ng-style="{width: vm.uploading}">
+    </div>
+  </div>
+  <div class="sub-header" ng-if="vm.uploading">Uploading :: vm.uploading ::</div>
+  <div class="btn btn-primary btn-sm" ngf-select ng-model="vm.file" ngf-accept="application/zip" name="template"><small>Browse</small></div>
+  <span>::vm.file.name::</span>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary btn-sm" type="button" ng-click="vm.upload()">OK</button>
+  <button class="btn btn-warning btn-sm" type="button" ng-click="vm.cancel()">Cancel</button>
+</div>

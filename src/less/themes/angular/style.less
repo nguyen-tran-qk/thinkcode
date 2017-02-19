@@ -2,6 +2,9 @@
 .powered-by-firepad {
 	display: none;
 }
+.abn-tree {
+  font-size: 14px;
+}
 
 /* variables */
 @editor-height: 500px;
@@ -37,9 +40,62 @@
     width: 100%;
   }
 }
+
+.min-width-10 {
+  min-width: 10%;
+}
+.min-width-20 {
+  min-width: 20%;
+}
+.min-width-30 {
+  min-width: 30%;
+}
+.min-width-40 {
+  min-width: 40%;
+}
+.min-width-50 {
+  min-width: 50%;
+}
+.min-width-60 {
+  min-width: 60%;
+}
+.min-width-70 {
+  min-width: 70%;
+}
+.min-width-80 {
+  min-width: 80%;
+}
+.min-width-90 {
+  min-width: 90%;
+}
+.min-width-100 {
+  min-width: 100%;
+}
+
 #demo {
+  .workspace {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-content: space-around;
+    & > div {
+      flex: 1;
+      // margin: 0 7px;
+      &.file-tree.resizable {
+        min-width: 15%;
+        max-width: 30%;
+        flex: 0 0 15%;
+      }
+      &.console-panel.resizable {
+        min-width: 5%;
+        max-width: 50%;
+        flex: 0 0 30%;
+      } 
+    }
+  }
 	/* tabs */
 	.editor-tabs {
+    padding: 0 15px;
 		.nav.nav-tabs {
 			height: 40px;
 			li > a {

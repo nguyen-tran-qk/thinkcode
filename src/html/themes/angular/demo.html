@@ -1,41 +1,43 @@
 {% extends "src/html/themes/angular/website/_layout-instructor.html" %} {% block content %}
 <!-- <div id="userlist" class="col-md-2"></div> -->
 <div id="demo">
-  <div class="panel panel-default col-md-2 file-tree">
-    <div class="panel-body">
-      <abn-tree ng-if="!loading" tree-data="vm.my_data" tree-control="vm.my_tree" icon-leaf="md-insert-drive-file" icon-expand="md-folder-open" icon-collapse="md-folder" expand-level="3"></abn-tree>
-      <br/>
-      <div class="absolute bottom">
-        <div class="btn btn-primary btn-sm" ngf-select="vm.upload($file)" ngf-accept="application/zip" name="template"><small>Upload Template</small></div>
+  <div class="row workspace">
+    <div class="panel panel-default col-md-2 file-tree" resizable r-directions="['right']" r-flex="true">
+      <div class="panel-body">
+        <abn-tree ng-if="!loading" tree-data="vm.my_data" tree-control="vm.my_tree" icon-leaf="fa fa-file" icon-expand="fa fa-chevron-down" icon-collapse="fa fa-chevron-right" expand-level="3"></abn-tree>
+        <br/>
+        <div class="absolute bottom">
+          <div class="btn btn-primary btn-sm" ng-click="vm.openUpload()"><small>Upload Template</small></div>
+        </div>
       </div>
     </div>
-  </div>
-  <!-- Tabbable Widget -->
-  <div class="editor-tabs tabbable col-md-7" ng-show="vm.tabs.length">
-    <!-- Tabs -->
-    <ul class="nav nav-tabs">
-      <li ng-repeat="tab in vm.tabs track by tab.data.id" ng-class="{'active': tab.data.id === vm.currentBranch.data.id}">
-        <a href ng-click="vm.openTab(tab)"><i class="fa fa-fw fa-code"></i> ::tab.label::</a>
-        <i class="btn-close md md-close" ng-if="tab.uid !== -1" ng-click="vm.closeFile(tab)"></i>
-      </li>
-    </ul>
-    <!-- // END Tabs -->
-    <!-- Panes -->
-    <div class="tab-content padding-none">
-      <div id="firepad" class="tab-pane active">
+    <!-- Tabbable Widget -->
+    <div class="editor-tabs tabbable col-md-6" ng-show="vm.tabs.length">
+      <!-- Tabs -->
+      <ul class="nav nav-tabs">
+        <li ng-repeat="tab in vm.tabs track by tab.data.id" ng-class="{'active': tab.data.id === vm.currentBranch.data.id}">
+          <a href ng-click="vm.openTab(tab)"><i class="fa fa-fw fa-code"></i> ::tab.label::</a>
+          <i class="btn-close md md-close" ng-if="tab.uid !== -1" ng-click="vm.closeFile(tab)"></i>
+        </li>
+      </ul>
+      <!-- // END Tabs -->
+      <!-- Panes -->
+      <div class="tab-content padding-none">
+        <div id="firepad" class="tab-pane active">
+        </div>
+        <div class="editor-actions" ng-if="vm.currentBranch.uid !== -1">
+          <button class="btn btn-success btn-sm" ng-click="vm.saveFile()" ng-disabled="waiting">Save</button>
+          <button class="btn btn-primary btn-sm" ng-click="vm.runFile()" ng-disabled="waiting">Run</button>
+          <!-- <button class="btn btn-default btn-sm" ng-click="vm.closeFile()">Close</button> -->
+        </div>
       </div>
-      <div class="editor-actions" ng-if="vm.currentBranch.uid !== -1">
-        <button class="btn btn-success btn-sm" ng-click="vm.saveFile()" ng-disabled="waiting">Save</button>
-        <button class="btn btn-primary btn-sm" ng-click="vm.runFile()" ng-disabled="waiting">Run</button>
-        <!-- <button class="btn btn-default btn-sm" ng-click="vm.closeFile()">Close</button> -->
-      </div>
+      <!-- // END Panes -->
     </div>
-    <!-- // END Panes -->
-  </div>
-  <div class="panel panel-default col-md-3 padding-none console-panel">
-    <div id="console" class="">
+    <div class="panel panel-default col-md-4 padding-none console-panel" resizable r-directions="['left']" r-flex="true">
+      <div id="console" class="">
+      </div>
     </div>
   </div>
 </div>
 <!-- // END Tabbable Widget -->
-{% include "src/html/themes/angular/modals/save-file-success.html" %} {% include "src/html/themes/angular/modals/error-workspace.html" %} {% endblock %}
+{% include "src/html/themes/angular/modals/save-file-success.html" %} {% endblock %}

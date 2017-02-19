@@ -12,8 +12,10 @@
 		"angular-messages.js",
 		"angular-material.js",
 		"ui-bootstrap.js",
+		"ui-bootstrap-tpls.js",
 		"abn_tree_directive.js",
-		"ng-file-upload.js"
+		"ng-file-upload.js",
+		"angular-resizable.js"
 	],
 	"themes": ["angular"]
 }

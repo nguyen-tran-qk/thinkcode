@@ -7,7 +7,7 @@
     .factory('DemoService', ['API_URL', '$http', 'Upload', function(API_URL, $http, Upload) {
       return {
         getWorkspaceById: function(id, callback, errorCallback) {
-          $http.get(API_URL + '/workspaces/' + id, { withCredentials: true })
+          $http.get(API_URL + '/workspaces/' + id)
             .then(function(res) {
               if (callback) {
                 callback(res);
@@ -19,7 +19,7 @@
             });
         },
         loadFile: function(wsId, rel_path, callback, errorCallback) {
-          $http.get(API_URL + '/workspaces/' + wsId + '/load?relative_path=' + rel_path, { withCredentials: true })
+          $http.get(API_URL + '/workspaces/' + wsId + '/load?relative_path=' + rel_path)
             .then(function(res) {
               if (callback) {
                 callback(res);
@@ -31,7 +31,7 @@
             });
         },
         execute: function(wsId, rel_path, engine, callback, errorCallback) {
-          $http.get(API_URL + '/workspaces/' + wsId + '/execute?engine=' + engine + '&relative_path=' + rel_path, { withCredentials: true })
+          $http.get(API_URL + '/workspaces/' + wsId + '/execute?engine=' + engine + '&relative_path=' + rel_path)
             .then(function(res) {
               if (callback) {
                 callback(res);
@@ -43,7 +43,7 @@
             });
         },
         saveFile: function(wsId, rel_path, content, callback, errorCallback) {
-          $http.patch(API_URL + '/workspaces/' + wsId + '/save?relative_path=' + rel_path + '&content=' + content, { withCredentials: true })
+          $http.patch(API_URL + '/workspaces/' + wsId + '/save?relative_path=' + rel_path + '&content=' + content)
             .then(function(res) {
               if (callback) {
                 callback(res);
@@ -57,7 +57,7 @@
         uploadTemplate: function(wsId, file, callback, errorCallback, progressCallback) {
           Upload.upload({
             url: API_URL + '/workspaces/' + wsId + '/upload',
-            data: { 'template[zip]': file, withCredentials: true }
+            data: { 'template[zip]': file }
           }).then(function(res) {
             if (callback) {
               callback(res);

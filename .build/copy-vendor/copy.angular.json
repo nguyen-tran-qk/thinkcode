@@ -12,8 +12,10 @@
 		"angular-messages/angular-messages.js",
 		"angular-material/angular-material.js",
 		"angular-bootstrap/ui-bootstrap.js",
+		"angular-bootstrap/ui-bootstrap-tpls.js",
 		"angular-bootstrap-nav-tree/dist/abn_tree_directive.js",
-		"ng-file-upload/ng-file-upload.js"
+		"ng-file-upload/ng-file-upload.js",
+		"angular-resizable/src/angular-resizable.js"
 	],
 	"dest": "js/vendor/angular",
 	"flatten": true,

@@ -15,11 +15,6 @@
 		"src": "main.js"
 	},
 	{
-		"build": "app/maps.js",
-		"cwd": "./lib/maps/js/google/",
-		"src": "_init.js"
-	},
-	{
 		"build": "app/charts.js",
 		"cwd": "./lib/charts/js/flot/",
 		"src": "main.js"
