@@ -6,9 +6,23 @@
   font-size: 14px;
 }
 
+/* resizer grabber */
+.rg-right {
+  margin-right: -15px; // to match with padding 15px of editor
+}
+.rg-left {
+  margin-left: -15px;
+}
+.rg-right, .rg-left {
+  span {
+    border-width: 0 2px;
+  }
+}
+
 /* variables */
 @editor-height: 500px;
 @editor-wrap-height: 540px;
+@workspace-actions-bg: #2a3034;
 
 /* fonts */
 @font-face {
@@ -41,6 +55,7 @@
   }
 }
 
+/* helper classes */
 .min-width-10 {
   min-width: 10%;
 }
@@ -71,6 +86,12 @@
 .min-width-100 {
   min-width: 100%;
 }
+.padding-left-none {
+  padding-left: 0 !important;
+}
+.padding-right-none {
+  padding-right: 0 !important;
+}
 
 #demo {
   .workspace {
@@ -82,20 +103,35 @@
       flex: 1;
       // margin: 0 7px;
       &.file-tree.resizable {
-        min-width: 15%;
+        min-width: 50px;
         max-width: 30%;
-        flex: 0 0 15%;
+        flex: 0 0 20%;
       }
       &.console-panel.resizable {
-        min-width: 5%;
+        min-width: 50px;
         max-width: 50%;
         flex: 0 0 30%;
       } 
     }
+    .resize-notify {
+      height: 100%; 
+      color: #ccc;
+      font-size: 42px;
+      display: flex; 
+      align-items: center;
+      position: absolute;
+      top: 0;
+      &.resize-right {
+        right: -5px;
+      }
+      &.resize-left {
+        left: -5px;
+      }
+    }
   }
 	/* tabs */
 	.editor-tabs {
-    padding: 0 15px;
+    padding: 0 14px;
 		.nav.nav-tabs {
 			height: 40px;
 			li > a {
@@ -116,11 +152,22 @@
 				}
 			}
 		}
+    .tab-content {
+      height: calc(~"100% - 40px");
+      #firepad, .firepad, .CodeMirror {
+        height: 100%;
+      }
+    }
 	}
 
 	/* tree control */
 	.file-tree {
-		min-height: @editor-wrap-height; // 500px of .CodeMirror + 38px of .console-panel-heading, see below
+		// min-height: @editor-wrap-height; // 500px of .CodeMirror + 38px of .console-panel-heading, see below
+    div.panel-body {
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
 	}
 
 	/* buttons of editor */
@@ -134,6 +181,21 @@
 		}
 	}
 }
+.workspace-actions {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 45px; // the height of footer
+  height: 41px; // the padding bottom of class page-section + 1px to make sure it fills up
+  background-color: @workspace-actions-bg;
+  z-index: 99;
+  // div:nth-of-type(2) {
+  //   border-width: 0 14px;
+  //   border-color: brown;
+  // }
+}
 
 /* console */
 #console {
@@ -142,7 +204,7 @@
   }
 }
 .console-panel {
-	height: @editor-wrap-height;
+	height: 100%;
 }
 .console-panel-heading {
 	min-height: 38px;
@@ -152,7 +214,7 @@
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
   font-family: Menlo, Monaco, monospace, sans-serif !important;
-  height: @editor-height;
+  height: 100%;
   color: black;
 }
 
@@ -185,7 +247,7 @@
 .cm-s-Pacific .cm-variable { color: #C5C8C6; }
 .cm-s-Pacific .cm-variable-2 { font-style: italic; color: #c5e88c; }
 
-.cm-s-thinkcode-console.CodeMirror { color: #939598; min-height: @editor-wrap-height; }
+.cm-s-thinkcode-console.CodeMirror { color: #939598; }
 .cm-s-thinkcode-console.CodeMirror { background: #000000; }
 
 /* material preloader, credit to https://codepen.io/anon/pen/oBJrZE */

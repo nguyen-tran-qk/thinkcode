@@ -31,6 +31,7 @@ require('./angular/directives/curriculum');
 require('./angular/directives/flotchart-earnings');
 require('./angular/directives/material-treeview');
 require('./angular/directives/treeView');
+require('./angular/directives/abn-tree-modified');
 
 // Angular App Services
 require('./angular/services/demo')

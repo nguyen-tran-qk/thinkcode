@@ -1,18 +1,15 @@
 {% extends "src/html/themes/angular/website/_layout-instructor.html" %} {% block content %}
 <!-- <div id="userlist" class="col-md-2"></div> -->
-<div id="demo">
-  <div class="row workspace">
-    <div class="panel panel-default col-md-2 file-tree" resizable r-directions="['right']" r-flex="true">
-      <div class="panel-body">
-        <abn-tree ng-if="!loading" tree-data="vm.my_data" tree-control="vm.my_tree" icon-leaf="fa fa-file" icon-expand="fa fa-chevron-down" icon-collapse="fa fa-chevron-right" expand-level="3"></abn-tree>
-        <br/>
-        <div class="absolute bottom">
-          <div class="btn btn-primary btn-sm" ng-click="vm.openUpload()"><small>Upload Template</small></div>
-        </div>
+<div id="demo" class="height-100pc">
+  <div class="row workspace height-100pc">
+    <div class="panel panel-default col-md-2 file-tree margin-none height-100pc" resizable id="tree-resize" r-directions="['right']" r-flex="true">
+      <div class="panel-body height-100pc">
+        <abn-tree-mod id="workspace-tree" ng-hide="vm.treeHidden" ng-if="!loading" tree-data="vm.my_data" tree-control="vm.my_tree" icon-leaf="fa fa-file" icon-expand="fa fa-chevron-right" icon-collapse="fa fa-chevron-down" expand-level="3"></abn-tree-mod>
+        <div ng-if="vm.treeHidden" class="resize-notify resize-right"><i class="fa fa-fw fa-angle-double-right"></i></div>
       </div>
     </div>
     <!-- Tabbable Widget -->
-    <div class="editor-tabs tabbable col-md-6" ng-show="vm.tabs.length">
+    <div class="editor-tabs tabbable col-md-6 margin-none" ng-show="vm.tabs.length">
       <!-- Tabs -->
       <ul class="nav nav-tabs">
         <li ng-repeat="tab in vm.tabs track by tab.data.id" ng-class="{'active': tab.data.id === vm.currentBranch.data.id}">
@@ -25,19 +22,27 @@
       <div class="tab-content padding-none">
         <div id="firepad" class="tab-pane active">
         </div>
-        <div class="editor-actions" ng-if="vm.currentBranch.uid !== -1">
-          <button class="btn btn-success btn-sm" ng-click="vm.saveFile()" ng-disabled="waiting">Save</button>
-          <button class="btn btn-primary btn-sm" ng-click="vm.runFile()" ng-disabled="waiting">Run</button>
-          <!-- <button class="btn btn-default btn-sm" ng-click="vm.closeFile()">Close</button> -->
-        </div>
       </div>
       <!-- // END Panes -->
     </div>
-    <div class="panel panel-default col-md-4 padding-none console-panel" resizable r-directions="['left']" r-flex="true">
-      <div id="console" class="">
+    <div class="panel panel-default col-md-4 padding-none console-panel margin-none" resizable id="console-resize" r-directions="['left']" r-flex="true" r-width="500">
+      <div id="console" class="height-100pc" ng-hide="vm.consoleHidden">
       </div>
+      <div ng-if="vm.consoleHidden" class="resize-notify resize-left"><i class="fa fa-fw fa-angle-double-left"></i></div>
     </div>
   </div>
+</div>
+<div class="workspace-actions">
+  <div class="col-md-2">
+    <div class="btn btn-primary btn-sm" ng-click="vm.openUpload()" ng-disabled="waiting"><small>Upload Template</small></div>
+  </div>
+  <div class="col-md-6">
+    <div class="text-right" ng-if="vm.currentBranch.uid !== -1">
+      <button class="btn btn-success btn-sm" ng-click="vm.saveFile()" ng-disabled="waiting">Save</button>
+      <button class="btn btn-primary btn-sm" ng-click="vm.runFile()" ng-disabled="waiting">Run</button>
+    </div>
+  </div>
+  <div class="col-md-4"></div>
 </div>
 <!-- // END Tabbable Widget -->
 {% include "src/html/themes/angular/modals/save-file-success.html" %} {% endblock %}

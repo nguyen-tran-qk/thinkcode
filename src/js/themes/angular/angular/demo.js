@@ -11,6 +11,23 @@
     $scope.loading = true;
 
     var vm = this;
+
+    $scope.$on('angular-resizable.resizing', function(event, args) {
+      if (args.id === 'tree-resize') {
+        if (args.width < 200) {
+          vm.treeHidden = true;
+        } else {
+          vm.treeHidden = false;
+        }
+      }
+      if (args.id === 'console-resize') {
+        if (args.width < 200) {
+          vm.consoleHidden = true;
+        } else {
+          vm.consoleHidden = false;
+        }
+      }
+    });
     vm.$state = $state;
     vm.workspaceId = vm.$state.params.workspaceId ? vm.$state.params.workspaceId : 3;
     vm.tabs = []; //// array to store files aka. branchs to display as tabs
@@ -19,7 +36,6 @@
     vm.firepadRefs = Utils.firepadRefs;
     vm.userId = Math.floor(Math.random() * 999999999).toString();
     vm.fileRef = {};
-    // vm.uploading = '30%';
 
     var defaultMode, defaultBranch, firepadElement, cmConsoleElement, defaultText, cmEditorOptions, cmConsoleOptions, saveFile;
     defaultText = '# Happy coding!';
@@ -76,7 +92,7 @@
 
     var showErrorModal = function() {
       var modalInstance = $uibModal.open({
-        templateUrl: '/angular/modals/error-workspace.html',
+        templateUrl: 'modals/error-workspace.html',
         backdrop: 'static',
         keyboard: false,
         controller: function($uibModalInstance) {
@@ -91,15 +107,12 @@
         },
         controllerAs: '$ctrl'
       });
-      // modalInstance.result.then(function(selectedItem) {
-      //   $ctrl.selected = selectedItem;
-      // }, function() {
-      //   // $log.info('Modal dismissed at: ' + new Date());
-      // });
-      // $('#workspaceErrorModal').modal({
-      //   backdrop: 'static',
-      //   show: true
-      // });
+      modalInstance.result.then(function(result) {
+        if (result === 'ok') {
+          $scope.loading = false;
+          $scope.waiting = false;
+        }
+      });
     }
 
     saveFile = function(callback) {
@@ -252,7 +265,7 @@
               }
             }
             tree[i].data = {
-              id: vm.workspaceId + '_' + tree[i].label.replace(/\./, '_'),
+              id: vm.workspaceId + '_' + tree[i].label.replace(/\./g, '_'),
               mode: fileMode, // will handle multiple file types later
               relative_path: relative_path + tree[i].label
             };
@@ -331,7 +344,7 @@
 
     vm.openUpload = function() {
       var modalInstance = $uibModal.open({
-        templateUrl: '/angular/modals/upload-template.html',
+        templateUrl: 'modals/upload-template.html',
         backdrop: 'static',
         keyboard: false,
         controller: function($uibModalInstance, workspaceId) {
