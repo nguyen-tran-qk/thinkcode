@@ -36,10 +36,18 @@
             }],
             authUser: ['UserService', function(UserService) {
               var request = this;
-              if (localStorage.jwt && localStorage.jwt.length) {
+              if (localStorage.token && localStorage.token.length) {
                 return request.next();
               } else {
                 request.redirectTo('login');
+              }
+            }],
+            unAuthUser: ['UserService', function(UserService) {
+              var request = this;
+              if (!localStorage.token || !localStorage.token.length) {
+                return request.next();
+              } else {
+                request.redirectTo('main.workspaces');
               }
             }]
           });
@@ -49,40 +57,46 @@
             .otherwise('/login');
 
           $stateProvider
-            .state('demo', {
-              url: '/demo?workspaceId',
-              templateUrl: 'demo.html',
-              controller: 'DemoController',
-              controllerAs: 'vm'
-            })
             .state('login', {
               url: '/login',
+              middleware: 'unAuthUser',
               templateUrl: 'website/login.html',
               controller: 'UsersController',
               controllerAs: 'vm'
             })
             .state('sign-up', {
               url: '/sign-up',
+              middleware: 'unAuthUser',
               templateUrl: 'website/sign-up.html',
-              controller: ['$scope', '$rootScope', function($scope, $rootScope) {
-                $scope.app.settings.htmlClass = $rootScope.htmlClass.websiteLogin;
-                $scope.app.settings.bodyClass = 'login';
-              }]
+              controller: 'UsersController',
+              controllerAs: 'vm'
             })
             .state('main', {
               abstract: true,
               url: '/app',
-              template: '<div ui-view class="ui-view-main" />'
+              template: '<div ui-view="main" class="ui-view-main" />'
             })
             .state('main.workspaces', {
               url: '/workspaces',
               middleware: 'authUser',
-              templateUrl: 'website/instructor-courses.html',
-              controller: ['$scope', '$rootScope', 'UserService', function($scope, $rootScope, UserService) {
-                $scope.user = UserService.isLoggedIn();
-                $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
-                $scope.app.settings.bodyClass = '';
-              }]
+              views: {
+                'main': {
+                  templateUrl: 'website/instructor-courses.html',
+                  controller: 'WorkspacesController',
+                  controllerAs: 'vm'
+                }
+              }
+            })
+            .state('main.workspaces.details', {
+              url: '/:workspaceId',
+              middleware: 'authUser',
+              views: {
+                'content': {
+                  templateUrl: 'workspace.html',
+                  controller: 'WorkspaceDetailsController',
+                  controllerAs: 'wVm'
+                }
+              }
             });
 
           $stateProvider

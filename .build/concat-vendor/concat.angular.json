@@ -16,7 +16,8 @@
 		"abn_tree_directive.js",
 		"ng-file-upload.js",
 		"angular-resizable.js",
-		"angular-middleware.js"
+		"angular-middleware.js",
+		"ngToast.js"
 	],
 	"themes": ["angular"]
 }

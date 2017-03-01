@@ -1,0 +1,48 @@
+{% block content %}
+<!-- <div id="userlist" class="col-md-2"></div> -->
+<div id="workspace-container" class="height-100pc">
+  <div class="row workspace height-100pc">
+    <div class="panel panel-default col-md-2 file-tree margin-none height-100pc" resizable id="tree-resize" r-directions="['right']" r-flex="true">
+      <div class="panel-body height-100pc">
+        <abn-tree-mod id="workspace-tree" ng-hide="wVm.treeHidden" ng-if="!loading" tree-data="wVm.my_data" tree-control="wVm.my_tree" icon-leaf="fa fa-file" icon-expand="fa fa-chevron-right" icon-collapse="fa fa-chevron-down" expand-level="3"></abn-tree-mod>
+        <div ng-if="wVm.treeHidden" class="resize-notify resize-right"><i class="fa fa-fw fa-angle-double-right"></i></div>
+      </div>
+    </div>
+    <!-- Tabbable Widget -->
+    <div class="editor-tabs tabbable col-md-6 margin-none" ng-show="wVm.tabs.length">
+      <!-- Tabs -->
+      <ul class="nav nav-tabs">
+        <li ng-repeat="tab in wVm.tabs track by tab.data.id" ng-class="{'active': tab.data.id === wVm.currentBranch.data.id}">
+          <a href ng-click="wVm.openTab(tab)"><i class="fa fa-fw fa-code"></i> ::tab.label::</a>
+          <i class="btn-close md md-close" ng-if="tab.uid !== -1" ng-click="wVm.closeFile(tab)"></i>
+        </li>
+      </ul>
+      <!-- // END Tabs -->
+      <!-- Panes -->
+      <div class="tab-content padding-none">
+        <div id="firepad" class="tab-pane active">
+        </div>
+      </div>
+      <!-- // END Panes -->
+    </div>
+    <div class="panel panel-default col-md-4 padding-none console-panel margin-none" resizable id="console-resize" r-directions="['left']" r-flex="true" r-width="500">
+      <div id="console" class="height-100pc" ng-class="{'code-error': wVm.codeError}" ng-hide="wVm.consoleHidden">
+      </div>
+      <div ng-if="wVm.consoleHidden" class="resize-notify resize-left"><i class="fa fa-fw fa-angle-double-left"></i></div>
+    </div>
+  </div>
+</div>
+<div class="workspace-actions">
+  <div class="col-md-2">
+    <div class="btn btn-primary btn-sm" ng-click="wVm.openUpload()" ng-disabled="waiting"><small>Upload Template</small></div>
+  </div>
+  <div class="col-md-6">
+    <div class="text-right" ng-if="wVm.currentBranch.uid !== -1">
+      <button class="btn btn-success btn-sm" ng-click="wVm.saveFile()" ng-disabled="waiting">Save</button>
+      <button class="btn btn-primary btn-sm" ng-click="wVm.runFile()" ng-disabled="waiting">Run</button>
+    </div>
+  </div>
+  <div class="col-md-4"></div>
+</div>
+<!-- // END Tabbable Widget -->
+{% include "src/html/themes/angular/modals/save-file-success.html" %} {% endblock %}

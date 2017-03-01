@@ -1,10 +1,10 @@
 (function() {
   "use strict";
 
-  angular.module('app')
-    .controller('DemoController', demoCtrl);
+  angular.module('thinkcodeControllers')
+    .controller('WorkspaceDetailsController', wsDetailsCtrl);
 
-  function demoCtrl($scope, $state, $timeout, $filter, $uibModal, $document, Utils, DemoService, Upload) {
+  function wsDetailsCtrl($scope, $state, $timeout, $filter, $uibModal, $document, Utils, WorkspaceService, Upload, ngToast) {
 
     $scope.app.settings.htmlClass = 'transition-navbar-scroll top-navbar-xlarge bottom-footer';
     $scope.app.settings.bodyClass = '';
@@ -34,7 +34,6 @@
     vm.my_data = [];
     vm.firebaseApp = Utils.firebaseApp;
     vm.firepadRefs = Utils.firepadRefs;
-    vm.userId = Math.floor(Math.random() * 999999999).toString();
     vm.fileRef = {};
 
     var defaultMode, defaultBranch, firepadElement, cmConsoleElement, defaultText, cmEditorOptions, cmConsoleOptions, saveFile;
@@ -90,48 +89,24 @@
       }
     }
 
-    var showErrorModal = function() {
-      var modalInstance = $uibModal.open({
-        templateUrl: 'modals/error-workspace.html',
-        backdrop: 'static',
-        keyboard: false,
-        controller: function($uibModalInstance) {
-          var $ctrl = this;
-          $ctrl.ok = function() {
-            $uibModalInstance.close('ok');
-          };
-
-          $ctrl.cancel = function() {
-            $uibModalInstance.dismiss('cancel');
-          };
-        },
-        controllerAs: '$ctrl'
-      });
-      modalInstance.result.then(function(result) {
-        if (result === 'ok') {
-          $scope.loading = false;
-          $scope.waiting = false;
-        }
-      });
-    };
-
     saveFile = function(callback) {
       $scope.waiting = true;
       if (vm.currentBranch.uid !== -1) {
         var content = vm.codeMirror.getValue();
-        DemoService.saveFile(vm.workspaceId, vm.currentBranch.data.relative_path, encodeURIComponent(content), function(res) {
+        WorkspaceService.saveFile(vm.workspaceId, vm.currentBranch.data.relative_path, encodeURIComponent(content), function(res) {
           vm.codeMirror.markClean();
           if (callback) {
             callback();
           } else {
             $scope.waiting = false;
-            $('#saveFileSuccess').modal({
-              backdrop: 'static',
-              show: true
-            });
+            showSuccessMessage('File saved!');
           }
         }, function(res) {
-          showErrorModal();
+          if (res.data && res.data.message) {
+          $scope.showMessage('danger', res.data.message);
+        } else {
+          $scope.showMessage('danger');
+        }
         });
       }
     };
@@ -181,18 +156,22 @@
         $timeout(function() {
           if (!snapshot.child('users').exists()) {
             if (file.label !== 'untitled') {
-              DemoService.loadFile(vm.workspaceId, file.data.relative_path, function(res) {
+              WorkspaceService.loadFile(vm.workspaceId, file.data.relative_path, function(res) {
                 fileContent = res.data.content;
                 //// Create Firepad (with our desired userId).
                 vm.firepad = Firepad.fromCodeMirror(vm.fileRef, vm.codeMirror, {
-                  userId: vm.userId
+                  userId: $scope.user.id
                 });
                 vm.firepad.on('ready', function() {
                   vm.firepad.setText(fileContent); //// this makes the editor not clean anymore
                 });
                 $scope.waiting = false;
               }, function(res) {
-                showErrorModal();
+                if (res.status === 503) {
+                  $scope.showMessage('danger', res.data.message);
+                } else {
+                  $scope.showMessage('danger');
+                }
               });
             } else {
               vm.codeMirror.setValue(defaultText);
@@ -200,10 +179,11 @@
             }
           } else {
             vm.firepad = Firepad.fromCodeMirror(vm.fileRef, vm.codeMirror, {
-              userId: vm.userId
+              userId: $scope.user.id
             });
             $scope.waiting = false;
           }
+          vm.codeError = false;
         });
       });
       // vm.codeMirror.options.tabSize = 4;
@@ -212,7 +192,7 @@
 
       //// Create FirepadUserList (with our desired userId).
       // var firepadUserList = FirepadUserList.fromDiv(fileRef.child('users'),
-      //   document.getElementById('userlist'), vm.userId);
+      //   document.getElementById('userlist'), $scope.user.id);
 
       //// Initialize contents.
       // firepad.on('ready', function() {
@@ -304,7 +284,7 @@
 
     vm.closeFile = function(branch) {
       var fileRef = getExampleRef(branch.data.id);
-      fileRef.child('/users/' + vm.userId).remove();
+      fileRef.child('/users/' + $scope.user.id).remove();
       removeTabsByUid(branch.uid);
       if (!vm.tabs.length) {
         vm.tabs.push(defaultBranch);
@@ -322,20 +302,35 @@
     };
 
     //// retrieve workspace structure
-    DemoService.getWorkspaceById(vm.workspaceId, function(res) {
+    WorkspaceService.getWorkspaceById(vm.workspaceId, function(res) {
       $timeout(function() {
         vm.my_data = analyzeTree(res.data);
         $scope.loading = false;
       });
+    }, function(res) {
+      if (res.status === 401) {
+        vm.$state.go('main.workspaces', {}, { reload: true });
+        $scope.showMessage('danger', res.data.message);
+      }
     });
 
     vm.runFile = function() {
       vm.saveFile(function() {
-        DemoService.execute(vm.workspaceId, vm.currentBranch.data.relative_path, vm.mode, function(res) {
+        WorkspaceService.execute(vm.workspaceId, vm.currentBranch.data.relative_path, function(res) {
           vm.cmConsole.setValue(res.data.result);
           $scope.waiting = false;
         }, function(res) {
-          showErrorModal();
+          $scope.waiting = false;
+          if (res.status === 503) {
+            $scope.showMessage('danger', res.data.message);
+          } else if (res.status === 501) {
+            $scope.showMessage('danger', 'Unrecognized language.');
+          } else if (res.data.result) {
+            vm.codeError = true;
+            vm.cmConsole.setValue(res.data.result);
+          } else {
+            $scope.showMessage('danger');
+          }
         });
       });
     };
@@ -350,15 +345,15 @@
         controller: function($uibModalInstance, workspaceId) {
           var vm = this;
           vm.upload = function() {
-            vm.uploading = '5%';
-            DemoService.uploadTemplate(workspaceId, vm.file, function(res) {
+            vm.uploading = '1%';
+            WorkspaceService.uploadTemplate(workspaceId, vm.file, function(res) {
               if (res.status < 300) {
                 $timeout(function() {
                   $uibModalInstance.close('done');
                 }, 500);
               }
             }, function(res) {
-              $uibModalInstance.dismiss('cancel');
+              $uibModalInstance.dismiss(res);
             }, function(percentage) {
               $timeout(function() {
                 vm.uploading = percentage + '%';
@@ -378,10 +373,17 @@
       });
       modalInstance.result.then(function(result) {
         if (result === 'done') {
+          $scope.showMessage('success', 'Upload successfully!');
           $scope.$state.reload();
         }
-      }, function() {
-        showErrorModal();
+      }, function(res) {
+        if (res.data.length > 1) {
+          for (var i = res.data.length - 1; i >= 0; i--) {
+            $scope.showMessage('danger', res.data[i].error);
+          }
+        } else {
+          $scope.showMessage('danger', res.data.message);
+        }
       });
     };
 

@@ -1,9 +1,42 @@
 /* common */
+.ui-view-main {
+  height: 100%;
+}
+.ng-toast.ng-toast--bottom {
+  bottom: 80px;
+}
 .powered-by-firepad {
 	display: none;
 }
 .abn-tree {
   font-size: 14px;
+}
+.form-error {
+  .form-control-material {
+    .form-control {
+      & ~ label {
+        color: @red;
+      }
+    }
+    .ma-form-bar {
+      &:before, &:after {
+        background: @red;
+      }
+    }
+  }
+}
+.alert {
+  padding: 10px;
+}
+.alert-danger {
+  background-color: @red-400;
+  border-color: @red-400;
+}
+.media {
+  display: inline-block;
+  .media-body {
+    width: initial;
+  }
 }
 
 /* resizer grabber */
@@ -23,6 +56,8 @@
 @editor-height: 500px;
 @editor-wrap-height: 540px;
 @workspace-actions-bg: #2a3034;
+@red: #F44336;
+@red-400: #EF5350;
 
 /* fonts */
 @font-face {
@@ -92,8 +127,11 @@
 .padding-right-none {
   padding-right: 0 !important;
 }
+.right {
+  float: right !important;
+}
 
-#demo {
+#workspace-container {
   .workspace {
     display: flex;
     flex-flow: row wrap;
@@ -165,8 +203,6 @@
 		// min-height: @editor-wrap-height; // 500px of .CodeMirror + 38px of .console-panel-heading, see below
     div.panel-body {
       height: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
     }
 	}
 
@@ -201,6 +237,11 @@
 #console {
   .CodeMirror-lines .CodeMirror-code pre.CodeMirror-line {
     font-weight: bold;
+  }
+  &.code-error {
+    .CodeMirror-code pre {
+      color: @red;
+    }
   }
 }
 .console-panel {
@@ -242,7 +283,7 @@
 .cm-s-Pacific .cm-number { color: #DE935F; }
 .cm-s-Pacific .cm-keyword { color: #B294BB; }
 .cm-s-Pacific .cm-operator { color: #ffe083; }
-.cm-s-Pacific .cm-error { background: #ffe083; color: #354551; }
+.cm-s-Pacific .cm-error { background: #ffe083; color: #354551 !important; }
 .cm-s-Pacific .cm-invalidchar { background: #ffe083; color: #354551; }
 .cm-s-Pacific .cm-variable { color: #C5C8C6; }
 .cm-s-Pacific .cm-variable-2 { font-style: italic; color: #c5e88c; }

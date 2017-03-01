@@ -77,7 +77,7 @@
                     </ul>
                 </li> -->
         <li ng-class="{ 'active': $state.includes(website-courses) }">
-          <a href ui-sref="website-courses.grid">Library </span></a>
+          <a href ui-sref="main.workspaces" ui-sref-opts="{reload: true}">Library </span></a>
         </li>
       </ul>
       <div class="navbar-right">
@@ -85,7 +85,7 @@
           <!-- user -->
           <li class="dropdown user{% if page.slug|contains('website-student-') %} active{% endif %}">
             <a href class="dropdown-toggle" data-toggle="dropdown">
-              <img src="images/people/110/guy-6.jpg" alt="" class="img-circle" /> Bill<span class="caret"></span>
+              <img src="images/people/110/guy-6.jpg" alt="" class="img-circle" /> :: user.username ::<span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
               <li ui-sref-active="active"><a ui-sref="website-student.dashboard"><i class="fa fa-bar-chart-o"></i> Dashboard</a></li>

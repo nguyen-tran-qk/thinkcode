@@ -13,7 +13,6 @@ require('../html/_flotchart-earnings');
 // Angular App
 require('./app/app.js');
 require('./app/config.router.js');
-require('./app/demo.js');
 require('./app/utils.js');
 require('./app/main.js');
 
@@ -34,8 +33,10 @@ require('./app/directives/treeView');
 require('./app/directives/abn-tree-modified');
 
 // Angular App Services
-require('./app/services/demo')
+require('./app/services/workspace')
 require('./app/services/users')
 
 // Angular App Controllers
 require('./app/controllers/users.controller.js')
+require('./app/controllers/workspaces.controller.js')
+require('./app/controllers/workspaceDetails.controller.js')

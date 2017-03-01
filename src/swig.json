@@ -25,7 +25,9 @@
 		"vendor/abn_tree",
 		"vendor/ui-bootstrap-csp",
 		"vendor/codemirror-custom",
-		"vendor/angular-resizable"
+		"vendor/angular-resizable",
+		"vendor/ngToast",
+		"vendor/ngToast-animations"
 	],
 	"js_vendor": [
 		{

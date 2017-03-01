@@ -1,6 +1,5 @@
-<div class="row" data-toggle="isotope">
-
-    <div class="item col-xs-12 col-sm-6 col-lg-4">
+<div class="row" data-toggle="isotope" ng-if="vm.$state.current.name === 'main.workspaces'">
+  <!-- <div class="item col-xs-12 col-sm-6 col-lg-4">
         {% include "src/html/themes/html/courses/_listing-grid-widget.html" {
         coverBg: "bg-default",
         coverIcon: "fa-github",
@@ -15,55 +14,69 @@
         itemMeta2: false,
         itemTags: false,
         itemDescription: false,
-        itemUrl: "demo",
+        itemUrl: "main.workspaces.details({workspaceId: ws.id})",
         lessons: false } %}
+    </div> -->
+  <div class="col-xs-12 col-sm-6 col-lg-4" ng-repeat="ws in vm.workspaces">
+    <div class="panel panel-default paper-shadow" data-z="0.5">
+      <!-- <div class="panel-heading">
+        <div class="media media-clearfix-xs-min v-middle">
+          <div class="media-body text-caption text-light">
+            Lessons {{ random(1,5) }} of {{ random(5,15) }}
+          </div>
+          <div class="media-right">
+            <div class="progress progress-mini width-100 margin-none">
+              <div class="progress-bar {{ lessonsBar }}" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width:75%;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <div class="cover overlay cover-image-full hover">
+        <span class="img icon-block height-150 bg-primary"></span>
+        <a ui-sref="main.workspaces.details({workspaceId: ws.id})" class="padding-none overlay overlay-full icon-block bg-primary">
+          <span class="v-center"><i class="fa fa-code"></i></span>
+        </a>
+        <a ui-sref="main.workspaces.details({workspaceId: ws.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
+          <span class="v-center"><span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span></span>
+        </a>
+      </div>
+      <div class="panel-body">
+        <h4 class="text-headline margin-v-0-10"><a ui-sref="main.workspaces.details({workspaceId: ws.id})">:: ws.engine ::</a></h4>
+        <!-- <p class="small margin-none">
+          <span class="fa fa-fw fa-star text-yellow-800"></span>
+          <span class="fa fa-fw fa-star text-yellow-800"></span>
+          <span class="fa fa-fw fa-star text-yellow-800"></span>
+          <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+          <span class="fa fa-fw fa-star-o text-yellow-800"></span>
+        </p> -->
+      </div>
+      <hr class="margin-none">
+      <div class="panel-body">
+        <div class="media v-middle">
+          <div class="media-left">
+            <img src="images/people/50/guy-{{ random(1,9) }}.jpg" alt="People" class="img-circle width-40" />
+          </div>
+          <div class="media-body">
+            Created by <h4><a href>:: ws.author ::</a><br/></h4>
+          </div>
+        </div>
+        <a class="btn btn-white btn-flat paper-shadow relative right" data-z="0" data-hover-z="1" data-animated ui-sref="main.workspaces.details({workspaceId: ws.id})"><i class="fa fa-fw fa-pencil"></i>Go to course</a>
+      </div>
     </div>
-    <div class="item col-xs-12 col-sm-6 col-lg-4">
-        {% include "src/html/themes/html/courses/_listing-grid-widget.html" {
-        coverBg: "bg-primary",
-        coverIcon: "fa-css3",
-        coverBtn: "btn-primary",
-        itemTitle: "Awesome CSS with LESS Processing",
-        itemLabel: "label-primary",
-        itemButton: true,
-        itemButtonText: "Edit course",
-        itemButtonIcon: "fa-pencil",
-        itemRating: false,
-        itemMeta: false,
-        itemMeta2: false,
-        itemTags: false,
-        itemDescription: false,
-        itemUrl: "demo",
-        lessons: false } %}
+  </div>
+  <div class="col-xs-12 col-sm-6 col-lg-4">
+    <div class="panel panel-default paper-shadow" data-z="0.5">
+      <div class="cover overlay cover-image-full hover" style="height: 150px;">
+        <span class="img icon-block height-150 bg-grey-200"></span>
+        <a href ng-click="vm.createWorkspace()" class="padding-none overlay overlay-full icon-block bg-grey-200" style="height: 150px;">
+          <span class="v-center">
+                <i class="fa fa-plus text-grey-600"></i>
+            </span>
+        </a>
+      </div>
     </div>
-    <div class="item col-xs-12 col-sm-6 col-lg-4">
-        {% include "src/html/themes/html/courses/_listing-grid-widget.html" {
-        coverBg: "bg-lightred",
-        coverIcon: "fa-windows",
-        coverBtn: "btn-red-500",
-        itemTitle: "Vagrant Portable Environments",
-        itemLabel: "bg-lightred",
-        itemButton: true,
-        itemButtonText: "Edit course",
-        itemButtonIcon: "fa-pencil",
-        itemRating: false,
-        itemMeta: false,
-        itemMeta2: false,
-        itemTags: false,
-        itemDescription: false,
-        itemUrl: "demo",
-        lessons: false } %}
-    </div>
-    <div class="item col-xs-12 col-sm-6 col-lg-4">
-        {% include "src/html/themes/html/courses/_listing-grid-widget.html" {
-        coverBg: "bg-grey-200",
-        coverIcon: "fa-plus text-grey-600",
-        coverHover: false,
-        coverBtn: "btn-white",
-        itemBody: false,
-        itemUrl: "demo",
-        lessons: false } %}
-    </div>
-
+  </div>
 </div>
-{% include "src/html/themes/html/_pagination.html" %}
+<div ui-view="content" class="ui-view-main" ng-if="vm.$state.current.name === 'main.workspaces.details'"></div>
+<!-- {% include "src/html/themes/html/_pagination.html" %} -->

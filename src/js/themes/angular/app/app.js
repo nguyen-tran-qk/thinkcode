@@ -2,22 +2,25 @@
   'use strict';
 
   angular.module('app', [
-    'ngResource',
-    'ngSanitize',
-    'ngAnimate',
-    'ngAria',
-    'ui.router',
-    'ui.router.middleware',
-    'ui.utils',
-    'ui.jq',
-    'ui.bootstrap',
-    'ngMaterial',
-    'angularBootstrapNavTree',
-    'ngFileUpload',
-    'angularResizable',
-    'utils',
-    'thinkcodeControllers'
-  ]).constant("$MD_THEME_CSS", "default");
+      'ngResource',
+      'ngSanitize',
+      'ngAnimate',
+      'ngAria',
+      'ui.router',
+      'ui.router.middleware',
+      'ui.utils',
+      'ui.jq',
+      'ui.bootstrap',
+      'ngMaterial',
+      'angularBootstrapNavTree',
+      'ngFileUpload',
+      'angularResizable',
+      'ngToast',
+      'utils',
+      'thinkcodeControllers'
+    ]).constant("$MD_THEME_CSS", "default")
+    .constant('API_URL', 'https://www.thinkcode.ml/api/v1');
+
 
   angular.module('thinkcodeControllers', []);
 
@@ -35,9 +38,9 @@
     }])
     .config(
       ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$interpolateProvider',
-        '$mdThemingProvider', '$httpProvider',
+        '$mdThemingProvider', '$httpProvider', 'ngToastProvider',
         function($controllerProvider, $compileProvider, $filterProvider, $provide, $interpolateProvider,
-          $mdThemingProvider, $httpProvider) {
+          $mdThemingProvider, $httpProvider, ngToastProvider) {
           app.controller = $controllerProvider.register;
           app.directive = $compileProvider.directive;
           app.filter = $filterProvider.register;
@@ -52,6 +55,13 @@
           $interpolateProvider.endSymbol('::');
 
           // $httpProvider.interceptors.push('httpRequestInterceptor');
+          ngToastProvider.configure({
+            animation: 'slide',
+            combineDuplications: true,
+            verticalPosition: 'bottom',
+            horizontalPosition: 'right',
+            maxNumber: 3
+          });
         }
       ]);
 
