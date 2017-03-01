@@ -15,7 +15,8 @@
 		"ui-bootstrap-tpls.js",
 		"abn_tree_directive.js",
 		"ng-file-upload.js",
-		"angular-resizable.js"
+		"angular-resizable.js",
+		"angular-middleware.js"
 	],
 	"themes": ["angular"]
 }

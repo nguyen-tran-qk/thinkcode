@@ -113,7 +113,7 @@
           $scope.waiting = false;
         }
       });
-    }
+    };
 
     saveFile = function(callback) {
       $scope.waiting = true;

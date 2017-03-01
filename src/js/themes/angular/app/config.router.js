@@ -6,24 +6,44 @@
       function($rootScope, $state, $stateParams) {
         $rootScope.$state = $state;
         $rootScope.$stateParams = $stateParams;
+        $rootScope.htmlClass = {
+          website: 'transition-navbar-scroll top-navbar-xlarge bottom-footer',
+          websitePricing: 'top-navbar-xlarge bottom-footer app-desktop',
+          websiteSurvey: 'top-navbar-xlarge bottom-footer app-desktop app-mobile',
+          websiteLogin: 'hide-sidebar ls-bottom-footer',
+          websiteTakeQuiz: 'transition-navbar-scroll top-navbar-xlarge bottom-footer app-desktop app-mobile',
+          appl3: 'st-layout ls-top-navbar-large ls-bottom-footer show-sidebar sidebar-l3',
+          appl1r3: 'st-layout ls-top-navbar-large ls-bottom-footer show-sidebar sidebar-l1 sidebar-r3'
+        };
       }
     ])
     .config(
-      ['$stateProvider', '$urlRouterProvider', '$locationProvider',
-        function($stateProvider, $urlRouterProvider, $locationProvider) {
+      ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$middlewareProvider',
+
+        function($stateProvider, $urlRouterProvider, $locationProvider, $middlewareProvider) {
           // $locationProvider.hashPrefix('');
           // $locationProvider.html5Mode({
           //   enabled: true
           // });
-          var htmlClass = {
-            website: 'transition-navbar-scroll top-navbar-xlarge bottom-footer',
-            websitePricing: 'top-navbar-xlarge bottom-footer app-desktop',
-            websiteSurvey: 'top-navbar-xlarge bottom-footer app-desktop app-mobile',
-            websiteLogin: 'hide-sidebar ls-bottom-footer',
-            websiteTakeQuiz: 'transition-navbar-scroll top-navbar-xlarge bottom-footer app-desktop app-mobile',
-            appl3: 'st-layout ls-top-navbar-large ls-bottom-footer show-sidebar sidebar-l3',
-            appl1r3: 'st-layout ls-top-navbar-large ls-bottom-footer show-sidebar sidebar-l1 sidebar-r3'
-          };
+          $middlewareProvider.map({
+            /** Don't allow anyone through */
+            'nobody': function nobodyMiddleware() {},
+            /** Let everyone through */
+            everyone: [function everyoneMiddleware() {
+              // In order to resolve the middleware,
+              // you MUST call this.next()
+              this.next();
+            }],
+            authUser: ['UserService', function(UserService) {
+              var request = this;
+              if (localStorage.jwt && localStorage.jwt.length) {
+                return request.next();
+              } else {
+                request.redirectTo('login');
+              }
+            }]
+          });
+          $middlewareProvider.global('everyone');
 
           $urlRouterProvider
             .otherwise('/login');
@@ -38,17 +58,30 @@
             .state('login', {
               url: '/login',
               templateUrl: 'website/login.html',
-              controller: ['$scope', function($scope) {
-                $scope.app.settings.htmlClass = htmlClass.websiteLogin;
-                $scope.app.settings.bodyClass = 'login';
-              }]
+              controller: 'UsersController',
+              controllerAs: 'vm'
             })
             .state('sign-up', {
               url: '/sign-up',
               templateUrl: 'website/sign-up.html',
-              controller: ['$scope', function($scope) {
-                $scope.app.settings.htmlClass = htmlClass.websiteLogin;
+              controller: ['$scope', '$rootScope', function($scope, $rootScope) {
+                $scope.app.settings.htmlClass = $rootScope.htmlClass.websiteLogin;
                 $scope.app.settings.bodyClass = 'login';
+              }]
+            })
+            .state('main', {
+              abstract: true,
+              url: '/app',
+              template: '<div ui-view class="ui-view-main" />'
+            })
+            .state('main.workspaces', {
+              url: '/workspaces',
+              middleware: 'authUser',
+              templateUrl: 'website/instructor-courses.html',
+              controller: ['$scope', '$rootScope', 'UserService', function($scope, $rootScope, UserService) {
+                $scope.user = UserService.isLoggedIn();
+                $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
+                $scope.app.settings.bodyClass = '';
               }]
             });
 
@@ -271,81 +304,91 @@
             })
             .state('website-instructor.dashboard', {
               url: '/dashboard',
+              middleware: 'authUser',
               templateUrl: 'website/instructor-dashboard.html',
-              controller: ['$scope', function($scope) {
-                $scope.app.settings.htmlClass = htmlClass.website;
+              controller: ['$scope', '$rootScope', function($scope, $rootScope) {
+                $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
                 $scope.app.settings.bodyClass = '';
               }]
             })
             .state('website-instructor.courses', {
               url: '/courses',
+              middleware: 'authUser',
               templateUrl: 'website/instructor-courses.html',
-              controller: ['$scope', function($scope) {
-                $scope.app.settings.htmlClass = htmlClass.website;
+              controller: ['$scope', '$rootScope', function($scope, $rootScope) {
+                $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
                 $scope.app.settings.bodyClass = '';
               }]
             })
             .state('website-instructor.edit-course', {
               url: '/edit-course',
+              middleware: 'authUser',
               templateUrl: 'website/instructor-edit-course.html',
-              controller: ['$scope', function($scope) {
-                $scope.app.settings.htmlClass = htmlClass.website;
+              controller: ['$scope', '$rootScope', function($scope, $rootScope) {
+                $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
                 $scope.app.settings.bodyClass = '';
               }]
             })
             .state('website-instructor.edit-course-meta', {
               url: '/edit-course-meta',
+              middleware: 'authUser',
               templateUrl: 'website/instructor-edit-course-meta.html',
-              controller: ['$scope', function($scope) {
-                $scope.app.settings.htmlClass = htmlClass.website;
+              controller: ['$scope', '$rootScope', function($scope, $rootScope) {
+                $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
                 $scope.app.settings.bodyClass = '';
               }]
             })
             .state('website-instructor.edit-course-lessons', {
               url: '/edit-course-lessons',
+              middleware: 'authUser',
               templateUrl: 'website/instructor-edit-course-lessons.html',
-              controller: ['$scope', function($scope) {
-                $scope.app.settings.htmlClass = htmlClass.website;
+              controller: ['$scope', '$rootScope', function($scope, $rootScope) {
+                $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
                 $scope.app.settings.bodyClass = '';
               }]
             })
             .state('website-instructor.earnings', {
               url: '/earnings',
+              middleware: 'authUser',
               templateUrl: 'website/instructor-earnings.html',
-              controller: ['$scope', function($scope) {
-                $scope.app.settings.htmlClass = htmlClass.website;
+              controller: ['$scope', '$rootScope', function($scope, $rootScope) {
+                $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
                 $scope.app.settings.bodyClass = '';
               }]
             })
             .state('website-instructor.statement', {
               url: '/instructor',
+              middleware: 'authUser',
               templateUrl: 'website/instructor-statement.html',
-              controller: ['$scope', function($scope) {
-                $scope.app.settings.htmlClass = htmlClass.website;
+              controller: ['$scope', '$rootScope', function($scope, $rootScope) {
+                $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
                 $scope.app.settings.bodyClass = '';
               }]
             })
             .state('website-instructor.messages', {
               url: '/messages',
+              middleware: 'authUser',
               templateUrl: 'website/instructor-messages.html',
-              controller: ['$scope', function($scope) {
-                $scope.app.settings.htmlClass = htmlClass.website;
+              controller: ['$scope', '$rootScope', function($scope, $rootScope) {
+                $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
                 $scope.app.settings.bodyClass = '';
               }]
             })
             .state('website-instructor.private-profile', {
               url: '/private-profile',
+              middleware: 'authUser',
               templateUrl: 'website/instructor-private-profile.html',
-              controller: ['$scope', function($scope) {
-                $scope.app.settings.htmlClass = htmlClass.website;
+              controller: ['$scope', '$rootScope', function($scope, $rootScope) {
+                $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
                 $scope.app.settings.bodyClass = '';
               }]
             })
             .state('website-instructor.billing', {
               url: '/billing',
+              middleware: 'authUser',
               templateUrl: 'website/instructor-billing.html',
-              controller: ['$scope', function($scope) {
-                $scope.app.settings.htmlClass = htmlClass.website;
+              controller: ['$scope', '$rootScope', function($scope, $rootScope) {
+                $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
                 $scope.app.settings.bodyClass = '';
               }]
             });

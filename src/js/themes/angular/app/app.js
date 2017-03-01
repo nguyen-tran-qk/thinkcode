@@ -7,6 +7,7 @@
     'ngAnimate',
     'ngAria',
     'ui.router',
+    'ui.router.middleware',
     'ui.utils',
     'ui.jq',
     'ui.bootstrap',
@@ -14,8 +15,11 @@
     'angularBootstrapNavTree',
     'ngFileUpload',
     'angularResizable',
-    'utils'
+    'utils',
+    'thinkcodeControllers'
   ]).constant("$MD_THEME_CSS", "default");
+
+  angular.module('thinkcodeControllers', []);
 
   var app = angular.module('app')
     // .factory('httpRequestInterceptor', function() {

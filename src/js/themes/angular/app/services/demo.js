@@ -6,6 +6,18 @@
     .constant('API_URL', 'https://www.thinkcode.ml/api/v1')
     .factory('DemoService', ['API_URL', '$http', 'Upload', function(API_URL, $http, Upload) {
       return {
+      	getAllWorkspaces: function(callback, errorCallback) {
+          $http.get(API_URL + '/workspaces?token=' + localStorage.jwt)
+            .then(function(res) {
+              if (callback) {
+                callback(res);
+              }
+            }, function(res) {
+              if (errorCallback) {
+                errorCallback(res);
+              }
+            });
+        },
         getWorkspaceById: function(id, callback, errorCallback) {
           $http.get(API_URL + '/workspaces/' + id)
             .then(function(res) {
@@ -31,7 +43,7 @@
             });
         },
         execute: function(wsId, rel_path, engine, callback, errorCallback) {
-          $http.get(API_URL + '/workspaces/' + wsId + '/execute?engine=' + engine + '&relative_path=' + rel_path)
+          $http.get(API_URL + '/workspaces/' + wsId + '/execute?token=' + localStorage.jwt + '&relative_path=' + rel_path)
             .then(function(res) {
               if (callback) {
                 callback(res);

@@ -15,7 +15,8 @@
 		"angular-bootstrap/ui-bootstrap-tpls.js",
 		"angular-bootstrap-nav-tree/dist/abn_tree_directive.js",
 		"ng-file-upload/ng-file-upload.js",
-		"angular-resizable/src/angular-resizable.js"
+		"angular-resizable/src/angular-resizable.js",
+		"angular-middleware/dist/angular-middleware.js"
 	],
 	"dest": "js/vendor/angular",
 	"flatten": true,
