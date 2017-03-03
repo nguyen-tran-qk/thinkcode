@@ -74,7 +74,7 @@
             .state('main', {
               abstract: true,
               url: '/app',
-              template: '<div ui-view="main" class="ui-view-main" />'
+              template: '<div ui-view="main" class="main-container ui-view-main" />'
             })
             .state('main.workspaces', {
               url: '/workspaces',

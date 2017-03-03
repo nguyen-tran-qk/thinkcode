@@ -1,4 +1,4 @@
-<div class="row" data-toggle="isotope" ng-if="vm.$state.current.name === 'main.workspaces'">
+<div class="container page-section" ng-if="vm.$state.current.name === 'main.workspaces'">
   <!-- <div class="item col-xs-12 col-sm-6 col-lg-4">
         {% include "src/html/themes/html/courses/_listing-grid-widget.html" {
         coverBg: "bg-default",
@@ -18,7 +18,7 @@
         lessons: false } %}
     </div> -->
   <div class="col-xs-12 col-sm-6 col-lg-4" ng-repeat="ws in vm.workspaces">
-    <div class="panel panel-default paper-shadow" data-z="0.5">
+    <div class="panel panel-default paper-shadow">
       <!-- <div class="panel-heading">
         <div class="media media-clearfix-xs-min v-middle">
           <div class="media-body text-caption text-light">
@@ -42,7 +42,7 @@
         </a>
       </div>
       <div class="panel-body">
-        <h4 class="text-headline margin-v-0-10"><a ui-sref="main.workspaces.details({workspaceId: ws.id})">:: ws.engine ::</a></h4>
+        <h4 class="text-headline margin-none"><a ui-sref="main.workspaces.details({workspaceId: ws.id})">:: ws.engine ::</a></h4>
         <!-- <p class="small margin-none">
           <span class="fa fa-fw fa-star text-yellow-800"></span>
           <span class="fa fa-fw fa-star text-yellow-800"></span>
@@ -58,15 +58,29 @@
             <img src="images/people/50/guy-{{ random(1,9) }}.jpg" alt="People" class="img-circle width-40" />
           </div>
           <div class="media-body">
-            Created by <h4><a href>:: ws.author ::</a><br/></h4>
+            Created by
+            <h4><a href>:: ws.author ::</a><br/></h4>
           </div>
         </div>
-        <a class="btn btn-white btn-flat paper-shadow relative right" data-z="0" data-hover-z="1" data-animated ui-sref="main.workspaces.details({workspaceId: ws.id})"><i class="fa fa-fw fa-pencil"></i>Go to course</a>
+        <div class="navbar-right">
+          <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right">
+            <!-- user -->
+            <li class="dropdown">
+              <a href class="dropdown-toggle" data-toggle="dropdown"><i class="icon-lg md md-expand-more"></i></a>
+              <ul class="dropdown-menu" role="menu">
+                <li ui-sref-active="active"><a ui-sref="main.workspaces.details({workspaceId: ws.id})">Go to course</a></li>
+                <li ui-sref-active="active"><a href ng-click="vm.deleteWorkspace(ws.id, ws.engine)">Delete</a></li>
+              </ul>
+            </li>
+            <!-- // END user -->
+          </ul>
+        </div>
+        <!-- <a class="btn btn-white btn-flat paper-shadow relative right" ui-sref="main.workspaces.details({workspaceId: ws.id})"><i class="fa fa-fw fa-pencil"></i>Go to course</a> -->
       </div>
     </div>
   </div>
   <div class="col-xs-12 col-sm-6 col-lg-4">
-    <div class="panel panel-default paper-shadow" data-z="0.5">
+    <div class="panel panel-default paper-shadow">
       <div class="cover overlay cover-image-full hover" style="height: 150px;">
         <span class="img icon-block height-150 bg-grey-200"></span>
         <a href ng-click="vm.createWorkspace()" class="padding-none overlay overlay-full icon-block bg-grey-200" style="height: 150px;">

@@ -2,6 +2,9 @@
 .ui-view-main {
   height: 100%;
 }
+.main-container {
+  overflow-y: scroll;
+}
 .ng-toast.ng-toast--bottom {
   bottom: 80px;
 }
@@ -74,21 +77,21 @@
 }
 
 /* override container styles */
-@media (min-width: 768px) {
+@media (max-width: 1199px) {
   .container {
-    width: 100%;
+    width: 100% !important;
   }
 }
-@media (min-width: 992px) {
-  .container {
-    width: 100%;
-  }
-}
-@media (min-width: 1200px) {
-  .container {
-    width: 100%;
-  }
-}
+// @media (min-width: 992px) {
+//   .container {
+//     width: 100%;
+//   }
+// }
+// @media (min-width: 1200px) {
+//   .container {
+//     width: 100%;
+//   }
+// }
 
 /* helper classes */
 .min-width-10 {
@@ -129,6 +132,12 @@
 }
 .right {
   float: right !important;
+}
+i.icon-lg {
+  &:before {
+    font-size: 24px;
+    font-weight: 700;
+  }
 }
 
 #workspace-container {

@@ -310,7 +310,7 @@
     }, function(res) {
       if (res.status === 401) {
         vm.$state.go('main.workspaces', {}, { reload: true });
-        $scope.showMessage('danger', res.data.message);
+        $scope.showMessage('danger', 'Xin lỗi, bạn không có quyền truy cập.');
       }
     });
 

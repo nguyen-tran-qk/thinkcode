@@ -45,7 +45,7 @@
               $state.go('main.workspaces');
             }
           }, function(res) {
-            showMessage(res);
+            $scope.showMessage('danger', 'Thông tin đăng nhập không chính xác.');
           });
         }
       };

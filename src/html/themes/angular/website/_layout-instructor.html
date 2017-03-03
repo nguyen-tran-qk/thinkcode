@@ -1,29 +1,14 @@
 {% include "src/html/themes/angular/website/_navbar.html" %}
-
 <!-- {% include "src/html/themes/html/instructor/_website-profile-cover.html" %} -->
-
-<div class="container height-100pc">
-    <div class="loading-overlay" ng-if="loading"></div>
-    <div class="height-100pc padding-top-none">
-        <div class="row height-100pc">
-
-            <div class="col-md-12 height-100pc padding-left-none padding-right-none">
-
-                {% block content %}{% endblock %}
-
-                <br/>
-                <br/>
-
-            </div>
-            <!-- <div class="col-md-3"> -->
-
-                <!-- {% include "src/html/themes/html/instructor/_website-profile-sidebar.html" %} -->
-
-            <!-- </div> -->
-
-        </div>
-    </div>
-
+<div class="height-100pc">
+  <div class="loading-overlay" ng-if="loading"></div>
+  <div class="col-md-12 height-100pc padding-left-none padding-right-none">
+    {% block content %}{% endblock %}
+    <br/>
+    <br/>
+  </div>
+  <!-- <div class="col-md-3"> -->
+  <!-- {% include "src/html/themes/html/instructor/_website-profile-sidebar.html" %} -->
+  <!-- </div> -->
 </div>
-
 {% include "lib/layout/html/_footer_copyright.html" %}

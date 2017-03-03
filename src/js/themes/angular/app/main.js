@@ -27,7 +27,8 @@
           var message = msg || 'Failed to proceed.';
           ngToast.create({
             className: type,
-            content: message
+            content: message,
+            dismissOnTimeout: type === 'danger' ? false : true
           });
         };
       }
