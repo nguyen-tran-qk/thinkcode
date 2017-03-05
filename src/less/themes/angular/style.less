@@ -11,6 +11,9 @@
 .powered-by-firepad {
 	display: none;
 }
+.fullscreen {
+  height: calc(~"100% - 40px");
+}
 .abn-tree {
   font-size: 14px;
 }
@@ -146,20 +149,21 @@ i.icon-lg {
     flex-flow: row wrap;
     justify-content: space-around;
     align-content: space-around;
-    & > div {
-      flex: 1;
-      // margin: 0 7px;
-      &.file-tree.resizable {
-        min-width: 50px;
-        max-width: 30%;
-        flex: 0 0 20%;
-      }
-      &.console-panel.resizable {
-        min-width: 50px;
-        max-width: 50%;
-        flex: 0 0 30%;
-      } 
-    }
+    // & > div {
+    //   flex: 1;
+    //   // margin: 0 7px;
+    //   &.file-tree.resizable {
+    //     min-width: 50px;
+    //     max-width: 30%;
+    //     flex: 0 0 20%;
+    //     overflow: auto;
+    //   }
+    //   &.console-panel.resizable {
+    //     min-width: 50px;
+    //     max-width: 50%;
+    //     flex: 0 0 30%;
+    //   } 
+    // }
     .resize-notify {
       height: 100%; 
       color: #ccc;
@@ -178,6 +182,7 @@ i.icon-lg {
   }
 	/* tabs */
 	.editor-tabs {
+    flex: 1;
     padding: 0 14px;
 		.nav.nav-tabs {
 			height: 40px;
@@ -209,6 +214,8 @@ i.icon-lg {
 
 	/* tree control */
 	.file-tree {
+    overflow: scroll;
+    flex: 0 0 16.67%;
 		// min-height: @editor-wrap-height; // 500px of .CodeMirror + 38px of .console-panel-heading, see below
     div.panel-body {
       height: 100%;
@@ -254,12 +261,18 @@ i.icon-lg {
   }
 }
 .console-panel {
+  flex: 0 0 25%;
 	height: 100%;
 }
 .console-panel-heading {
 	min-height: 38px;
 }
-
+.file-tree, .console-panel {
+  &.minimized {
+    overflow: hidden !important;
+    flex: 0 0 50px !important;
+  }
+}
 /* Theme: Pacific */
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */

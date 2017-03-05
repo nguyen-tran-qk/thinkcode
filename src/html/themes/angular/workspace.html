@@ -2,14 +2,14 @@
 <!-- <div id="userlist" class="col-md-2"></div> -->
 <div id="workspace-container" class="height-100pc">
   <div class="workspace height-100pc">
-    <div class="panel panel-default col-md-2 file-tree margin-none height-100pc" resizable id="tree-resize" r-directions="['right']" r-flex="true">
+    <div class="panel panel-default col-md-2 file-tree margin-none height-100pc" ng-class="{'minimized': wVm.treeHidden}">
       <div class="panel-body height-100pc">
-        <abn-tree-mod id="workspace-tree" ng-hide="wVm.treeHidden" ng-if="!loading" tree-data="wVm.my_data" tree-control="wVm.my_tree" icon-leaf="fa fa-file" icon-expand="fa fa-chevron-right" icon-collapse="fa fa-chevron-down" expand-level="3"></abn-tree-mod>
-        <div ng-if="wVm.treeHidden" class="resize-notify resize-right"><i class="fa fa-fw fa-angle-double-right"></i></div>
+        <abn-tree-mod id="workspace-tree" ng-hide="wVm.treeHidden" ng-if="!loading" tree-data="wVm.my_data" tree-control="wVm.my_tree" icon-leaf="fa fa-file" icon-expand="fa fa-folder" icon-collapse="fa fa-folder-open" expand-level="3"></abn-tree-mod>
+        <div ng-if="wVm.treeHidden" class="resize-notify resize-right" ng-click="wVm.treeHidden = false"><i class="fa fa-fw fa-angle-double-right"></i></div>
       </div>
     </div>
     <!-- Tabbable Widget -->
-    <div class="editor-tabs tabbable col-md-6 margin-none" ng-show="wVm.tabs.length">
+    <div class="editor-tabs tabbable col-md-7 margin-none" ng-show="wVm.tabs.length">
       <!-- Tabs -->
       <ul class="nav nav-tabs">
         <li ng-repeat="tab in wVm.tabs track by tab.data.id" ng-class="{'active': tab.data.id === wVm.currentBranch.data.id}">
@@ -25,24 +25,28 @@
       </div>
       <!-- // END Panes -->
     </div>
-    <div class="panel panel-default col-md-4 padding-none console-panel margin-none" resizable id="console-resize" r-directions="['left']" r-flex="true" r-width="500">
+    <div class="panel panel-default col-md-3 padding-none console-panel margin-none" ng-class="{'minimized': wVm.consoleHidden}">
       <div id="console" class="height-100pc" ng-class="{'code-error': wVm.codeError}" ng-hide="wVm.consoleHidden">
       </div>
-      <div ng-if="wVm.consoleHidden" class="resize-notify resize-left"><i class="fa fa-fw fa-angle-double-left"></i></div>
+      <div ng-if="wVm.consoleHidden" class="resize-notify resize-left" ng-click="consoleHidden = false"><i class="fa fa-fw fa-angle-double-left"></i></div>
     </div>
   </div>
 </div>
 <div class="workspace-actions">
   <div class="col-md-2">
-    <div class="btn btn-primary btn-sm" ng-click="wVm.openUpload()" ng-disabled="waiting"><small>Upload Template</small></div>
+    <div class="btn btn-primary btn-sm" ng-click="wVm.openUpload()" ng-disabled="waiting" ng-if="user.instructor"><small>Upload Template</small></div>
   </div>
-  <div class="col-md-6">
-    <div class="text-right" ng-if="wVm.currentBranch.uid !== -1">
+  <div class="col-md-7">
+    <div class="pull-right" ng-if="wVm.currentBranch.uid !== -1">
       <button class="btn btn-success btn-sm" ng-click="wVm.saveFile()" ng-disabled="waiting">Save</button>
       <button class="btn btn-primary btn-sm" ng-click="wVm.runFile()" ng-disabled="waiting">Run</button>
     </div>
   </div>
-  <div class="col-md-4"></div>
+  <div class="col-md-3">
+    <div class="pull-right">
+      <button class="btn btn-default" ng-click="wVm.treeHidden = true; wVm.consoleHidden = true">Expand</button>
+    </div>
+  </div>
 </div>
 <!-- // END Tabbable Widget -->
 {% include "src/html/themes/angular/modals/save-file-success.html" %} {% endblock %}

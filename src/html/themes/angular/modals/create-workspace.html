@@ -1,0 +1,17 @@
+<div class="modal-header">
+  <h3 class="modal-title">Tạo Workspace</h3>
+</div>
+<div class="modal-body">
+  <div class="btn-group" uib-dropdown>
+    <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>:: vm.engine.name :: <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+      <li role="menuitem"><a href ng-click="vm.selectEngine(1)">Python</a></li>
+      <li role="menuitem"><a href ng-click="vm.selectEngine(2)">Ruby</a></li>
+    </ul>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default" type="button" ng-click="vm.cancel()">Bỏ qua</button>
+  <button class="btn btn-primary" type="button" ng-click="vm.ok()">Tạo workspace</button>
+</div>

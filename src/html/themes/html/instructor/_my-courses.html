@@ -17,6 +17,9 @@
         itemUrl: "main.workspaces.details({workspaceId: ws.id})",
         lessons: false } %}
     </div> -->
+  <div class="col-xs-12 margin-v-0-10">
+    <button class="btn btn-success col-xs-2" ng-click="vm.createWorkspace()"><strong>Tạo workspace</strong></button>
+  </div>
   <div class="col-xs-12 col-sm-6 col-lg-4" ng-repeat="ws in vm.workspaces">
     <div class="panel panel-default paper-shadow">
       <!-- <div class="panel-heading">
@@ -58,7 +61,7 @@
             <img src="images/people/50/guy-{{ random(1,9) }}.jpg" alt="People" class="img-circle width-40" />
           </div>
           <div class="media-body">
-            Created by
+            Tạo bởi
             <h4><a href>:: ws.author ::</a><br/></h4>
           </div>
         </div>
@@ -68,26 +71,14 @@
             <li class="dropdown">
               <a href class="dropdown-toggle" data-toggle="dropdown"><i class="icon-lg md md-expand-more"></i></a>
               <ul class="dropdown-menu" role="menu">
-                <li ui-sref-active="active"><a ui-sref="main.workspaces.details({workspaceId: ws.id})">Go to course</a></li>
-                <li ui-sref-active="active"><a href ng-click="vm.deleteWorkspace(ws.id, ws.engine)">Delete</a></li>
+                <li ui-sref-active="active"><a ui-sref="main.workspaces.details({workspaceId: ws.id})">Vào workspace</a></li>
+                <li ui-sref-active="active"><a href ng-click="vm.deleteWorkspace(ws.id, ws.engine)">Xóa</a></li>
               </ul>
             </li>
             <!-- // END user -->
           </ul>
         </div>
         <!-- <a class="btn btn-white btn-flat paper-shadow relative right" ui-sref="main.workspaces.details({workspaceId: ws.id})"><i class="fa fa-fw fa-pencil"></i>Go to course</a> -->
-      </div>
-    </div>
-  </div>
-  <div class="col-xs-12 col-sm-6 col-lg-4">
-    <div class="panel panel-default paper-shadow">
-      <div class="cover overlay cover-image-full hover" style="height: 150px;">
-        <span class="img icon-block height-150 bg-grey-200"></span>
-        <a href ng-click="vm.createWorkspace()" class="padding-none overlay overlay-full icon-block bg-grey-200" style="height: 150px;">
-          <span class="v-center">
-                <i class="fa fa-plus text-grey-600"></i>
-            </span>
-        </a>
       </div>
     </div>
   </div>

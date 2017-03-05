@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
       </button>
       <div class="navbar-brand navbar-brand-logo">
-        <a class="svg" ui-sref="main.workspaces">{% include "src/html/themes/html/_logo.html" %}</a>
+        <a class="svg" href ng-click="goTo('main.workspaces')">{% include "src/html/themes/html/_logo.html" %}</a>
         <!-- <a class="svg" ui-sref="website-pages.home"><img src="images/thinkcode-logo.png"></a> -->
          <!-- Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a> -->
       </div>
@@ -77,7 +77,7 @@
                     </ul>
                 </li> -->
         <li ng-class="{ 'active': $state.includes(website-courses) }">
-          <a href ui-sref="main.workspaces" ui-sref-opts="{reload: true}">Library </span></a>
+          <a href ng-click="goTo('main.workspaces')">Library </span></a>
         </li>
       </ul>
       <div class="navbar-right">

@@ -8,6 +8,7 @@
 
     $scope.app.settings.htmlClass = 'transition-navbar-scroll top-navbar-xlarge bottom-footer';
     $scope.app.settings.bodyClass = '';
+    document.getElementById("main").style.overflow = 'auto';
     $scope.loading = true;
 
     var vm = this;
@@ -99,14 +100,15 @@
             callback();
           } else {
             $scope.waiting = false;
-            showSuccessMessage('File saved!');
+            showSuccessMessage('Lưu thành công!');
           }
         }, function(res) {
+          $scope.waiting = false;
           if (res.data && res.data.message) {
-          $scope.showMessage('danger', res.data.message);
-        } else {
-          $scope.showMessage('danger');
-        }
+            $scope.showMessage('danger', res.data.message);
+          } else {
+            $scope.showMessage('danger');
+          }
         });
       }
     };

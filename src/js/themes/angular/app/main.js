@@ -24,12 +24,15 @@
           });
         };
         $scope.showMessage = function(type, msg) {
-          var message = msg || 'Failed to proceed.';
+          var message = msg || 'Xin lỗi, thao tác thất bại.';
           ngToast.create({
             className: type,
             content: message,
             dismissOnTimeout: type === 'danger' ? false : true
           });
+        };
+        $scope.goTo = function(state) {
+          $state.go(state, {}, {reload: true});
         };
       }
     ]);
