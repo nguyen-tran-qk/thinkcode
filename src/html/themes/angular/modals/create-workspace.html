@@ -13,5 +13,5 @@
 </div>
 <div class="modal-footer">
   <button class="btn btn-default" type="button" ng-click="vm.cancel()">Bỏ qua</button>
-  <button class="btn btn-primary" type="button" ng-click="vm.ok()">Tạo workspace</button>
+  <button class="btn btn-primary" type="button" ng-click="vm.ok()" ng-disabled="vm.engine.id === -1">Tạo workspace</button>
 </div>

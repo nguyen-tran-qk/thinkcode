@@ -29,7 +29,7 @@
           var vm = this;
           vm.content = 'Vui lòng chọn engine cho workspace:';
           vm.engine = {
-            id: '',
+            id: -1,
             name: 'Chọn engine'
           };
           vm.selectEngine = function(engine_id) {
