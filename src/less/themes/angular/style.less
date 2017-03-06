@@ -1,4 +1,7 @@
 /* common */
+.navbar.navbar-size-small .navbar-brand-logo .svg {
+  height: 42px;
+}
 .ui-view-main {
   height: 100%;
 }
@@ -214,7 +217,7 @@ i.icon-lg {
 
 	/* tree control */
 	.file-tree {
-    overflow: scroll;
+    overflow: auto;
     flex: 0 0 16.67%;
 		// min-height: @editor-wrap-height; // 500px of .CodeMirror + 38px of .console-panel-heading, see below
     div.panel-body {
@@ -239,7 +242,7 @@ i.icon-lg {
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 45px; // the height of footer
+  bottom: 0; 
   height: 41px; // the padding bottom of class page-section + 1px to make sure it fills up
   background-color: @workspace-actions-bg;
   z-index: 99;
@@ -268,6 +271,7 @@ i.icon-lg {
 	min-height: 38px;
 }
 .file-tree, .console-panel {
+  transition: flex-basis 0.3s ease-in-out;
   &.minimized {
     overflow: hidden !important;
     flex: 0 0 50px !important;
@@ -361,6 +365,9 @@ i.icon-lg {
   	height: 7px;
   	line-height: 7px;
   }
+}
+.navbar-size-small ~ #preloader {
+  top: 43px;
 }
 
 // screen overlay

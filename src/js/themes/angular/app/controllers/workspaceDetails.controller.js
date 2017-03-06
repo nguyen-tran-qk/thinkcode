@@ -4,14 +4,31 @@
   angular.module('thinkcodeControllers')
     .controller('WorkspaceDetailsController', wsDetailsCtrl);
 
-  function wsDetailsCtrl($scope, $state, $timeout, $filter, $uibModal, $document, Utils, WorkspaceService, Upload, ngToast) {
+  function wsDetailsCtrl($scope, $state, $timeout, $interval, $filter, $uibModal, $document, Utils, WorkspaceService, Upload, ngToast) {
 
-    $scope.app.settings.htmlClass = 'transition-navbar-scroll top-navbar-xlarge bottom-footer';
+    $scope.app.settings.htmlClass = 'transition-navbar-scroll top-navbar-small';
     $scope.app.settings.bodyClass = '';
     document.getElementById("main").style.overflow = 'auto';
+    var $navbar = $('.navbar');
+    if ($navbar.hasClass('navbar-size-large')) {
+      $navbar.removeClass('navbar-size-large');
+    }
+    if ($navbar.hasClass('navbar-size-xlarge')) {
+      $navbar.removeClass('navbar-size-xlarge');
+    }
+    if ($navbar.hasClass('paper-shadow')) {
+      $navbar.removeClass('paper-shadow');
+    }
+    if (!$navbar.hasClass('navbar-size-small')) {
+      $navbar.addClass('navbar-size-small');
+    }
+    $('.navbar .navbar-right .navbar-btn').addClass('btn-sm');
+    $('.navbar .container').addClass('width-100pc');
+
     $scope.loading = true;
 
     var vm = this;
+    var checkFile;
 
     $scope.$on('angular-resizable.resizing', function(event, args) {
       if (args.id === 'tree-resize') {
@@ -90,6 +107,13 @@
       }
     }
 
+    function stopCheckFile() {
+      if (angular.isDefined(checkFile)) {
+        $interval.cancel(checkFile);
+        checkFile = undefined;
+      }
+    }
+
     saveFile = function(callback) {
       $scope.waiting = true;
       if (vm.currentBranch.uid !== -1) {
@@ -100,12 +124,15 @@
             callback();
           } else {
             $scope.waiting = false;
-            showSuccessMessage('Lưu thành công!');
+            $scope.showMessage('success', 'Lưu thành công!');
           }
+          stopCheckFile();
         }, function(res) {
           $scope.waiting = false;
           if (res.data && res.data.message) {
             $scope.showMessage('danger', res.data.message);
+          } else if (res.status === -1) {
+            $scope.showMessage('danger', 'Lưu thất bại. Hãy chắc chắn nội dung file không quá dài.');
           } else {
             $scope.showMessage('danger');
           }
@@ -191,7 +218,16 @@
       // vm.codeMirror.options.tabSize = 4;
       vm.codeMirror.setOption('mode', vm.mode); // codemirror'mode is not two way binding with vm.mode therefore we have to update it
       vm.codeMirror.markClean(); //// mark the editor as clean
-
+      if (file.label !== 'untitled') {
+        vm.codeMirror.on('changes', function() {
+          if (!angular.isDefined(checkFile)) {
+            checkFile = $interval(function() {
+              $scope.showMessage('info', 'File đang được tự động lưu...');
+              saveFile();
+            }, 30000);
+          }
+        });
+      }
       //// Create FirepadUserList (with our desired userId).
       // var firepadUserList = FirepadUserList.fromDiv(fileRef.child('users'),
       //   document.getElementById('userlist'), $scope.user.id);
@@ -320,6 +356,7 @@
       vm.saveFile(function() {
         WorkspaceService.execute(vm.workspaceId, vm.currentBranch.data.relative_path, function(res) {
           vm.cmConsole.setValue(res.data.result);
+          vm.codeError = false;
           $scope.waiting = false;
         }, function(res) {
           $scope.waiting = false;
@@ -389,5 +426,8 @@
       });
     };
 
+    $scope.$on('$destroy', function() {
+      stopCheckFile();
+    });
   }
 })();

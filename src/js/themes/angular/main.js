@@ -2,7 +2,7 @@
 require('../html/_curriculum');
 
 // Scrolling behaviour
-// require('../html/_scroll');
+require('../html/_scroll');
 
 // Quiz timer
 require('../html/_countdown');

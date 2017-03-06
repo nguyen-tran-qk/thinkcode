@@ -8,6 +8,7 @@
     $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
     $scope.app.settings.bodyClass = '';
     $scope.loading = true;
+    $('.main-container').tkScrollNavbarTransition();
 
     var vm = this;
     vm.$state = $state;

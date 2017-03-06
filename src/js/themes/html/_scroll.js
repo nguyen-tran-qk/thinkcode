@@ -11,7 +11,7 @@
             var $navbar = $('.navbar-fixed-top'),
                 $html = $('html');
 
-            if (Modernizr.touch || ! $navbar.length || ! $html.is('.transition-navbar-scroll')) return false;
+            if (! $navbar.length || ! $html.is('.transition-navbar-scroll')) return false;
 
             var scrollTop = parseInt($(e.currentTarget).scrollTop(), 10);
 
@@ -30,7 +30,7 @@
                         $html.removeClass('top-navbar-xlarge').addClass('top-navbar-large');
                     }
                 }
-                if (scrollTop <= 0) {
+                if (scrollTop <= 0 && !$navbar.is('.navbar-size-small')) {
                     $navbar.attr('data-z', 0);
                     $navbar.addClass('navbar-size-xlarge');
                     if ($html.is('.ls-top-navbar-large')) {
