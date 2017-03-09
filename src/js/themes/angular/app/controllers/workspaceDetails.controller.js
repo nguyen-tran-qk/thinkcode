@@ -28,7 +28,6 @@
     $scope.loading = true;
 
     var vm = this;
-    var checkFile;
 
     $scope.$on('angular-resizable.resizing', function(event, args) {
       if (args.id === 'tree-resize') {
@@ -107,13 +106,6 @@
       }
     }
 
-    function stopCheckFile() {
-      if (angular.isDefined(checkFile)) {
-        $interval.cancel(checkFile);
-        checkFile = undefined;
-      }
-    }
-
     saveFile = function(callback) {
       $scope.waiting = true;
       if (vm.currentBranch.uid !== -1) {
@@ -126,7 +118,6 @@
             $scope.waiting = false;
             $scope.showMessage('success', 'Lưu thành công!');
           }
-          stopCheckFile();
         }, function(res) {
           $scope.waiting = false;
           if (res.data && res.data.message) {
@@ -189,7 +180,7 @@
                 fileContent = res.data.content;
                 //// Create Firepad (with our desired userId).
                 vm.firepad = Firepad.fromCodeMirror(vm.fileRef, vm.codeMirror, {
-                  userId: $scope.user.id
+                  userId: $scope.user.id.toString() // toString() is IMPORTANT!
                 });
                 vm.firepad.on('ready', function() {
                   vm.firepad.setText(fileContent); //// this makes the editor not clean anymore
@@ -208,7 +199,7 @@
             }
           } else {
             vm.firepad = Firepad.fromCodeMirror(vm.fileRef, vm.codeMirror, {
-              userId: $scope.user.id
+              userId: $scope.user.id.toString() // toString() is IMPORTANT!
             });
             $scope.waiting = false;
           }
@@ -218,16 +209,6 @@
       // vm.codeMirror.options.tabSize = 4;
       vm.codeMirror.setOption('mode', vm.mode); // codemirror'mode is not two way binding with vm.mode therefore we have to update it
       vm.codeMirror.markClean(); //// mark the editor as clean
-      if (file.label !== 'untitled') {
-        vm.codeMirror.on('changes', function() {
-          if (!angular.isDefined(checkFile)) {
-            checkFile = $interval(function() {
-              $scope.showMessage('info', 'File đang được tự động lưu...');
-              saveFile();
-            }, 30000);
-          }
-        });
-      }
       //// Create FirepadUserList (with our desired userId).
       // var firepadUserList = FirepadUserList.fromDiv(fileRef.child('users'),
       //   document.getElementById('userlist'), $scope.user.id);
@@ -425,9 +406,5 @@
         }
       });
     };
-
-    $scope.$on('$destroy', function() {
-      stopCheckFile();
-    });
   }
 })();

@@ -7,14 +7,12 @@
       'ngAnimate',
       'ngAria',
       'ui.router',
-      'ui.router.middleware',
       'ui.utils',
-      'ui.jq',
       'ui.bootstrap',
-      'ngMaterial',
       'angularBootstrapNavTree',
       'ngFileUpload',
       'angularResizable',
+      'ui.router.middleware',
       'ngToast',
       'utils',
       'thinkcodeControllers'
@@ -33,14 +31,38 @@
     //     }
     //   };
     // })
-    .run(['$http', function($http) {
-      $http.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-    }])
+    // .run(['$http', function($http) {
+    //   $http.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+    // }])
+    .factory('authInterceptor', function($q, $injector) {
+      return {
+        'request': function(config) {
+          // config.headers['Access-Control-Allow-Origin'] = '*';
+          // config.headers['Origin'] = '*';
+          return config;
+        },
+        'requestError': function(rejection) {
+          return $q.reject(rejection);
+        },
+        'response': function(response) {
+          return response;
+        },
+        'responseError': function(response) {
+          if (response.status === 401) {
+            var state = $injector.get('$state');
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            state.go('login');
+          }
+          return $q.reject(rejection);
+        }
+      };
+    })
     .config(
       ['$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$interpolateProvider',
-        '$mdThemingProvider', '$httpProvider', 'ngToastProvider',
+        '$httpProvider', 'ngToastProvider',
         function($controllerProvider, $compileProvider, $filterProvider, $provide, $interpolateProvider,
-          $mdThemingProvider, $httpProvider, ngToastProvider) {
+          $httpProvider, ngToastProvider) {
           app.controller = $controllerProvider.register;
           app.directive = $compileProvider.directive;
           app.filter = $filterProvider.register;
@@ -49,12 +71,10 @@
           app.constant = $provide.constant;
           app.value = $provide.value;
 
-          // $mdThemingProvider.disableTheming();
-          // $mdThemingProvider.theme('default').dark();
           $interpolateProvider.startSymbol('::');
           $interpolateProvider.endSymbol('::');
 
-          // $httpProvider.interceptors.push('httpRequestInterceptor');
+          $httpProvider.interceptors.push('authInterceptor');
           ngToastProvider.configure({
             animation: 'slide',
             combineDuplications: true,

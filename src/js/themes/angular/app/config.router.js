@@ -76,6 +76,17 @@
               url: '/app',
               template: '<div ui-view="main" id="main" class="main-container ui-view-main" />'
             })
+            .state('main.demo', {
+              url: '/demo',
+              middleware: 'authUser',
+              views: {
+                'main': {
+                  templateUrl: 'demo.html',
+                  controller: 'DemoCtrl',
+                  controllerAs: 'vm'
+                }
+              }
+            })
             .state('main.workspaces', {
               url: '/workspaces',
               middleware: 'authUser',

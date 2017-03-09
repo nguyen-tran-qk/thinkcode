@@ -17,7 +17,7 @@
       $scope.loading = false;
       vm.workspaces = res.data.workspaces;
     }, function(res) {
-      $scope.showMessage();
+      $scope.showMessage('danger');
     });
 
     vm.createWorkspace = function() {
@@ -51,7 +51,7 @@
       }).result.then(function(engine_id) {
         WorkspaceService.createWorkspace(engine_id, function(res) { //will change dynamically later
           $scope.showMessage('success', 'Workspace created!');
-          vm.$state.go('main.workspaces.details', {workspaceId: res.data.new_workspace_id});
+          vm.$state.go('main.workspaces.details', { workspaceId: res.data.new_workspace_id });
         }, function(res) {
           if (res.status === 500) {
             $scope.showMessage('danger', 'Xin lỗi, không thể tạo workspace!');
