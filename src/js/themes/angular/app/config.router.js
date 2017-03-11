@@ -76,13 +76,13 @@
               url: '/app',
               template: '<div ui-view="main" id="main" class="main-container ui-view-main" />'
             })
-            .state('main.demo', {
-              url: '/demo',
+            .state('main.courses', {
+              url: '/courses',
               middleware: 'authUser',
               views: {
                 'main': {
-                  templateUrl: 'demo.html',
-                  controller: 'DemoCtrl',
+                  templateUrl: 'courses/courses.html',
+                  controller: 'CoursesCtrl',
                   controllerAs: 'vm'
                 }
               }

@@ -14,7 +14,8 @@
         };
 
         $scope.$state = $state;
-        $scope.user = null;
+        $scope.user = UserService.getUser();
+        // $scope.user = null;
 
         $scope.signout = function() {
           $scope.loading = true;
@@ -32,7 +33,7 @@
           });
         };
         $scope.goTo = function(state) {
-          $state.go(state, {}, {reload: true});
+          $state.go(state, {}, { reload: true });
         };
       }
     ]);

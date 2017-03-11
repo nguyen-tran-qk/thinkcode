@@ -6,7 +6,7 @@
       var user = null;
       return {
         getUser: function() {
-          return JSON.parse(localStorage.user);
+          return localStorage.user ? JSON.parse(localStorage.user) : null;
         },
         setUser: function(value) {
           user = value;

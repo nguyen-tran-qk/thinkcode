@@ -35,8 +35,10 @@ require('./app/directives/abn-tree-modified');
 // Angular App Services
 require('./app/services/workspace')
 require('./app/services/users')
+require('./app/services/course')
 
 // Angular App Controllers
 require('./app/controllers/users.controller.js')
 require('./app/controllers/workspaces.controller.js')
 require('./app/controllers/workspaceDetails.controller.js')
+require('./app/controllers/courses.controller.js')

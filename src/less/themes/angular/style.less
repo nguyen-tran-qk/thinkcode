@@ -442,3 +442,46 @@ i.icon-lg {
     .colour(1);
   }
 }
+
+
+/* auto hide navbar */
+.auto-hide {
+  transform: translateY(-41px);
+  & ~ #preloader {
+    top: 10px;
+  }
+  &:hover {
+    transform: translateY(0);
+  }
+}
+.top-navbar-hide {
+  body {
+    padding: 10px;
+  }
+}
+
+/* Courses */
+#courses {
+  .action-bar {
+    .dropdown {
+      padding: 12px 0 0 16px;
+    }
+    .btn {
+      &:not(.dropdown-toggle) {
+        margin-top: 14px;
+      }
+      &.dropdown-toggle {
+        height: 36px;
+        line-height: 36px;
+        .caret {
+          margin-left: 5px;
+        }
+      }
+    }
+    .form-control-material {
+      label {
+        line-height: 64px;
+      }
+    }
+  }
+}

@@ -6,7 +6,7 @@
 
   function wsDetailsCtrl($scope, $state, $timeout, $interval, $filter, $uibModal, $document, Utils, WorkspaceService, Upload, ngToast) {
 
-    $scope.app.settings.htmlClass = 'transition-navbar-scroll top-navbar-small';
+    $scope.app.settings.htmlClass = 'transition-navbar-scroll top-navbar-hide';
     $scope.app.settings.bodyClass = '';
     document.getElementById("main").style.overflow = 'auto';
     var $navbar = $('.navbar');
@@ -19,8 +19,8 @@
     if ($navbar.hasClass('paper-shadow')) {
       $navbar.removeClass('paper-shadow');
     }
-    if (!$navbar.hasClass('navbar-size-small')) {
-      $navbar.addClass('navbar-size-small');
+    if (!$navbar.hasClass('auto-hide')) {
+      $navbar.addClass('auto-hide');
     }
     $('.navbar .navbar-right .navbar-btn').addClass('btn-sm');
     $('.navbar .container').addClass('width-100pc');
@@ -46,6 +46,10 @@
       }
     });
     vm.$state = $state;
+    if (!vm.$state.params.workspaceId) {
+      vm.$state.go('main.workspaces', {}, { reload: true });
+      return;
+    }
     vm.workspaceId = vm.$state.params.workspaceId ? vm.$state.params.workspaceId : 3;
     vm.tabs = []; //// array to store files aka. branchs to display as tabs
     vm.my_data = [];

@@ -1,0 +1,74 @@
+{% extends "src/html/themes/angular/website/_layout-instructor.html" %} {% block content %}
+<div id="courses" class="container page-section" ng-if="vm.$state.current.name === 'main.courses'">
+  <div class="col-xs-12 margin-v-0-10 panel panel-default action-bar">
+    <button class="btn btn-success col-xs-2" ng-click="vm.createWorkspace()"><strong>Tạo workspace</strong></button>
+    <div class="form-group right padding-none">
+      <div class="btn-group right" uib-dropdown>
+        <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>Level<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+          <li role="menuitem"><a href ng-click="vm.search.level = 'Learn'">Learn</a></li>
+          <li role="menuitem"><a href ng-click="vm.search.level = 'Hack'">Hack</a></li>
+        </ul>
+      </div>
+      <div class="btn-group right" uib-dropdown>
+        <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>Engine<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+          <li role="menuitem"><a href ng-click="vm.search.engine = 'Python'">Python</a></li>
+          <li role="menuitem"><a href ng-click="vm.search.engine = 'Ruby'">Ruby</a></li>
+        </ul>
+      </div>
+      <div class="form-control-material col-xs-4 right">
+        <input class="form-control" id="search" type="text" ng-model="vm.search.description">
+        <label for="search">Search</label>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-lg-4" ng-repeat="item in vm.courses | filter: vm.search">
+    <div class="panel panel-default paper-shadow">
+      <div class="cover overlay cover-image-full hover">
+        <span class="img icon-block height-150 bg-primary"></span>
+        <a ui-sref="main.courses.details({workspaceId: item.id})" class="padding-none overlay overlay-full icon-block bg-primary">
+          <span class="v-center"><i class="fa fa-code"></i></span>
+        </a>
+        <a ui-sref="main.courses.details({workspaceId: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
+          <span class="v-center"><span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span></span>
+        </a>
+      </div>
+      <div class="panel-body">
+        <h4 class="text-headline margin-none"><a ui-sref="main.courses.details({workspaceId: item.id})">:: item.title ::</a></h4>
+      </div>
+      <hr class="margin-none">
+      <div class="panel-body">
+        <p>:: item.description ::</p>
+        <div class="media v-middle">
+          <div class="media-left">
+            <img src="images/people/50/guy-{{ random(1,9) }}.jpg" alt="People" class="img-circle width-40" />
+          </div>
+          <div class="media-body">
+            Giảng viên
+            <h4><a href>:: item.instructor ::</a><br/></h4>
+          </div>
+        </div>
+        <div class="navbar-right">
+          <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right">
+            <!-- user -->
+            <li class="dropdown">
+              <a href class="dropdown-toggle" data-toggle="dropdown"><i class="icon-lg md md-expand-more"></i></a>
+              <ul class="dropdown-menu" role="menu">
+                <li ui-sref-active="active"><a ui-sref="main.courses.details({workspaceId: item.id})">Tham gia khóa học</a></li>
+                <li ui-sref-active="active"><a href ng-click="vm.deleteWorkspace(item.id, item.engine)">Xóa</a></li>
+              </ul>
+            </li>
+            <!-- // END user -->
+          </ul>
+        </div>
+        <!-- <a class="btn btn-white btn-flat paper-shadow relative right" ui-sref="main.courses.details({workspaceId: item.id})"><i class="fa fa-fw fa-pencil"></i>Go to course</a> -->
+      </div>
+    </div>
+  </div>
+</div>
+<div ui-view="content" class="ui-view-main" ng-if="vm.$state.current.name === 'main.courses.details'"></div>
+<!-- {% include "src/html/themes/html/_pagination.html" %} -->
+{% endblock %}

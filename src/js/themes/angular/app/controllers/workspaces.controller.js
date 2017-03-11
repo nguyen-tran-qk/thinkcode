@@ -4,7 +4,6 @@
     .controller('WorkspacesController', workspacesCtrl);
 
   function workspacesCtrl($scope, $rootScope, $state, $uibModal, UserService, WorkspaceService) {
-    $scope.user = UserService.getUser();
     $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
     $scope.app.settings.bodyClass = '';
     $scope.loading = true;
