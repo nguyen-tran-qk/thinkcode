@@ -67,6 +67,7 @@
 @workspace-actions-bg: #2a3034;
 @red: #F44336;
 @red-400: #EF5350;
+@red-300: #E57373;
 
 /* fonts */
 @font-face {
@@ -481,6 +482,27 @@ i.icon-lg {
     .form-control-material {
       label {
         line-height: 64px;
+      }
+    }
+  }
+  .cover.overlay {
+    &:hover {
+      .overlay.overlay-full {
+        &:not(.overlay-hover) {
+          display: none;
+        }
+        &.overlay-hover {
+          .v-center {
+            .btn-danger {
+              background-color: @red-300;
+              border-color: @red-300;
+              &:hover {
+                background-color: @red-400;
+                border-color: @red-400;
+              }
+            }
+          }
+        }
       }
     }
   }

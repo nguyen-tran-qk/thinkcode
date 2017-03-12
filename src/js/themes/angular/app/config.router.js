@@ -47,7 +47,20 @@
               if (!localStorage.token || !localStorage.token.length) {
                 return request.next();
               } else {
-                request.redirectTo('main.workspaces');
+                request.redirectTo('main.courses');
+              }
+            }],
+            instructor: ['UserService', function(UserService) {
+              var request = this;
+              if (localStorage.token && localStorage.token.length && localStorage.user) {
+                var user = JSON.parse(localStorage.user);
+                if (user.instructor) {
+                  return request.next();
+                } else {
+                  request.redirectTo('main.courses');
+                }
+              } else {
+                request.redirectTo('login');
               }
             }]
           });
@@ -79,6 +92,17 @@
             .state('main.courses', {
               url: '/courses',
               middleware: 'authUser',
+              views: {
+                'main': {
+                  templateUrl: 'courses/courses.html',
+                  controller: 'CoursesCtrl',
+                  controllerAs: 'vm'
+                }
+              }
+            })
+            .state('main.courses.manage', {
+              url: '/courses/manage',
+              middleware: 'instructor',
               views: {
                 'main': {
                   templateUrl: 'courses/courses.html',

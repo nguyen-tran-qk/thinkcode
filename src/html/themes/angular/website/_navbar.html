@@ -76,8 +76,11 @@
                         <li ui-sref-active="active"><a ui-sref="essential.tabs">Tabs</a></li>
                     </ul>
                 </li> -->
-        <li ng-class="{ 'active': $state.includes(website-courses) }">
-          <a href ng-click="goTo('main.workspaces')">Workspaces </span></a>
+        <li ng-class="{ 'active': $state.includes('main.workspaces') }">
+          <a href ng-click="goTo('main.workspaces')">Workspaces</a>
+        </li>
+        <li ng-class="{ 'active': $state.includes('main.courses.manage') }">
+            <a href ng-click="goTo('main.courses.manage')">Manage</a>
         </li>
       </ul>
       <div class="navbar-right">

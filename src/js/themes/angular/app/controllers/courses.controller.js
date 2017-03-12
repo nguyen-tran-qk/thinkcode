@@ -12,14 +12,14 @@
   	var vm = this;
   	vm.$state = $state;
 
-  	vm.fetchPublishedCourses = function() {
-  		CoursesService.getAllPublishedCourses(function(res) {
+  	vm.fetchCourses = function() {
+  		CoursesService.getAllCourses(vm.$state.is('main.courses.manage'), function(res) {
   			vm.courses = res.data;
   			$scope.loading = false;
   		}, function(res) {
   			$scope.showMessage('danger');
   		});
   	};
-  	vm.fetchPublishedCourses();
+  	vm.fetchCourses();
   }
 })();

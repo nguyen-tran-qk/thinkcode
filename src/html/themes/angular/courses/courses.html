@@ -1,8 +1,20 @@
 {% extends "src/html/themes/angular/website/_layout-instructor.html" %} {% block content %}
-<div id="courses" class="container page-section" ng-if="vm.$state.current.name === 'main.courses'">
+<div id="courses" class="container page-section" ng-if="vm.$state.includes('main.courses')">
   <div class="col-xs-12 margin-v-0-10 panel panel-default action-bar">
-    <button class="btn btn-success col-xs-2" ng-click="vm.createWorkspace()"><strong>Tạo workspace</strong></button>
-    <div class="form-group right padding-none">
+    <div ng-if="vm.$state.is('main.courses.manage')">
+      <button class="btn btn-success col-xs-2" ng-click="vm.createWorkspace()"><strong>Tạo khóa học</strong></button>
+      <div class="form-group right padding-none">
+        <div class="btn-group right" uib-dropdown>
+          <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>Status<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+            <li role="menuitem"><a href ng-click="vm.search.status = 'draft'">Draft</a></li>
+            <li role="menuitem"><a href ng-click="vm.search.status = 'published'">Published</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="form-group right padding-none col-xs-5" ng-if="vm.$state.is('main.courses')">
       <div class="btn-group right" uib-dropdown>
         <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>Level<span class="caret"></span>
         </button>
@@ -19,7 +31,7 @@
           <li role="menuitem"><a href ng-click="vm.search.engine = 'Ruby'">Ruby</a></li>
         </ul>
       </div>
-      <div class="form-control-material col-xs-4 right">
+      <div class="form-control-material col-xs-6 right">
         <input class="form-control" id="search" type="text" ng-model="vm.search.description">
         <label for="search">Search</label>
       </div>
@@ -33,11 +45,18 @@
           <span class="v-center"><i class="fa fa-code"></i></span>
         </a>
         <a ui-sref="main.courses.details({workspaceId: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
-          <span class="v-center"><span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span></span>
+          <span class="v-center" ng-if="vm.$state.is('main.courses.manage')">
+	          <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-pencil"></i></span>
+	          <span class="btn btn-circle btn-danger btn-lg"><i class="md md-clear"></i></span>
+          </span>
+          <span class="v-center" ng-if="!vm.$state.is('main.courses.manage')">
+	          <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
+          </span>
         </a>
       </div>
       <div class="panel-body">
         <h4 class="text-headline margin-none"><a ui-sref="main.courses.details({workspaceId: item.id})">:: item.title ::</a></h4>
+        <p>Engine: :: item.engine :: - Level: :: item.level ::</p>
       </div>
       <hr class="margin-none">
       <div class="panel-body">
@@ -51,7 +70,7 @@
             <h4><a href>:: item.instructor ::</a><br/></h4>
           </div>
         </div>
-        <div class="navbar-right">
+        <div class="navbar-right" ng-if="!vm.$state.is('main.courses.manage')">
           <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right">
             <!-- user -->
             <li class="dropdown">
@@ -69,6 +88,6 @@
     </div>
   </div>
 </div>
-<div ui-view="content" class="ui-view-main" ng-if="vm.$state.current.name === 'main.courses.details'"></div>
+<div ui-view="content" class="ui-view-main" ng-if="vm.$state.is('main.courses.details')"></div>
 <!-- {% include "src/html/themes/html/_pagination.html" %} -->
 {% endblock %}
