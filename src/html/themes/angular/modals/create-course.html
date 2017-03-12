@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <h3 class="modal-title">:: vm.course.id ? 'Chỉnh sửa khóa học' : 'Tạo khóa học'::</h3>
+</div>
+<div class="modal-body">
+  <form class="" name="form.newCourseForm">
+    <div class="form-group form-control-material">
+      <input type="text" class="form-control" id="course-title" placeholder="Nhập tên khóa học" ng-model="vm.course.title" ng-class="{'used': vm.course.title}" maxlength="50"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+      <label for="course-title">Title</label>
+    </div>
+    <div class="form-group form-control-material">
+      <input type="text" class="form-control" id="course-desc" placeholder="Description" ng-model="vm.course.description" maxlength="250" ng-class="{'used': vm.course.description}"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+      <label for="course-desc">Description</label>
+    </div>
+    <div class="row">
+      <div class="btn-group col-md-3" uib-dropdown>
+        <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>::vm.course.engine::<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+          <li role="menuitem"><a href ng-click="vm.selectEngine(1)">Python</a></li>
+          <li role="menuitem"><a href ng-click="vm.selectEngine(2)">Ruby</a></li>
+        </ul>
+      </div>
+      <div class="btn-group col-md-3" uib-dropdown>
+        <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>::vm.course.level::<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+          <li role="menuitem"><a href ng-click="vm.selectLevel(1)">Learn</a></li>
+          <li role="menuitem"><a href ng-click="vm.selectLevel(2)">Hack</a></li>
+        </ul>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default" type="button" ng-click="vm.cancel()">Bỏ qua</button>
+  <button class="btn btn-primary" type="button" ng-click="vm.ok()" ng-disabled="!vm.validForm()">:: vm.course.id ? 'Chỉnh sửa' : 'Tạo khóa học'::</button>
+  <button class="btn btn-success" type="button" ng-click="vm.changeCourseStatus()" ng-if="vm.course.id">:: vm.course.status === 'draft' ? 'Publish' : 'Unpublish'::</button>
+</div>

@@ -2,12 +2,13 @@
 <div id="courses" class="container page-section" ng-if="vm.$state.includes('main.courses')">
   <div class="col-xs-12 margin-v-0-10 panel panel-default action-bar">
     <div ng-if="vm.$state.is('main.courses.manage')">
-      <button class="btn btn-success col-xs-2" ng-click="vm.createWorkspace()"><strong>Tạo khóa học</strong></button>
+      <button class="btn btn-success col-xs-2" ng-click="vm.openCourseModal()"><strong>Tạo khóa học</strong></button>
       <div class="form-group right padding-none">
         <div class="btn-group right" uib-dropdown>
-          <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>Status<span class="caret"></span>
+          <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>::vm.search.status.length ? vm.search.status : 'Status'::<span class="caret"></span>
           </button>
           <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+            <li role="menuitem"><a href ng-click="vm.search.status = ''">All</a></li>
             <li role="menuitem"><a href ng-click="vm.search.status = 'draft'">Draft</a></li>
             <li role="menuitem"><a href ng-click="vm.search.status = 'published'">Published</a></li>
           </ul>
@@ -16,17 +17,19 @@
     </div>
     <div class="form-group right padding-none col-xs-5" ng-if="vm.$state.is('main.courses')">
       <div class="btn-group right" uib-dropdown>
-        <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>Level<span class="caret"></span>
+        <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>::vm.search.level.length ? vm.search.level : 'Level'::<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+          <li role="menuitem"><a href ng-click="vm.search.level = ''">All</a></li>
           <li role="menuitem"><a href ng-click="vm.search.level = 'Learn'">Learn</a></li>
           <li role="menuitem"><a href ng-click="vm.search.level = 'Hack'">Hack</a></li>
         </ul>
       </div>
       <div class="btn-group right" uib-dropdown>
-        <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>Engine<span class="caret"></span>
+        <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>::vm.search.engine.length ? vm.search.engine : 'Engine'::<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+          <li role="menuitem"><a href ng-click="vm.search.engine = ''">All</a></li>
           <li role="menuitem"><a href ng-click="vm.search.engine = 'Python'">Python</a></li>
           <li role="menuitem"><a href ng-click="vm.search.engine = 'Ruby'">Ruby</a></li>
         </ul>
@@ -41,26 +44,26 @@
     <div class="panel panel-default paper-shadow">
       <div class="cover overlay cover-image-full hover">
         <span class="img icon-block height-150 bg-primary"></span>
-        <a ui-sref="main.courses.details({workspaceId: item.id})" class="padding-none overlay overlay-full icon-block bg-primary">
-          <span class="v-center"><i class="fa fa-code"></i></span>
+        <a href class="padding-none overlay overlay-full icon-block bg-primary">
+          <span class="v-center"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
         </a>
-        <a ui-sref="main.courses.details({workspaceId: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
+        <a href class="overlay overlay-full overlay-hover overlay-bg-white">
           <span class="v-center" ng-if="vm.$state.is('main.courses.manage')">
-	          <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-pencil"></i></span>
-	          <span class="btn btn-circle btn-danger btn-lg"><i class="md md-clear"></i></span>
+	          <span class="btn btn-circle btn-primary btn-lg" ng-click="vm.openCourseModal(item.id)"><i class="fa fa-pencil"></i></span>
+	          <span class="btn btn-circle btn-danger btn-lg" ng-click="vm.deleteCourse(item.id, item.title)"><i class="md md-clear"></i></span>
           </span>
           <span class="v-center" ng-if="!vm.$state.is('main.courses.manage')">
 	          <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
           </span>
         </a>
       </div>
-      <div class="panel-body">
-        <h4 class="text-headline margin-none"><a ui-sref="main.courses.details({workspaceId: item.id})">:: item.title ::</a></h4>
+      <div class="panel-body course-title">
+        <h4 class="text-headline margin-none"><a href>:: item.title ::</a></h4>
         <p>Engine: :: item.engine :: - Level: :: item.level ::</p>
       </div>
       <hr class="margin-none">
       <div class="panel-body">
-        <p>:: item.description ::</p>
+        <p class="desc">:: item.description ::</p>
         <div class="media v-middle">
           <div class="media-left">
             <img src="images/people/50/guy-{{ random(1,9) }}.jpg" alt="People" class="img-circle width-40" />
@@ -76,8 +79,21 @@
             <li class="dropdown">
               <a href class="dropdown-toggle" data-toggle="dropdown"><i class="icon-lg md md-expand-more"></i></a>
               <ul class="dropdown-menu" role="menu">
-                <li ui-sref-active="active"><a ui-sref="main.courses.details({workspaceId: item.id})">Tham gia khóa học</a></li>
-                <li ui-sref-active="active"><a href ng-click="vm.deleteWorkspace(item.id, item.engine)">Xóa</a></li>
+                <li ui-sref-active="active"><a href>Tham gia khóa học</a></li>
+                <!-- <li ui-sref-active="active"><a href ng-click="vm.deleteWorkspace(item.id, item.engine)" ng-if="user.instructor">Xóa</a></li> -->
+              </ul>
+            </li>
+            <!-- // END user -->
+          </ul>
+        </div>
+        <div class="navbar-right" ng-if="vm.$state.is('main.courses.manage')">
+          <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right">
+            <!-- user -->
+            <li class="dropdown">
+              <a href class="dropdown-toggle" data-toggle="dropdown"><i class="icon-lg md md-expand-more"></i></a>
+              <ul class="dropdown-menu" role="menu">
+                <li ui-sref-active="active"><a href ng-click="vm.openCourseModal(item)">Chỉnh sửa</a></li>
+                <li ui-sref-active="active"><a href ng-click="vm.deleteCourse(item.id, item.title)">Xóa</a></li>
               </ul>
             </li>
             <!-- // END user -->
