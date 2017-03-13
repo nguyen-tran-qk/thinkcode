@@ -1,7 +1,7 @@
 {% extends "src/html/themes/angular/website/_layout-instructor.html" %} {% block content %}
-<div id="courses" class="container page-section" ng-if="vm.$state.includes('main.courses')">
+<div id="courses" class="container page-section" ng-if="!vm.$state.includes('main.manage-courses.details')">
   <div class="col-xs-12 margin-v-0-10 panel panel-default action-bar">
-    <div ng-if="vm.$state.is('main.courses.manage')">
+    <div ng-if="vm.$state.is('main.manage-courses')">
       <button class="btn btn-success col-xs-2" ng-click="vm.openCourseModal()"><strong>Tạo khóa học</strong></button>
       <div class="form-group right padding-none">
         <div class="btn-group right" uib-dropdown>
@@ -44,21 +44,21 @@
     <div class="panel panel-default paper-shadow">
       <div class="cover overlay cover-image-full hover">
         <span class="img icon-block height-150 bg-primary"></span>
-        <a href class="padding-none overlay overlay-full icon-block bg-primary">
+        <a ui-sref="main.manage-courses.details({course_id: item.id})" class="padding-none overlay overlay-full icon-block bg-primary">
           <span class="v-center"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
         </a>
-        <a href class="overlay overlay-full overlay-hover overlay-bg-white">
-          <span class="v-center" ng-if="vm.$state.is('main.courses.manage')">
+        <a ui-sref="main.manage-courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
+          <!-- <span class="v-center" ng-if="vm.$state.is('main.manage-courses')">
 	          <span class="btn btn-circle btn-primary btn-lg" ng-click="vm.openCourseModal(item.id)"><i class="fa fa-pencil"></i></span>
 	          <span class="btn btn-circle btn-danger btn-lg" ng-click="vm.deleteCourse(item.id, item.title)"><i class="md md-clear"></i></span>
-          </span>
-          <span class="v-center" ng-if="!vm.$state.is('main.courses.manage')">
+          </span> -->
+          <span class="v-center">
 	          <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
           </span>
         </a>
       </div>
       <div class="panel-body course-title">
-        <h4 class="text-headline margin-none"><a href>:: item.title ::</a></h4>
+        <h4 class="text-headline margin-none"><a ui-sref="main.manage-courses.details({course_id: item.id})">:: item.title ::</a></h4>
         <p>Engine: :: item.engine :: - Level: :: item.level ::</p>
       </div>
       <hr class="margin-none">
@@ -73,7 +73,7 @@
             <h4><a href>:: item.instructor ::</a><br/></h4>
           </div>
         </div>
-        <div class="navbar-right" ng-if="!vm.$state.is('main.courses.manage')">
+        <div class="navbar-right" ng-if="vm.$state.is('main.courses')">
           <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right">
             <!-- user -->
             <li class="dropdown">
@@ -86,24 +86,11 @@
             <!-- // END user -->
           </ul>
         </div>
-        <div class="navbar-right" ng-if="vm.$state.is('main.courses.manage')">
-          <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right">
-            <!-- user -->
-            <li class="dropdown">
-              <a href class="dropdown-toggle" data-toggle="dropdown"><i class="icon-lg md md-expand-more"></i></a>
-              <ul class="dropdown-menu" role="menu">
-                <li ui-sref-active="active"><a href ng-click="vm.openCourseModal(item)">Chỉnh sửa</a></li>
-                <li ui-sref-active="active"><a href ng-click="vm.deleteCourse(item.id, item.title)">Xóa</a></li>
-              </ul>
-            </li>
-            <!-- // END user -->
-          </ul>
-        </div>
         <!-- <a class="btn btn-white btn-flat paper-shadow relative right" ui-sref="main.courses.details({workspaceId: item.id})"><i class="fa fa-fw fa-pencil"></i>Go to course</a> -->
       </div>
     </div>
   </div>
 </div>
-<div ui-view="content" class="ui-view-main" ng-if="vm.$state.is('main.courses.details')"></div>
+<div ui-view="content" class="ui-view-main" ng-if="vm.$state.includes('main.manage-courses.details')"></div>
 <!-- {% include "src/html/themes/html/_pagination.html" %} -->
 {% endblock %}

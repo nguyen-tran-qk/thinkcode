@@ -54,7 +54,7 @@
             localStorage.removeItem('user');
             state.go('login');
           }
-          return $q.reject(rejection);
+          return $q.reject(response);
         }
       };
     })

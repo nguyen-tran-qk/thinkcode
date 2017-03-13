@@ -1,5 +1,6 @@
 @import "font-mfizz";
-
+@import "variables";
+@import "course";
 /* common */
 .navbar.navbar-size-small .navbar-brand-logo .svg {
   height: 42px;
@@ -70,14 +71,6 @@
     border-width: 0 2px;
   }
 }
-
-/* variables */
-@editor-height: 500px;
-@editor-wrap-height: 540px;
-@workspace-actions-bg: #2a3034;
-@red: #F44336;
-@red-400: #EF5350;
-@red-300: #E57373;
 
 /* fonts */
 @font-face {
@@ -471,58 +464,3 @@ i.icon-lg {
   }
 }
 
-/* Courses */
-#courses {
-  .action-bar {
-    .dropdown {
-      padding: 12px 0 0 16px;
-    }
-    .btn {
-      &:not(.dropdown-toggle) {
-        margin-top: 14px;
-      }
-    }
-    .form-control-material {
-      label {
-        line-height: 64px;
-      }
-    }
-  }
-  .cover.overlay {
-    .overlay.overlay-full:not(.overlay-hover) {
-      i.mfizz {
-        display: inline-block;
-        margin-top: 7px;
-        margin-left: 7px;
-      }
-    }
-    &:hover {
-      .overlay.overlay-full {
-        &:not(.overlay-hover) {
-          display: none;
-        }
-        &.overlay-hover {
-          .v-center {
-            .btn-danger {
-              background-color: @red-300;
-              border-color: @red-300;
-              &:hover {
-                background-color: @red-400;
-                border-color: @red-400;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  .course-title {
-    height: 115px;
-  }
-  p.desc {
-    word-break: break-all;
-    height: 75px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}

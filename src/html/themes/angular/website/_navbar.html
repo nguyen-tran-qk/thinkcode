@@ -79,8 +79,8 @@
         <li ng-class="{ 'active': $state.includes('main.workspaces') }">
           <a href ng-click="goTo('main.workspaces')">Workspaces</a>
         </li>
-        <li ng-class="{ 'active': $state.includes('main.courses.manage') }">
-            <a href ng-click="goTo('main.courses.manage')">Manage</a>
+        <li ng-class="{ 'active': $state.includes('main.manage-courses') }" ng-if="user.instructor">
+            <a href ng-click="goTo('main.manage-courses')">Manage Courses</a>
         </li>
       </ul>
       <div class="navbar-right">

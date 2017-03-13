@@ -100,13 +100,24 @@
                 }
               }
             })
-            .state('main.courses.manage', {
-              url: '/courses/manage',
+            .state('main.manage-courses', {
+              url: '/manage',
               middleware: 'instructor',
               views: {
                 'main': {
                   templateUrl: 'courses/courses.html',
                   controller: 'CoursesCtrl',
+                  controllerAs: 'vm'
+                }
+              }
+            })
+            .state('main.manage-courses.details', {
+              url: '/:course_id',
+              middleware: 'instructor',
+              views: {
+                'content': {
+                  templateUrl: 'courses/course-details.html',
+                  controller: 'CourseDetailsCtrl',
                   controllerAs: 'vm'
                 }
               }
