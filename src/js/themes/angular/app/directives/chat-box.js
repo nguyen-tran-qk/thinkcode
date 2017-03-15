@@ -24,12 +24,33 @@
 
           var ref = firebase.database().ref().child('chat/conversation_1');
           var check;
-          $scope.messages = $firebaseArray(ref);
           $scope.active = false;
-          $scope.unreadCount = 0;
+          $scope.messages = $firebaseArray(ref);
+          $scope.messages.$loaded()
+            .then(function() {
+              $scope.toggleChatBox();
+              $scope.messages.$watch(function(obj) {
+                if (obj.event === 'child_added') {
+                  var newMsg = $scope.messages.$getRecord(obj.key);
+                  if (newMsg.user_id !== $scope.user.id.toString()) {
+                    if ($scope.active) {
+                      newMsg.read = true;
+                      $scope.messages.$save(newMsg);
+                      $scope.unreadCount = 0;
+                    } else {
+                      $scope.unreadCount++;
+                    }
+                  }
+                }
+                $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
+              });
+            })
+            .catch(function(error) {
+              console.log("Firebase load error:", error);
+            });
 
           function checkReadMsg(msg) {
-            if (msg.user_id !== $scope.user.id && !msg.read) {
+            if (msg.user_id !== $scope.user.id.toString() && !msg.read) {
               if ($scope.active) {
                 msg.read = true;
                 $scope.messages.$save(msg);
@@ -41,21 +62,17 @@
             $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
           }
           $scope.toggleChatBox = function() {
+            $scope.unreadCount = 0;
             for (var i = 0; i < $scope.messages.length; i++) {
               checkReadMsg($scope.messages[i]);
             }
           };
-          $scope.toggleChatBox();
-          ref.on('child_added', function(childSnapshot, prevChildKey) {
-            var newMsg = childSnapshot.val();
-            checkReadMsg(newMsg);
-          });
           $scope.sendChat = function() {
             // var currentdate = new Date();
             // var datetime = currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear() + " @ " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
             var datetime = new Date();
 
-            var chatMessage = { user_id: $scope.user.id, name: $scope.user.username, message: $scope.chatMes, datetime: datetime.toString(), read: false };
+            var chatMessage = { user_id: $scope.user.id.toString(), name: $scope.user.username, message: $scope.chatMes, datetime: datetime.toString(), read: false };
             $scope.messages.$add(chatMessage);
             $scope.chatMes = "";
           };
@@ -74,6 +91,6 @@
             }
           });
         }
-      }
+      };
     });
 })();
