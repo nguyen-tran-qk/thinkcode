@@ -80,7 +80,7 @@
           <a href ng-click="goTo('main.workspaces')">Workspaces</a>
         </li>
         <li ng-class="{ 'active': $state.includes('main.manage-courses') }" ng-if="user.instructor">
-            <a href ng-click="goTo('main.manage-courses')">Manage Courses</a>
+            <a href ng-click="goTo('main.manage-courses')">Quản lý khóa học</a>
         </li>
       </ul>
       <div class="navbar-right">
@@ -98,8 +98,8 @@
           </li>
           <!-- // END user -->
         </ul>
-        <a ui-sref="login" class="navbar-btn btn btn-primary" ng-if="!user">Log In</a>
-        <a ng-click="signout()" class="navbar-btn btn btn-primary" ng-if="user">Logout</a>
+        <a ui-sref="login" class="navbar-btn btn btn-primary" ng-if="!user">Đăng nhập</a>
+        <a ng-click="signout()" class="navbar-btn btn btn-primary" ng-if="user">Đăng xuất</a>
       </div>
     </div>
     <!-- /.navbar-collapse -->

@@ -38,14 +38,16 @@
     <div class="btn btn-primary btn-sm" ng-click="wVm.openUpload()" ng-disabled="waiting" ng-if="user.instructor"><small>Upload Template</small></div>
   </div>
   <div class="col-md-7">
-    <div class="pull-right" ng-if="wVm.currentBranch.uid !== -1">
-      <button class="btn btn-success btn-sm" ng-click="wVm.saveFile()" ng-disabled="waiting">Save</button>
-      <button class="btn btn-primary btn-sm" ng-click="wVm.runFile()" ng-disabled="waiting">Run</button>
+    <div class="pull-right">
+      <div ng-if="wVm.currentBranch.uid !== -1">
+        <button class="btn btn-success btn-sm" ng-click="wVm.saveFile()" ng-disabled="waiting">Save</button>
+        <button class="btn btn-primary btn-sm" ng-click="wVm.runFile()" ng-disabled="waiting">Run</button>
+      </div>
+      <button class="btn btn-default btn-sm" ng-click="wVm.treeHidden = true; wVm.consoleHidden = true"><i class="fa fa-expand icon-lg"></i></button>
     </div>
   </div>
   <div class="col-md-3">
     <div class="pull-right">
-      <button class="btn btn-default btn-sm" ng-click="wVm.treeHidden = true; wVm.consoleHidden = true"><i class="fa fa-expand icon-lg"></i></button>
     </div>
   </div>
 </div>

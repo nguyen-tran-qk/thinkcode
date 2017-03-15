@@ -16,7 +16,29 @@
         firebaseApp: firebaseApp,
         firepadRefs: firepadRefs
       };
-    }]);
+    }])
+    .filter('moment', function() {
+      return function(string, format) {
+        if (string && moment(string).isValid()) {
+          return moment(string).format(format);
+        } else {
+          return string;
+        }
+      };
+    })
+    .filter('fromNow', function() {
+      return function(string, notSuffixed) {
+        if (moment(string).isValid()) {
+          // if (isSuffixed === true) {
+          //   return moment(string).fromNow(true);
+          // } else {
+          return moment(string).fromNow(notSuffixed);
+          // }
+        } else {
+          return string;
+        }
+      };
+    });
 
   angular.module('app').filter('findBranchByUid', function() {
     return function(list, uid) {

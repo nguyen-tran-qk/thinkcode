@@ -29,7 +29,7 @@
           ngToast.create({
             className: type,
             content: message,
-            dismissOnTimeout: type === 'danger' ? false : true
+            timeout: '5000'
           });
         };
         $scope.goTo = function(state) {

@@ -39,7 +39,7 @@
               if (localStorage.token && localStorage.token.length) {
                 return request.next();
               } else {
-                request.redirectTo('login');
+                request.redirectTo('main.courses');
               }
             }],
             unAuthUser: ['UserService', function(UserService) {
@@ -67,7 +67,7 @@
           $middlewareProvider.global('everyone');
 
           $urlRouterProvider
-            .otherwise('/login');
+            .otherwise('/courses');
 
           $stateProvider
             .state('login', {
@@ -91,11 +91,22 @@
             })
             .state('main.courses', {
               url: '/courses',
-              middleware: 'authUser',
+              middleware: 'everyone',
               views: {
                 'main': {
                   templateUrl: 'courses/courses.html',
                   controller: 'CoursesCtrl',
+                  controllerAs: 'vm'
+                }
+              }
+            })
+            .state('main.courses.details', {
+              url: '/:course_id',
+              middleware: 'everyone',
+              views: {
+                'content': {
+                  templateUrl: 'courses/course-details.html',
+                  controller: 'CourseDetailsCtrl',
                   controllerAs: 'vm'
                 }
               }

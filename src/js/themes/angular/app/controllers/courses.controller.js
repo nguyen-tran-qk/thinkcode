@@ -71,10 +71,7 @@
           $scope.showMessage('danger');
         });
       }, function(result) {
-        if (result === 'updated') {
-          $scope.showMessage('success', 'Cập nhật khóa học thành công!');
-          vm.fetchCourses();
-        } else if (result !== 'close') {
+        if (result !== 'close') {
           $scope.showMessage('danger');
         }
       });
