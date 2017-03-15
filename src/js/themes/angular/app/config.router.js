@@ -67,7 +67,7 @@
           $middlewareProvider.global('everyone');
 
           $urlRouterProvider
-            .otherwise('/courses');
+            .otherwise('/app/courses');
 
           $stateProvider
             .state('login', {

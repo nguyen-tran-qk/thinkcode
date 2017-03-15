@@ -42,7 +42,7 @@
           }
           UserService.signin(data, function(res) {
             if (res.data.session) {
-              $state.go('main.courses');
+              $state.go('main.courses', {}, { reload: true });
             }
           }, function(res) {
             $scope.showMessage('danger', 'Thông tin đăng nhập không chính xác.');
@@ -64,7 +64,7 @@
             }
           }
           UserService.signup(data, function(res) {
-            $state.go('main.courses');
+            $state.go('main.courses', {}, { reload: true });
           }, function(res) {
             showMessage(res);
           });

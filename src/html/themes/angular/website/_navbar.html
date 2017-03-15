@@ -84,7 +84,7 @@
         </li>
       </ul>
       <div class="navbar-right">
-        <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right">
+        <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right" ng-if="user">
           <!-- user -->
           <li class="dropdown user{% if page.slug|contains('website-student-') %} active{% endif %}">
             <a href class="dropdown-toggle" data-toggle="dropdown">

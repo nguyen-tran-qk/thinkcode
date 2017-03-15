@@ -1,5 +1,5 @@
 {% extends "src/html/themes/angular/website/_layout-instructor.html" %} {% block content %}
-<div id="courses" class="container page-section" ng-if="!vm.$state.includes('main.manage-courses.details')">
+<div id="courses" class="container page-section" ng-if="vm.$state.current.name.indexOf('details') < 0">
   <div class="col-xs-12 margin-v-0-10 panel panel-default action-bar">
     <div ng-if="vm.$state.is('main.manage-courses')">
       <button class="btn btn-success col-xs-2" ng-click="vm.openCourseModal()"><strong>Tạo khóa học</strong></button>
@@ -91,6 +91,6 @@
     </div>
   </div>
 </div>
-<div ui-view="content" class="ui-view-main" ng-if="vm.$state.includes('main.manage-courses.details')"></div>
+<div ui-view="content" class="ui-view-main" ng-if="vm.$state.current.name.indexOf('details') >= 0"></div>
 <!-- {% include "src/html/themes/html/_pagination.html" %} -->
 {% endblock %}
