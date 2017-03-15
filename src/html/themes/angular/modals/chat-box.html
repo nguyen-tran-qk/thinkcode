@@ -1,0 +1,34 @@
+<div id="live-chat">
+  <header class="clearfix">
+    <a href="#" class="chat-close">x</a>
+    <h4>John Doe</h4>
+    <span class="chat-message-counter">3</span>
+  </header>
+  <div class="chat">
+    <div class="chat-history">
+      <div ng-repeat="chatMessage in messages">
+        <div class="chat-message clearfix">
+          <img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">
+          <div class="chat-message-content clearfix">
+            <span class="chat-time">::chatMessage.datetime::</span>
+            <h5>:: chatMessage.name ::</h5>
+            <p>:: chatMessage.message ::</p>
+          </div>
+          <!-- end chat-message-content -->
+        </div>
+        <!-- end chat-message -->
+        <hr>
+      </div>
+    </div>
+    <!-- end chat-history -->
+    <p class="chat-feedback">Your partner is typing…</p>
+    <form>
+      <fieldset>
+        <input type="text" placeholder="Type your message…" autofocus ng-model="chatMes">
+        <button type="submit" ng-click="sendChat()">Send</button>
+      </fieldset>
+    </form>
+  </div>
+  <!-- end chat -->
+</div>
+<!-- end live-chat -->

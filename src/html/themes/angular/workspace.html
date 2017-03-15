@@ -7,6 +7,7 @@
         <abn-tree-mod id="workspace-tree" ng-hide="wVm.treeHidden" ng-if="!loading" tree-data="wVm.my_data" tree-control="wVm.my_tree" icon-leaf="fa fa-file" icon-expand="fa fa-folder" icon-collapse="fa fa-folder-open" expand-level="3"></abn-tree-mod>
         <div ng-if="wVm.treeHidden" class="resize-notify resize-right" ng-click="wVm.treeHidden = false"><i class="fa fa-fw fa-angle-double-right"></i></div>
       </div>
+      <chat-box user="user"></chat-box>
     </div>
     <!-- Tabbable Widget -->
     <div class="editor-tabs tabbable col-md-7 margin-none" ng-show="wVm.tabs.length">

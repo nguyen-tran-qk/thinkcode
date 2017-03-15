@@ -31,6 +31,7 @@ require('./app/directives/flotchart-earnings');
 require('./app/directives/material-treeview');
 require('./app/directives/treeView');
 require('./app/directives/abn-tree-modified');
+require('./app/directives/chat-box');
 
 // Angular App Services
 require('./app/services/workspace')

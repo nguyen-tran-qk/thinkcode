@@ -15,7 +15,8 @@
 		"ng-file-upload.js",
 		"angular-resizable.js",
 		"angular-middleware.js",
-		"ngToast.js"
+		"ngToast.js",
+		"angularfire.js"
 	],
 	"themes": ["angular"]
 }

@@ -15,7 +15,8 @@
 		"ng-file-upload/ng-file-upload.js",
 		"angular-resizable/src/angular-resizable.js",
 		"angular-middleware/dist/angular-middleware.js",
-		"ngToast/dist/ngToast.js"
+		"ngToast/dist/ngToast.js",
+		"angularfire/dist/angularfire.js"
 	],
 	"dest": "js/vendor/angular",
 	"flatten": true,
