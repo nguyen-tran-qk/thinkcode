@@ -28,10 +28,24 @@
         templateUrl: 'modals/create-course.html',
         backdrop: 'static',
         keyboard: false,
-        controller: function($uibModalInstance, courseId, CoursesService) {
+        controller: function($timeout, $uibModalInstance, courseId, CoursesService) {
           var vm = this;
           var engine_arr = ['Engine', 'Python', 'Ruby'],
             level_arr = ['Level', 'Learn', 'Hack'];
+
+          function debounce(func, wait, context) {
+            var timer;
+            return function debounced() {
+              var context = $scope,
+                args = Array.prototype.slice.call(arguments);
+              $timeout.cancel(timer);
+              timer = $timeout(function() {
+                timer = undefined;
+                func.apply(context, args);
+              }, wait || 10);
+            };
+          }
+
           vm.course = {
             engine: engine_arr[0],
             level: level_arr[0]
@@ -53,6 +67,38 @@
           vm.cancel = function() {
             $uibModalInstance.dismiss('close');
           };
+          vm.searchBadge = debounce(function(keyword) {
+            if (keyword && keyword.length) {
+              CoursesService.searchBadge(keyword, function(res) {
+                vm.badgeList = res.data;
+              });
+            } else {
+              vm.badgeList = [];
+            }
+          }, 300);
+          vm.selectBadge = function(badge) {
+            vm.typing = false;
+            vm.course.badge_id = badge.id;
+            vm.currentBadge = badge;
+          };
+          // Read the image using the filereader 
+          var fileReaderSupported = window.FileReader !== null;
+          vm.photoChanged = function(file) {
+            if (file !== null) {
+              // var file = files[0];
+              if (fileReaderSupported && file.type.indexOf('image') > -1) {
+                $timeout(function() {
+                  var fileReader = new FileReader();
+                  fileReader.readAsDataURL(file); // convert the image to data url. 
+                  fileReader.onload = function(e) {
+                    $timeout(function() {
+                      vm.course.cover = e.target.result; // Retrieve the image. 
+                    });
+                  };
+                });
+              }
+            }
+          };
         },
         controllerAs: 'vm',
         resolve: {
@@ -63,12 +109,18 @@
           if (res.data.new_course_id) {
             $scope.showMessage('success', 'Tạo khóa học thành công!');
             vm.fetchCourses();
-            vm.$state.go('main.manage-courses.details', {course_id: res.data.new_course_id});
+            vm.$state.go('main.manage-courses.details', { course_id: res.data.new_course_id });
           } else {
             $scope.showMessage('danger');
           }
         }, function(res) {
-          $scope.showMessage('danger');
+          if (res.data.length > 0) {
+            angular.forEach(res.data, function(obj) {
+              $scope.showMessage('danger', obj.error);
+            });
+          } else {
+            $scope.showMessage('danger');
+          }
         });
       }, function(result) {
         if (result !== 'close') {

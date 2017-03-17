@@ -148,6 +148,8 @@
                 $scope.showMessage('danger', 'Xin lỗi, thao tác thất bại!');
               } else if (res.status === 401) {
                 $scope.showMessage('danger', 'Xin lỗi, bạn không có quyền thực hiện thao tác này!');
+              } else {
+              	$scope.showMessage('danger');
               }
             });
           }

@@ -3,6 +3,7 @@
 
   angular.module('app')
     .factory('CoursesService', ['API_URL', '$http', 'Upload', function(API_URL, $http, Upload) {
+      var tokenString = '?token=' + localStorage.token;
       return {
         getAllCourses: function(isInstructor, callback, errorCallback) {
           var url = API_URL + '/courses';
@@ -53,7 +54,7 @@
             });
         },
         getCourseById: function(courseId, callback, errorCallback) {
-          $http.get(API_URL + '/courses/' + courseId + '?token=' + localStorage.token)
+          $http.get(API_URL + '/courses/' + courseId + tokenString)
             .then(function(res) {
               if (callback) {
                 callback(res);
@@ -65,7 +66,7 @@
             });
         },
         deleteCourse: function(courseId, callback, errorCallback) {
-          $http.delete(API_URL + '/courses/' + courseId + '?token=' + localStorage.token)
+          $http.delete(API_URL + '/courses/' + courseId + tokenString)
             .then(function(res) {
               if (callback) {
                 callback(res);
@@ -77,7 +78,19 @@
             });
         },
         changeCourseStatus: function(courseId, state, callback, errorCallback) {
-          $http.patch(API_URL + '/courses/' + courseId + '/change?token=' + localStorage.token + '&state=' + state)
+          $http.patch(API_URL + '/courses/' + courseId + '/change_status?token=' + localStorage.token + '&state=' + state)
+            .then(function(res) {
+              if (callback) {
+                callback(res);
+              }
+            }, function(res) {
+              if (errorCallback) {
+                errorCallback(res);
+              }
+            });
+        },
+        searchBadge: function(keyword, callback, errorCallback) {
+          $http.get(API_URL + '/badges?keyword=' + keyword)
             .then(function(res) {
               if (callback) {
                 callback(res);

@@ -2,16 +2,23 @@
   <h3 class="modal-title">:: vm.course.id ? 'Chỉnh sửa khóa học' : 'Tạo khóa học'::</h3>
 </div>
 <div class="modal-body">
-  <form class="" name="form.newCourseForm">
+  <form class="create-course" name="form.newCourseForm">
+    <div class="form-group ">
+      <div class="btn btn-primary btn-sm" ngf-select ng-model="uploadedFile" ngf-accept="'svg, png'" name="template" ngf-change="vm.photoChanged(uploadedFile)"><small>Upload ảnh bìa</small></div>
+      <!-- <div class="btn btn-primary btn-sm" ngf-select ng-model="uploadedFile" ngf-accept="svg" name="template" ngf-change="vm.photoChanged(uploadedFile)" ngf-resize="{width:350, height: 150, centerCrop: true}"><small>Upload ảnh bìa</small></div> -->
+      <div ng-if="vm.course.cover" class="text-center margin-v-10">
+        <img class="course-cover" height="150" ng-src=":: vm.course.cover ::">
+      </div>
+    </div>
     <div class="form-group form-control-material">
       <input type="text" class="form-control" id="course-title" placeholder="Nhập tên khóa học" ng-model="vm.course.title" ng-class="{'used': vm.course.title}" maxlength="50"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
-      <label for="course-title">Title</label>
+      <label for="course-title">Tiêu đề</label>
     </div>
-    <div class="form-group form-control-material">
-      <input type="text" class="form-control" id="course-desc" placeholder="Description" ng-model="vm.course.description" maxlength="250" ng-class="{'used': vm.course.description}"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
-      <label for="course-desc">Description</label>
+    <div class="form-group">
+      <label for="course-desc">Mô tả</label>
+      <textarea class="form-control" id="course-desc" placeholder="Giới thiệu/mô tả ngắn gọn về khóa học" ng-model="vm.course.description" maxlength="250" rows="4"></textarea>
     </div>
-    <div class="row">
+    <div class="row margin-v-10">
       <div class="btn-group col-md-3" uib-dropdown>
         <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>::vm.course.engine::<span class="caret"></span>
         </button>
@@ -28,6 +35,19 @@
           <li role="menuitem"><a href ng-click="vm.selectLevel(2)">Hack</a></li>
         </ul>
       </div>
+    </div>
+    <div class="form-group form-control-material" ng-class="{'open': vm.badgeList.length && vm.typing}">
+      <input type="text" class="form-control" id="course-badge" name="course-badge" ng-model="keyword" ng-keyup="vm.searchBadge(keyword)" ng-class="{'used': keyword}" ng-click="vm.typing = true"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+      <label for="course-badge">Tìm huy hiệu</label>
+      <span ng-if="!vm.currentBadge">Hãy tìm một huy hiệu để trao thưởng cho các học viên hoàn thành khóa học này.</span>
+      <ul class="dropdown-menu badges-dropdown-list" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+        <li role="menuitem" ng-repeat="badge in vm.badgeList" ng-click="vm.selectBadge(badge)">
+          <img ng-src="::badge.image::" width="40" height="40"><span>:: badge.title ::</span>
+        </li>
+      </ul>
+    </div>
+    <div ng-if="vm.currentBadge">
+      <span>Huy hiệu </span><img ng-src="::vm.currentBadge.image::" width="40" height="40"><strong> :: vm.currentBadge.title ::</strong><span> sẽ được trao thưởng cho các học viên hoàn thành khóa học.</span>
     </div>
   </form>
 </div>
