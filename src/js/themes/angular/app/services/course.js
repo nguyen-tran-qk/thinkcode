@@ -5,10 +5,14 @@
     .factory('CoursesService', ['API_URL', '$http', 'Upload', function(API_URL, $http, Upload) {
       var tokenString = '?token=' + localStorage.token;
       return {
-        getAllCourses: function(isInstructor, callback, errorCallback) {
+        getAllCourses: function(type, callback, errorCallback) {
           var url = API_URL + '/courses';
-          if (isInstructor) {
+          if (type === 'manage') {
             url += '/manage?token=' + localStorage.token;
+          } else if (type === 'collaborate') {
+            url += '/collaborate?token=' + localStorage.token;
+          } else if (type === 'review') {
+            url += '/review?token=' + localStorage.token;
           }
           $http.get(url)
             .then(function(res) {

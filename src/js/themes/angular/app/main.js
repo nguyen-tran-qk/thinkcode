@@ -32,8 +32,11 @@
             timeout: '5000'
           });
         };
-        $scope.goTo = function(state) {
-          $state.go(state, {}, { reload: true });
+        $scope.goTo = function(state, params) {
+          if (!params) {
+            params = {};
+          }
+          $state.go(state, params, { reload: true });
         };
       }
     ]);

@@ -11,7 +11,7 @@
       <div class="navbar-brand navbar-brand-logo">
         <a class="svg" href ng-click="goTo('main.courses')">{% include "src/html/themes/html/_logo.html" %}</a>
         <!-- <a class="svg" ui-sref="website-pages.home"><img src="images/thinkcode-logo.png"></a> -->
-         <!-- Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a> -->
+        <!-- Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a> -->
       </div>
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -79,8 +79,13 @@
         <li ng-class="{ 'active': $state.includes('main.workspaces') }">
           <a href ng-click="goTo('main.workspaces')">Workspaces</a>
         </li>
-        <li ng-class="{ 'active': $state.includes('main.manage-courses') }" ng-if="user.instructor">
-            <a href ng-click="goTo('main.manage-courses')">Quản lý khóa học</a>
+        <li ng-class="{ 'active': $state.includes('main.courses') && $state.params.type !== 'published' }" uib-dropdown ng-if="user.instructor || user.staff">
+          <a href id="simple-dropdown" uib-dropdown-toggle>Quản lý khóa học<span class="caret"></a>
+          <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+            <li ng-if="user.instructor"><a href ng-click="goTo('main.courses', {type: 'manage'})">Quản lý</a></li>
+            <li ng-if="user.instructor"><a href ng-click="goTo('main.courses', {type: 'collaborate'})">Biên tập</a></li>
+            <li ng-if="user.staff"><a href ng-click="goTo('main.courses', {type: 'review'})">Kiểm tra chất lượng</a></li>
+          </ul>
         </li>
       </ul>
       <div class="navbar-right">
@@ -106,4 +111,3 @@
   </div>
 </div>
 <div id="preloader" ng-class="{ 'block': loading||waiting, 'display-none': !loading && !waiting }"></div>
-

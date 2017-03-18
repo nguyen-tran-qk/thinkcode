@@ -62,12 +62,29 @@
               } else {
                 request.redirectTo('login');
               }
+            }],
+            staff: ['UserService', function(UserService) {
+              var request = this;
+              if (localStorage.token && localStorage.token.length && localStorage.user) {
+                var user = JSON.parse(localStorage.user);
+                if (user.staff) {
+                  return request.next();
+                } else {
+                  request.redirectTo('main.courses');
+                }
+              } else {
+                request.redirectTo('login');
+              }
             }]
           });
           $middlewareProvider.global('everyone');
 
           $urlRouterProvider
-            .otherwise('/app/courses');
+            .otherwise(function($injector, $location) {
+              $injector.invoke(['$state', function($state) {
+                $state.go('main.courses');
+              }]);
+            });
 
           $stateProvider
             .state('login', {
@@ -90,7 +107,7 @@
               template: '<div ui-view="main" id="main" class="main-container ui-view-main" />'
             })
             .state('main.courses', {
-              url: '/courses',
+              url: '/courses/{type:string}',
               middleware: 'everyone',
               views: {
                 'main': {
@@ -98,33 +115,14 @@
                   controller: 'CoursesCtrl',
                   controllerAs: 'vm'
                 }
+              },
+              params: {
+                type: 'published'
               }
             })
             .state('main.courses.details', {
-              url: '/:course_id',
+              url: '/{course_id:int}',
               middleware: 'everyone',
-              views: {
-                'content': {
-                  templateUrl: 'courses/course-details.html',
-                  controller: 'CourseDetailsCtrl',
-                  controllerAs: 'vm'
-                }
-              }
-            })
-            .state('main.manage-courses', {
-              url: '/manage',
-              middleware: 'instructor',
-              views: {
-                'main': {
-                  templateUrl: 'courses/courses.html',
-                  controller: 'CoursesCtrl',
-                  controllerAs: 'vm'
-                }
-              }
-            })
-            .state('main.manage-courses.details', {
-              url: '/:course_id',
-              middleware: 'instructor',
               views: {
                 'content': {
                   templateUrl: 'courses/course-details.html',

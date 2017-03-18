@@ -1,7 +1,7 @@
 {% extends "src/html/themes/angular/website/_layout-instructor.html" %} {% block content %}
 <div id="courses" class="container page-section" ng-if="vm.$state.current.name.indexOf('details') < 0">
   <div class="col-xs-12 margin-v-0-10 panel panel-default action-bar">
-    <div ng-if="vm.$state.is('main.manage-courses')">
+    <div ng-if="user.instructor && vm.$state.params.type === 'manage'">
       <button class="btn btn-success col-xs-2" ng-click="vm.openCourseModal()"><strong>Tạo khóa học mới</strong></button>
       <div class="form-group right padding-none">
         <div class="btn-group right" uib-dropdown>
@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <div class="form-group right padding-none col-xs-6" ng-if="vm.$state.is('main.courses')">
+    <div class="form-group right padding-none col-xs-6">
       <div class="btn-group right" uib-dropdown>
         <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>::vm.search.level.length ? vm.search.level : 'Level'::<span class="caret"></span>
         </button>
@@ -40,20 +40,20 @@
       </div>
     </div>
   </div>
-  <div class="col-xs-12 col-sm-6 col-lg-4" ng-repeat="item in vm.courses | filter: vm.search">
+  <div class="col-xs-12 col-sm-6 col-lg-4" ng-repeat="item in vm.courses | filter: vm.search track by item.id">
     <div class="panel panel-default paper-shadow">
       <div class="cover overlay cover-image-full hover">
         <div ng-if="item.cover !== 'missing.png'">
-          <span ui-sref="main.manage-courses.details({course_id: item.id})" class="img icon-block height-150 course-cover width-100pc" ng-attr-style="background-image: url(::item.cover::);"></span>
-          <a ui-sref="main.manage-courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
+          <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block height-150 course-cover width-100pc" ng-attr-style="background-image: url(::item.cover::);"></span>
+          <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
         </div>
         <div ng-if="item.cover === 'missing.png'">
           <span class="img icon-block height-150 bg-primary width-100pc"></span>
-          <a ui-sref="main.manage-courses.details({course_id: item.id})" class="padding-none overlay overlay-full icon-block bg-primary">
+          <a ui-sref="main.courses.details({course_id: item.id})" class="padding-none overlay overlay-full icon-block bg-primary">
             <span class="v-center"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
           </a>
-          <a ui-sref="main.manage-courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
-            <!-- <span class="v-center" ng-if="vm.$state.is('main.manage-courses')">
+          <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
+            <!-- <span class="v-center" ng-if="vm.$state.is('main.courses')">
 	          <span class="btn btn-circle btn-primary btn-lg" ng-click="vm.openCourseModal(item.id)"><i class="fa fa-pencil"></i></span>
 	          <span class="btn btn-circle btn-danger btn-lg" ng-click="vm.deleteCourse(item.id, item.title)"><i class="md md-clear"></i></span>
           </span> -->
@@ -64,7 +64,7 @@
         </div>
       </div>
       <div class="panel-body course-title">
-        <h4 class="text-headline margin-none"><a ui-sref="main.manage-courses.details({course_id: item.id})">:: item.title ::</a></h4>
+        <h4 class="text-headline margin-none"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
         <p>Engine: :: item.engine :: - Level: :: item.level ::</p>
       </div>
       <hr class="margin-none">
@@ -79,7 +79,7 @@
             <h4><a href>:: item.instructor ::</a><br/></h4>
           </div>
         </div>
-        <div class="navbar-right" ng-if="vm.$state.is('main.courses')">
+        <div class="navbar-right" ng-if="!user.admin && !user.instructor && !user.staff">
           <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right">
             <!-- user -->
             <li class="dropdown">

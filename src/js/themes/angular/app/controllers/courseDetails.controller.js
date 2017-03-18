@@ -142,7 +142,7 @@
           if (result === 'ok') {
             CoursesService.deleteCourse(courseId, function(res) { //will change dynamically later
               $scope.showMessage('success', 'Khóa học đã xóa thành công!');
-              vm.$state.go('main.manage-courses', {}, { reload: true });
+              vm.$state.go('main.courses', {type: vm.$state.params.type}, { reload: true });
             }, function(res) {
               if (res.status === 500) {
                 $scope.showMessage('danger', 'Xin lỗi, thao tác thất bại!');

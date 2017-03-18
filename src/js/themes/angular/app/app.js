@@ -51,9 +51,7 @@
         'responseError': function(response) {
           if (response.status === 401) {
             var state = $injector.get('$state');
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            state.go('login');
+            state.go('main.courses');
           }
           return $q.reject(response);
         }

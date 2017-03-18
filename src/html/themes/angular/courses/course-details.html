@@ -1,16 +1,16 @@
 <div id="course-details">
-  <div class="parallax bg-white page-section">
+  <div class="parallax bg-white padding-v-15">
     <div class="parallax-layer container" data-opacity="true">
       <div class="media v-middle">
         <div class="media-left">
-          <span class="icon-block s60 bg-lightred" ng-if="vm.course.cover === 'missing.png'"><i class="mfizz icon-::vm.course.engine | lowercase::"></i></span>
-          <span class="icon-block s60 course-cover" ng-if="vm.course.cover !== 'missing.png'" ng-attr-style="background-image: url(::vm.course.cover::);"></span>
+          <span class="icon-block bg-lightred" ng-if="vm.course.cover === 'missing.png'"><i class="mfizz icon-::vm.course.engine | lowercase::"></i></span>
+          <span class="icon-block course-cover" ng-if="vm.course.cover !== 'missing.png'" ng-attr-style="background-image: url(::vm.course.cover::);"></span>
         </div>
         <div class="media-body">
           <h1 class="text-display-1 margin-none">:: vm.course.title ::</h1>
         </div>
         <div class="media-right">
-          <a class="btn btn-white" ui-sref="main.manage-courses">Back to my courses</a>
+          <a class="btn btn-white" ui-sref="main.courses({type: vm.$state.params.type})">Quay lại</a>
         </div>
       </div>
     </div>
@@ -26,10 +26,12 @@
         </div> -->
           <div>:: vm.course.description ::</div>
           <br/>
-          <p class="margin-none">
+          <p class="margin-none info">
             <!-- <span class="label bg-gray-dark">New</span> -->
-            <span class="label label-grey-200">:: vm.course.engine ::</span>
-            <span class="label label-grey-200">:: vm.course.level ::</span>
+            <span class="label" ng-class="vm.course.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: vm.course.engine ::</span>
+            <span class="label" ng-class="vm.course.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: vm.course.level ::</span>
+            <i class="course-badge fa fa-trophy" aria-hidden="true"></i><a href><strong> :: vm.course.badge.title ::</strong></a>
+            <span class="label bg-cyan-500 admin-label">Admin: :: vm.course.admin ::</span>
           </p>
         </div>
         <div class="page-section">

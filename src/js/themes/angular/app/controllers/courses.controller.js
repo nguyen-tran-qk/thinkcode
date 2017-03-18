@@ -14,10 +14,15 @@
     vm.$state = $state;
 
     vm.fetchCourses = function() {
-      CoursesService.getAllCourses(vm.$state.includes('main.manage-courses'), function(res) {
+      var type = vm.$state.params.type || 'published';
+      CoursesService.getAllCourses(type, function(res) {
         vm.courses = res.data;
         $scope.loading = false;
       }, function(res) {
+        $scope.loading = false;
+        if (res.status === 401) {
+          $scope.showMessage('danger', res.data.message);
+        }
         $scope.showMessage('danger');
       });
     };
@@ -109,7 +114,7 @@
           if (res.data.new_course_id) {
             $scope.showMessage('success', 'Tạo khóa học thành công!');
             vm.fetchCourses();
-            vm.$state.go('main.manage-courses.details', { course_id: res.data.new_course_id });
+            vm.$state.go('main.courses.details', { course_id: res.data.new_course_id });
           } else {
             $scope.showMessage('danger');
           }
@@ -129,5 +134,10 @@
       });
     };
 
+    $scope.$watch('vm.$state.params.type', function(newVal, oldVal) {
+      if (newVal !== oldVal && vm.$state.params.type) {
+        vm.fetchCourses();
+      }
+    });
   }
 })();
