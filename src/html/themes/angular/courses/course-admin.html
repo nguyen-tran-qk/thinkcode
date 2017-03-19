@@ -1,0 +1,40 @@
+<div class="modal-header">
+  <h3 class="modal-title">Quản trị khóa học</h3>
+</div>
+<div class="modal-body">
+  <div class="form-group form-control-material" ng-class="{'open': vm.authorList.length && vm.authorTyping}">
+    <input type="text" class="form-control" id="course-author" name="course-author" placeholder="Tìm theo tên" ng-model="vm.aKeyword" ng-keyup="vm.delaySearch('author', vm.aKeyword)" ng-class="{'used': vm.aKeyword}" ng-click="vm.authorTyping = true" autocomplete="off"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+    <label for="course-author">Quản trị viên của khóa học: :: vm.course.admin ::</label>
+    <ul class="dropdown-menu badges-dropdown-list" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+      <li role="menuitem" ng-repeat="author in vm.authorList" ng-click="vm.select('author', author)">
+        <a href>:: author.title ::</a>
+      </li>
+    </ul>
+  </div>
+  <div class="form-group form-control-material" ng-class="{'open': vm.editorList.length && vm.editorTyping}">
+    <input type="text" class="form-control" id="course-editor" name="course-editor" placeholder="Tìm theo tên giáo viên" ng-model="vm.eKeyword" ng-keyup="vm.delaySearch('editor', vm.eKeyword)" ng-class="{'used': vm.eKeyword}" ng-click="vm.editorTyping = true" autocomplete="off"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+    <label for="course-editor">Giáo viên:
+      <span ng-repeat="item in vm.course.teachers">:: item.title ::<span ng-if="$index < (vm.course.teachers.length -1)">, </span></span>
+    </label>
+    <ul class="dropdown-menu badges-dropdown-list" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+      <li role="menuitem" ng-repeat="editor in vm.editorList" ng-click="vm.select('editor', editor)">
+        <a href>:: editor.title ::</a>
+      </li>
+    </ul>
+  </div>
+  <div class="form-group form-control-material" ng-class="{'open': vm.courseList.length && vm.courseTyping}">
+    <input type="text" class="form-control" id="course-course" name="course-course" placeholder="Tìm theo tên khóa học" ng-model="vm.cKeyword" ng-keyup="vm.delaySearch('course', vm.cKeyword)" ng-class="{'used': vm.cKeyword}" ng-click="vm.courseTyping = true" autocomplete="off"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+    <label for="course-course">Nên học trước:
+      <span ng-repeat="item in vm.course.prerequisites">:: item.title ::<span ng-if="$index < (vm.course.prerequisites.length -1)">, </span></span>
+    </label>
+    <ul class="dropdown-menu badges-dropdown-list" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+      <li role="menuitem" ng-repeat="course in vm.courseList" ng-click="vm.select('course', course)">
+        <span>:: course.title ::</span>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default" type="button" ng-click="vm.cancel()">Bỏ qua</button>
+  <button class="btn btn-primary" type="button" ng-click="vm.ok()" ng-disabled="!vm.course.author_id">Lưu thay đổi</button>
+</div>

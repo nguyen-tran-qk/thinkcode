@@ -84,7 +84,23 @@
             });
         },
         changeCourseStatus: function(courseId, state, callback, errorCallback) {
-          $http.patch(API_URL + '/courses/' + courseId + '/change_status?token=' + localStorage.token + '&state=' + state)
+          var data = {
+            token: localStorage.token,
+            state: state
+          };
+          $http.patch(API_URL + '/courses/' + courseId + '/change_status', data)
+            .then(function(res) {
+              if (callback) {
+                callback(res);
+              }
+            }, function(res) {
+              if (errorCallback) {
+                errorCallback(res);
+              }
+            });
+        },
+        searchCourse: function(keyword, callback, errorCallback) {
+          $http.get(API_URL + '/courses/search?keyword=' + keyword)
             .then(function(res) {
               if (callback) {
                 callback(res);
@@ -106,7 +122,23 @@
                 errorCallback(res);
               }
             });
-        }
+        },
+        updateCourseAdministration: function(courseId, course, callback, errorCallback) {
+          var data = {
+            token: localStorage.token,
+            course: course
+          };
+          $http.patch(API_URL + '/courses/' + courseId + '/administration', data)
+            .then(function(res) {
+              if (callback) {
+                callback(res);
+              }
+            }, function(res) {
+              if (errorCallback) {
+                errorCallback(res);
+              }
+            });
+        },
       };
     }]);
 })();

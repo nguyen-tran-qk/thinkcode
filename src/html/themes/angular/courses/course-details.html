@@ -1,9 +1,9 @@
 <div id="course-details">
-  <div class="parallax bg-white padding-v-15">
+  <div class="parallax bg-white page-section">
     <div class="parallax-layer container" data-opacity="true">
       <div class="media v-middle">
         <div class="media-left">
-          <span class="icon-block bg-lightred" ng-if="vm.course.cover === 'missing.png'"><i class="mfizz icon-::vm.course.engine | lowercase::"></i></span>
+          <span class="icon-block s60 bg-lightred" ng-if="vm.course.cover === 'missing.png'"><i class="mfizz icon-::vm.course.engine | lowercase::"></i></span>
           <!-- <span class="icon-block course-cover" ng-if="vm.course.cover !== 'missing.png'" ng-attr-style="background-image: url(::vm.course.cover::);"> -->
           <span class="icon-block course-cover" ng-if="vm.course.cover !== 'missing.png'">
             <img ng-src="::vm.course.cover::">
@@ -27,7 +27,7 @@
             <iframe class="embed-responsive-item" src="//www.youtube-nocookie.com/embed/Ycv5fNd4AeM?rel=0"></iframe>
           </div>
         </div> -->
-          <div>:: vm.course.description ::</div>
+          <div class="description">:: vm.course.description ::</div>
           <br/>
           <div class="info">
             <p class="margin-none">
@@ -110,20 +110,17 @@
                 </li>
               </ul>
             </div>
-            <div class="col-md-5">
-              <div class="pull-right">
-                <a class="btn btn-white btn-circle paper-shadow relative" data-z="1" href><i class="md md-add"></i></a>
-              </div>
-              <h2 class="text-headline margin-none">Testimonials</h2>
-              <p class="text-subhead text-light">A few words from our past students</p>
-              {% include "src/html/themes/html/testimonial/_carousel-2.html" { dataItems: 1, dataItemsLg: 1, dataItemsMd: 1, dataItemsSm: 1 } %}
+            <div class="col-md-5" ng-if="vm.course.prerequisites.length">
+              <h2 class="text-headline margin-none">Yêu cầu của khóa học</h2>
+              <p class="tẽt-subhead text-light">Khóa học này yêu cầu một số kiến thức nhất định, do đó trước khi bắt đầu, bạn nên tham gia:</p>
+              <!-- {% include "src/html/themes/html/testimonial/_carousel-2.html" { dataItems: 1, dataItemsLg: 1, dataItemsMd: 1, dataItemsSm: 1 } %} -->
             </div>
           </div>
         </div>
       </div>
       <div class="col-lg-3 col-md-4">
         <div class="page-section">
-          <div class="panel panel-default" data-toggle="panel-collapse" data-open="true">
+          <div class="panel panel-default paper-shadow" data-toggle="panel-collapse" data-open="true" data-z="0.5" data-hover-z="1" data-animated="">
             <div class="panel-heading panel-collapse-trigger collapse" data-toggle="collapse" data-target="#manage-course" aria-expanded="true">
               <h4 class="panel-title">Quản lý</h4>
             </div>
@@ -131,17 +128,17 @@
               <div class="panel-body list-group">
                 <ul class="list-group list-group-menu">
                   <li class="list-group-item" ui-sref-active="active"><a class="link-text-color" ng-click="vm.updateCourse()" href ng-if="vm.course.status !== 'published'">Chỉnh sửa khóa học</a></li>
-                  <li class="list-group-item" ui-sref-active="active" ng-if="vm.course.status !== 'published' && (user.username === vm.course.admin || user.staff)"><a class="link-text-color" ng-click="" href>Quản trị khóa học</a></li>
+                  <li class="list-group-item" ui-sref-active="active" ng-if="vm.course.status !== 'published' && (user.username === vm.course.admin || user.staff)"><a class="link-text-color" ng-click="vm.courseAdministration()" href>Quản trị khóa học</a></li>
                   <li class="list-group-item" ui-sref-active="active"><a class="link-text-color" ng-click="vm.deleteCourse(vm.course.id, vm.course.title)" href>Xóa bỏ</a></li>
                   <li class="list-group-item collapse" data-toggle="collapse" data-target="#change-status" aria-expanded="true" ui-sref-active="active">
-                    <a class="link-text-color sub-heading">Thay đổi trạng thái</a>
+                    <a class="link-text-color sub-heading" href>Thay đổi trạng thái</a>
                     <div id="change-status" class="collapse in">
                       <div class="list-group">
                         <ul class="list-group list-group-menu">
-                          <li class="list-group-item" ui-sref-active="active"><a class="link-text-color" ng-click="vm.changeCourseStatus()" href>Nộp để kiểm định</a></li>
-                          <li class="list-group-item" ui-sref-active="active"><a class="link-text-color" ng-click="vm.changeCourseStatus()" href>Trả về nháp</a></li>
-                          <li class="list-group-item" ui-sref-active="active"><a class="link-text-color" ng-click="vm.changeCourseStatus()" href>Trả về kiểm định</a></li>
-                          <li class="list-group-item" ui-sref-active="active"><a class="link-text-color" ng-click="vm.changeCourseStatus()" href>Duyệt</a></li>
+                          <li class="list-group-item" ui-sref-active="active" uib-tooltip="Chỉ dành cho quản trị viên khóa học này" ng-if="vm.course.status === 'draft'"><a class="link-text-color" ng-click="vm.changeCourseStatus('reviewing')" href><small>Nộp để kiểm tra</small></a></li>
+                          <li class="list-group-item" ui-sref-active="active" uib-tooltip="Chỉ dành cho nhân viên" ng-if="vm.course.status !== 'draft'"><a class="link-text-color" ng-click="vm.changeCourseStatus('draft')" href><small>Trả về nháp</small></a></li>
+                          <li class="list-group-item" ui-sref-active="active" uib-tooltip="Chỉ dành cho nhân viên" ng-if="vm.course.status === 'published'"><a class="link-text-color" ng-click="vm.changeCourseStatus(reviewing)" href><small>Trả về kiểm tra</small></a></li>
+                          <li class="list-group-item" ui-sref-active="active" uib-tooltip="Chỉ dành cho nhân viên" ng-if="vm.course.status === 'reviewing'"><a class="link-text-color" ng-click="vm.changeCourseStatus('published')" href><small>Duyệt</small></a></li>
                         </ul>
                       </div>
                     </div>
@@ -150,11 +147,27 @@
               </div>
             </div>
           </div>
+          <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated="">
+            <div class="panel-body">
+              <div class="media v-middle" ng-if="!vm.course.teachers.length">
+                <h4 class="margin-none">Chưa có giáo viên được chỉ định cho khóa học này</h4>
+              </div>
+              <div class="media v-middle" ng-repeat="teacher in vm.course.teachers">
+                <div class="media-left">
+                  <img src="images/people/110/guy-{{ random(1,9) }}.jpg" alt="" width="60" class="img-circle">
+                </div>
+                <div class="media-body">
+                  <h4 class="margin-none"><a href>:: teacher.username ::</a></h4>
+                  <span class="caption text-light">Giáo viên</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="bg-white page-section">
+  <div class="bg-white page-section padding-v-20-40">
     <div class="container">
       <h4>Featured</h4> {% include "src/html/themes/html/courses/_carousel.html" { dataItems: 4, dataItemsLg: 3, dataItemsMd: 2, dataItemsSm: 1 } %}
     </div>

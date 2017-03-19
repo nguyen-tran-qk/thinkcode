@@ -73,7 +73,7 @@
           $interpolateProvider.startSymbol('::');
           $interpolateProvider.endSymbol('::');
 
-          $httpProvider.interceptors.push('authInterceptor');
+          // $httpProvider.interceptors.push('authInterceptor');
           ngToastProvider.configure({
             animation: 'slide',
             combineDuplications: true,

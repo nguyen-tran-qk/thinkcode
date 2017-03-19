@@ -59,6 +59,18 @@
                 errorCallback(res);
               }
             });
+        },
+        searchUser: function(keyword, callback, errorCallback) {
+          $http.get(API_URL + '/users/search?keyword=' + keyword)
+            .then(function(res) {
+              if (callback) {
+                callback(res);
+              }
+            }, function(res) {
+              if (errorCallback) {
+                errorCallback(res);
+              }
+            });
         }
       };
     }]);
