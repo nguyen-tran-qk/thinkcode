@@ -37,6 +37,7 @@ require('./app/directives/chat-box');
 require('./app/services/workspace')
 require('./app/services/users')
 require('./app/services/course')
+require('./app/services/badge')
 
 // Angular App Controllers
 require('./app/controllers/users.controller.js')

@@ -58,11 +58,30 @@
           templateUrl: 'modals/create-course.html',
           backdrop: 'static',
           keyboard: false,
-          controller: function($uibModalInstance, course, CoursesService) {
+          controller: function($timeout, $uibModalInstance, course, CoursesService, BadgeService) {
             var vm = this;
             var engine_arr = ['Engine', 'Python', 'Ruby'],
               level_arr = ['Level', 'Learn', 'Hack'];
+
+            function debounce(func, wait, context) {
+              var timer;
+              return function debounced() {
+                var context = $scope,
+                  args = Array.prototype.slice.call(arguments);
+                $timeout.cancel(timer);
+                timer = $timeout(function() {
+                  timer = undefined;
+                  func.apply(context, args);
+                }, wait || 10);
+              };
+            }
+
             vm.course = course;
+            BadgeService.getBadges(function(res) {
+              vm.currentBadge = res.data.find(function(badge) {
+                return badge.id === vm.course.badge.id;
+              });
+            });
             vm.selectEngine = function(engine_id) {
               vm.course.engine_id = engine_id;
               vm.course.engine = engine_arr[engine_id];
@@ -79,6 +98,38 @@
             };
             vm.cancel = function() {
               $uibModalInstance.dismiss('close');
+            };
+            vm.searchBadge = debounce(function(keyword) {
+              if (keyword && keyword.length) {
+                CoursesService.searchBadge(keyword, function(res) {
+                  vm.badgeList = res.data;
+                });
+              } else {
+                vm.badgeList = [];
+              }
+            }, 300);
+            vm.selectBadge = function(badge) {
+              vm.typing = false;
+              vm.course.badge_id = badge.id;
+              vm.currentBadge = badge;
+            };
+            // Read the image using the filereader 
+            var fileReaderSupported = window.FileReader !== null;
+            vm.photoChanged = function(file) {
+              if (file !== null) {
+                // var file = files[0];
+                if (fileReaderSupported && file.type.indexOf('image') > -1) {
+                  $timeout(function() {
+                    var fileReader = new FileReader();
+                    fileReader.readAsDataURL(file); // convert the image to data url. 
+                    fileReader.onload = function(e) {
+                      $timeout(function() {
+                        vm.course.cover = e.target.result; // Retrieve the image. 
+                      });
+                    };
+                  });
+                }
+              }
             };
           },
           controllerAs: 'vm',
@@ -142,14 +193,14 @@
           if (result === 'ok') {
             CoursesService.deleteCourse(courseId, function(res) { //will change dynamically later
               $scope.showMessage('success', 'Khóa học đã xóa thành công!');
-              vm.$state.go('main.courses', {type: vm.$state.params.type}, { reload: true });
+              vm.$state.go('main.courses', { type: vm.$state.params.type }, { reload: true });
             }, function(res) {
               if (res.status === 500) {
                 $scope.showMessage('danger', 'Xin lỗi, thao tác thất bại!');
               } else if (res.status === 401) {
                 $scope.showMessage('danger', 'Xin lỗi, bạn không có quyền thực hiện thao tác này!');
               } else {
-              	$scope.showMessage('danger');
+                $scope.showMessage('danger');
               }
             });
           }

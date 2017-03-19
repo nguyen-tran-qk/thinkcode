@@ -51,7 +51,7 @@
         'responseError': function(response) {
           if (response.status === 401) {
             var state = $injector.get('$state');
-            state.go('main.courses');
+            state.go('main.courses', { type: 'published' }, { reload: true });
           }
           return $q.reject(response);
         }

@@ -4,7 +4,10 @@
       <div class="media v-middle">
         <div class="media-left">
           <span class="icon-block bg-lightred" ng-if="vm.course.cover === 'missing.png'"><i class="mfizz icon-::vm.course.engine | lowercase::"></i></span>
-          <span class="icon-block course-cover" ng-if="vm.course.cover !== 'missing.png'" ng-attr-style="background-image: url(::vm.course.cover::);"></span>
+          <!-- <span class="icon-block course-cover" ng-if="vm.course.cover !== 'missing.png'" ng-attr-style="background-image: url(::vm.course.cover::);"> -->
+          <span class="icon-block course-cover" ng-if="vm.course.cover !== 'missing.png'">
+            <img ng-src="::vm.course.cover::">
+          </span>
         </div>
         <div class="media-body">
           <h1 class="text-display-1 margin-none">:: vm.course.title ::</h1>
@@ -26,18 +29,23 @@
         </div> -->
           <div>:: vm.course.description ::</div>
           <br/>
-          <p class="margin-none info">
-            <!-- <span class="label bg-gray-dark">New</span> -->
-            <span class="label" ng-class="vm.course.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: vm.course.engine ::</span>
-            <span class="label" ng-class="vm.course.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: vm.course.level ::</span>
-            <i class="course-badge fa fa-trophy" aria-hidden="true"></i><a href><strong> :: vm.course.badge.title ::</strong></a>
-            <span class="label bg-cyan-500 admin-label">Admin: :: vm.course.admin ::</span>
-          </p>
+          <div class="info">
+            <p class="margin-none">
+              <!-- <span class="label bg-gray-dark">New</span> -->
+              <span class="label" ng-class="vm.course.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: vm.course.engine ::</span>
+              <span class="label" ng-class="vm.course.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: vm.course.level ::</span>
+              <i class="course-badge fa fa-trophy" aria-hidden="true"></i><a href><strong> :: vm.course.badge.title ::</strong></a>
+            </p>
+            <div class="label bg-cyan-500 admin-label">
+              <h5>Quản trị khóa học:</h5>
+              <div><img src="images/people/110/guy-6.jpg" width="20" height="20" class="img-circle"> :: vm.course.admin ::</div>
+            </div>
+          </div>
         </div>
         <div class="page-section">
           <div class="row">
             <div class="col-md-7">
-              <h2 class="text-headline margin-none">What you'll learn</h2>
+              <h2 class="text-headline margin-none">Bạn sẽ được học những gì?</h2>
               <p class="text-subhead text-light">A minus obcaecati optio pariatur porro.</p>
               <ul class="list-group relative paper-shadow" data-hover-z="0.5" data-animated>
                 <li class="list-group-item">
@@ -115,58 +123,34 @@
       </div>
       <div class="col-lg-3 col-md-4">
         <div class="page-section">
-          <!-- .panel -->
-          <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated ng-if="!user.instructor">
-            <div class="panel-heading">
-              <h4 class="text-headline">Course</h4>
+          <div class="panel panel-default" data-toggle="panel-collapse" data-open="true">
+            <div class="panel-heading panel-collapse-trigger collapse" data-toggle="collapse" data-target="#manage-course" aria-expanded="true">
+              <h4 class="panel-title">Quản lý</h4>
             </div>
-            <div class="panel-body">
-              <p class="text-caption">
-                <i class="fa fa-clock-o fa-fw"></i> 4 hrs &nbsp;
-                <i class="fa fa-calendar fa-fw"></i> 21/10/14
-                <br/>
-                <i class="fa fa-user fa-fw"></i> Instructor: :: vm.course.instructor ::
-                <br/>
-                <i class="fa fa-mortar-board fa-fw"></i> Max. students: 50
-                <br/>
-                <i class="fa fa-check fa-fw"></i> Attending: 30
-              </p>
-            </div>
-            <hr class="margin-none" />
-            <div class="panel-body text-center">
-              <p><a class="btn btn-success btn-lg paper-shadow relative" data-z="1" data-hover-z="2" data-animated href>Start Course</a></p>
-            </div>
-            <ul class="list-group">
-              <li class="list-group-item">
-                <a href class="text-light"><i class="fa fa-facebook fa-fw"></i> Share on facebook</a>
-              </li>
-              <li class="list-group-item">
-                <a href class="text-light"><i class="fa fa-twitter fa-fw"></i> Tweet this course</a>
-              </li>
-            </ul>
-          </div>
-          <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated>
-            <hr class="margin-none" />
-            <div class="panel-body text-center">
-              <p>
-                <a class="btn btn-primary btn-sm paper-shadow relative" data-z="1" data-hover-z="2" data-animated ng-click="vm.updateCourse()">Chỉnh sửa khóa học</a>
-                <a class="btn btn-danger btn-sm paper-shadow relative" data-z="1" data-hover-z="2" data-animated ng-click="vm.deleteCourse(vm.course.id, vm.course.title)">Xóa bỏ</a>
-              </p>
-              <p>
-                <a class="btn btn-sm paper-shadow relative" ng-class="vm.course.status === 'draft' ? 'btn-success' : 'btn-warning'" data-z="1" data-hover-z="2" data-animated ng-click="vm.changeCourseStatus()">:: vm.course.status === 'draft' ? 'Publish' : 'Unpublish' ::</a>
-              </p>
+            <div id="manage-course" class="collapse">
+              <div class="panel-body list-group">
+                <ul class="list-group list-group-menu">
+                  <li class="list-group-item" ui-sref-active="active"><a class="link-text-color" ng-click="vm.updateCourse()" href ng-if="vm.course.status !== 'published'">Chỉnh sửa khóa học</a></li>
+                  <li class="list-group-item" ui-sref-active="active" ng-if="vm.course.status !== 'published' && (user.username === vm.course.admin || user.staff)"><a class="link-text-color" ng-click="" href>Quản trị khóa học</a></li>
+                  <li class="list-group-item" ui-sref-active="active"><a class="link-text-color" ng-click="vm.deleteCourse(vm.course.id, vm.course.title)" href>Xóa bỏ</a></li>
+                  <li class="list-group-item collapse" data-toggle="collapse" data-target="#change-status" aria-expanded="true" ui-sref-active="active">
+                    <a class="link-text-color sub-heading">Thay đổi trạng thái</a>
+                    <div id="change-status" class="collapse in">
+                      <div class="list-group">
+                        <ul class="list-group list-group-menu">
+                          <li class="list-group-item" ui-sref-active="active"><a class="link-text-color" ng-click="vm.changeCourseStatus()" href>Nộp để kiểm định</a></li>
+                          <li class="list-group-item" ui-sref-active="active"><a class="link-text-color" ng-click="vm.changeCourseStatus()" href>Trả về nháp</a></li>
+                          <li class="list-group-item" ui-sref-active="active"><a class="link-text-color" ng-click="vm.changeCourseStatus()" href>Trả về kiểm định</a></li>
+                          <li class="list-group-item" ui-sref-active="active"><a class="link-text-color" ng-click="vm.changeCourseStatus()" href>Duyệt</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-          <!-- // END .panel -->
-          <!-- .panel -->
-          <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated>
-            <div class="panel-body">
-              {% include "src/html/themes/html/course/_author-expandable.html" %}
-            </div>
-          </div>
-          <!-- // END .panel -->
         </div>
-        <!-- // END .page-section -->
       </div>
     </div>
   </div>

@@ -5,13 +5,13 @@
         <div class="panel-body">
             <div class="form-group">
                 <div class="form-control-material">
-                    <input class="form-control" id="username" type="text" placeholder="Username" ng-model="vm.username" ng-keyup="$event.keyCode == 13 && vm.signin()">
+                    <input class="form-control" id="username" type="text" placeholder="Username" ng-model="vm.username" ng-keyup="$event.keyCode == 13 && vm.signin()" autocomplete="off">
                     <label for="username">Username</label>
                 </div>
             </div>
             <div class="form-group">
                 <div class="form-control-material">
-                    <input class="form-control" id="password" type="password" placeholder="Enter Password" ng-model="vm.password" ng-keyup="$event.keyCode == 13 && vm.signin()">
+                    <input class="form-control" id="password" type="password" placeholder="Enter Password" ng-model="vm.password" ng-keyup="$event.keyCode == 13 && vm.signin()" autocomplete="off">
                     <label for="password">Password</label>
                 </div>
             </div>

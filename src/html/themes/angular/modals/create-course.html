@@ -4,10 +4,10 @@
 <div class="modal-body">
   <form class="create-course" name="form.newCourseForm">
     <div class="form-group ">
-      <div class="btn btn-primary btn-sm" ngf-select ng-model="uploadedFile" ngf-accept="'svg, png'" name="template" ngf-change="vm.photoChanged(uploadedFile)"><small>Upload ảnh bìa</small></div>
+      <div class="btn btn-primary btn-sm" ngf-select ng-model="uploadedFile" ngf-accept="'svg, png'" name="template" ngf-change="vm.photoChanged(uploadedFile)"><small>Upload ảnh bìa</small></div> <span>Kích thước đề nghị: 500x500 (px)</span>
       <!-- <div class="btn btn-primary btn-sm" ngf-select ng-model="uploadedFile" ngf-accept="svg" name="template" ngf-change="vm.photoChanged(uploadedFile)" ngf-resize="{width:350, height: 150, centerCrop: true}"><small>Upload ảnh bìa</small></div> -->
       <div ng-if="vm.course.cover" class="text-center margin-v-10">
-        <img class="course-cover" height="150" ng-src=":: vm.course.cover ::">
+        <img class="course-cover-preview" height="150" ng-src=":: vm.course.cover ::">
       </div>
     </div>
     <div class="form-group form-control-material">
@@ -37,9 +37,9 @@
       </div>
     </div>
     <div class="form-group form-control-material" ng-class="{'open': vm.badgeList.length && vm.typing}">
-      <input type="text" class="form-control" id="course-badge" name="course-badge" ng-model="keyword" ng-keyup="vm.searchBadge(keyword)" ng-class="{'used': keyword}" ng-click="vm.typing = true"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
-      <label for="course-badge">Tìm huy hiệu</label>
-      <span ng-if="!vm.currentBadge">Hãy tìm một huy hiệu để trao thưởng cho các học viên hoàn thành khóa học này.</span>
+      <input type="text" class="form-control" id="course-badge" name="course-badge" ng-model="keyword" ng-keyup="vm.searchBadge(keyword)" ng-class="{'used': keyword}" ng-click="vm.typing = true" autocomplete="off"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+      <label for="course-badge">Tìm danh hiệu</label>
+      <span ng-if="!vm.currentBadge">Hãy tìm một danh hiệu để trao thưởng cho các học viên hoàn thành khóa học này.</span>
       <ul class="dropdown-menu badges-dropdown-list" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
         <li role="menuitem" ng-repeat="badge in vm.badgeList" ng-click="vm.selectBadge(badge)">
           <img ng-src="::badge.image::" width="40" height="40"><span>:: badge.title ::</span>
@@ -47,7 +47,7 @@
       </ul>
     </div>
     <div ng-if="vm.currentBadge">
-      <span>Huy hiệu </span><img ng-src="::vm.currentBadge.image::" width="40" height="40"><strong> :: vm.currentBadge.title ::</strong><span> sẽ được trao thưởng cho các học viên hoàn thành khóa học.</span>
+      <span>Danh hiệu </span><img ng-src="::vm.currentBadge.image::" width="40" height="40"><strong> :: vm.currentBadge.title ::</strong><span> sẽ được trao thưởng cho các học viên hoàn thành khóa học.</span>
     </div>
   </form>
 </div>

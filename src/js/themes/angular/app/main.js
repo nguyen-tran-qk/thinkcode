@@ -21,7 +21,7 @@
           $scope.loading = true;
           UserService.signout(function(res) {
             $scope.loading = false;
-            $scope.$state.go('main.courses', {}, { reload: true });
+            $scope.$state.go('main.courses', { type: 'published' }, { reload: true });
           });
         };
         $scope.showMessage = function(type, msg) {

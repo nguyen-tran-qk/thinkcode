@@ -45,6 +45,9 @@
       <div class="cover overlay cover-image-full hover">
         <div ng-if="item.cover !== 'missing.png'">
           <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block height-150 course-cover width-100pc" ng-attr-style="background-image: url(::item.cover::);"></span>
+         <!--  <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block height-150 course-cover width-100pc">
+          	<img ng-src="::item.cover::">
+          </span> -->
           <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
         </div>
         <div ng-if="item.cover === 'missing.png'">

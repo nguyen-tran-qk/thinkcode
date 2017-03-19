@@ -3,8 +3,10 @@
 
   angular.module('app')
     .factory('CoursesService', ['API_URL', '$http', 'Upload', function(API_URL, $http, Upload) {
-      var tokenString = '?token=' + localStorage.token;
       return {
+        tokenString: function() {
+          return '?token=' + localStorage.token;
+        },
         getAllCourses: function(type, callback, errorCallback) {
           var url = API_URL + '/courses';
           if (type === 'manage') {
@@ -58,7 +60,7 @@
             });
         },
         getCourseById: function(courseId, callback, errorCallback) {
-          $http.get(API_URL + '/courses/' + courseId + tokenString)
+          $http.get(API_URL + '/courses/' + courseId + this.tokenString())
             .then(function(res) {
               if (callback) {
                 callback(res);
@@ -70,7 +72,7 @@
             });
         },
         deleteCourse: function(courseId, callback, errorCallback) {
-          $http.delete(API_URL + '/courses/' + courseId + tokenString)
+          $http.delete(API_URL + '/courses/' + courseId + this.tokenString())
             .then(function(res) {
               if (callback) {
                 callback(res);

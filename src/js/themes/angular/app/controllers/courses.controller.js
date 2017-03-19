@@ -20,10 +20,9 @@
         $scope.loading = false;
       }, function(res) {
         $scope.loading = false;
-        if (res.status === 401) {
-          $scope.showMessage('danger', res.data.message);
+        if (res.status !== 401) {
+          $scope.showMessage('danger');
         }
-        $scope.showMessage('danger');
       });
     };
     vm.fetchCourses();
@@ -33,7 +32,7 @@
         templateUrl: 'modals/create-course.html',
         backdrop: 'static',
         keyboard: false,
-        controller: function($timeout, $uibModalInstance, courseId, CoursesService) {
+        controller: function($timeout, $uibModalInstance, courseId, CoursesService, BadgeService) {
           var vm = this;
           var engine_arr = ['Engine', 'Python', 'Ruby'],
             level_arr = ['Level', 'Learn', 'Hack'];
@@ -50,7 +49,7 @@
               }, wait || 10);
             };
           }
-
+          
           vm.course = {
             engine: engine_arr[0],
             level: level_arr[0]
