@@ -111,18 +111,6 @@
               }
             });
         },
-        searchBadge: function(keyword, callback, errorCallback) {
-          $http.get(API_URL + '/badges?keyword=' + keyword)
-            .then(function(res) {
-              if (callback) {
-                callback(res);
-              }
-            }, function(res) {
-              if (errorCallback) {
-                errorCallback(res);
-              }
-            });
-        },
         updateCourseAdministration: function(courseId, course, callback, errorCallback) {
           var data = {
             token: localStorage.token,

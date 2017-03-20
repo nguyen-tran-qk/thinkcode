@@ -2,9 +2,9 @@
   "use strict";
 
   angular.module('app')
-    .controller('AppCtrl', ['$scope', '$state', 'UserService', 'ngToast',
+    .controller('AppCtrl', ['$scope', '$state', 'UserService', 'BadgeService', 'ngToast',
 
-      function($scope, $state, UserService, ngToast) {
+      function($scope, $state, UserService, BadgeService, ngToast) {
 
         $scope.app = {
           settings: {
@@ -12,10 +12,16 @@
             bodyClass: ''
           }
         };
-
+        $scope.loading = false;
         $scope.$state = $state;
         $scope.user = UserService.getUser();
-        // $scope.user = null;
+        $scope.allBadges = [];
+        
+        BadgeService.getBadges(function(res) {
+          $scope.allBadges = res.data;
+        }, function(res) {
+          $scope.allBadges = [];
+        });
 
         $scope.signout = function() {
           $scope.loading = true;

@@ -38,6 +38,31 @@
           return string;
         }
       };
+    })
+    .filter('courseStatus', function() {
+      return function(string) {
+        if (string === 'draft') {
+          return 'Bản nháp';
+        } else if (string === 'reviewing') {
+          return 'Đang kiểm tra';
+        } else if (string === 'published') {
+          return 'Đã được duyệt';
+        } else {
+          return string;
+        }
+      };
+    })
+    .filter('badgeImage', function() {
+      return function(badge_id, badge_arr) {
+        var result = badge_arr.find(function(item) {
+          return item.id === badge_id;
+        });
+        if (result) {
+          return result.image;
+        } else {
+          return '';
+        }
+      }
     });
 
   angular.module('app').filter('findBranchByUid', function() {

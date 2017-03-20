@@ -5,38 +5,39 @@
       <button class="btn btn-success col-xs-2" ng-click="vm.openCourseModal()"><strong>Tạo khóa học mới</strong></button>
       <div class="form-group right padding-none">
         <div class="btn-group right" uib-dropdown>
-          <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>::vm.search.status.length ? vm.search.status : 'Status'::<span class="caret"></span>
+          <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>::vm.search.status.length ? vm.search.status : 'Trạng thái'::<span class="caret"></span>
           </button>
           <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
-            <li role="menuitem"><a href ng-click="vm.search.status = ''">All</a></li>
-            <li role="menuitem"><a href ng-click="vm.search.status = 'draft'">Draft</a></li>
-            <li role="menuitem"><a href ng-click="vm.search.status = 'published'">Published</a></li>
+            <li role="menuitem"><a href ng-click="vm.search.status = ''">Tất cả</a></li>
+            <li role="menuitem"><a href ng-click="vm.search.status = 'draft'">Nháp</a></li>
+            <li role="menuitem"><a href ng-click="vm.search.status = 'reviewing'">Đang kiểm định</a></li>
+            <li role="menuitem"><a href ng-click="vm.search.status = 'published'">Đã được duyệt</a></li>
           </ul>
         </div>
       </div>
     </div>
     <div class="form-group right padding-none col-xs-6">
       <div class="btn-group right" uib-dropdown>
-        <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>::vm.search.level.length ? vm.search.level : 'Level'::<span class="caret"></span>
+        <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>::vm.search.level.length ? vm.search.level : 'Trình độ'::<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
-          <li role="menuitem"><a href ng-click="vm.search.level = ''">All</a></li>
+          <li role="menuitem"><a href ng-click="vm.search.level = ''">Tất cả</a></li>
           <li role="menuitem"><a href ng-click="vm.search.level = 'Learn'">Learn</a></li>
           <li role="menuitem"><a href ng-click="vm.search.level = 'Hack'">Hack</a></li>
         </ul>
       </div>
       <div class="btn-group right" uib-dropdown>
-        <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>::vm.search.engine.length ? vm.search.engine : 'Engine'::<span class="caret"></span>
+        <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>::vm.search.engine.length ? vm.search.engine : 'Ngôn ngữ'::<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
-          <li role="menuitem"><a href ng-click="vm.search.engine = ''">All</a></li>
+          <li role="menuitem"><a href ng-click="vm.search.engine = ''">Tất cả</a></li>
           <li role="menuitem"><a href ng-click="vm.search.engine = 'Python'">Python</a></li>
           <li role="menuitem"><a href ng-click="vm.search.engine = 'Ruby'">Ruby</a></li>
         </ul>
       </div>
       <div class="form-control-material col-xs-6 right">
         <input class="form-control" id="search" type="text" ng-model="vm.search.description">
-        <label for="search">Search</label>
+        <label for="search">Tìm khóa học</label>
       </div>
     </div>
   </div>
@@ -45,7 +46,7 @@
       <div class="cover overlay cover-image-full hover">
         <div ng-if="item.cover !== 'missing.png'">
           <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block height-150 course-cover width-100pc" ng-attr-style="background-image: url(::item.cover::);"></span>
-         <!--  <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block height-150 course-cover width-100pc">
+          <!--  <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block height-150 course-cover width-100pc">
           	<img ng-src="::item.cover::">
           </span> -->
           <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
@@ -68,7 +69,13 @@
       </div>
       <div class="panel-body course-title">
         <h4 class="text-headline margin-none"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
-        <p>Engine: :: item.engine :: - Level: :: item.level ::</p>
+        <p>
+          <span class="label" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
+          <span class="label" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
+          <span class="badge-label">
+          	<img ng-src=":: item.badge.id | badgeImage:allBadges ::" alt="Badge" class="icon-block s30"><a href><strong> :: item.badge.title ::</strong></a>
+          </span>
+        </p>
       </div>
       <hr class="margin-none">
       <div class="panel-body">

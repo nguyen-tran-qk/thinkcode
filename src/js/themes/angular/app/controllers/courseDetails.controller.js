@@ -38,7 +38,11 @@
         }, 1000);
       }, function(res) {
         vm.$state.go('main.courses');
-        $scope.showMessage('danger');
+        if (res.status === 401) {
+          $scope.showMessage('danger', 'Xin lỗi, bạn không có quyền thực hiện thao tác này.');
+        } else {
+          $scope.showMessage('danger');
+        }
         $timeout(function() {
           $scope.loading = false;
         });
@@ -100,7 +104,7 @@
             };
             vm.searchBadge = debounce(function(keyword) {
               if (keyword && keyword.length) {
-                CoursesService.searchBadge(keyword, function(res) {
+                BadgeService.searchBadge(keyword, function(res) {
                   vm.badgeList = res.data;
                 });
               } else {
@@ -194,6 +198,15 @@
               }, wait || 10);
             };
           }
+
+          function existedInArray(item, arr) {
+            for (var i = 0; i < arr.length; i++) {
+              if (arr[i].id === item.id) {
+                return true;
+              }
+            }
+            return false;
+          }
           vm.ok = function() {
             $uibModalInstance.close(vm.course);
           };
@@ -227,18 +240,36 @@
             if (type === 'author') {
               vm.authorTyping = false;
               vm.aKeyword = '';
+              vm.authorList = [];
               vm.course.author_id = item.id;
-              vm.course.admin = item.title;
+              vm.course.admin = item.username;
             } else if (type === 'editor') {
               vm.editorTyping = false;
               vm.eKeyword = '';
-              vm.course.teachers.push(item);
+              vm.editorList = [];
+              if (!existedInArray(item, vm.course.teachers)) {
+                vm.course.teachers.push(item);
+              }
             } else if (type === 'course') {
               vm.courseTyping = false;
               vm.cKeyword = '';
-              vm.course.prerequisites.push(item);
+              vm.courseList = [];
+              if (!existedInArray(item, vm.course.prerequisites)) {
+                vm.course.prerequisites.push(item);
+              }
             } else {
               return;
+            }
+          };
+          vm.remove = function(type, item) {
+            if (type === 'editor') {
+              vm.course.teachers = vm.course.teachers.filter(function(teacher) {
+                return teacher.id !== item.id;
+              });
+            } else if (type === 'course') {
+            	vm.course.prerequisites = vm.course.prerequisites.filter(function(course) {
+                return course.id !== item.id;
+              });
             }
           };
         },

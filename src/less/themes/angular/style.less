@@ -3,6 +3,12 @@
 @import "course";
 @import "chat-box";
 /* common */
+.btn {
+  font-weight: 700 !important;
+}
+.navbar-brand-logo .svg {
+  vertical-align: baseline !important;
+}
 .navbar.navbar-size-small .navbar-brand-logo .svg {
   height: 42px;
 }
@@ -60,6 +66,22 @@
     }
   }
 }
+.label {
+  a {
+    margin-left: 5px;
+    .label-close {
+      width: 18px;
+      height: 18px;
+      border-radius: 50px;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      &:hover {
+        color: #0c80df;
+        background-color: rgba(255, 255, 255, 0.5)
+      }
+    }
+  }
+}
 #simple-dropdown {
   & ~ ul.dropdown-menu {
     top: 55px;
@@ -98,11 +120,14 @@
     width: 100% !important;
   }
 }
-// @media (min-width: 992px) {
-//   .container {
-//     width: 100%;
-//   }
-// }
+@media (min-width: 992px) and (max-width: 1200px) {
+  .page-section {
+    padding: 20px 0;
+  }
+  // .container {
+  //   width: 100%;
+  // }
+}
 // @media (min-width: 1200px) {
 //   .container {
 //     width: 100%;

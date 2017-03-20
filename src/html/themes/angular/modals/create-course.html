@@ -6,7 +6,7 @@
     <div class="form-group ">
       <div class="btn btn-primary btn-sm" ngf-select ng-model="uploadedFile" ngf-accept="'svg, png'" name="template" ngf-change="vm.photoChanged(uploadedFile)"><small>Upload ảnh bìa</small></div> <span>Kích thước đề nghị: 500x500 (px)</span>
       <!-- <div class="btn btn-primary btn-sm" ngf-select ng-model="uploadedFile" ngf-accept="svg" name="template" ngf-change="vm.photoChanged(uploadedFile)" ngf-resize="{width:350, height: 150, centerCrop: true}"><small>Upload ảnh bìa</small></div> -->
-      <div ng-if="vm.course.cover" class="text-center margin-v-10">
+      <div ng-if="vm.course.cover && vm.course.cover !== 'missing.png'" class="text-center margin-v-10">
         <img class="course-cover-preview" height="150" ng-src=":: vm.course.cover ::">
       </div>
     </div>
@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
       <label for="course-desc">Mô tả</label>
-      <textarea class="form-control" id="course-desc" placeholder="Giới thiệu/mô tả ngắn gọn về khóa học" ng-model="vm.course.description" maxlength="600" rows="4"></textarea>
+      <textarea class="form-control" id="course-desc" placeholder="Giới thiệu/mô tả ngắn gọn về khóa học" ng-model="vm.course.description" rows="5"></textarea>
     </div>
     <div class="row margin-v-10">
       <div class="btn-group col-md-3" uib-dropdown>

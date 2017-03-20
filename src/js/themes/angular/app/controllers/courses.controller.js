@@ -73,7 +73,7 @@
           };
           vm.searchBadge = debounce(function(keyword) {
             if (keyword && keyword.length) {
-              CoursesService.searchBadge(keyword, function(res) {
+              BadgeService.searchBadge(keyword, function(res) {
                 vm.badgeList = res.data;
               });
             } else {
