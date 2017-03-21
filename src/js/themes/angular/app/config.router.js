@@ -152,6 +152,17 @@
                   controllerAs: 'wVm'
                 }
               }
+            })
+            .state('main.badges', {
+              url: '/badges',
+              middleware: 'everyone',
+              views: {
+                'main': {
+                  templateUrl: 'badges/badges.html',
+                  controller: 'BadgesController',
+                  controllerAs: 'vm'
+                }
+              }
             });
 
           $stateProvider

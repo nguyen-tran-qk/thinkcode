@@ -123,8 +123,7 @@
             <div id="manage-course" class="collapse">
               <div class="panel-body list-group">
                 <ul class="list-group list-group-menu">
-                  <li class="list-group-item" ui-sref-active="active"><a class="link-text-color" ng-click="vm.updateCourse()" href ng-if="vm.course.status !== 'published'">Chỉnh sửa khóa học</a></li>
-                  <li class="list-group-item" ui-sref-active="active" ng-if="vm.course.status !== 'published' && (user.username === vm.course.admin || user.staff)"><a class="link-text-color" ng-click="vm.courseAdministration()" href>Quản trị khóa học</a></li>
+                  <li class="list-group-item" ui-sref-active="active" ng-if="vm.course.status !== 'published'"><a class="link-text-color" ng-click="vm.editCourse()" href>Chỉnh sửa thông tin và quản trị</a></li>
                   <li class="list-group-item" ui-sref-active="active" ng-if="vm.course.status !== 'published'"><a class="link-text-color" ng-click="vm.deleteCourse(vm.course.id, vm.course.title)" href>Xóa bỏ</a></li>
                   <li class="list-group-item collapse" data-toggle="collapse" data-target="#change-status" aria-expanded="true" ui-sref-active="active">
                     <a class="link-text-color sub-heading" href>Trạng thái: <strong>:: vm.course.status | courseStatus ::</strong></a>
@@ -159,55 +158,15 @@
               </div>
             </div>
           </div>
-          <div class="col-md-12" ng-show="vm.course.prerequisites.length">
-            <h4 class="margin-none">Yêu cầu của khóa học</h4>
-            <p class="text-light">Khóa học này yêu cầu một số kiến thức nhất định, do đó trước khi bắt đầu, bạn nên tham gia:</p>
-            <div class="slick-basic slick-slider" data-items="1">
-              <div class="item" ng-repeat="item in vm.course.prerequisites">
-                <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated>
-                  <div class="panel-body">
-                    <div class="media media-clearfix-xs">
-                      <div class="media-left">
-                        <div class="cover width-90 width-100pc-xs overlay cover-image-full hover">
-                          <div ng-if="item.cover !== 'missing.png'">
-                            <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block s90 course-cover" ng-attr-style="background-image: url(::item.cover::);"></span>
-                            <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
-                          </div>
-                          <div ng-if="item.cover == 'missing.png'">
-                            <span class="img icon-block s90 bg-primary"></span>
-                            <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full padding-none icon-block s90 bg-primary">
-                              <span class="v-center"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
-                            </a>
-                            <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
-                              <span class="v-center">
-                            <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                              </span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="media-body">
-                        <h4 class="media-heading margin-v-5-3"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
-                        <p>
-                          <small class="text-light">Quản trị viên</small>
-                          <br/>
-                          <a href>:: item.admin ::</a>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="bg-white page-section padding-v-20-40" ng-if="vm.course.recommendations.length">
+  <div class="bg-white page-section padding-v-20-40" ng-if="vm.course.prerequisites.length">
     <div class="container">
-      <h4>Các khóa học đề nghị:</h4>
-      <div class="panel panel-default paper-shadow col-sm-4 col-lg-3 padding-none" data-z="0.5" data-hover-z="1" data-animated ng-repeat="item in vm.course.recommendations">
+      <h4 class="margin-none">Yêu cầu của khóa học</h4>
+      <p class="text-light">Khóa học này yêu cầu một số kiến thức nhất định, do đó trước khi bắt đầu, bạn nên tham gia:</p>
+      <div class="panel panel-default paper-shadow col-sm-4 col-lg-3 padding-none" data-z="0.5" data-hover-z="1" data-animated ng-repeat="item in vm.course.prerequisites">
         <div class="panel-body">
           <div class="media media-clearfix-xs">
             <div class="media-left">
@@ -231,7 +190,6 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading margin-v-5-3"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
-              <p class="text-light">:: item.status | courseStatus ::</p>
             </div>
           </div>
         </div>

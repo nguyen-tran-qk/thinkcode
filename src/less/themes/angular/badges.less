@@ -1,0 +1,32 @@
+.badge-details {
+  height: 0px;
+  transition: height 0.2s linear;
+  border-width: 0px;
+  .close-btn {
+    a {
+      font-size: 28px;
+    }
+  }
+  img,
+  .close-btn {
+    display: none;
+  }
+  &.badge-selected {
+    height: 200px;
+    img,
+    .close-btn {
+      display: block;
+    }
+  }
+}
+
+.badges-container {
+  .panel {
+    &:hover {
+      cursor: pointer;
+    }
+    &:not(:last-of-type) {
+      margin-right: 20px;
+    }
+  }
+}

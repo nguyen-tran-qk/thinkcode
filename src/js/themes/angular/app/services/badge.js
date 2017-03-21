@@ -27,6 +27,18 @@
                 errorCallback(res);
               }
             });
+        },
+        getBadgeById: function(id, callback, errorCallback) {
+          $http.get(API_URL + '/badges/' + id)
+            .then(function(res) {
+              if (callback) {
+                callback(res);
+              }
+            }, function(res) {
+              if (errorCallback) {
+                errorCallback(res);
+              }
+            });
         }
       };
     }]);

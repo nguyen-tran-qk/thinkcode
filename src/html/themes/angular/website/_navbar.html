@@ -87,6 +87,9 @@
             <li ng-if="user.staff"><a href ng-click="goTo('main.courses', {type: 'review'})">Kiểm tra chất lượng</a></li>
           </ul>
         </li>
+        <li ng-class="{ 'active': $state.is('main.badges') }">
+          <a href ng-click="goTo('main.badges')">Các Danh Hiệu</a>
+        </li>
       </ul>
       <div class="navbar-right">
         <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right" ng-if="user">

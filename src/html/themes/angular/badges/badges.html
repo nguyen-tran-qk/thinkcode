@@ -1,0 +1,49 @@
+{% extends "src/html/themes/angular/website/_layout-instructor.html" %} {% block content %}
+<div class="container">
+  <div class="jumbotron bg-transparent margin-none">
+    <div class="panel panel-default paper-shadow badge-details" data-z="0.5" ng-class="{'badge-selected': vm.selectedBadge}">
+      <div class="pull-right close-btn">
+        <a class="relative" data-z="1" href ng-click="vm.selectedBadge = null"><i class="md md-close"></i></a>
+      </div>
+      <div class="panel-body">
+        <div class="media media-clearfix-xs">
+          <div class="media-left text-center">
+            <img ng-src=":: vm.selectedBadge.image ::" alt="badge_image" class="img-circle" width="100" height="100">
+          </div>
+          <div class="media-body" ng-show="vm.selectedBadge">
+            <h4 class="text-headline margin-v-5-0">:: vm.selectedBadge.title ::</h4>
+            <p>:: vm.selectedBadge.description ::</p>
+            <hr class="margin-v-8">
+            <p class="text-light">Hoàn thành một trong các khóa học sau để đạt được danh hiệu này</p>
+            <div class="media v-middle margin-none" ng-repeat="item in vm.selectedBadge.required_courses track by item.id">
+              <div class="media-left">
+                <img ng-src="::item.cover::" alt="Course" class="width-40">
+              </div>
+              <div class="media-body">
+                <h4><a href="">:: item.title ::</a></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="badges-container">
+    <div class="panel panel-default paper-shadow col-xs-4 col-sm-4 col-md-2 padding-none" data-z="0.5" data-hover-z="1" data-animated="" ng-repeat="badge in vm.badges track by badge.id" ng-click="vm.selectBadge(badge.id)">
+      <div class="panel-body">
+        <div class="media v-middle">
+          <div class="media-left">
+            <img ng-src=":: badge.image ::" alt="badge_image" class="img-circle" width="60" height="60">
+          </div>
+          <div class="media-body">
+            <p class="text-subhead margin-v-5-0">
+              <!-- <span class="text-muted">@ Mosaicpro Inc.</span> -->
+              <strong>:: badge.title ::</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

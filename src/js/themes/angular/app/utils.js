@@ -63,6 +63,16 @@
           return '';
         }
       }
+    })
+    .filter('existedInArray', function() {
+      return function(item, arr) {
+        for (var i = 0; i < arr.length; i++) {
+          if (arr[i].id === item.id) {
+            return true;
+          }
+        }
+        return false;
+      }
     });
 
   angular.module('app').filter('findBranchByUid', function() {

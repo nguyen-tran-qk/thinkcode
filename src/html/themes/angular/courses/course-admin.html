@@ -1,48 +1,113 @@
 <div class="modal-header">
   <h3 class="modal-title">Quản trị khóa học</h3>
 </div>
-<div class="modal-body course-admin">
-  <div class="form-group form-control-material" ng-class="{'open': vm.authorList.length && vm.authorTyping}">
-    <input type="text" class="form-control" id="course-author" name="course-author" placeholder="Tìm theo tên" ng-model="vm.aKeyword" ng-keyup="vm.delaySearch('author', vm.aKeyword)" ng-class="{'used': vm.aKeyword}" ng-click="vm.authorTyping = true" autocomplete="off"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
-    <label for="course-author">Quản trị viên của khóa học: <strong>:: vm.course.admin ::</strong></label>
-    <ul class="dropdown-menu badges-dropdown-list" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
-      <li role="menuitem" ng-repeat="author in vm.authorList" ng-click="vm.select('author', author)">
-        <a href>:: author.username ::</a>
+<div class="modal-body course-admin display-inline-block width-100pc">
+  <div class="editor-tabs tabbable tabs-primary col-md-12 margin-none padding-none">
+    <ul class="nav nav-tabs">
+      <li ng-class="{'active': tab === 1, 'disabled': !vm.editInfoAllowed}">
+        <a href ng-click="vm.editInfoAllowed ? tab=1 : ''">Thông tin khóa học</a>
+      </li>
+      <li ng-class="{'active': tab === 2, 'disabled': !vm.editAdminAllowed}">
+        <a href ng-click="vm.editAdminAllowed ? tab=2 : ''">Quản trị khóa học</a>
+      </li>
+      <li ng-class="{'active': tab === 3, 'disabled': !vm.editInfoAllowed}">
+        <a href ng-click="vm.editInfoAllowed ? tab=3 : ''">Các bài học</a>
       </li>
     </ul>
-  </div>
-  <div class="form-group form-control-material" ng-class="{'open': vm.editorList.length && vm.editorTyping}">
-    <input type="text" class="form-control" id="course-editor" name="course-editor" placeholder="Tìm theo tên giáo viên" ng-model="vm.eKeyword" ng-keyup="vm.delaySearch('editor', vm.eKeyword)" ng-class="{'used': vm.eKeyword}" ng-click="vm.editorTyping = true" autocomplete="off"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
-    <label for="course-editor">Giáo viên:
-    </label>
-    <ul class="dropdown-menu badges-dropdown-list" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
-      <li role="menuitem" ng-repeat="editor in vm.editorList track by editor.id" ng-click="vm.select('editor', editor)">
-        <a href>:: editor.username ::</a>
-      </li>
-    </ul>
-  </div>
-  <div class="form-group">
-    <span class="label bg-cyan-500" ng-repeat="item in vm.course.teachers" ng-if="vm.course.teachers.length">:: item.username ::
-        <a href class="" ng-click="vm.remove('editor', item)"><i class="md md-close label-close"></i></a>
-      </span>
-  </div>
-  <div class="form-group form-control-material" ng-class="{'open': vm.courseList.length && vm.courseTyping}">
-    <input type="text" class="form-control" id="course-course" name="course-course" placeholder="Tìm theo tên khóa học" ng-model="vm.cKeyword" ng-keyup="vm.delaySearch('course', vm.cKeyword)" ng-class="{'used': vm.cKeyword}" ng-click="vm.courseTyping = true" autocomplete="off"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
-    <label for="course-course">Nên học trước:
-    </label>
-    <ul class="dropdown-menu badges-dropdown-list" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
-      <li role="menuitem" ng-repeat="course in vm.courseList" ng-click="vm.select('course', course)">
-        <a href>:: course.title ::</a>
-      </li>
-    </ul>
-  </div>
-  <div class="form-group">
-    <span class="label bg-blue-600" ng-repeat="item in vm.course.prerequisites" ng-if="vm.course.prerequisites.length">:: item.title ::
-      <a href class="" ng-click="vm.remove('course', item)"><i class="md md-close label-close"></i></a>
-    </span>
+    <div class="tab-content" ng-show="tab === 1">
+      <form class="create-course" name="form.newCourseForm">
+        <div class="form-group ">
+          <!-- <div class="btn btn-primary btn-sm" ngf-select ng-model="uploadedFile" ngf-accept="svg" name="template" ngf-change="vm.photoChanged(uploadedFile)" ngf-resize="{width:350, height: 150, centerCrop: true}"><small>Upload ảnh bìa</small></div> -->
+          <div ng-if="vm.course.cover && vm.course.cover !== 'missing.png'" class="text-center margin-v-10">
+            <img class="course-cover-preview" height="150" ng-src=":: vm.course.cover ::">
+          </div>
+          <div class="btn btn-primary btn-sm" ngf-select ng-model="uploadedFile" ngf-accept="'svg, png'" name="template" ngf-change="vm.photoChanged(uploadedFile)"><small>Upload ảnh bìa</small></div> <span>Kích thước đề nghị: 500x500 (px)</span>
+        </div>
+        <div class="form-group form-control-material">
+          <input type="text" class="form-control" id="course-title" placeholder="Nhập tên khóa học" ng-model="vm.course.title" ng-class="{'used': vm.course.title}" maxlength="50" required><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+          <label for="course-title">Tiêu đề</label>
+        </div>
+        <div class="form-group">
+          <label for="course-desc">Mô tả</label>
+          <textarea class="form-control" id="course-desc" placeholder="Giới thiệu/mô tả ngắn gọn về khóa học" ng-model="vm.course.description" rows="5" required></textarea>
+        </div>
+        <div class="row margin-v-10">
+          <div class="btn-group col-md-3" uib-dropdown>
+            <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>::vm.course.engine::<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+              <li role="menuitem"><a href ng-click="vm.selectEngine(1)">Python</a></li>
+              <li role="menuitem"><a href ng-click="vm.selectEngine(2)">Ruby</a></li>
+            </ul>
+          </div>
+          <div class="btn-group col-md-3" uib-dropdown>
+            <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>::vm.course.level::<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+              <li role="menuitem"><a href ng-click="vm.selectLevel(1)">Learn</a></li>
+              <li role="menuitem"><a href ng-click="vm.selectLevel(2)">Hack</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-group form-control-material" ng-class="{'open': vm.badgeList.length && vm.typing}">
+          <input type="text" class="form-control" id="course-badge" name="course-badge" ng-model="keyword" ng-keyup="vm.searchBadge(keyword)" ng-class="{'used': keyword}" ng-click="vm.typing = true" autocomplete="off"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+          <label for="course-badge">Tìm danh hiệu</label>
+          <span ng-if="!vm.currentBadge">Hãy tìm một danh hiệu để trao thưởng cho các học viên hoàn thành khóa học này.</span>
+          <ul class="dropdown-menu badges-dropdown-list" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+            <li role="menuitem" ng-repeat="badge in vm.badgeList" ng-click="vm.selectBadge(badge)">
+              <img ng-src="::badge.image::" width="40" height="40"><span>:: badge.title ::</span>
+            </li>
+          </ul>
+        </div>
+        <div ng-if="vm.currentBadge">
+          <span>Danh hiệu </span><img ng-src="::vm.currentBadge.image::" width="40" height="40"><strong> :: vm.currentBadge.title ::</strong><span> sẽ được trao thưởng cho các học viên hoàn thành khóa học.</span>
+        </div>
+      </form>
+    </div>
+    <div class="tab-content" ng-show="tab === 2">
+      <div class="form-group form-control-material" ng-class="{'open': vm.authorList.length && vm.authorTyping}">
+        <input type="text" class="form-control" id="course-author" name="course-author" placeholder="Tìm theo tên" ng-model="vm.aKeyword" ng-keyup="vm.delaySearch('author', vm.aKeyword)" ng-class="{'used': vm.aKeyword}" ng-click="vm.authorTyping = true" autocomplete="off"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+        <label for="course-author">Quản trị viên của khóa học: <strong>:: vm.course.admin ::</strong></label>
+        <ul class="dropdown-menu badges-dropdown-list" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+          <li role="menuitem" ng-repeat="author in vm.authorList" ng-click="vm.select('author', author)">
+            <a href>:: author.username ::</a>
+          </li>
+        </ul>
+      </div>
+      <div class="form-group form-control-material" ng-class="{'open': vm.editorList.length && vm.editorTyping}">
+        <input type="text" class="form-control" id="course-editor" name="course-editor" placeholder="Tìm theo tên giáo viên" ng-model="vm.eKeyword" ng-keyup="vm.delaySearch('editor', vm.eKeyword)" ng-class="{'used': vm.eKeyword}" ng-click="vm.editorTyping = true" autocomplete="off"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+        <label for="course-editor">Giáo viên:
+        </label>
+        <ul class="dropdown-menu badges-dropdown-list" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+          <li role="menuitem" ng-repeat="editor in vm.editorList track by editor.id" ng-click="vm.select('editor', editor)">
+            <a href>:: editor.username ::</a>
+          </li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <span class="label bg-cyan-500" ng-repeat="item in vm.course.teachers" ng-if="vm.course.teachers.length">:: item.username ::
+          <a href class="" ng-click="vm.remove('editor', item)"><i class="md md-close label-close"></i></a>
+        </span>
+      </div>
+      <div class="form-group form-control-material" ng-class="{'open': vm.courseList.length && vm.courseTyping}">
+        <input type="text" class="form-control" id="course-course" name="course-course" placeholder="Tìm theo tên khóa học" ng-model="vm.cKeyword" ng-keyup="vm.delaySearch('course', vm.cKeyword)" ng-class="{'used': vm.cKeyword}" ng-click="vm.courseTyping = true" autocomplete="off"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+        <label for="course-course">Nên học trước:
+        </label>
+        <ul class="dropdown-menu badges-dropdown-list" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
+          <li role="menuitem" ng-repeat="course in vm.courseList" ng-click="vm.select('course', course)">
+            <a href>:: course.title ::</a>
+          </li>
+        </ul>
+      </div>
+      <div class="form-group">
+        <span class="label bg-blue-600" ng-repeat="item in vm.course.prerequisites" ng-if="vm.course.prerequisites.length">:: item.title ::
+          <a href class="" ng-click="vm.remove('course', item)"><i class="md md-close label-close"></i></a>
+        </span>
+      </div>
+    </div>
   </div>
 </div>
 <div class="modal-footer">
   <button class="btn btn-default" type="button" ng-click="vm.cancel()">Bỏ qua</button>
-  <button class="btn btn-primary" type="button" ng-click="vm.ok()" ng-disabled="!vm.course.author_id">Lưu thay đổi</button>
+  <button class="btn btn-primary" type="button" ng-click="vm.ok()" ng-disabled="!vm.validForm()">Lưu thay đổi</button>
 </div>
