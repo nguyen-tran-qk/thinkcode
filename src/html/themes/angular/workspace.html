@@ -39,10 +39,10 @@
   </div>
   <div class="col-md-7">
     <div class="pull-right">
-      <div ng-if="wVm.currentBranch.uid !== -1">
+      <span ng-if="wVm.currentBranch.uid !== -1">
         <button class="btn btn-success btn-sm" ng-click="wVm.saveFile()" ng-disabled="waiting">Save</button>
         <button class="btn btn-primary btn-sm" ng-click="wVm.runFile()" ng-disabled="waiting">Run</button>
-      </div>
+      </span>
       <button class="btn btn-default btn-sm" ng-click="wVm.treeHidden = true; wVm.consoleHidden = true"><i class="fa fa-expand icon-lg"></i></button>
     </div>
   </div>

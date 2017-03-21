@@ -325,17 +325,20 @@
     };
 
     //// retrieve workspace structure
-    WorkspaceService.getWorkspaceById(vm.workspaceId, function(res) {
-      $timeout(function() {
-        vm.my_data = analyzeTree(res.data);
-        $scope.loading = false;
+    vm.refreshWorkspace = function() {
+      WorkspaceService.getWorkspaceById(vm.workspaceId, function(res) {
+        $timeout(function() {
+          vm.my_data = analyzeTree(res.data);
+          $scope.loading = false;
+        });
+      }, function(res) {
+        if (res.status === 401) {
+          vm.$state.go('main.workspaces', {}, { reload: true });
+          $scope.showMessage('danger', 'Xin lỗi, bạn không có quyền truy cập.');
+        }
       });
-    }, function(res) {
-      if (res.status === 401) {
-        vm.$state.go('main.workspaces', {}, { reload: true });
-        $scope.showMessage('danger', 'Xin lỗi, bạn không có quyền truy cập.');
-      }
-    });
+    };
+    vm.refreshWorkspace();
 
     vm.runFile = function() {
       vm.saveFile(function() {
@@ -398,7 +401,7 @@
       modalInstance.result.then(function(result) {
         if (result === 'done') {
           $scope.showMessage('success', 'Upload successfully!');
-          $scope.$state.reload();
+          vm.refreshWorkspace();
         }
       }, function(res) {
         if (res.data.length > 1) {

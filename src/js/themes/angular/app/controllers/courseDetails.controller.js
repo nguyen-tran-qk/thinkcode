@@ -214,7 +214,7 @@
             $uibModalInstance.dismiss();
           };
           vm.delaySearch = debounce(function(type, keyword) {
-            if (keyword && keyword.length) {
+            // if (keyword && keyword.length) {
               if (type === 'author' || type === 'editor') {
                 UserService.searchUser(keyword, function(res) {
                   if (type === 'author') {
@@ -232,9 +232,9 @@
                   $scope.showMessage('danger');
                 });
               }
-            } else {
-              return;
-            }
+            // } else {
+            //   return;
+            // }
           }, 300);
           vm.select = function(type, item) {
             if (type === 'author') {

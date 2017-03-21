@@ -97,7 +97,7 @@
         uploadTemplate: function(wsId, file, callback, errorCallback, progressCallback) {
           Upload.upload({
             url: API_URL + '/workspaces/' + wsId + '/upload',
-            data: { 'template[zip]': file, 'token': localStorage.token }
+            data: { 'template[template]': file, 'token': localStorage.token }
           }).then(function(res) {
             if (callback) {
               callback(res);

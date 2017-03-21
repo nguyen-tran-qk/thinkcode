@@ -38,7 +38,7 @@
               <img ng-src=":: vm.course.badge.id | badgeImage:allBadges ::" alt="Badge" class="icon-block s30"><a href><strong> :: vm.course.badge.title ::</strong></a>
             </p>
             <div class="label bg-cyan-500 admin-label">
-              <small>Quản trị viên:</small> 
+              <small>Quản trị viên:</small>
               <img src="images/people/110/guy-6.jpg" width="30" height="30" class="img-circle"><span class="text-h5"> :: vm.course.admin ::</span>
             </div>
           </div>
@@ -57,7 +57,7 @@
                       </div>
                     </div>
                     <div class="media-body text-body-2">
-                      Basics of GIT and how to become a STAR.
+                      Lession 1
                     </div>
                   </div>
                 </li>
@@ -69,7 +69,7 @@
                       </div>
                     </div>
                     <div class="media-body text-body-2">
-                      Database connections & some other nice features.
+                      Lession 2
                     </div>
                   </div>
                 </li>
@@ -81,7 +81,7 @@
                       </div>
                     </div>
                     <div class="media-body text-body-2">
-                      Eaque ex exercitationem quia reprehenderit?
+                      Lession 3
                     </div>
                   </div>
                 </li>
@@ -93,7 +93,7 @@
                       </div>
                     </div>
                     <div class="media-body text-body-2">
-                      Ab distinctio nemo, provident quia quibusdam ullam.
+                      Lession 4
                     </div>
                   </div>
                 </li>
@@ -110,42 +110,6 @@
                   </div>
                 </li>
               </ul>
-            </div>
-            <div class="col-md-5" ng-if="vm.course.prerequisites.length">
-              <h2 class="text-headline margin-none">Yêu cầu của khóa học</h2>
-              <p class="tẽt-subhead text-light">Khóa học này yêu cầu một số kiến thức nhất định, do đó trước khi bắt đầu, bạn nên tham gia:</p>
-              <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated ng-repeat="item in vm.course.prerequisites">
-                <div class="panel-body">
-                  <div class="media media-clearfix-xs">
-                    <div class="media-left">
-                      <div class="cover width-90 width-100pc-xs overlay cover-image-full hover">
-                        <div ng-if="item.cover !== 'missing.png'">
-                          <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block s90 course-cover" ng-attr-style="background-image: url(::item.cover::);"></span>
-                          <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
-                        </div>
-                        <div ng-if="item.cover == 'missing.png'">
-                          <span class="img icon-block s90 bg-primary"></span>
-                          <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full padding-none icon-block s90 bg-primary">
-                            <span class="v-center"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
-                          </a>
-                          <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
-                            <span class="v-center">
-                            <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="media-body">
-                      <h4 class="media-heading margin-v-5-3"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
-                      <p>
-                        <small class="text-light">Quản trị viên</small><br/>
-                        <a href>:: item.admin ::</a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -195,6 +159,47 @@
               </div>
             </div>
           </div>
+          <div class="col-md-12" ng-show="vm.course.prerequisites.length">
+            <h4 class="margin-none">Yêu cầu của khóa học</h4>
+            <p class="text-light">Khóa học này yêu cầu một số kiến thức nhất định, do đó trước khi bắt đầu, bạn nên tham gia:</p>
+            <div class="slick-basic slick-slider" data-items="1">
+              <div class="item" ng-repeat="item in vm.course.prerequisites">
+                <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated>
+                  <div class="panel-body">
+                    <div class="media media-clearfix-xs">
+                      <div class="media-left">
+                        <div class="cover width-90 width-100pc-xs overlay cover-image-full hover">
+                          <div ng-if="item.cover !== 'missing.png'">
+                            <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block s90 course-cover" ng-attr-style="background-image: url(::item.cover::);"></span>
+                            <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
+                          </div>
+                          <div ng-if="item.cover == 'missing.png'">
+                            <span class="img icon-block s90 bg-primary"></span>
+                            <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full padding-none icon-block s90 bg-primary">
+                              <span class="v-center"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
+                            </a>
+                            <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
+                              <span class="v-center">
+                            <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
+                              </span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="media-body">
+                        <h4 class="media-heading margin-v-5-3"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
+                        <p>
+                          <small class="text-light">Quản trị viên</small>
+                          <br/>
+                          <a href>:: item.admin ::</a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -226,6 +231,7 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading margin-v-5-3"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
+              <p class="text-light">:: item.status | courseStatus ::</p>
             </div>
           </div>
         </div>
