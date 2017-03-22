@@ -1,10 +1,7 @@
 {% extends "src/html/themes/angular/website/_layout-instructor.html" %} {% block content %}
 <div class="container">
-  <div class="jumbotron bg-transparent margin-none">
-    <div class="panel panel-default paper-shadow badge-details" data-z="0.5" ng-class="{'badge-selected': vm.selectedBadge}">
-      <div class="pull-right close-btn">
-        <a class="relative" data-z="1" href ng-click="vm.selectedBadge = null"><i class="md md-close"></i></a>
-      </div>
+  <div class="jumbotron bg-transparent margin-none side-padding-none">
+    <div class="panel panel-default paper-shadow badge-details" data-z="0.5" data-hover-z="1" data-animated="" ng-class="{'badge-selected': vm.selectedBadge}">
       <div class="panel-body">
         <div class="media media-clearfix-xs">
           <div class="media-left text-center">
@@ -15,15 +12,19 @@
             <p>:: vm.selectedBadge.description ::</p>
             <hr class="margin-v-8">
             <p class="text-light">Hoàn thành một trong các khóa học sau để đạt được danh hiệu này</p>
-            <div class="media v-middle margin-none" ng-repeat="item in vm.selectedBadge.required_courses track by item.id">
+            <div class="media v-middle required-course" ng-repeat="item in vm.selectedBadge.required_courses track by item.id">
               <div class="media-left">
-                <img ng-src="::item.cover::" alt="Course" class="width-40">
+                <img ng-src="::item.cover::" alt="Course" class="width-60" ng-if="item.cover !== 'missing.png'">
+                <span class="icon-block s60" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'" ng-if="item.cover === 'missing.png'"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
               </div>
               <div class="media-body">
                 <h4><a href="">:: item.title ::</a></h4>
               </div>
             </div>
           </div>
+        </div>
+        <div class="pull-right close-btn">
+          <a class="relative" data-z="1" href ng-click="vm.selectedBadge = null"><i class="md md-close"></i></a>
         </div>
       </div>
     </div>
