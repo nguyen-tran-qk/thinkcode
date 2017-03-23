@@ -127,9 +127,73 @@
               }
             });
         },
-        addLessonToCourse: function(courseId, data, callback, errorCallback) {
+        getLessonById: function(courseId, lessonId, callback, errorCallback) {
+          $http.get(API_URL + '/courses/' + courseId + '/lessons/' + lessonId + this.tokenString())
+            .then(function(res) {
+              if (callback) {
+                callback(res);
+              }
+            }, function(res) {
+              if (errorCallback) {
+                errorCallback(res);
+              }
+            });
+        },
+        addOrUpdateLesson: function(courseId, lessonId, data, callback, errorCallback) { //for video & reading lesson
           data.token = localStorage.token;
-          $http.post(API_URL + '/courses/' + courseId + '/lessons', data)
+          var promise;
+          if (!lessonId) { // create new lesson
+            promise = $http.post(API_URL + '/courses/' + courseId + '/lessons', data);
+          } else { //update lesson
+            promise = $http.put(API_URL + '/courses/' + courseId + '/lessons/' + lessonId, data);
+          }
+          promise.then(function(res) {
+            if (callback) {
+              callback(res);
+            }
+          }, function(res) {
+            if (errorCallback) {
+              errorCallback(res);
+            }
+          });
+        },
+        uploadCodeLesson: function(courseId, lessonId, postData, callback, errorCallback, progressCallback) { //for code & project task
+          postData.token = localStorage.token;
+          var promise;
+          if (!lessonId) { // create new lesson
+            promise = Upload.upload({
+              url: API_URL + '/courses/' + courseId + '/lessons',
+              method: 'POST',
+              data: postData
+            });
+          } else { //update lesson
+            promise = Upload.upload({
+              url: API_URL + '/courses/' + courseId + '/lessons/' + lessonId,
+              method: 'PATCH',
+              data: postData
+            });
+          }
+          promise.then(function(res) {
+            if (callback) {
+              callback(res);
+            }
+          }, function(res) {
+            if (errorCallback) {
+              errorCallback(res);
+            }
+          }, function(evt) {
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            if (progressCallback) {
+              progressCallback(progressPercentage);
+            }
+          });
+        },
+        updateLessonsOrder: function(courseId, lessonIdsArr, callback, errorCallback) {
+          var url = API_URL + '/courses/' + courseId + '/lessons/update_order?token=' + localStorage.token;
+          for (var i = 0; i < lessonIdsArr.length; i++) {
+            url += '&ordered_ids[]=' + lessonIdsArr[i];
+          }
+          $http.put(url)
             .then(function(res) {
               if (callback) {
                 callback(res);
@@ -152,6 +216,9 @@
               }
             });
         },
+        downloadLessonTemplate: function(courseId, lessonId, callback) {
+          callback(API_URL + '/courses/' + courseId + '/lessons/' + lessonId + '/download' + this.tokenString());
+        }
       };
     }]);
 })();

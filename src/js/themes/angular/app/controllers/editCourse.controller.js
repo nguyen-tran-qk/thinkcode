@@ -8,6 +8,7 @@
     vm.course = courseData.course;
     vm.editInfoAllowed = courseData.editInfoAllowed;
     vm.editAdminAllowed = courseData.editAdminAllowed;
+    var scope = courseData.scope;
     if (!vm.editInfoAllowed) {
       $scope.tab = 2;
     } else {
@@ -19,7 +20,7 @@
       vm.course.author_id = res.data[0].id;
     }, function(res) {
       $uibModalInstance.dismiss();
-      $scope.showMessage('danger');
+      scope.showMessage('danger');
     });
     vm.authorList = [];
     vm.authorTyping = false;
@@ -117,13 +118,13 @@
             vm.editorList = res.data;
           }
         }, function(res) {
-          $scope.showMessage('danger');
+          scope.showMessage('danger');
         });
       } else if (type === 'course') {
         CoursesService.searchCourse(keyword, function(res) {
           vm.courseList = res.data;
         }, function(res) {
-          $scope.showMessage('danger');
+          scope.showMessage('danger');
         });
       }
       // } else {
@@ -168,32 +169,125 @@
     };
 
     vm.addLesson = function() {
-      CoursesService.addLessonToCourse(vm.course.id, vm.selectedLesson, function(res) {
-        CoursesService.getCourseById(vm.course.id, function(res) {
-          vm.course = res.data;
-          vm.editing = false;
+      var lessonId = vm.selectedLesson.id || null;
+      var data = {
+        lesson: {
+          title: vm.selectedLesson.title,
+          description: vm.selectedLesson.description
+        },
+        type: vm.selectedLesson.type
+      };
+      if (vm.selectedLesson.type === 'video' || vm.selectedLesson.type === 'reading') {
+        if (vm.selectedLesson.type === 'video') {
+          data.video_task = {
+            video_url: vm.selectedLesson.video_url,
+            video_duration: vm.selectedLesson.video_duration,
+            teacher_note: vm.selectedLesson.teacher_note
+          };
+        } else {
+          data.reading_task = {
+            content: vm.selectedLesson.content
+          };
+        }
+        CoursesService.addOrUpdateLesson(vm.course.id, lessonId, data, function(res) {
+          CoursesService.getCourseById(vm.course.id, function(res) {
+            vm.course = res.data;
+            vm.editing = false;
+            vm.selectedLesson = {};
+          }, function(res) {
+            scope.showMessage('danger');
+          });
         }, function(res) {
-          $scope.showMessage('danger');
+          scope.showMessage('danger');
         });
-      }, function(res) {
-        $scope.showMessage('danger');
-      });
+      } else {
+        if (vm.selectedLesson.type === 'code') {
+          data.code_task = {
+            template: vm.selectedLesson.template,
+            cheat_sheet: vm.selectedLesson.cheat_sheet
+          };
+        } else {
+          data.project_task = {
+            template: vm.selectedLesson.template
+          };
+        }
+        vm.uploading = '1%';
+        CoursesService.uploadCodeLesson(vm.course.id, lessonId, data, function(res) {
+          if (res.status < 300) {
+            CoursesService.getCourseById(vm.course.id, function(res) {
+              vm.course = res.data;
+              vm.editing = false;
+              vm.uploading = null;
+              vm.selectedLesson = {};
+            }, function(res) {
+              scope.showMessage('danger');
+            });
+          }
+        }, function(res) {
+          if (res.data.length) {
+            angular.forEach(res.data, function(err) {
+              scope.showMessage('danger', err.error);
+            });
+          } else {
+            scope.showMessage('danger');
+          }
+        }, function(percentage) {
+          $timeout(function() {
+            vm.uploading = percentage + '%';
+          }, 100);
+        });
+      }
     };
 
     vm.deleteLesson = function(lesson) {
       if (!lesson.deleteConfirm) {
-      	lesson.deleteConfirm = true;
+        lesson.deleteConfirm = true;
       } else {
         CoursesService.deleteLesson(vm.course.id, lesson.id, function(res) {
           CoursesService.getCourseById(vm.course.id, function(res) {
             vm.course = res.data;
           }, function(res) {
-            $scope.showMessage('danger');
+            scope.showMessage('danger');
           });
         }, function(res) {
-          $scope.showMessage('danger');
+          scope.showMessage('danger');
         });
       }
+    };
+
+    vm.saveLessonsOrder = function() {
+      var items = document.getElementsByClassName('nestable-item'),
+        orderedList = [];
+      for (var i = 0; i < items.length; i++) {
+        orderedList.push($(items[i]).data('lesson-id'));
+      }
+      CoursesService.updateLessonsOrder(vm.course.id, orderedList, function(res) {
+        vm.orderChanged = false;
+        scope.showMessage('success', 'Thứ tự bài học đã được cập nhật thành công!');
+      }, function(res) {
+        scope.showMessage('danger');
+      });
+    };
+
+    vm.selectLesson = function(item) {
+      vm.uploading = null;
+      CoursesService.getLessonById(vm.course.id, item.id, function(res) {
+        vm.editing = true;
+        vm.selectedLesson = res.data;
+        if (vm.selectedLesson.type === 'code' || vm.selectedLesson.type === 'project') {
+          vm.selectedLesson.template = '';
+        }
+      }, function(res) {
+        scope.showMessage('danger');
+      });
+    };
+
+    vm.downloadTemplate = function(lessonId) {
+      CoursesService.downloadLessonTemplate(vm.course.id, lessonId, function(res) {
+        window.open(res);
+      }, function(res) {
+        scope.showMessage('danger');
+      });
     };
   }
 })();

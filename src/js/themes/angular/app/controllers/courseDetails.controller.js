@@ -70,7 +70,8 @@
           courseData: {
             course: angular.copy(vm.course),
             editInfoAllowed: editInfoAllowed,
-            editAdminAllowed: editAdminAllowed
+            editAdminAllowed: editAdminAllowed,
+            scope: $scope
           }
         }
       }).result.then(function(newCourse) {
