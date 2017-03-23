@@ -12,7 +12,7 @@
             bodyClass: ''
           }
         };
-        $scope.loading = false;
+        $scope.loading = [true];
         $scope.$state = $state;
         $scope.user = UserService.getUser();
         $scope.allBadges = [];
@@ -24,9 +24,9 @@
         });
 
         $scope.signout = function() {
-          $scope.loading = true;
+          $scope.loading[0] = true;
           UserService.signout(function(res) {
-            $scope.loading = false;
+            $scope.loading[0] = false;
             $scope.$state.go('main.courses', { type: 'published' }, { reload: true });
           });
         };

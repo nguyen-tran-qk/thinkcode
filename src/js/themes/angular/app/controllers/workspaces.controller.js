@@ -6,7 +6,7 @@
   function workspacesCtrl($scope, $rootScope, $state, $uibModal, UserService, WorkspaceService) {
     $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
     $scope.app.settings.bodyClass = '';
-    $scope.loading = true;
+    $scope.loading[0] = true;
     $scope.user = UserService.getUser();
     $('.main-container').tkScrollNavbarTransition();
 
@@ -14,7 +14,7 @@
     vm.$state = $state;
 
     WorkspaceService.getAllWorkspaces(function(res) {
-      $scope.loading = false;
+      $scope.loading[0] = false;
       vm.workspaces = res.data.workspaces;
     }, function(res) {
       $scope.showMessage('danger');

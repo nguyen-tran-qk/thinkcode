@@ -368,139 +368,34 @@ i.icon-lg {
 .cm-s-thinkcode-console.CodeMirror { color: #939598; }
 .cm-s-thinkcode-console.CodeMirror { background: #000000; }
 
-/* material preloader, credit to https://codepen.io/anon/pen/oBJrZE */
-// Functions/mixins
-.colour(@value) {
-	background-color: extract(@colours, @value);
-}
-
-// Variables
-@nav-bar-height: 80px;
-@preloader-height: 5px;
-@colours: #159756, #da4733, #3b78e7, #fdba2c; // green, red, blue, yellow
-@animation-duration: 3.5s;
-
-#preloader {
-  position: absolute;
-  top: @nav-bar-height;
-  left: 0;
-  padding-top: @preloader-height;
-  width: 100%;
-  .colour(1);
-  box-shadow: 0 2px 2px rgba(0, 0, 0, .2);
-  z-index: 102;
-  animation: preloader-background linear @animation-duration infinite;
-  
-  &::before,
-  &::after {
-    display: block;
-    position: absolute;
-    top: 0;
-    z-index: 102;
-    width: 0;
-    height: @preloader-height;
-    background: #afa;
-    animation: preloader-front linear @animation-duration infinite;
-    content: '';
-  }
-  
-  &::before {
-    right: 50%;
-  }
-  
-  &::after {
-    left: 50%;
-  }
-
-  & + .progress {
-  	height: 7px;
-  	line-height: 7px;
-  }
-}
-.navbar-size-small ~ #preloader {
-  top: 43px;
-}
 
 // screen overlay
 .loading-overlay {
-  background: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.98);
 	width: 100%;
   height: 100vh;
   position: fixed;
   left: 0;
   top: 0;
   z-index: 101;
-}
-
-// Animations
-@keyframes preloader-background {
-  0%, 24.9% {
-    .colour(1);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.3s ease-out;
+  &.visible {
+    opacity: 1;
+    visibility: visible;
   }
-  
-  25%, 49.9% {
-    .colour(2);
-  }
-  
-  50%, 74.9% {
-    .colour(3);
-  }
-  
-  75%, 100% {
-    .colour(4);
+  .loading-logo {
+    display: flex;
+    margin: 40vh auto;
+    align-items: center;
+    justify-content: center;
   }
 }
-
-@keyframes preloader-front {
-  0% {
-    width: 0;
-    .colour(2);
-  }
-  
-  24.9% {
-    width: 50%;
-    .colour(2);
-  }
-  
-  25% {
-    width: 0;
-    .colour(3);
-  }
-  
-  49.9% {
-    width: 50%;
-    .colour(3);
-  }
-  
-  50% {
-    width: 0;
-    .colour(4);
-  }
-  
-  74.9% {
-    width: 50%;
-    .colour(4);
-  }
-  
-  75% {
-    width: 0%;
-    .colour(1);
-  }
-  
-  
-  100% {
-    width: 50%;
-    .colour(1);
-  }
-}
-
 
 /* auto hide navbar */
 .auto-hide {
   transform: translateY(-41px);
-  & ~ #preloader {
-    top: 10px;
-  }
   &:hover {
     transform: translateY(0);
   }
@@ -511,3 +406,96 @@ i.icon-lg {
   }
 }
 
+.nestable-item-handle .nestable-handle {
+  height: 100%;
+  line-height: 45px;
+  background-color: #efefef;
+}
+
+/* Material preloader, credit https://codepen.io/jczimm/pen/vEBpoL */
+@loader-green: #008744;
+@loader-blue: #0057e7;
+@loader-red: #d62d20;
+@loader-yellow: #ffa700;
+
+// scaling... any units
+@loader-width: 30px;
+
+// demo-specific
+.showbox {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 5%;
+}
+// end demo-specific
+
+.loader {
+  position: relative;
+  width: @loader-width;
+  &:before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+  }
+}
+
+.circular {
+  animation: rotate 2s linear infinite;
+  height: 100%;
+  transform-origin: center center;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.path {
+  stroke-dasharray: 1, 200;
+  stroke-dashoffset: 0;
+  animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+  stroke-linecap: round;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px;
+  }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px;
+  }
+}
+
+@keyframes color {
+  100%,
+  0% {
+    stroke: @loader-red;
+  }
+  40% {
+    stroke: @loader-blue;
+  }
+  66% {
+    stroke: @loader-green;
+  }
+  80%,
+  90% {
+    stroke: @loader-yellow;
+  }
+}

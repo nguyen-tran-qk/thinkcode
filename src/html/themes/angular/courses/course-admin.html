@@ -14,7 +14,7 @@
         <a href ng-click="vm.editInfoAllowed ? tab=3 : ''">Các bài học</a>
       </li>
     </ul>
-    <div class="tab-content padding-none" ng-show="tab === 1">
+    <div class="tab-content" ng-show="tab === 1">
       <form class="create-course" name="form.newCourseForm">
         <div class="form-group ">
           <!-- <div class="btn btn-primary btn-sm" ngf-select ng-model="uploadedFile" ngf-accept="svg" name="template" ngf-change="vm.photoChanged(uploadedFile)" ngf-resize="{width:350, height: 150, centerCrop: true}"><small>Upload ảnh bìa</small></div> -->
@@ -64,7 +64,7 @@
         </div>
       </form>
     </div>
-    <div class="tab-content padding-none" ng-show="tab === 2">
+    <div class="tab-content" ng-show="tab === 2">
       <div class="form-group form-control-material" ng-class="{'open': vm.authorList.length && vm.authorTyping}">
         <input type="text" class="form-control" id="course-author" name="course-author" placeholder="Tìm theo tên" ng-model="vm.aKeyword" ng-keyup="vm.delaySearch('author', vm.aKeyword)" ng-class="{'used': vm.aKeyword}" ng-click="vm.authorTyping = true" autocomplete="off"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
         <label for="course-author">Quản trị viên của khóa học: <strong>:: vm.course.admin ::</strong></label>
@@ -105,7 +105,7 @@
         </span>
       </div>
     </div>
-    <div class="tab-content padding-none" ng-show="tab === 3">
+    <div class="tab-content" ng-show="tab === 3">
       <button class="btn btn-sm btn-primary right margin-v-10" ng-click="vm.editing = true; vm.selectedLesson = {};" ng-disabled="vm.editing">Tạo bài học</button>
       <button class="btn btn-sm btn-success right margin-v-10 layout-margin text-white" ng-click="vm.saveLessonsOrder()" ng-disabled="!vm.orderChanged">Lưu thứ tự</button>
       <div class="nestable display-inline-block width-100pc margin-v-10" id="lessons-order" ng-if="vm.course.lessons.length">
@@ -115,11 +115,12 @@
             <div class="nestable-content">
               <div class="media v-middle width-100pc">
                 <div class="media-body width-100pc block">
-                  <div class="display-inline-block">
+                  <div class="display-inline-block lesson-infos">
+                    <span class="overlay" ng-if="item.deleteConfirm"></span>
                     <h4 class="text-title media-heading margin-none"><a href="" class="link-text-color">:: item.title ::</a></h4>
-                    <div class="text-caption">:: item.description ::</div>
+                    <div class="text-caption">:: item.description | limitTo: 50 :: <span ng-if="item.description.length > 50"> ...</span></div>
                   </div>
-                  <button class="btn btn-default btn-sm right margin-v-5-0" ng-click="item.deleteConfirm = null" ng-if="item.deleteConfirm">Hủy</button>
+                  <button class="btn btn-default btn-sm right margin-v-5-0 ripple" ng-click="item.deleteConfirm = null" ng-if="item.deleteConfirm">Hủy</button>
                   <button class="btn btn-warning btn-stroke btn-sm right layout-margin margin-v-5-0" ng-click="vm.deleteLesson(item)">:: item.deleteConfirm ? 'Xác nhận xóa?' : 'Xóa' ::</button>
                   <button class="btn btn-default btn-stroke btn-sm right layout-margin margin-v-5-0" ng-if="!item.deleteConfirm" ng-click="vm.selectLesson(item)">Sửa</button>
                 </div>

@@ -6,7 +6,6 @@
   function CoursesCtrl($scope, $rootScope, $state, $uibModal, CoursesService, UserService) {
     $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
     $scope.app.settings.bodyClass = '';
-    $scope.loading = true;
     $scope.user = UserService.getUser();
     $('.main-container').tkScrollNavbarTransition();
 
@@ -14,12 +13,13 @@
     vm.$state = $state;
 
     vm.fetchCourses = function() {
+    $scope.loading[0] = true;
       var type = vm.$state.params.type || 'published';
       CoursesService.getAllCourses(type, function(res) {
         vm.courses = res.data;
-        $scope.loading = false;
+        $scope.loading[0] = false;
       }, function(res) {
-        $scope.loading = false;
+        $scope.loading[0] = false;
         if (res.status !== 401) {
           $scope.showMessage('danger');
         }

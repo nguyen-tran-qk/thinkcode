@@ -6,7 +6,7 @@
   function BadgesController($scope, $rootScope, $state, $timeout, $filter, $uibModal, BadgeService, UserService) {
     $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
     $scope.app.settings.bodyClass = '';
-    $scope.loading = true;
+    $scope.loading[0] = true;
     $scope.user = UserService.getUser();
     $('.main-container').tkScrollNavbarTransition();
 
@@ -22,7 +22,7 @@
     vm.fetchBadges = function() {
       BadgeService.getBadges(function(res) {
         vm.badges = res.data;
-        $scope.loading = false;
+        $scope.loading[0] = false;
       }, function(res) {
         $scope.showMessage('danger');
       });
@@ -48,13 +48,13 @@
     };
 
     vm.save = function() {
-      $scope.loading = true;
+      $scope.loading[0] = true;
       if (vm.selectedBadge.id) {
         BadgeService.manageBadge(vm.selectedBadge.id, vm.selectedBadge, function(res) {
           vm.selectBadge(vm.selectedBadge.id);
           vm.fetchBadges();
         }, function(res) {
-          $scope.loading = false;
+          $scope.loading[0] = false;
           if (res.data.length) {
             angular.forEach(res.data, function(err) {
               $scope.showMessage('danger', err.error);
@@ -68,7 +68,7 @@
           vm.selectBadge(res.data.new_badge_id);
           vm.fetchBadges();
         }, function(res) {
-          $scope.loading = false;
+          $scope.loading[0] = false;
           if (res.data.length) {
             angular.forEach(res.data, function(err) {
               $scope.showMessage('danger', err.error);
@@ -104,13 +104,13 @@
         }
       }).result.then(function(result) {
         if (result === 'ok') {
-          $scope.loading = true;
+          $scope.loading[0] = true;
           BadgeService.manageBadge(vm.selectedBadge.id, null, function(res) {
             vm.editing = false;
             vm.selectedBadge = null;
             vm.fetchBadges();
           }, function(res) {
-            $scope.loading = false;
+            $scope.loading[0] = false;
             if (res.data.length) {
               angular.forEach(res.data, function(err) {
                 $scope.showMessage('danger', err.error);

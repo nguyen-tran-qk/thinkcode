@@ -6,7 +6,7 @@
   function CourseDetailsCtrl($scope, $rootScope, $state, $uibModal, $timeout, $filter, CoursesService, UserService) {
     $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
     $scope.app.settings.bodyClass = '';
-    $scope.loading = true;
+    $scope.loading[0] = true;
     $scope.user = UserService.getUser();
     $('.main-container').tkScrollNavbarTransition();
 
@@ -29,12 +29,13 @@
     };
 
     vm.getCourseDetails = function() {
+      $scope.loading[0] = true;
       CoursesService.getCourseById(vm.$state.params.course_id, function(res) {
         vm.course = res.data;
         vm.course.engine_id = engine_arr.indexOf(vm.course.engine);
         vm.course.level_id = level_arr.indexOf(vm.course.level);
         $timeout(function() {
-          $scope.loading = false;
+          $scope.loading[0] = false;
         }, 1000);
       }, function(res) {
         vm.$state.go('main.courses');
@@ -44,11 +45,10 @@
           $scope.showMessage('danger');
         }
         $timeout(function() {
-          $scope.loading = false;
+          $scope.loading[0] = false;
         });
       }, 1000);
     };
-    vm.getCourseDetails();
 
     vm.editCourse = function() {
       var editInfoAllowed = false;
@@ -104,6 +104,8 @@
         }, function(res) {
           $scope.showMessage('danger');
         });
+      }, function() {
+        vm.getCourseDetails();
       });
     };
 
@@ -173,5 +175,7 @@
         });
       }
     };
+
+    vm.getCourseDetails();
   }
 })();

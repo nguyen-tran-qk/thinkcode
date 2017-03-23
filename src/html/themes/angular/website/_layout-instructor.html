@@ -1,7 +1,18 @@
 {% include "src/html/themes/angular/website/_navbar.html" %}
 <!-- {% include "src/html/themes/html/instructor/_website-profile-cover.html" %} -->
 <div class="fullscreen">
-  <div class="loading-overlay" ng-if="loading"></div>
+  <div class="loading-overlay" ng-class="{'visible': loading[0]}">
+    <div class="loading-logo" layout="row" layout-align="center center">
+      <img src="images/ThinkCode-04.svg" width="180" height="50" class="display-inline-block" flex>
+      <!-- <div class="showbox"> -->
+        <div class="loader" ng-class="{ 'display-inline-block': loading[0]||waiting, 'display-none': !loading[0] && !waiting }" flex>
+          <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+          </svg>
+        </div>
+      <!-- </div> -->
+    </div>
+  </div>
   <div class="col-md-12 height-100pc padding-left-none padding-right-none">
     {% block content %}{% endblock %}
     <br/>

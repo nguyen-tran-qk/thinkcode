@@ -25,7 +25,7 @@
     $('.navbar .navbar-right .navbar-btn').addClass('btn-sm');
     $('.navbar .container').addClass('width-100pc');
 
-    $scope.loading = true;
+    $scope.loading[0] = true;
 
     var vm = this;
 
@@ -329,7 +329,7 @@
       WorkspaceService.getWorkspaceById(vm.workspaceId, function(res) {
         $timeout(function() {
           vm.my_data = analyzeTree(res.data);
-          $scope.loading = false;
+          $scope.loading[0] = false;
         });
       }, function(res) {
         if (res.status === 401) {

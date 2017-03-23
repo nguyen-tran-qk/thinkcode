@@ -62,7 +62,7 @@
         } else {
           return '';
         }
-      }
+      };
     })
     .filter('existedInArray', function() {
       return function(item, arr) {
@@ -72,7 +72,21 @@
           }
         }
         return false;
-      }
+      };
+    })
+    .filter('lessonTypeClass', function() {
+      return function(lessonType, predicate) {
+        switch (lessonType) {
+          case 'video':
+            return predicate === 'bgColor' ? 'red' : 'film';
+          case 'reading':
+            return predicate === 'bgColor' ? 'indigo' : 'book';
+          case 'code':
+            return predicate === 'bgColor' ? 'green' : 'code';
+          case 'project':
+            return predicate === 'bgColor' ? 'orange' : 'desktop';
+        }
+      };
     });
 
   angular.module('app').filter('findBranchByUid', function() {
@@ -83,5 +97,5 @@
         }
       });
     };
-  })
+  });
 }());
