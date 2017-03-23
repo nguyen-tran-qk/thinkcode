@@ -35,7 +35,7 @@
               <span class="label" ng-class="vm.course.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: vm.course.engine ::</span>
               <span class="label" ng-class="vm.course.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: vm.course.level ::</span>
               <!-- <i class="course-badge fa fa-trophy" aria-hidden="true"></i><a href><strong> :: vm.course.badge.title ::</strong></a> -->
-              <img ng-src=":: vm.course.badge.id | badgeImage:allBadges ::" alt="Badge" class="icon-block s30"><a href><strong> :: vm.course.badge.title ::</strong></a>
+              <img ng-src=":: vm.course.badge.id | badgeImage:allBadges ::" alt="Badge" class="icon-block s30 img-circle"><a ui-sref="main.badges({id: vm.course.badge.id})"><strong> :: vm.course.badge.title ::</strong></a>
             </p>
             <div class="label bg-cyan-500 admin-label">
               <small>Quản trị viên:</small>

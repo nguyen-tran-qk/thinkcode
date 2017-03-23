@@ -70,7 +70,8 @@
     "angular-resizable": "^1.2.0",
     "angular-middleware": "~2.1.2",
     "angularfire": "2.3.0",
-    "ngToast": "ngtoast#^2.0.0"
+    "ngToast": "ngtoast#^2.0.0",
+    "angular-slick": "^0.2.1"
   },
   "resolutions": {
     "bootstrap": "3.3.4",

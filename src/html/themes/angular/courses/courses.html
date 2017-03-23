@@ -73,7 +73,7 @@
           <span class="label" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
           <span class="label" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
           <span class="badge-label">
-          	<img ng-src=":: item.badge.id | badgeImage:allBadges ::" alt="Badge" class="icon-block s30"><a href><strong> :: item.badge.title ::</strong></a>
+          	<img ng-src=":: item.badge.id | badgeImage:allBadges ::" alt="Badge" class="icon-block s30 img-circle"><a ui-sref="main.badges({id: item.badge.id})"><strong> :: item.badge.title ::</strong></a>
           </span>
         </p>
       </div>

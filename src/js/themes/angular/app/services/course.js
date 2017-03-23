@@ -127,6 +127,31 @@
               }
             });
         },
+        addLessonToCourse: function(courseId, data, callback, errorCallback) {
+          data.token = localStorage.token;
+          $http.post(API_URL + '/courses/' + courseId + '/lessons', data)
+            .then(function(res) {
+              if (callback) {
+                callback(res);
+              }
+            }, function(res) {
+              if (errorCallback) {
+                errorCallback(res);
+              }
+            });
+        },
+        deleteLesson: function(courseId, lessonId, callback, errorCallback) {
+          $http.delete(API_URL + '/courses/' + courseId + '/lessons/' + lessonId + this.tokenString())
+            .then(function(res) {
+              if (callback) {
+                callback(res);
+              }
+            }, function(res) {
+              if (errorCallback) {
+                errorCallback(res);
+              }
+            });
+        },
       };
     }]);
 })();

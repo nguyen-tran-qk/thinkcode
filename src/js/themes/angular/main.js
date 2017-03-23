@@ -34,15 +34,16 @@ require('./app/directives/abn-tree-modified');
 require('./app/directives/chat-box');
 
 // Angular App Services
-require('./app/services/workspace')
-require('./app/services/users')
-require('./app/services/course')
-require('./app/services/badge')
+require('./app/services/workspace');
+require('./app/services/users');
+require('./app/services/course');
+require('./app/services/badge');
 
 // Angular App Controllers
-require('./app/controllers/users.controller.js')
-require('./app/controllers/workspaces.controller.js')
-require('./app/controllers/workspaceDetails.controller.js')
-require('./app/controllers/courses.controller.js')
-require('./app/controllers/courseDetails.controller.js')
-require('./app/controllers/badges.controller.js')
+require('./app/controllers/users.controller.js');
+require('./app/controllers/workspaces.controller.js');
+require('./app/controllers/workspaceDetails.controller.js');
+require('./app/controllers/courses.controller.js');
+require('./app/controllers/courseDetails.controller.js');
+require('./app/controllers/badges.controller.js');
+require('./app/controllers/editCourse.controller.js');

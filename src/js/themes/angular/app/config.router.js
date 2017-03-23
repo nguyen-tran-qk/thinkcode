@@ -154,7 +154,7 @@
               }
             })
             .state('main.badges', {
-              url: '/badges',
+              url: '/badges?id=',
               middleware: 'everyone',
               views: {
                 'main': {

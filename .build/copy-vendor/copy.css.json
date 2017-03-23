@@ -21,7 +21,9 @@
 			"bower_components/angular-bootstrap/ui-bootstrap-csp.css",
 			"bower_components/angular-resizable/src/angular-resizable.css",
 			"bower_components/ngToast/dist/ngToast.css",
-			"bower_components/ngToast/dist/ngToast-animations.css"
+			"bower_components/ngToast/dist/ngToast-animations.css",
+			"bower_components/slick-carousel/slick/slick.css",
+			"bower_components/slick-carousel/slick/slick-theme.css"
 		],
 		"dest": "css/vendor",
 		"flatten": true

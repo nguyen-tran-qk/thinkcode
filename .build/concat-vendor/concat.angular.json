@@ -16,7 +16,8 @@
 		"angular-resizable.js",
 		"angular-middleware.js",
 		"ngToast.js",
-		"angularfire.js"
+		"angularfire.js",
+		"slick.js"
 	],
 	"themes": ["angular"]
 }

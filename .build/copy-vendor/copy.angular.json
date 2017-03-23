@@ -16,7 +16,8 @@
 		"angular-resizable/src/angular-resizable.js",
 		"angular-middleware/dist/angular-middleware.js",
 		"ngToast/dist/ngToast.js",
-		"angularfire/dist/angularfire.js"
+		"angularfire/dist/angularfire.js",
+		"angular-slick/dist/slick.js"
 	],
 	"dest": "js/vendor/angular",
 	"flatten": true,

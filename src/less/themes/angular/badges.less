@@ -1,9 +1,3 @@
-.badge-details {
-  height: 0px;
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s, opacity 0.5s linear;
-  border-width: 0px;
   .close-btn {
     position: absolute;
     top: 5px;
@@ -13,14 +7,25 @@
       font-size: 28px;
     }
   }
-  img, .close-btn {
+.badge-details {
+  height: 0px;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s linear;
+  border-width: 0px;
+  img {
+    max-width: 100px;
+  }
+  img,
+  .close-btn {
     display: none;
   }
   &.badge-selected {
     height: auto;
     visibility: visible;
     opacity: 1;
-    img, .close-btn {
+    img,
+    .close-btn {
       display: block;
     }
   }
@@ -28,7 +33,28 @@
     max-width: 33%;
     margin: 0 8px 8px 0;
   }
+  .panel-body {
+    .media.width-100pc {
+      & > .media-left {
+        position: relative;
+        padding-right: 30px;
+        min-width: 140px;
+        .btn {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+        }
+      }
+      .media-body {
+        width: 90%;
+        .btn.btn-danger {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
 }
+
 .badges-container {
   .panel {
     &:hover {

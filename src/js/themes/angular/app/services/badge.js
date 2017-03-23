@@ -39,6 +39,35 @@
                 errorCallback(res);
               }
             });
+        },
+        createBadge: function(data, callback, errorCallback) {
+          $http.post(API_URL + '/badges', { token: localStorage.token, badge: data })
+            .then(function(res) {
+              if (callback) {
+                callback(res);
+              }
+            }, function(res) {
+              if (errorCallback) {
+                errorCallback(res);
+              }
+            });
+        },
+        manageBadge: function(id, data, callback, errorCallback) {
+          var promise;
+          if (data) {
+            promise = $http.put(API_URL + '/badges/' + id, { token: localStorage.token, badge: data });
+          } else {
+            promise = $http.delete(API_URL + '/badges/' + id + '?token=' + localStorage.token);
+          }
+          promise.then(function(res) {
+            if (callback) {
+              callback(res);
+            }
+          }, function(res) {
+            if (errorCallback) {
+              errorCallback(res);
+            }
+          });
         }
       };
     }]);

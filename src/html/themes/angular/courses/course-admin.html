@@ -105,6 +105,74 @@
         </span>
       </div>
     </div>
+    <div class="tab-content" ng-show="tab === 3">
+      <button class="btn btn-primary right" ng-click="vm.editing = true">Tạo bài học</button>
+      <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated="" ng-if="vm.editing">
+        <div class="panel-body">
+          <div class="form-group form-control-material">
+            <input type="text" class="form-control" id="lesson-title" ng-model="vm.selectedLesson.lesson.title" ng-class="{'used': vm.selectedLesson.title}" maxlength="50" required><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+            <label for="lesson-title">Tiêu đề bài học</label>
+          </div>
+          <div class="form-group">
+            <label for="lesson-desc">Mô tả</label>
+            <textarea class="form-control" id="lesson-desc" placeholder="Giới thiệu/mô tả ngắn gọn về bài học" ng-model="vm.selectedLesson.lesson.description" rows="5" required></textarea>
+          </div>
+          <div class="btn-group col-md-3" uib-dropdown>
+            <button id="lesson-type" type="button" class="btn btn-default" uib-dropdown-toggle>::vm.selectedLesson.type ? vm.selectedLesson.type : 'Chọn phân loại'::<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="lesson-type">
+              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='video'">Video</a></li>
+              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='reading'">Đọc hiểu</a></li>
+              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='code'">Thực hành code</a></li>
+              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='project'">Thực hành ứng dụng</a></li>
+            </ul>
+          </div>
+          <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'video'">
+            <div class="form-group form-control-material">
+              <input type="text" class="form-control" id="video-url" placeholder="Liên kết tới video" ng-model="vm.selectedLesson.video_task.video_url" ng-class="{'used': vm.selectedLesson.video_task.video_url}" required><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+              <label for="video-url">Liên kết tới video</label>
+            </div>
+            <div class="form-group form-control-material">
+              <input type="text" class="form-control" id="video-duration" ng-model="vm.selectedLesson.video_task.video_duration" ng-class="{'used': vm.selectedLesson.video_task.video_duration}" maxlength="10" required><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+              <label for="video-duration">Độ dài video</label>
+            </div>
+            <div class="form-group">
+              <label for="teacher-note">Ghi chú</label>
+              <textarea class="form-control" id="teacher-note" placeholder="Ghi chú về bài học" ng-model="vm.selectedLesson.video_task.teacher_note" rows="3" required></textarea>
+            </div>
+          </div>
+          <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'reading'">
+            <div class="form-group">
+              <label for="lesson-content">Nội dung</label>
+              <textarea class="form-control" id="lesson-content" placeholder="Nội dung để đọc về bài học" ng-model="vm.selectedLesson.reading_task.content" rows="5" required></textarea>
+            </div>
+          </div>
+          <div class="btn btn-primary btn-sm right" ng-click="vm.addLesson()">Lưu</div>
+          <div class="pull-right close-btn">
+            <a class="relative" data-z="1" href ng-click="vm.editing = false"><i class="md md-close"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="nestable display-inline-block width-100pc" id="nestable-handles-primary" ng-if="vm.course.lessons.length">
+        <ul class="nestable-list">
+          <li class="nestable-item nestable-item-handle" data-id="item.order" ng-repeat="item in vm.course.lessons">
+            <div class="nestable-handle"><i class="md md-menu"></i></div>
+            <div class="nestable-content">
+              <div class="media v-middle width-100pc">
+                <div class="media-body width-100pc block">
+                  <div class="display-inline-block">
+                    <h4 class="text-title media-heading margin-none"><a href="" class="link-text-color">:: item.title ::</a></h4>
+                    <div class="text-caption">:: item.description ::</div>
+                  </div>
+                  <button class="btn btn-default btn-sm right margin-v-5-0" ng-click="item.deleteConfirm = null" ng-if="item.deleteConfirm">Hủy</button>
+                  <button class="btn btn-warning btn-sm right layout-margin margin-v-5-0" ng-click="vm.deleteLesson(item)">:: item.deleteConfirm ? 'Xác nhận xóa?' : 'Xóa' ::</button>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 <div class="modal-footer">
