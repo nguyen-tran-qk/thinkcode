@@ -13,7 +13,8 @@
           <h1 class="text-display-1 margin-none">:: vm.course.title ::</h1>
         </div>
         <div class="media-right">
-          <a class="btn btn-white" ui-sref="main.courses({type: vm.$state.params.type})">Quay lại</a>
+          <a class="btn btn-white" ui-sref="main.courses({type: vm.$state.params.type})" ng-if="user.instructor || user.staff || user.admin">Quay lại</a>
+          <a class="btn btn-enroll" ng-class="hovering ? 'bg-light-blue-300' : 'bg-light-blue-400'" ng-mouseenter="hovering = true" ng-mouseleave="hovering = false">Bắt đầu học</a>
         </div>
       </div>
     </div>

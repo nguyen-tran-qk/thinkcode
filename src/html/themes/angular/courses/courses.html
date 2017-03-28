@@ -89,24 +89,11 @@
             <h4><a href>:: item.admin ::</a><br/></h4>
           </div>
         </div>
-        <div class="navbar-right" ng-if="!user.admin && !user.instructor && !user.staff">
-          <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right">
-            <!-- user -->
-            <li class="dropdown">
-              <a href class="dropdown-toggle" data-toggle="dropdown"><i class="icon-lg md md-expand-more"></i></a>
-              <ul class="dropdown-menu" role="menu">
-                <li ui-sref-active="active"><a href>Tham gia khóa học</a></li>
-                <!-- <li ui-sref-active="active"><a href ng-click="vm.deleteWorkspace(item.id, item.engine)" ng-if="user.instructor">Xóa</a></li> -->
-              </ul>
-            </li>
-            <!-- // END user -->
-          </ul>
-        </div>
-        <!-- <a class="btn btn-white btn-flat paper-shadow relative right" ui-sref="main.courses.details({workspaceId: item.id})"><i class="fa fa-fw fa-pencil"></i>Go to course</a> -->
       </div>
     </div>
   </div>
 </div>
 <div ui-view="content" class="ui-view-main" ng-if="vm.$state.current.name.indexOf('details') >= 0"></div>
+<div ui-view="lesson" class="ui-view-main" ng-if="vm.$state.is('main.courses.lesson')"></div>
 <!-- {% include "src/html/themes/html/_pagination.html" %} -->
 {% endblock %}

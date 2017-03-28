@@ -1,0 +1,53 @@
+{% extends "src/html/themes/angular/website/_layout-instructor.html" %} {% block content %}
+<div id="lesson-container" class="height-100pc">
+	<div class="lesson-header bg-blue-grey-900 col-sm-12">
+		<div class="col-sm-4 padding-none"><a href ng-if="vm.lesson.order > 1" ng-click="vm.lesson.order = vm.lesson.order-1"><i class="fa fa-chevron-left"></i>Previous lesson</a></div>
+		<div class="col-sm-4 text-center text-h3"><a href>Ruby Introduction</a></div>
+		<div class="col-sm-4 text-right padding-none"><a href ng-if="vm.lesson.order < 4" ng-click="vm.lesson.order = vm.lesson.order+1">Next lesson<i class="fa fa-chevron-right"></i></a></div>
+	</div>
+  <div class="panel panel-default col-sm-3 col-md-4 col-lg-3 margin-none height-100pc lesson-info" ng-hide="vm.minimized">
+    <div class="panel-body height-100pc">
+	    <div class="media media-grid v-middle lesson-title bg-grey-200">
+	      <div class="media-left">
+	        <span class="icon-block half bg-indigo-300 text-white">::vm.lesson.order::</span>
+	      </div>
+	      <div class="media-body">
+	        <h1 class="margin-none">Why Ruby is a Great Language?</h1>
+	      </div>
+	    </div>
+	    <p>
+	      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mattis ipsum nec odio consectetur pharetra. Vestibulum in elit sit amet dolor mollis varius. Pellentesque auctor in dolor sed venenatis. Curabitur pharetra facilisis metus, et bibendum ex egestas et. Vestibulum eget erat quis elit aliquam venenatis. Proin porta dapibus felis non sagittis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer nec ipsum sed libero ultrices ultricies. Aliquam posuere malesuada suscipit. Quisque sit amet suscipit justo. Integer lobortis egestas vehicula. Etiam facilisis enim nunc, eget imperdiet augue feugiat sed.
+			</p>
+    </div>
+    <button class="btn btn-complete" ng-class="hovering ? 'bg-blue-500' : 'bg-blue-600'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">Hoàn thành bài học</button>
+  </div>
+  <chat-box user="user"></chat-box>
+  <div class="height-100pc col-sm-9 col-md-8 col-lg-9 bg-blue-grey-700 lesson-content" ng-class="{'width-100pc': vm.minimized, 'type-video': vm.lesson.order === 2}">
+  	<div class="box" ng-if="vm.lesson.order === 2">
+  		<iframe src="https://www.youtube.com/embed/5bA7nrdVEqE" frameborder="0" allowfullscreen></iframe>
+		</div>
+  		<div class="panel panel-default paper-shadow col-sm-12 padding-none" data-z="0.5" ng-if="vm.lesson.order === 1">
+  			<div class="panel-body height-100pc">
+  			<p>
+  			Phasellus convallis est orci, ac lobortis ex gravida quis. Cras a felis sit amet tellus dictum pulvinar eu in lectus. Donec aliquam dignissim hendrerit. Nullam elementum metus velit, vitae gravida ligula dictum a. Etiam quis accumsan velit, at facilisis nulla. Proin molestie quam quis tellus sagittis sodales. Ut et turpis aliquet mauris blandit tempus quis eu nisl.
+
+				Curabitur cursus vehicula risus quis volutpat. Ut velit nibh, facilisis viverra sollicitudin ut, consequat eget ligula. Maecenas lobortis porta commodo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed ullamcorper varius dignissim. Aenean facilisis nisl purus, ac fermentum turpis pulvinar at. Nunc in metus porttitor, ornare arcu nec, fermentum elit. Sed ac nunc pretium, mollis odio eget, accumsan tellus. Pellentesque iaculis sem lectus, eu luctus mi ultricies sit amet.
+
+				Duis vehicula ex ac laoreet euismod. Curabitur molestie vulputate turpis, at finibus eros efficitur at. Donec fringilla lorem sit amet felis dignissim vehicula. Etiam vel tincidunt tellus, vestibulum aliquam quam. Cras hendrerit, mauris eget posuere lobortis, nunc metus accumsan urna, nec sollicitudin eros justo vitae nisl. Cras quis nibh a felis dictum posuere mattis in nisi. Proin sed pharetra nisi. Integer quam ligula, accumsan eget ornare at, tincidunt at ligula. Fusce a rhoncus dolor. Cras at mauris id odio dapibus mollis.
+				Phasellus convallis est orci, ac lobortis ex gravida quis. Cras a felis sit amet tellus dictum pulvinar eu in lectus. Donec aliquam dignissim hendrerit. Nullam elementum metus velit, vitae gravida ligula dictum a. Etiam quis accumsan velit, at facilisis nulla. Proin molestie quam quis tellus sagittis sodales. Ut et turpis aliquet mauris blandit tempus quis eu nisl.
+
+				Curabitur cursus vehicula risus quis volutpat. Ut velit nibh, facilisis viverra sollicitudin ut, consequat eget ligula. Maecenas lobortis porta commodo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed ullamcorper varius dignissim. Aenean facilisis nisl purus, ac fermentum turpis pulvinar at. Nunc in metus porttitor, ornare arcu nec, fermentum elit. Sed ac nunc pretium, mollis odio eget, accumsan tellus. Pellentesque iaculis sem lectus, eu luctus mi ultricies sit amet.
+
+				Duis vehicula ex ac laoreet euismod. Curabitur molestie vulputate turpis, at finibus eros efficitur at. Donec fringilla lorem sit amet felis dignissim vehicula. Etiam vel tincidunt tellus, vestibulum aliquam quam. Cras hendrerit, mauris eget posuere lobortis, nunc metus accumsan urna, nec sollicitudin eros justo vitae nisl. Cras quis nibh a felis dictum posuere mattis in nisi. Proin sed pharetra nisi. Integer quam ligula, accumsan eget ornare at, tincidunt at ligula. Fusce a rhoncus dolor. Cras at mauris id odio dapibus mollis.
+				Phasellus convallis est orci, ac lobortis ex gravida quis. Cras a felis sit amet tellus dictum pulvinar eu in lectus. Donec aliquam dignissim hendrerit. Nullam elementum metus velit, vitae gravida ligula dictum a. Etiam quis accumsan velit, at facilisis nulla. Proin molestie quam quis tellus sagittis sodales. Ut et turpis aliquet mauris blandit tempus quis eu nisl.
+
+				Curabitur cursus vehicula risus quis volutpat. Ut velit nibh, facilisis viverra sollicitudin ut, consequat eget ligula. Maecenas lobortis porta commodo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed ullamcorper varius dignissim. Aenean facilisis nisl purus, ac fermentum turpis pulvinar at. Nunc in metus porttitor, ornare arcu nec, fermentum elit. Sed ac nunc pretium, mollis odio eget, accumsan tellus. Pellentesque iaculis sem lectus, eu luctus mi ultricies sit amet.
+
+				Duis vehicula ex ac laoreet euismod. Curabitur molestie vulputate turpis, at finibus eros efficitur at. Donec fringilla lorem sit amet felis dignissim vehicula. Etiam vel tincidunt tellus, vestibulum aliquam quam. Cras hendrerit, mauris eget posuere lobortis, nunc metus accumsan urna, nec sollicitudin eros justo vitae nisl. Cras quis nibh a felis dictum posuere mattis in nisi. Proin sed pharetra nisi. Integer quam ligula, accumsan eget ornare at, tincidunt at ligula. Fusce a rhoncus dolor. Cras at mauris id odio dapibus mollis.
+				</p>
+				</div>
+  		</div>
+  		<button class="btn btn-expand" ng-click="vm.minimized=!vm.minimized"><i class="fa fa-expand"></i></button>
+  </div>
+</div>
+{% endblock %}

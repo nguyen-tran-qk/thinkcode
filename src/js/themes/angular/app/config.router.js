@@ -75,6 +75,19 @@
               } else {
                 request.redirectTo('login');
               }
+            }],
+            learner: ['UserService', function(UserService) {
+              var request = this;
+              if (localStorage.token && localStorage.token.length && localStorage.user) {
+                var user = JSON.parse(localStorage.user);
+                if (!user.staff && !user.instructor && !user.admin) {
+                  return request.next();
+                } else {
+                  request.redirectTo('main.courses');
+                }
+              } else {
+                request.redirectTo('login');
+              }
             }]
           });
           $middlewareProvider.global('everyone');
@@ -162,6 +175,21 @@
                   controller: 'BadgesController',
                   controllerAs: 'vm'
                 }
+              }
+            })
+            .state('main.learn', {
+              url: '/learn/:course_id/:lesson_id',
+              middleware: 'learner',
+              views: {
+                'main': {
+                  templateUrl: 'courses/lesson.html',
+                  controller: 'LessonController',
+                  controllerAs: 'vm'
+                }
+              },
+              params: {
+                course_id: null,
+                lesson_id: null
               }
             });
 
