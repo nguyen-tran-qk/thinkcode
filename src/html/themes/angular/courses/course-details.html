@@ -46,7 +46,7 @@
         <div class="page-section equal">
           <div class="row">
             <div class="col-sm-12 col-md-10">
-              <div class="panel panel-default paper-shadow" data-z="0.5" ng-if="!vm.course.lessons.length">
+              <div class="panel panel-default paper-shadow" data-z="0.5" ng-if="vm.course.status !== 'published' && !vm.course.lessons.length">
                 <div class="panel-heading panel-heading-gray">
                   <div class="text-h4"><span class="text-primary">:: vm.course.title ::</span> hiện chưa có bài học nào. Hãy vào mục <span class="text-muted">Chỉnh sửa thông tin và quản trị</span> để tạo các bài học.</div>
                 </div>
@@ -131,7 +131,7 @@
   </div>
   <div class="bg-white page-section padding-v-20-40 course-prerequisites" ng-if="vm.course.prerequisites.length">
     <div class="container">
-      <h4 class="margin-none">Yêu cầu của khóa học</h4>
+      <h4 class="margin-none">Các kiến thức nên biết</h4>
       <p class="text-light">Khóa học này yêu cầu một số kiến thức nhất định, do đó trước khi bắt đầu, bạn nên tham gia:</p>
       <div class="panel panel-default paper-shadow col-sm-4 col-lg-3 padding-none" data-z="0.5" data-hover-z="1" data-animated ng-repeat="item in vm.course.prerequisites">
         <div class="panel-body">

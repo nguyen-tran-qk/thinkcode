@@ -137,16 +137,16 @@
           </div>
           <div class="form-group">
             <label for="lesson-desc">Mô tả</label>
-            <textarea class="form-control" id="lesson-desc" placeholder="Giới thiệu/mô tả ngắn gọn về bài học" ng-model="vm.selectedLesson.description" rows="6" required></textarea>
+            <textarea class="form-control" id="lesson-desc" placeholder="Mô tả kết quả cần đạt được" ng-model="vm.selectedLesson.description" rows="6" required></textarea>
           </div>
           <div class="btn-group col-md-3 margin-v-0-10" uib-dropdown ng-class="{'disabled': vm.selectedLesson.id}">
             <button id="lesson-type" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="vm.selectedLesson.id">::vm.selectedLesson.type ? vm.selectedLesson.type : 'Chọn phân loại'::<span class="caret"></span>
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="lesson-type">
-              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='video'">Video</a></li>
-              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='reading'">Đọc hiểu</a></li>
-              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='code'">Thực hành code</a></li>
-              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='project'">Thực hành ứng dụng</a></li>
+              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='video'">Bài giảng</a></li>
+              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='reading'">Bài đọc</a></li>
+              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='code'">Thực hành</a></li>
+              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='project'">Bài tập lớn</a></li>
             </ul>
           </div>
           <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'video'">
@@ -160,13 +160,13 @@
             </div>
             <div class="form-group">
               <label for="teacher-note">Ghi chú</label>
-              <textarea class="form-control" id="teacher-note" placeholder="Ghi chú về bài học" ng-model="vm.selectedLesson.teacher_note" rows="3" required></textarea>
+              <textarea class="form-control" id="teacher-note" placeholder="Ghi chú của giảng viên" ng-model="vm.selectedLesson.teacher_note" rows="3" required></textarea>
             </div>
           </div>
           <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'reading'">
             <div class="form-group">
               <label for="lesson-content">Nội dung</label>
-              <textarea class="form-control" id="lesson-content" placeholder="Nội dung để đọc về bài học" ng-model="vm.selectedLesson.content" rows="6" required></textarea>
+              <textarea class="form-control" id="lesson-content" placeholder="Văn bản" ng-model="vm.selectedLesson.content" rows="6" required></textarea>
             </div>
           </div>
           <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'code'">
@@ -179,7 +179,7 @@
             <div class="btn btn-primary btn-sm margin-v-0-10" ngf-select ng-model="vm.selectedLesson.template" ngf-accept="application/zip" name="template"><small>Upload template</small></div>
             <span>::vm.selectedLesson.template.name::</span>
             <div class="form-group">
-              <label for="cheat-sheet">Đáp án</label>
+              <label for="cheat-sheet">Hướng dẫn</label>
               <textarea class="form-control" id="cheat-sheet" placeholder="Lời giải/cách giải quyết cho bài thực hành code" ng-model="vm.selectedLesson.cheat_sheet" rows="6" required></textarea>
             </div>
           </div>
