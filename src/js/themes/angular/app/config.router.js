@@ -178,7 +178,7 @@
               }
             })
             .state('main.learn', {
-              url: '/learn/:course_id/:lesson_id',
+              url: '/learn/:course_id/:workspace_id',
               middleware: 'learner',
               views: {
                 'main': {

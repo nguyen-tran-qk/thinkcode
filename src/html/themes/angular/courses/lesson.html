@@ -1,77 +1,89 @@
 {% extends "src/html/themes/angular/website/_layout-instructor.html" %} {% block content %}
-<div id="lesson-container" class="height-100pc">
-	<div class="lesson-header bg-blue-grey-900 col-sm-12">
-		<div class="col-sm-4 padding-none"><a href ng-if="vm.lesson.order > 1" ng-click="vm.lesson.order = vm.lesson.order-1"><i class="fa fa-chevron-left"></i>Previous lesson</a></div>
-		<div class="col-sm-4 text-center text-h3"><a href>Ruby Introduction</a></div>
-		<div class="col-sm-4 text-right padding-none"><a href ng-if="vm.lesson.order < 4" ng-click="vm.lesson.order = vm.lesson.order+1">Next lesson<i class="fa fa-chevron-right"></i></a></div>
-	</div>
-  <div class="panel panel-default col-sm-3 col-md-4 col-lg-3 margin-none height-100pc lesson-info" ng-hide="vm.minimized">
-    <div class="panel-body height-100pc">
-	    <div class="media media-grid v-middle lesson-title bg-grey-200">
-	      <div class="media-left">
-	        <span class="icon-block half bg-indigo-300 text-white">::vm.lesson.order::</span>
-	      </div>
-	      <div class="media-body">
-	        <h1 class="margin-none">Why Ruby is a Great Language?</h1>
-	      </div>
-	    </div>
-	    <p>
-	      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer mattis ipsum nec odio consectetur pharetra. Vestibulum in elit sit amet dolor mollis varius. Pellentesque auctor in dolor sed venenatis. Curabitur pharetra facilisis metus, et bibendum ex egestas et. Vestibulum eget erat quis elit aliquam venenatis. Proin porta dapibus felis non sagittis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer nec ipsum sed libero ultrices ultricies. Aliquam posuere malesuada suscipit. Quisque sit amet suscipit justo. Integer lobortis egestas vehicula. Etiam facilisis enim nunc, eget imperdiet augue feugiat sed.
-			</p>
+<div id="lesson-container" class="">
+  <div class="lesson-header bg-blue-grey-900 col-sm-12">
+    <div class="col-sm-4 padding-none"><a href ng-if="vm.lesson.previous.title" ng-click="vm.goToLesson(vm.lesson.previous.id)"><i class="fa fa-chevron-left"></i>:: vm.lesson.previous.title ::</a></div>
+    <div class="col-sm-4 text-center">
+      <a ui-sref="main.courses.details({course_id: vm.lesson.course_id})" class="text-h3">Ruby Introduction</a>
+      <br/><span class="text-light-blue-300">với :: vm.lesson.teacher ::</span>
+    </div>
+    <div class="col-sm-4 text-right padding-none"><a href ng-if="vm.lesson.next.title" ng-click="vm.goToLesson(vm.lesson.next.id)">:: vm.lesson.next.title ::<i class="fa fa-chevron-right"></i></a></div>
+  </div>
+  <div class="panel panel-default col-sm-3 col-md-3 col-lg-2 margin-none height-100pc lesson-info" ng-hide="vm.minimized">
+    <div class="media media-grid v-middle lesson-title bg-grey-200">
+      <div class="media-left">
+        <span class="icon-block half bg-:: vm.lesson.type | lessonTypeClass:'bgColor' ::-300 text-white">::vm.lesson.order::</span>
+      </div>
+      <div class="media-body">
+        <h1 class="margin-none">:: vm.lesson.title ::</h1>
+      </div>
+    </div>
+    <div class="panel-body">
+      <p>:: vm.lesson.description ::</p>
+      <div class="panel panel-default border-none lesson-notes" data-toggle="panel-collapse" data-open="true" data-z="0.5" data-z="0.5" data-hover-z="1" data-animated="" ng-show="vm.lesson.type === 'video'">
+        <div class="panel-heading panel-collapse-trigger collapse" data-toggle="collapse" data-target="#lesson-notes" aria-expanded="true">
+          <h4 class="panel-title">Về bài giảng này:</h4>
+        </div>
+        <div id="lesson-notes" class="collapse">
+          <div class="panel-body padding-v-5">
+            <h5 class="inline-block">Thời lượng:</h5><span class="inline-block">&nbsp;:: vm.lesson.video_duration ::</span>
+            <h5>Ghi chú của giảng viên:</h5>
+            <p>:: vm.lesson.teacher_note ::</p>
+          </div>
+        </div>
+      </div>
+      <abn-tree-mod id="workspace-tree" ng-if="!loading[0] && vm.my_data.length" tree-data="vm.my_data" tree-control="vm.my_tree" icon-leaf="fa fa-file" icon-expand="fa fa-folder" icon-collapse="fa fa-folder-open" expand-level="3"></abn-tree-mod>
+    </div>
+    <div class="panel panel-default bg-grey-100 padding-none cheat-sheet" ng-if="vm.showCheatSheet">
+      <i class="icon-close md md-close" ng-click="vm.showCheatSheet = false"></i>
+      <div class="panel-body">
+        <h5>Gợi ý nhỏ dành cho bạn</h5>
+        <p class="text-light">:: vm.lesson.cheat_sheet ::</p>
+      </div>
     </div>
     <button class="btn btn-complete" ng-class="hovering ? 'bg-blue-500' : 'bg-blue-600'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">Hoàn thành bài học</button>
   </div>
   <chat-box user="user"></chat-box>
-  <div class="height-100pc col-sm-9 col-md-8 col-lg-9 bg-blue-grey-700 lesson-content" ng-class="{'width-100pc': vm.minimized, 'type-video': vm.lesson.order === 2}">
-  	<div class="box" ng-if="vm.lesson.order === 2">
-  		<iframe src="https://www.youtube.com/embed/5bA7nrdVEqE" frameborder="0" allowfullscreen></iframe>
-		</div>
-		<div class="panel panel-default paper-shadow col-sm-12 padding-none" data-z="0.5" ng-if="vm.lesson.order === 1">
-			<div class="panel-body height-100pc">
-			<p>
-			Phasellus convallis est orci, ac lobortis ex gravida quis. Cras a felis sit amet tellus dictum pulvinar eu in lectus. Donec aliquam dignissim hendrerit. Nullam elementum metus velit, vitae gravida ligula dictum a. Etiam quis accumsan velit, at facilisis nulla. Proin molestie quam quis tellus sagittis sodales. Ut et turpis aliquet mauris blandit tempus quis eu nisl.
-
-			Curabitur cursus vehicula risus quis volutpat. Ut velit nibh, facilisis viverra sollicitudin ut, consequat eget ligula. Maecenas lobortis porta commodo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed ullamcorper varius dignissim. Aenean facilisis nisl purus, ac fermentum turpis pulvinar at. Nunc in metus porttitor, ornare arcu nec, fermentum elit. Sed ac nunc pretium, mollis odio eget, accumsan tellus. Pellentesque iaculis sem lectus, eu luctus mi ultricies sit amet.
-
-			Duis vehicula ex ac laoreet euismod. Curabitur molestie vulputate turpis, at finibus eros efficitur at. Donec fringilla lorem sit amet felis dignissim vehicula. Etiam vel tincidunt tellus, vestibulum aliquam quam. Cras hendrerit, mauris eget posuere lobortis, nunc metus accumsan urna, nec sollicitudin eros justo vitae nisl. Cras quis nibh a felis dictum posuere mattis in nisi. Proin sed pharetra nisi. Integer quam ligula, accumsan eget ornare at, tincidunt at ligula. Fusce a rhoncus dolor. Cras at mauris id odio dapibus mollis.
-			Phasellus convallis est orci, ac lobortis ex gravida quis. Cras a felis sit amet tellus dictum pulvinar eu in lectus. Donec aliquam dignissim hendrerit. Nullam elementum metus velit, vitae gravida ligula dictum a. Etiam quis accumsan velit, at facilisis nulla. Proin molestie quam quis tellus sagittis sodales. Ut et turpis aliquet mauris blandit tempus quis eu nisl.
-
-			Curabitur cursus vehicula risus quis volutpat. Ut velit nibh, facilisis viverra sollicitudin ut, consequat eget ligula. Maecenas lobortis porta commodo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed ullamcorper varius dignissim. Aenean facilisis nisl purus, ac fermentum turpis pulvinar at. Nunc in metus porttitor, ornare arcu nec, fermentum elit. Sed ac nunc pretium, mollis odio eget, accumsan tellus. Pellentesque iaculis sem lectus, eu luctus mi ultricies sit amet.
-
-			Duis vehicula ex ac laoreet euismod. Curabitur molestie vulputate turpis, at finibus eros efficitur at. Donec fringilla lorem sit amet felis dignissim vehicula. Etiam vel tincidunt tellus, vestibulum aliquam quam. Cras hendrerit, mauris eget posuere lobortis, nunc metus accumsan urna, nec sollicitudin eros justo vitae nisl. Cras quis nibh a felis dictum posuere mattis in nisi. Proin sed pharetra nisi. Integer quam ligula, accumsan eget ornare at, tincidunt at ligula. Fusce a rhoncus dolor. Cras at mauris id odio dapibus mollis.
-			Phasellus convallis est orci, ac lobortis ex gravida quis. Cras a felis sit amet tellus dictum pulvinar eu in lectus. Donec aliquam dignissim hendrerit. Nullam elementum metus velit, vitae gravida ligula dictum a. Etiam quis accumsan velit, at facilisis nulla. Proin molestie quam quis tellus sagittis sodales. Ut et turpis aliquet mauris blandit tempus quis eu nisl.
-
-			Curabitur cursus vehicula risus quis volutpat. Ut velit nibh, facilisis viverra sollicitudin ut, consequat eget ligula. Maecenas lobortis porta commodo. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed ullamcorper varius dignissim. Aenean facilisis nisl purus, ac fermentum turpis pulvinar at. Nunc in metus porttitor, ornare arcu nec, fermentum elit. Sed ac nunc pretium, mollis odio eget, accumsan tellus. Pellentesque iaculis sem lectus, eu luctus mi ultricies sit amet.
-
-			Duis vehicula ex ac laoreet euismod. Curabitur molestie vulputate turpis, at finibus eros efficitur at. Donec fringilla lorem sit amet felis dignissim vehicula. Etiam vel tincidunt tellus, vestibulum aliquam quam. Cras hendrerit, mauris eget posuere lobortis, nunc metus accumsan urna, nec sollicitudin eros justo vitae nisl. Cras quis nibh a felis dictum posuere mattis in nisi. Proin sed pharetra nisi. Integer quam ligula, accumsan eget ornare at, tincidunt at ligula. Fusce a rhoncus dolor. Cras at mauris id odio dapibus mollis.
-			</p>
-			</div>
-		</div>
-		<div class="workspace height-100pc" ng-if="vm.lesson.order === 3 || vm.lesson.order === 4">
-			<!-- Tabbable Widget -->
-	    <div class="editor-tabs tabbable col-sm-12 margin-none" ng-show="vm.tabs.length">
-	      <!-- Tabs -->
-	      <ul class="nav nav-tabs">
-	        <li ng-repeat="tab in vm.tabs track by tab.data.id" ng-class="{'active': tab.data.id === vm.currentBranch.data.id}">
-	          <a href ng-click="vm.openTab(tab)"><i class="fa fa-fw fa-code"></i> ::tab.label::</a>
-	          <i class="btn-close md md-close" ng-if="tab.uid !== -1" ng-click="vm.closeFile(tab)"></i>
-	        </li>
-	      </ul>
-	      <!-- // END Tabs -->
-	      <!-- Panes -->
-	      <div class="tab-content padding-none">
-	        <div id="firepad" class="tab-pane active">
-	        </div>
-	      </div>
-	      <!-- // END Panes -->
-	    </div>
-	    <div class="panel panel-default col-md-3 padding-none console-panel margin-none" ng-class="{'minimized': vm.consoleHidden}">
-	      <div id="console" class="height-100pc" ng-class="{'code-error': vm.codeError}" ng-hide="vm.consoleHidden">
-	      </div>
-	      <div ng-if="vm.consoleHidden" class="resize-notify resize-left" ng-click="vm.consoleHidden = false"><i class="fa fa-fw fa-angle-double-left"></i></div>
-	    </div>
+  <div class="height-100pc col-sm-9 col-md-9 col-lg-10 bg-blue-grey-700 lesson-content" ng-class="{'width-100pc': vm.minimized, 'type-video': vm.lesson.type === 'video'}">
+    <div class="box" ng-if="vm.lesson.type === 'video'">
+      <iframe ng-src="::vm.lesson.video_url | trusted::" frameborder="0" allowfullscreen></iframe>
     </div>
-		<button class="btn btn-expand" ng-click="vm.minimized=!vm.minimized"><i class="fa fa-expand"></i></button>
+    <div class="panel panel-default paper-shadow col-sm-12 padding-none" data-z="0.5" ng-if="vm.lesson.type === 'reading'">
+      <div class="panel-body height-100pc">
+        <p class="reading-content">:: vm.lesson.content ::</p>
+      </div>
+    </div>
+    <div class="workspace width-100pc" ng-show="vm.lesson.type === 'code' || vm.lesson.type === 'project'">
+      <!-- Tabbable Widget -->
+      <div class="editor-tabs tabbable margin-none height-100pc inline-block" ng-show="vm.tabs.length">
+        <!-- Tabs -->
+        <ul class="nav nav-tabs">
+          <li ng-repeat="tab in vm.tabs track by tab.data.id" ng-class="{'active': tab.data.id === vm.currentBranch.data.id}">
+            <a href ng-click="vm.openTab(tab)"><i class="fa fa-fw fa-code"></i> ::tab.label::</a>
+            <i class="btn-close md md-close" ng-if="tab.uid !== -1" ng-click="vm.closeFile(tab)"></i>
+          </li>
+        </ul>
+        <!-- // END Tabs -->
+        <!-- Panes -->
+        <div class="tab-content padding-none">
+          <div id="firepad" class="tab-pane active">
+          </div>
+        </div>
+        <!-- // END Panes -->
+      </div>
+      <div class="panel panel-default padding-none console-panel margin-none inline-block" ng-class="{'minimized': vm.minimized1}">
+        <div id="console" class="height-100pc" ng-class="{'code-error': vm.codeError}" ng-hide="vm.minimized1">
+        </div>
+        <div ng-if="vm.minimized1" class="resize-notify resize-left" ng-click="vm.minimized = false"><i class="fa fa-fw fa-angle-double-left"></i></div>
+      </div>
+      <div class="workspace-actions">
+        <button class="btn btn-expand" ng-click="vm.minimized=!vm.minimized"><i class="fa fa-expand"></i></button>
+        <button class="btn btn-sm btn-warning" ng-click="vm.showCheatSheet = true">Gợi ý</button>
+        <span ng-if="vm.currentBranch.uid !== -1">
+	        <button class="btn btn-success btn-sm" ng-click="vm.saveFile()" ng-disabled="waiting">Save</button>
+	        <button class="btn btn-primary btn-sm" ng-click="vm.runFile()" ng-disabled="waiting">Run</button>
+	      </span>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

@@ -32,8 +32,12 @@
       $scope.loading[0] = true;
       CoursesService.getCourseById(vm.$state.params.course_id, function(res) {
         vm.course = res.data;
+        vm.tempCourse = res.data;
         vm.course.engine_id = engine_arr.indexOf(vm.course.engine);
         vm.course.level_id = level_arr.indexOf(vm.course.level);
+        if (vm.isConfig) {
+          onInitConfig();
+        }
         $timeout(function() {
           $scope.loading[0] = false;
         }, 1000);
@@ -117,6 +121,35 @@
       }
     };
 
+    vm.enroll = function() {
+      if (!$scope.user) {
+        vm.$state.go('login');
+        return;
+      }
+      var promise = CoursesService.enrollCourse(vm.course.id);
+      promise.then(function(res) {
+        if (res.status < 300) {
+          CoursesService.startLesson(vm.course.id, vm.course.lessons[0].id)
+            .then(function(res) {
+              vm.$state.go('main.learn', { course_id: vm.course.id, workspace_id: res.data.workspace_id });
+            }, function(res) {
+              $scope.showMessage('danger');
+            });
+        }
+      }, function(res) {
+        $scope.showMessage('danger');
+      });
+    };
+
+    vm.goToLesson = function(lessonId) {
+      CoursesService.startLesson(vm.course.id, lessonId)
+        .then(function(res) {
+          vm.$state.go('main.learn', { course_id: vm.course.id, workspace_id: res.data.workspace_id });
+        }, function(res) {
+          $scope.showMessage('danger');
+        });
+    };
+
     vm.getCourseDetails();
 
     /* edit course's details and configurations */
@@ -137,7 +170,7 @@
       vm.tempCourse = angular.copy(vm.course);
     };
 
-    function saveEdit(newCourse) {
+    vm.saveEdit = function(newCourse) {
       var infoData = {
         cover: newCourse.cover,
         title: newCourse.title,
@@ -167,7 +200,7 @@
       }, function(res) {
         $scope.showMessage('danger');
       });
-    }
+    };
 
     var onInitConfig = function() {
       var engine_arr = ['Engine', 'Python', 'Ruby'],
@@ -225,7 +258,7 @@
         vm.tempCourse.level = level_arr[level_id];
       };
       vm.validForm = function() {
-        return $scope.form.newCourseForm.$valid && vm.tempCourse.engine_id && vm.tempCourse.level_id && vm.tempCourse.badge_id && vm.tempCourse.author_id;
+        return vm.tempCourse.engine_id && vm.tempCourse.level_id && vm.tempCourse.badge_id && vm.tempCourse.author_id;
       };
       vm.searchBadge = debounce(function(keyword) {
         if (keyword && keyword.length) {
@@ -259,7 +292,7 @@
           }
         }
       };
-      
+
       vm.delaySearch = debounce(function(type, keyword) {
         // if (keyword && keyword.length) {
         if (type === 'author' || type === 'editor') {
@@ -270,13 +303,13 @@
               vm.editorList = res.data;
             }
           }, function(res) {
-            scope.showMessage('danger');
+            $scope.showMessage('danger');
           });
         } else if (type === 'course') {
           CoursesService.searchCourse(keyword, function(res) {
             vm.courseList = res.data;
           }, function(res) {
-            scope.showMessage('danger');
+            $scope.showMessage('danger');
           });
         }
         // } else {
@@ -343,14 +376,14 @@
           }
           CoursesService.addOrUpdateLesson(vm.tempCourse.id, lessonId, data, function(res) {
             CoursesService.getCourseById(vm.tempCourse.id, function(res) {
-              vm.course = res.data;
+              vm.tempCourse = res.data;
               vm.editing = false;
               vm.selectedLesson = {};
             }, function(res) {
-              scope.showMessage('danger');
+              $scope.showMessage('danger');
             });
           }, function(res) {
-            scope.showMessage('danger');
+            $scope.showMessage('danger');
           });
         } else {
           if (vm.selectedLesson.type === 'code') {
@@ -367,21 +400,21 @@
           CoursesService.uploadCodeLesson(vm.tempCourse.id, lessonId, data, function(res) {
             if (res.status < 300) {
               CoursesService.getCourseById(vm.tempCourse.id, function(res) {
-                vm.course = res.data;
+                vm.tempCourse = res.data;
                 vm.editing = false;
                 vm.uploading = null;
                 vm.selectedLesson = {};
               }, function(res) {
-                scope.showMessage('danger');
+                $scope.showMessage('danger');
               });
             }
           }, function(res) {
             if (res.data.length) {
               angular.forEach(res.data, function(err) {
-                scope.showMessage('danger', err.error);
+                $scope.showMessage('danger', err.error);
               });
             } else {
-              scope.showMessage('danger');
+              $scope.showMessage('danger');
             }
           }, function(percentage) {
             $timeout(function() {
@@ -397,17 +430,17 @@
         } else {
           CoursesService.deleteLesson(vm.tempCourse.id, lesson.id, function(res) {
             CoursesService.getCourseById(vm.tempCourse.id, function(res) {
-              vm.course = res.data;
+              vm.tempCourse = res.data;
             }, function(res) {
-              scope.showMessage('danger');
+              $scope.showMessage('danger');
             });
           }, function(res) {
-            scope.showMessage('danger');
+            $scope.showMessage('danger');
           });
         }
       };
 
-      vm.saveLessonsOrder = function() {
+      vm.saveLessonsOrder = debounce(function() {
         var items = document.getElementsByClassName('nestable-item'),
           orderedList = [];
         for (var i = 0; i < items.length; i++) {
@@ -415,11 +448,11 @@
         }
         CoursesService.updateLessonsOrder(vm.tempCourse.id, orderedList, function(res) {
           vm.orderChanged = false;
-          scope.showMessage('success', 'Thứ tự bài học đã được cập nhật thành công!');
+          $scope.showMessage('success', 'Thứ tự bài học đã được cập nhật thành công!');
         }, function(res) {
-          scope.showMessage('danger');
+          $scope.showMessage('danger');
         });
-      };
+      }, 2000);
 
       vm.selectLesson = function(item) {
         vm.uploading = null;
@@ -430,7 +463,7 @@
             vm.selectedLesson.template = '';
           }
         }, function(res) {
-          scope.showMessage('danger');
+          $scope.showMessage('danger');
         });
       };
 
@@ -438,10 +471,28 @@
         CoursesService.downloadLessonTemplate(vm.tempCourse.id, lessonId, function(res) {
           window.open(res);
         }, function(res) {
-          scope.showMessage('danger');
+          $scope.showMessage('danger');
         });
       };
-    }
+      vm.validLesson = function() {
+        if (!vm.selectedLesson || !vm.selectedLesson.title || !vm.selectedLesson.description) {
+          return false;
+        } else {
+          if (vm.selectedLesson.type === 'video') {
+            return vm.selectedLesson.video_url && vm.selectedLesson.video_duration && vm.selectedLesson.teacher_note;
+          }
+          if (vm.selectedLesson.type === 'reading') {
+            return vm.selectedLesson.content;
+          }
+          if (vm.selectedLesson.type === 'code') {
+            return vm.selectedLesson.template && vm.selectedLesson.cheat_sheet;
+          }
+          if (vm.selectedLesson.type === 'project') {
+            return vm.selectedLesson.template;
+          }
+        }
+      };
+    };
 
     $scope.$watch('vm.isConfig', function() {
       if (vm.isConfig) {

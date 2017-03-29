@@ -17,7 +17,8 @@
 		"angular-middleware.js",
 		"ngToast.js",
 		"angularfire.js",
-		"slick.js"
+		"slick.js",
+		"ng-mousedrag.js"
 	],
 	"themes": ["angular"]
 }

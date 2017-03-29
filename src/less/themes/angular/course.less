@@ -74,6 +74,15 @@
 }
 
 #course-details {
+  .btn-close {
+    position: absolute;
+    right: 15px;
+    color: @primary-color;
+    font-size: 32px;
+    &:active {
+      box-shadow: none;
+    }
+  }
   .btn-enroll {
     display: flex;
     align-items: center;
@@ -160,6 +169,13 @@
       padding-top: 5px;
     }
   }
+  .panel.lesson-item {
+    &:hover {
+      h4.text-headline {
+        color: @primary-color;
+      }
+    }
+  }
 }
 
 .create-course {
@@ -229,6 +245,11 @@
       & ~ button {
         z-index: 12;
       }
+    }
+    & ~ .panel {
+      width: 45%;
+      position: absolute;
+      right: 10px;
     }
   }
 }

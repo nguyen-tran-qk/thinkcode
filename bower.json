@@ -71,7 +71,8 @@
     "angular-middleware": "~2.1.2",
     "angularfire": "2.3.0",
     "ngToast": "ngtoast#^2.0.0",
-    "angular-slick": "^0.2.1"
+    "angular-slick": "^0.2.1",
+    "ngMouseDrag": "ng-mousedrag#*"
   },
   "resolutions": {
     "bootstrap": "3.3.4",

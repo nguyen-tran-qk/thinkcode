@@ -46,8 +46,8 @@
               }
             });
         },
-        getWorkspaceById: function(id, callback, errorCallback) {
-          $http.get(API_URL + '/workspaces/' + id + '?token=' + localStorage.token)
+        getWorkspaceById: function(id, courseId, callback, errorCallback) {
+          $http.get(API_URL + '/courses/' + courseId + '/workspaces/' + id + '?token=' + localStorage.token)
             .then(function(res) {
               if (callback) {
                 callback(res);
@@ -58,8 +58,8 @@
               }
             });
         },
-        loadFile: function(wsId, rel_path, callback, errorCallback) {
-          $http.get(API_URL + '/workspaces/' + wsId + '/load?relative_path=' + rel_path + '&token=' + localStorage.token)
+        loadFile: function(wsId, courseId, rel_path, callback, errorCallback) {
+          $http.get(API_URL + '/courses/' + courseId + '/workspaces/' + wsId + '/load?relative_path=' + rel_path + '&token=' + localStorage.token)
             .then(function(res) {
               if (callback) {
                 callback(res);
@@ -70,8 +70,8 @@
               }
             });
         },
-        execute: function(wsId, rel_path, callback, errorCallback) {
-          $http.get(API_URL + '/workspaces/' + wsId + '/execute?token=' + localStorage.token + '&relative_path=' + rel_path)
+        execute: function(wsId, courseId, rel_path, callback, errorCallback) {
+          $http.get(API_URL + '/courses/' + courseId + '/workspaces/' + wsId + '/execute?token=' + localStorage.token + '&relative_path=' + rel_path)
             .then(function(res) {
               if (callback) {
                 callback(res);
@@ -82,8 +82,8 @@
               }
             });
         },
-        saveFile: function(wsId, rel_path, content, callback, errorCallback) {
-          $http.patch(API_URL + '/workspaces/' + wsId + '/save?relative_path=' + rel_path + '&content=' + content + '&token=' + localStorage.token)
+        saveFile: function(wsId, courseId, rel_path, content, callback, errorCallback) {
+          $http.patch(API_URL + '/courses/' + courseId + '/workspaces/' + wsId + '/save?relative_path=' + rel_path + '&content=' + content + '&token=' + localStorage.token)
             .then(function(res) {
               if (callback) {
                 callback(res);

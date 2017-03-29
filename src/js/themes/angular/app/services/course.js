@@ -218,6 +218,18 @@
         },
         downloadLessonTemplate: function(courseId, lessonId, callback) {
           callback(API_URL + '/courses/' + courseId + '/lessons/' + lessonId + '/download' + this.tokenString());
+        },
+        enrollCourse: function(courseId, isQuit) {
+          var url = API_URL + '/courses/' + courseId;
+          if (isQuit) {
+            url += '/unenroll';
+          } else {
+            url += '/enroll';
+          }
+          return $http.post(url, {token: localStorage.token});
+        },
+        startLesson: function(courseId, lessonId) {
+          return $http.post(API_URL + '/courses/' + courseId + '/lessons/' + lessonId + '/start', {token: localStorage.token});
         }
       };
     }]);

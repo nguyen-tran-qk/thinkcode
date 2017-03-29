@@ -1,6 +1,7 @@
 #lesson-container {
+  height: calc(~"100% - 8px");
   .lesson-header {
-    height: 40px;
+    height: 48px;
     display: flex;
     align-items: center;
     i {
@@ -10,6 +11,14 @@
       color: #ffffff;
       &:hover {
         text-decoration: none;
+      }
+      &.text-h3 {
+        &:hover {
+          color: #42A5F5;
+        }
+        &:focus {
+          text-decoration: none;
+        }
       }
     }
     .text-h3 {
@@ -33,19 +42,20 @@
     text-transform: none;
   }
   .btn-expand {
-    position: absolute;
-    bottom: 0;
-    left: 10px;
+    // position: absolute;
+    // bottom: 0;
+    margin-right: 10px;
     background-color: transparent;
     color: #ffffff;
     font-size: 20px;
     padding: 9px 15px;
+    z-index: 11;
     &:hover {
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: rgba(255, 255, 255, 0.05);
     }
   }
   .panel-body {
-    overflow: auto;
+    // overflow: auto;
     p {
       white-space: pre-line;
     }
@@ -56,21 +66,39 @@
       margin-bottom: 15px;
       width: 100%;
       h1 {
-        font-size: 1.84rem;
+        font-size: 1.5rem;
         font-weight: 400;
         line-height: 2.46rem;
       }
     }
+    .panel.lesson-notes {
+      .panel-heading {
+        background-color: #EEEEEE;
+      }
+    }
+    .cheat-sheet {
+      position: absolute;
+      bottom: 48px;
+      right: 0;
+      left: 0;
+      margin: 0;
+    }
   }
   .lesson-content {
-    padding: 0 10px;
+    padding: 0;
     display: flex;
     align-items: flex-start;
     justify-content: center;
+    .reading-content {
+      font-size: 16px;
+      line-height: 28px;
+      word-spacing: 2px;
+    }
     &.type-video {
-    	align-items: center;
+      align-items: center;
     }
     & > .panel {
+      margin: 0 10px;
       height: calc(~"100% - 48px");
       .panel-body {
         padding: 16px 20px;

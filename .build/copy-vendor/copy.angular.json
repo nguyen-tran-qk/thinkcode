@@ -17,7 +17,8 @@
 		"angular-middleware/dist/angular-middleware.js",
 		"ngToast/dist/ngToast.js",
 		"angularfire/dist/angularfire.js",
-		"angular-slick/dist/slick.js"
+		"angular-slick/dist/slick.js",
+		"ngMouseDrag/ng-mousedrag.js"
 	],
 	"dest": "js/vendor/angular",
 	"flatten": true,

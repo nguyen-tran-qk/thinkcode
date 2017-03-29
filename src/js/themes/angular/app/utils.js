@@ -87,6 +87,18 @@
             return predicate === 'bgColor' ? 'orange' : 'desktop';
         }
       };
+    })
+    .filter('getYoutubeVideoId', function() {
+      return function(url) {
+        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        var match = url.match(regExp);
+        return (match && match[7].length == 11) ? match[7] : false;
+      };
+    })
+    .filter('trusted', function($sce) {
+      return function(url) {
+        return $sce.trustAsResourceUrl(url);
+      }
     });
 
   angular.module('app').filter('findBranchByUid', function() {
