@@ -335,6 +335,11 @@
         if (res.status === 401) {
           vm.$state.go('main.workspaces', {}, { reload: true });
           $scope.showMessage('danger', 'Xin lỗi, bạn không có quyền truy cập.');
+        } else if (res.status === 404) {
+          vm.$state.go('main.workspaces', {}, { reload: true });
+          $scope.showMessage('danger', 'Không tìm thấy workspace yêu cầu.');
+        } else {
+          $scope.showMessage('danger');
         }
       });
     };

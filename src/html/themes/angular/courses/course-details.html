@@ -4,7 +4,7 @@
       <div class="media v-middle">
         <div class="media-left">
           <span class="course-cover" ng-class="vm.course.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'" ng-if="vm.course.cover === 'missing.png'"><i class="mfizz icon-::vm.course.engine | lowercase::"></i></span>
-          <span class="icon-block course-cover" ng-if="vm.course.cover !== 'missing.png'" ng-attr-style="background-image: url(::vm.course.cover::);">
+          <span class="icon-block course-cover" ng-if="vm.course.cover !== 'missing.png'" ng-attr-style="background-image: url(::vm.course.cover::);"></span>
           <!-- <span class="icon-block course-cover" ng-if="vm.course.cover !== 'missing.png'">
             <img ng-src="::vm.course.cover::">
           </span> -->
@@ -14,20 +14,15 @@
         </div>
         <div class="media-right">
           <a class="btn btn-white" ui-sref="main.courses({type: vm.$state.params.type})" ng-if="user.instructor || user.staff || user.admin">Quay lại</a>
-          <a class="btn btn-enroll" ng-class="hovering ? 'bg-light-blue-300' : 'bg-light-blue-400'" ng-mouseenter="hovering = true" ng-mouseleave="hovering = false">Bắt đầu học</a>
+          <a class="btn btn-enroll" ng-class="hovering ? 'bg-light-blue-300' : 'bg-light-blue-400'" ng-mouseenter="hovering = true" ng-mouseleave="hovering = false" ng-if="!user.instructor && !user.staff && !user.admin">Bắt đầu học</a>
         </div>
       </div>
     </div>
   </div>
   <div class="container">
-    <div class="row">
+    <div class="row" ng-show="!vm.isConfig">
       <div class="col-lg-9 col-md-8">
         <div class="page-section">
-          <!-- <div class="width-350 width-300-md width-100pc-xs paragraph-inline">
-          <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="//www.youtube-nocookie.com/embed/Ycv5fNd4AeM?rel=0"></iframe>
-          </div>
-        </div> -->
           <div class="description">:: vm.course.description ::</div>
           <br/>
           <div class="info">
@@ -91,7 +86,7 @@
             <div id="manage-course" class="collapse">
               <div class="panel-body list-group">
                 <ul class="list-group list-group-menu">
-                  <li class="list-group-item" ui-sref-active="active" ng-if="vm.course.status !== 'published'"><a class="link-text-color" ng-click="vm.editCourse()" href>Chỉnh sửa thông tin và quản trị</a></li>
+                  <li class="list-group-item" ui-sref-active="active" ng-if="vm.course.status !== 'published'"><a class="link-text-color" ng-click="vm.isConfig = true" href>Chỉnh sửa thông tin và quản trị</a></li>
                   <li class="list-group-item" ui-sref-active="active" ng-if="vm.course.status !== 'published'"><a class="link-text-color" ng-click="vm.deleteCourse(vm.course.id, vm.course.title)" href>Xóa bỏ</a></li>
                   <li class="list-group-item collapse" data-toggle="collapse" data-target="#change-status" aria-expanded="true" ui-sref-active="active">
                     <a class="link-text-color sub-heading" href>Trạng thái: <strong>:: vm.course.status | courseStatus ::</strong></a>
@@ -128,6 +123,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="row" ng-if="vm.isConfig">
+      {% include "src/html/themes/angular/courses/course-admin.html" %}
     </div>
   </div>
   <div class="bg-white page-section padding-v-20-40 course-prerequisites" ng-if="vm.course.prerequisites.length">
