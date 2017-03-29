@@ -86,7 +86,7 @@
             <div id="manage-course" class="collapse">
               <div class="panel-body list-group">
                 <ul class="list-group list-group-menu">
-                  <li class="list-group-item" ui-sref-active="active" ng-if="vm.course.status !== 'published'"><a class="link-text-color" ng-click="vm.isConfig = true" href>Chỉnh sửa thông tin và quản trị</a></li>
+                  <li class="list-group-item" ui-sref-active="active" ng-if="vm.course.status !== 'published'"><a class="link-text-color" ng-click="vm.editCourse()" href>Chỉnh sửa thông tin và quản trị</a></li>
                   <li class="list-group-item" ui-sref-active="active" ng-if="vm.course.status !== 'published'"><a class="link-text-color" ng-click="vm.deleteCourse(vm.course.id, vm.course.title)" href>Xóa bỏ</a></li>
                   <li class="list-group-item collapse" data-toggle="collapse" data-target="#change-status" aria-expanded="true" ui-sref-active="active">
                     <a class="link-text-color sub-heading" href>Trạng thái: <strong>:: vm.course.status | courseStatus ::</strong></a>

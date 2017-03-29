@@ -18,22 +18,22 @@
       <form class="create-course" name="form.newCourseForm">
         <div class="form-group ">
           <!-- <div class="btn btn-primary btn-sm" ngf-select ng-model="uploadedFile" ngf-accept="svg" name="template" ngf-change="vm.photoChanged(uploadedFile)" ngf-resize="{width:350, height: 150, centerCrop: true}"><small>Upload ảnh bìa</small></div> -->
-          <div ng-if="vm.course.cover && vm.course.cover !== 'missing.png'" class="text-center margin-v-10">
-            <img class="course-cover-preview" height="150" ng-src=":: vm.course.cover ::">
+          <div ng-if="vm.tempCourse.cover && vm.tempCourse.cover !== 'missing.png'" class="text-center margin-v-10">
+            <img class="course-cover-preview" height="150" ng-src=":: vm.tempCourse.cover ::">
           </div>
           <div class="btn btn-primary btn-sm" ngf-select ng-model="uploadedFile" ngf-accept="'svg, png'" name="template" ngf-change="vm.photoChanged(uploadedFile)"><small>Upload ảnh bìa</small></div> <span>Kích thước đề nghị: 500x500 (px)</span>
         </div>
         <div class="form-group form-control-material">
-          <input type="text" class="form-control" id="course-title" placeholder="Nhập tên khóa học" ng-model="vm.course.title" ng-class="{'used': vm.course.title}" maxlength="50" required><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+          <input type="text" class="form-control" id="course-title" placeholder="Nhập tên khóa học" ng-model="vm.tempCourse.title" ng-class="{'used': vm.tempCourse.title}" maxlength="50" required><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
           <label for="course-title">Tiêu đề</label>
         </div>
         <div class="form-group">
           <label for="course-desc">Mô tả</label>
-          <textarea class="form-control" id="course-desc" placeholder="Giới thiệu/mô tả ngắn gọn về khóa học" ng-model="vm.course.description" rows="6" required></textarea>
+          <textarea class="form-control" id="course-desc" placeholder="Giới thiệu/mô tả ngắn gọn về khóa học" ng-model="vm.tempCourse.description" rows="10" required></textarea>
         </div>
         <div class="row margin-v-10">
           <div class="btn-group col-md-3" uib-dropdown>
-            <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>::vm.course.engine::<span class="caret"></span>
+            <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>::vm.tempCourse.engine::<span class="caret"></span>
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
               <li role="menuitem"><a href ng-click="vm.selectEngine(1)">Python</a></li>
@@ -41,7 +41,7 @@
             </ul>
           </div>
           <div class="btn-group col-md-3" uib-dropdown>
-            <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>::vm.course.level::<span class="caret"></span>
+            <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>::vm.tempCourse.level::<span class="caret"></span>
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
               <li role="menuitem"><a href ng-click="vm.selectLevel(1)">Learn</a></li>
@@ -67,7 +67,7 @@
     <div class="tab-content" ng-show="tab === 2">
       <div class="form-group form-control-material" ng-class="{'open': vm.authorList.length && vm.authorTyping}">
         <input type="text" class="form-control" id="course-author" name="course-author" placeholder="Tìm theo tên" ng-model="vm.aKeyword" ng-keyup="vm.delaySearch('author', vm.aKeyword)" ng-class="{'used': vm.aKeyword}" ng-click="vm.authorTyping = true" autocomplete="off"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
-        <label for="course-author">Quản trị viên của khóa học: <strong>:: vm.course.admin ::</strong></label>
+        <label for="course-author">Quản trị viên của khóa học: <strong>:: vm.tempCourse.admin ::</strong></label>
         <ul class="dropdown-menu badges-dropdown-list" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
           <li role="menuitem" ng-repeat="author in vm.authorList" ng-click="vm.select('author', author)">
             <a href>:: author.username ::</a>
@@ -85,7 +85,7 @@
         </ul>
       </div>
       <div class="form-group">
-        <span class="label bg-cyan-500" ng-repeat="item in vm.course.teachers" ng-if="vm.course.teachers.length">:: item.username ::
+        <span class="label bg-cyan-500" ng-repeat="item in vm.tempCourse.teachers" ng-if="vm.tempCourse.teachers.length">:: item.username ::
           <a href class="" ng-click="vm.remove('editor', item)"><i class="md md-close label-close"></i></a>
         </span>
       </div>
@@ -100,7 +100,7 @@
         </ul>
       </div>
       <div class="form-group">
-        <span class="label bg-blue-600" ng-repeat="item in vm.course.prerequisites" ng-if="vm.course.prerequisites.length">:: item.title ::
+        <span class="label bg-blue-600" ng-repeat="item in vm.tempCourse.prerequisites" ng-if="vm.tempCourse.prerequisites.length">:: item.title ::
           <a href class="" ng-click="vm.remove('course', item)"><i class="md md-close label-close"></i></a>
         </span>
       </div>
@@ -108,10 +108,10 @@
     <div class="tab-content" ng-show="tab === 3">
       <button class="btn btn-sm btn-primary right margin-v-10" ng-click="vm.editing = true; vm.selectedLesson = {};" ng-disabled="vm.editing">Tạo bài học</button>
       <button class="btn btn-sm btn-success right margin-v-10 layout-margin text-white" ng-click="vm.saveLessonsOrder()" ng-disabled="!vm.orderChanged">Lưu thứ tự</button>
-      <div class="nestable display-inline-block width-100pc margin-v-10" id="lessons-order" ng-if="vm.course.lessons.length">
+      <div class="nestable display-inline-block width-100pc margin-v-10" id="lessons-order" ng-if="vm.tempCourse.lessons.length">
         <ul class="nestable-list">
-          <li class="nestable-item nestable-item-handle" data-id="::item.order::" data-lesson-id="::item.id::" ng-repeat="item in vm.course.lessons">
-            <div class="nestable-handle" ng-mousedown="vm.course.lessons.length > 1 ? vm.orderChanged = true : ''"><i class="md md-menu"></i></div>
+          <li class="nestable-item nestable-item-handle" data-id="::item.order::" data-lesson-id="::item.id::" ng-repeat="item in vm.tempCourse.lessons">
+            <div class="nestable-handle" ng-mousedown="vm.tempCourse.lessons.length > 1 ? vm.orderChanged = true : ''"><i class="md md-menu"></i></div>
             <div class="nestable-content">
               <div class="media v-middle width-100pc">
                 <div class="media-body width-100pc block">
@@ -203,6 +203,6 @@
   </div>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-default" type="button" ng-click="vm.cancel()">Đóng</button>
+  <button class="btn btn-default" type="button" ng-click="vm.isConfig = false">Đóng</button>
   <button class="btn btn-primary" type="button" ng-click="vm.ok()" ng-disabled="!vm.validForm()" ng-if="tab!==3">Lưu thay đổi</button>
 </div>
