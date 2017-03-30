@@ -8,8 +8,8 @@
     </div>
     <div class="col-sm-4 text-right padding-none"><a href ng-if="vm.lesson.next.title" ng-click="vm.goToLesson(vm.lesson.next.id)">:: vm.lesson.next.title ::<i class="fa fa-chevron-right"></i></a></div>
   </div>
-  <div class="panel panel-default col-sm-3 col-md-3 col-lg-2 margin-none height-100pc lesson-info" ng-hide="vm.minimized">
-    <div class="media media-grid v-middle lesson-title bg-grey-200">
+  <div class="panel panel-default col-sm-3 col-md-3 col-lg-2 margin-none height-100pc padding-none lesson-info" ng-hide="vm.minimized">
+    <div class="media media-grid v-middle lesson-title bg-grey-300">
       <div class="media-left">
         <span class="icon-block half bg-:: vm.lesson.type | lessonTypeClass:'bgColor' ::-300 text-white">::vm.lesson.order::</span>
       </div>
@@ -19,19 +19,19 @@
     </div>
     <div class="panel-body">
       <p>:: vm.lesson.description ::</p>
-      <div class="panel panel-default border-none lesson-notes" data-toggle="panel-collapse" data-open="true" data-z="0.5" data-z="0.5" data-hover-z="1" data-animated="" ng-show="vm.lesson.type === 'video'">
-        <div class="panel-heading panel-collapse-trigger collapse" data-toggle="collapse" data-target="#lesson-notes" aria-expanded="true">
-          <h4 class="panel-title">Về bài giảng này:</h4>
-        </div>
-        <div id="lesson-notes" class="collapse">
-          <div class="panel-body padding-v-5">
-            <h5 class="inline-block">Thời lượng:</h5><span class="inline-block">&nbsp;:: vm.lesson.video_duration ::</span>
-            <h5>Ghi chú của giảng viên:</h5>
-            <p>:: vm.lesson.teacher_note ::</p>
-          </div>
+      <abn-tree-mod id="workspace-tree" ng-if="!loading[0] && vm.my_data.length" tree-data="vm.my_data" tree-control="vm.my_tree" icon-leaf="fa fa-file" icon-expand="fa fa-folder" icon-collapse="fa fa-folder-open" expand-level="3"></abn-tree-mod>
+    </div>
+    <div class="panel panel-default border-none lesson-notes" data-toggle="panel-collapse" data-open="true" data-z="0.5" data-z="0.5" data-hover-z="1" data-animated="" ng-show="vm.lesson.type === 'video'">
+      <div class="panel-heading panel-collapse-trigger collapse" data-toggle="collapse" data-target="#lesson-notes" aria-expanded="true">
+        <h4 class="panel-title">Về bài giảng này:</h4>
+      </div>
+      <div id="lesson-notes" class="collapse">
+        <div class="panel-body padding-v-5">
+          <h5 class="inline-block">Thời lượng:</h5><span class="inline-block">&nbsp;:: vm.lesson.video_duration ::</span>
+          <h5>Ghi chú của giảng viên:</h5>
+          <p>:: vm.lesson.teacher_note ::</p>
         </div>
       </div>
-      <abn-tree-mod id="workspace-tree" ng-if="!loading[0] && vm.my_data.length" tree-data="vm.my_data" tree-control="vm.my_tree" icon-leaf="fa fa-file" icon-expand="fa fa-folder" icon-collapse="fa fa-folder-open" expand-level="3"></abn-tree-mod>
     </div>
     <div class="panel panel-default bg-grey-100 padding-none cheat-sheet" ng-if="vm.showCheatSheet">
       <i class="icon-close md md-close" ng-click="vm.showCheatSheet = false"></i>
@@ -40,7 +40,7 @@
         <p class="text-light">:: vm.lesson.cheat_sheet ::</p>
       </div>
     </div>
-    <button class="btn btn-complete" ng-class="hovering ? 'bg-blue-500' : 'bg-blue-600'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">Hoàn thành bài học</button>
+    <button class="btn btn-complete" ng-class="hovering ? 'bg-blue-400' : 'bg-blue-500'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">Hoàn thành bài học</button>
   </div>
   <chat-box user="user"></chat-box>
   <div class="height-100pc col-sm-9 col-md-9 col-lg-10 bg-blue-grey-700 lesson-content" ng-class="{'width-100pc': vm.minimized, 'type-video': vm.lesson.type === 'video'}">
@@ -76,14 +76,12 @@
         <div ng-if="vm.minimized1" class="resize-notify resize-left" ng-click="vm.minimized = false"><i class="fa fa-fw fa-angle-double-left"></i></div>
       </div>
       <div class="workspace-actions">
-        <button class="btn btn-expand" ng-click="vm.minimized=!vm.minimized"><i class="fa fa-expand"></i></button>
         <button class="btn btn-sm btn-warning" ng-click="vm.showCheatSheet = true">Gợi ý</button>
-        <span ng-if="vm.currentBranch.uid !== -1">
-	        <button class="btn btn-success btn-sm" ng-click="vm.saveFile()" ng-disabled="waiting">Save</button>
-	        <button class="btn btn-primary btn-sm" ng-click="vm.runFile()" ng-disabled="waiting">Run</button>
-	      </span>
+        <button class="btn btn-success btn-sm" ng-click="vm.saveFile()" ng-disabled="waiting" ng-if="vm.currentBranch.uid !== -1">Save</button>
+        <button class="btn btn-primary btn-sm" ng-click="vm.runFile()" ng-disabled="waiting" ng-if="vm.currentBranch.uid !== -1">Run</button>
       </div>
     </div>
+    <button class="btn btn-expand" ng-click="vm.minimized=!vm.minimized"><i class="fa fa-expand"></i></button>
   </div>
 </div>
 {% endblock %}

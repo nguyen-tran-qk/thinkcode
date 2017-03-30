@@ -5,3 +5,5 @@ bower_components/
 /html/
 /angular/
 /index.html
+.firebaserc
+firebase.json

@@ -98,7 +98,7 @@
     .filter('trusted', function($sce) {
       return function(url) {
         return $sce.trustAsResourceUrl(url);
-      }
+      };
     });
 
   angular.module('app').filter('findBranchByUid', function() {

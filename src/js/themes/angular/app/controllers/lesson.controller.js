@@ -249,7 +249,7 @@
           }
         }
         return tree;
-      }
+      };
 
       // Navigation treeview
       openFile = function(branch) {
