@@ -15,7 +15,7 @@
         <div class="media-right">
           <a class="btn btn-white" ui-sref="main.courses({type: vm.$state.params.type})" ng-if="user.instructor || user.staff || user.admin">Quay lại</a>
           <a class="btn btn-enroll" ng-class="hovering ? 'bg-light-blue-300' : 'bg-light-blue-400'" ng-mouseenter="hovering = true" ng-mouseleave="hovering = false" ng-if="!user.instructor && !user.staff && !user.admin && !vm.course.enrolled" ng-click="vm.enroll()">Nhập học</a>
-          <a class="btn btn-enroll" ng-class="hovering ? 'bg-teal-A400' : 'bg-teal-A700'" ng-mouseenter="hovering = true" ng-mouseleave="hovering = false" ng-if="!user.instructor && !user.staff && !user.admin && vm.course.enrolled" ui-sref="main.learn({course_id: vm.course.id, workspace_id:1})">Tiếp tục</a>
+          <a class="btn btn-enroll" ng-class="hovering ? 'bg-teal-A400' : 'bg-teal-A700'" ng-mouseenter="hovering = true" ng-mouseleave="hovering = false" ng-if="!user.instructor && !user.staff && !user.admin && vm.course.enrolled" ng-click="vm.goToLesson(vm.lastLesson.id)">Tiếp tục</a>
         </div>
       </div>
     </div>
@@ -48,13 +48,14 @@
                   <div class="text-h4"><span class="text-primary">:: vm.course.title ::</span> hiện chưa có bài học nào. Hãy vào mục <span class="text-muted">Chỉnh sửa thông tin và quản trị</span> để tạo các bài học.</div>
                 </div>
               </div>
-              <div class="panel panel-default curriculum paper-shadow lesson-item" data-z="0.5" ng-repeat="lesson in vm.course.lessons"  ng-mouseenter="lesson.hover = true" ng-mouseleave="lesson.hover = false">
+              <div class="panel panel-default curriculum paper-shadow lesson-item" data-z="0.5" ng-repeat="lesson in vm.course.lessons" ng-mouseenter="lesson.hover = true" ng-mouseleave="lesson.hover = false">
                 <div class="panel-heading panel-heading-gray">
                   <div class="media">
                     <div class="media-left">
-                      <span class="icon-block img-circle bg-:: lesson.type | lessonTypeClass:'bgColor' ::-300 half text-white"><i class="fa fa-:: lesson.type | lessonTypeClass:'icon' ::"></i></span>
+                      <span class="icon-block img-circle bg-:: lesson.type | lessonTypeClass:'bgColor' ::-300 half text-white" ng-if="lesson.progress !== 'finished'"><i class="fa fa-:: lesson.type | lessonTypeClass:'icon' ::"></i></span>
+                      <span class="icon-block img-circle bg-green-A200 half text-white" ng-if="lesson.progress === 'finished'" uib-tooltip="Bạn đã hoàn thành bài học này!"><i class="fa fa-check"></i></span>
                     </div>
-                    <div class="media-body">
+                    <div class="media-body v-middle">
                       <h4 class="text-headline inline-block" data-toggle="collapse" data-target="#curriculum-::$index::">:: lesson.title ::</h4>
                       <button class="btn btn-sm bg-cyan-500 inline-block right text-white margin-v-10-0" ng-click="vm.goToLesson(lesson.id)" ng-if="!user.instructor && !user.staff && !user.admin && vm.course.enrolled && lesson.hover">Vào học</button>
                       <div class="collapse" id="curriculum-::$index::">
@@ -130,7 +131,7 @@
       {% include "src/html/themes/angular/courses/course-admin.html" %}
     </div>
   </div>
-  <div class="bg-white page-section padding-v-20-40 course-prerequisites" ng-if="vm.course.prerequisites.length">
+  <div class="bg-white page-section padding-v-20-40 course-prerequisites" ng-if="vm.course.prerequisites.length && !vm.isConfig">
     <div class="container">
       <h4 class="margin-none">Các kiến thức nên biết</h4>
       <p class="text-light">Khóa học này yêu cầu một số kiến thức nhất định, do đó trước khi bắt đầu, bạn nên tham gia:</p>

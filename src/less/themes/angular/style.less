@@ -7,6 +7,7 @@
 /* common */
 body {
   background-color: #f0f0f0;
+  font-family: 'NotoSans';
 }
 .btn {
   font-weight: 700 !important;
@@ -132,6 +133,12 @@ textarea {
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'NotoSans';
+  src: url('../fonts/NotoSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 /* override container styles */
 @media (max-width: 1199px) {
@@ -199,6 +206,12 @@ textarea {
 }
 .border-none {
   border: none !important;
+}
+.bg-blue-50 {
+  background-color: @blue-50;
+}
+.bg-light-blue-50 {
+  background-color: @light-blue-50;
 }
 i.icon-lg {
   &:before {
@@ -337,7 +350,7 @@ i.icon-close {
   //   border-color: brown;
   // }
   .btn {
-    margin-right: 8px;
+    margin: 0 8px;
   }
 }
 

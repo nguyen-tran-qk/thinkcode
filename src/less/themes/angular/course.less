@@ -106,6 +106,7 @@
   .media {
     .media-body {
       width: 10000px;
+      word-break: break-word;
     }
   }
   .icon-block {
@@ -230,26 +231,29 @@
   .label {
     margin-right: 8px;
   }
-  #lessons-order {
-    .lesson-infos {
-      z-index: 10;
-      .overlay {
-        background: rgba(255, 255, 255, 0.5);
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        z-index: 11;
+  .course-lessons {
+    overflow: auto;
+    #lessons-order {
+      width: 50%;
+      .lesson-infos {
+        z-index: 10;
+        .overlay {
+          background: rgba(255, 255, 255, 0.5);
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          left: 0;
+          top: 0;
+          z-index: 11;
+        }
+        & ~ button {
+          z-index: 12;
+        }
       }
-      & ~ button {
-        z-index: 12;
+      & ~ .panel {
+        width: 45%;
+        float: right;
       }
-    }
-    & ~ .panel {
-      width: 45%;
-      position: absolute;
-      right: 10px;
     }
   }
 }

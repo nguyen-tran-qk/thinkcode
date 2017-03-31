@@ -226,10 +226,16 @@
           } else {
             url += '/enroll';
           }
-          return $http.post(url, {token: localStorage.token});
+          return $http.post(url, { token: localStorage.token });
         },
         startLesson: function(courseId, lessonId) {
-          return $http.post(API_URL + '/courses/' + courseId + '/lessons/' + lessonId + '/start', {token: localStorage.token});
+          return $http.post(API_URL + '/courses/' + courseId + '/lessons/' + lessonId + '/start', { token: localStorage.token });
+        },
+        finishLesson: function(courseId, workspaceId) {
+          return $http.patch(API_URL + '/courses/' + courseId + '/workspaces/' + workspaceId + '/finish', { token: localStorage.token });
+        },
+        resetLesson: function(courseId, workspaceId) {
+          return $http.patch(API_URL + '/courses/' + courseId + '/workspaces/' + workspaceId + '/unfinish', { token: localStorage.token });
         }
       };
     }]);

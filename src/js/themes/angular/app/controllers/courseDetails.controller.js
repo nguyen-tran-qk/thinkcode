@@ -32,9 +32,17 @@
       $scope.loading[0] = true;
       CoursesService.getCourseById(vm.$state.params.course_id, function(res) {
         vm.course = res.data;
-        vm.tempCourse = res.data;
         vm.course.engine_id = engine_arr.indexOf(vm.course.engine);
         vm.course.level_id = level_arr.indexOf(vm.course.level);
+        if (vm.course.enrolled && vm.course.lessons.length) {
+          for (var i = 0; i < vm.course.lessons.length; i++) {
+            if (vm.course.lessons[i].progress === 'current') {
+              vm.lastLesson = vm.course.lessons[i];
+              break;
+            }
+          }
+        }
+        vm.tempCourse = res.data;
         if (vm.isConfig) {
           onInitConfig();
         }
@@ -42,7 +50,7 @@
           $scope.loading[0] = false;
         }, 1000);
       }, function(res) {
-        vm.$state.go('main.courses');
+        vm.$state.go('main.courses', { type: 'published' }, { reload: true });
         if (res.status === 401) {
           $scope.showMessage('danger', 'Xin lỗi, bạn không có quyền thực hiện thao tác này.');
         } else {
