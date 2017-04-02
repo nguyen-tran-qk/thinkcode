@@ -1,0 +1,226 @@
+{% extends "src/html/themes/angular/website/_layout-student.html" %} {% block content %}
+<div id="dashboard">
+  <!-- <div class="parallax overflow-hidden bg-blue-400 page-section third">
+    <div class="container parallax-layer" data-opacity="true">
+      <div class="media v-middle">
+        <div class="media-left text-center">
+          <a href><img src="images/people/110/guy-6.jpg" alt="people" class="img-circle width-80" /></a>
+        </div>
+        <div class="media-body">
+          <h1 class="text-white text-display-1 margin-v-0">:: user.username ::</h1>
+        </div>
+        <div class="media-right">
+          <span class="label bg-blue-500">Học sinh</span>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="container">
+    <div class="page-section">
+      <div class="row">
+        <div class="col-md-9 col-lg-10">
+          <div class="row" ng-if="vm.$state.params.page === 'dashboard'">
+            <div class="col-xs-12 col-lg-6">
+              <div class="panel panel-default paper-shadow" data-z="0.5">
+                <div class="panel-heading">
+                  <h4 class="text-headline margin-none">Các khóa học</h4>
+                  <p class="text-subhead text-light">Các khóa học gần đây của tôi</p>
+                </div>
+                <div class="panel-body" ng-if="!vm.myCourses.length">
+                  <p class="">Bạn chưa có khóa học nào. Hãy đăng ký một khóa học và giành các danh hiệu cao quý <a ui-sref="main.courses">tại đây</a></p>
+                </div>
+                <ul class="list-group">
+                  <li class="list-group-item media v-middle" ng-repeat="course in vm.myCourses track by course.id">
+                    <div class="media-body">
+                      <a ui-sref="main.courses.details({course_id: course.id})" class="text-subhead list-group-link">:: course.title ::</a>
+                    </div>
+                    <div class="media-right">
+                      <div class="progress progress-mini width-100 margin-none">
+                        <div class="progress-bar progress-bar-green-300" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: :: course.finished_count/course.lessons_count*100 ::%;">
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <div class="panel-footer text-right" ng-if="vm.myCourses.length">
+                  <a href class="btn btn-white paper-shadow relative" data-z="0" data-hover-z="1" data-animated ng-click="transitionTo('main.user', {page: 'my-courses'})">Xem tất cả</a>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-xs-12 col-lg-6">
+              <div class="panel panel-default paper-shadow" data-z="0.5">
+                <div class="panel-body">
+                  <h4 class="text-headline margin-none">Danh hiệu</h4>
+                  <p class="text-subhead text-light">Phần thưởng cho bạn khi hoàn thành các khóa học</p>
+                  <div class="icon-block half img-circle bg-purple-300">
+                    <i class="fa fa-star text-white"></i>
+                  </div>
+                  <div class="icon-block half img-circle bg-indigo-300">
+                    <i class="fa fa-trophy text-white"></i>
+                  </div>
+                  <div class="icon-block half img-circle bg-green-300">
+                    <i class="fa fa-mortar-board text-white"></i>
+                  </div>
+                  <div class="icon-block half img-circle bg-orange-300">
+                    <i class="fa fa-code-fork text-white"></i>
+                  </div>
+                  <div class="icon-block half img-circle bg-red-300">
+                    <i class="fa fa-diamond text-white"></i>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            <div class="col-xs-12 col-lg-6">
+              <div class="panel panel-default paper-shadow" data-z="0.5">
+                <div class="panel-heading">
+                  <h4 class="text-headline margin-none">Các bài tập lớn</h4>
+                  <p class="text-subhead text-light">Thử thách để rèn luyện kỹ năng của bạn</p>
+                </div>
+                <div class="panel-body" ng-if="!vm.myProjects.length">
+                  <p class="">Bạn chưa có bài tập lớn nào. Hãy đăng ký một khóa học và nâng cao kỹ năng của mình <a ui-sref="main.courses">tại đây</a></p>
+                </div>
+                <ul class="list-group">
+                  <li class="list-group-item media v-middle" ng-repeat="proj in vm.myProjects track by proj.id">
+                    <div class="media-body">
+                      <h4 class="text-subhead margin-none">
+                        <a ui-sref="main.learn({course_id: proj.course_id, workspace_id: proj.id})" class="list-group-link">:: proj.title ::</a>
+                      </h4>
+                      <div class="caption">
+                        <span class="text-light">Course:</span>
+                        <a ui-sref="main.courses.details({course_id: proj.course_id})">:: proj.course_name ::</a>
+                      </div>
+                    </div>
+                    <div class="media-right text-center" ng-if="vm.myProjects.length">
+                      <a href class="btn btn-white paper-shadow relative" data-z="0" data-hover-z="1" data-animated ng-click="transitionTo('main.user', {page: 'my-projects'})">Xem tất cả</a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-xs-12 col-lg-6">
+              <h4 class="text-headline margin-none">Danh sách hội thoại</h4>
+              <p class="text-subhead text-light">Các giảng viên luôn sẵn sàng lắng nghe &amp; hỗ trợ khi bạn gặp trở ngại</p>
+              {% include "src/html/themes/html/student/_forum-activity.html" %}
+            </div>
+          </div>
+          <div class="row" ng-if="vm.$state.params.page === 'my-courses'" id="my-courses">
+            <div class="col-xs-12 col-sm-6 col-lg-4">
+              <div class="panel panel-default paper-shadow" data-z="0.5" ng-repeat="item in vm.myCourses">
+                <div class="panel-heading">
+                  <div class="media media-clearfix-xs-min v-middle">
+                    <div class="media-body text-caption text-light">
+                      Đã hoàn thành :: item.finished_count ::/:: item.lessons_count :: bài học
+                    </div>
+                    <div class="media-right">
+                      <div class="progress progress-mini width-100 margin-none">
+                        <div class="progress-bar {{ lessonsBar }}" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: :: item.finished_count/item.lessons_count*100 ::%;">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="cover overlay cover-image-full hover">
+                  <div ng-if="item.cover !== 'missing.png'">
+                    <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block height-100 course-cover width-100pc" ng-attr-style="background-image: url(::item.cover::);"></span>
+                    <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
+                  </div>
+                  <div ng-if="item.cover === 'missing.png'">
+                    <span class="img icon-block height-100 bg-primary width-100pc"></span>
+                    <a ui-sref="main.courses.details({course_id: item.id})" class="padding-none overlay overlay-full icon-block bg-primary">
+                      <span class="v-center"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
+                    </a>
+                    <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
+                      <span class="v-center">
+                        <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
+                      </span>
+                    </a>
+                  </div>
+                </div>
+                <div class="panel-body padding-v-5-10 course-title">
+                  <h4 class="text-title"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
+                  <p>
+                    <span class="label label-sm" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
+                    <span class="label label-sm" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
+                    <span class="badge-label">
+                      <img ng-src=":: item.badge.image ::" alt="Badge" class="icon-block s25 img-circle"><a ui-sref="main.badges({id: item.badge.id})"><strong><small> :: item.badge.title ::</small></strong></a>
+                    </span>
+                  </p>
+                </div>
+                <hr class="margin-none">
+                <div class="panel-body">
+                  <p>Bài học tiếp theo: <span class="text-teal-500 next-lesson" ui-sref="main.learn({course_id: item.id, workspace_id: item.current_lesson.workspace_id})">:: item.current_lesson.title ::</span></p>
+                  <!-- <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated >Tiếp tục</a> -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" ng-if="vm.$state.params.page === 'my-projects'">
+            <div class="panel panel-default width-100pc">
+              <div class="panel-body padding-v-5-10">
+                <div class="form-group form-control-material">
+                  <input id="forumSearch" type="text" class="form-control" placeholder="" />
+                  <label for="forumSearch">Tìm bài tập</label>
+                </div>
+                <!-- <a href="#" class="btn btn-inverse paper-shadow relative" data-z="0.5" data-hover-z="1">Search</a> -->
+              </div>
+            </div>
+            <div class="panel panel-default paper-shadow" data-z="0.5">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <div class="media v-middle">
+                    <div class="media-body">
+                      <h4 class="text-headline margin-none">Các bài tập lớn</h4>
+                      <p class="text-subhead text-light">Tập hợp những thử thách để rèn luyện kỹ năng của bạn</p>
+                    </div>
+                    <!-- <div class="media-right">
+                      <a href="#" class="btn btn-white btn-flat"><i class="fa fa-fw fa-plus"></i> New Topic</a>
+                    </div> -->
+                  </div>
+                </li>
+                <li class="list-group-item media v-middle" ng-repeat="item in vm.myProjects track by item.id">
+                  <div class="media-left">
+                    <span class="icon-block img-circle half text-white" ng-if="!item.finished" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
+                    <span class="icon-block img-circle bg-green-A200 half text-white" ng-if="item.finished" uib-tooltip="Bạn đã hoàn thành bài tập này!" tooltip-placement="right"><i class="fa fa-check"></i></span>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="text-subhead margin-none">
+                      <a href class="link-text-color">:: item.title ::</a>
+                    </h4>
+                    <div class="text-light text-caption">
+                      thuộc khóa học
+                      <a ui-sref="main.courses.details({course_id: item.course_id})">:: item.course_name ::</a>
+                      <span class="label label-sm" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
+                      <span class="label label-sm" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
+                    </div>
+                  </div>
+                  <div class="media-right col-md-3 no-float padding-none">
+                    <button class="btn btn-stroke btn-sm inline-block right btn-take-lesson" ui-sref="main.learn({course_id: item.course_id, workspace_id: item.id})">Vào học</button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <br/>
+          <br/>
+        </div>
+        <div class="col-md-3 col-lg-2">
+          <div class="panel panel-default" data-toggle="panel-collapse" data-open="true">
+            <div class="panel-heading panel-collapse-trigger">
+              <h4 class="panel-title"><b>Hồ sơ của tôi</b></h4>
+            </div>
+            <div class="panel-body list-group">
+              <ul class="list-group list-group-menu">
+                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'dashboard'}"><a class="link-text-color" href ng-click="transitionTo('main.user', {page: 'dashboard'})">Tổng quan</a></li>
+                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'my-courses'}"><a class="link-text-color" href ng-click="transitionTo('main.user', {page: 'my-courses'})">Khóa học của tôi</a></li>
+                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'my-projects'}"><a class="link-text-color" href ng-click="transitionTo('main.user', {page: 'my-projects'})">Các bài tập lớn</a></li>
+                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'profiles'}"><a class="link-text-color" href ng-click="transitionTo('main.user', {page: 'profiles'})">Thông tin cá nhân</a></li>
+                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'conversations'}"><a class="link-text-color" href ng-click="transitionTo('main.user', {page: 'conversations'})">Danh sách hội thoại</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

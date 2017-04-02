@@ -82,7 +82,7 @@
           case 'reading':
             return predicate === 'bgColor' ? 'indigo' : 'book';
           case 'code':
-            return predicate === 'bgColor' ? 'green' : 'code';
+            return predicate === 'bgColor' ? 'pink' : 'code';
           case 'project':
             return predicate === 'bgColor' ? 'orange' : 'desktop';
         }

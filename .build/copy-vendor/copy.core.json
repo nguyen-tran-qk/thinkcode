@@ -21,7 +21,8 @@
 	        "codemirror/lib/codemirror.js",
 			"firebase/firebase.js",
 			"firepad/dist/firepad.js",
-			"slick-carousel/slick/slick.js"
+			"slick-carousel/slick/slick.js",
+			"trix/dist/trix.js"
 		],
 		"dest": "js/vendor/core",
 		"flatten": true

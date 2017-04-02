@@ -18,7 +18,9 @@
       'thinkcodeControllers',
       'firebase',
       'slick',
-      'ngMouseDrag'
+      'ngMouseDrag',
+      'iso.directives',
+      'angularTrix'
     ]).constant("$MD_THEME_CSS", "default")
     .constant('API_URL', 'https://www.thinkcode.ml/api/v1');
 

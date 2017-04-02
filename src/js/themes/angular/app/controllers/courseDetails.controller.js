@@ -149,6 +149,40 @@
       });
     };
 
+    vm.unenroll = function() {
+      $uibModal.open({
+        templateUrl: 'modals/confirm.html',
+        backdrop: 'static',
+        keyboard: false,
+        controller: function($uibModalInstance, data) {
+          var vm = this;
+          vm.title = 'Hủy đăng ký';
+          vm.content = 'Mọi tiến trình học liên quan đến khóa học này, ngoại trừ các danh hiệu, sẽ bị mất. Bạn chắc chắn muốn hủy đăng ký "' + data.title + '"?';
+          vm.ok = function() {
+            $uibModalInstance.close('ok');
+          };
+          vm.cancel = function() {
+            $uibModalInstance.dismiss();
+          };
+        },
+        controllerAs: 'vm',
+        resolve: {
+          data: {
+            title: vm.course.title
+          }
+        }
+      }).result.then(function(result) {
+        if (result === 'ok') {
+          CoursesService.enrollCourse(vm.course.id, true)
+            .then(function(res) {
+              vm.getCourseDetails();
+            }, function(res) {
+              $scope.showMessage('danger');
+            });
+        }
+      });
+    };
+
     vm.goToLesson = function(lessonId) {
       CoursesService.startLesson(vm.course.id, lessonId)
         .then(function(res) {

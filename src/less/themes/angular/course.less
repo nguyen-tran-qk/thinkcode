@@ -2,7 +2,8 @@
 
 /* Courses */
 
-#courses {
+#courses,
+#my-courses {
   .action-bar {
     .dropdown {
       padding: 12px 0 0 16px;
@@ -73,6 +74,21 @@
   }
 }
 
+#my-courses {
+  .course-title {
+    height: 120px;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  .next-lesson {
+    &:hover {
+      color: #4DB6AC;
+      cursor: pointer;
+    }
+  }
+}
+
 #course-details {
   .btn-close {
     position: absolute;
@@ -89,6 +105,15 @@
     color: #ffffff;
     padding: 15px 30px;
     font-size: 16px;
+  }
+  .btn-unenroll {
+    border: 1px solid #F44336;
+    color: #F44336;
+    font-weight: normal !important;
+    &:hover {
+      color: #ffffff;
+      background-color: @red-400;
+    }
   }
   .page-section.course-prerequisites {
     &:last-of-type {
@@ -171,6 +196,9 @@
     }
   }
   .panel.lesson-item {
+    h4.text-headline {
+      width: calc(~"100% - 75px");
+    }
     &:hover {
       h4.text-headline {
         color: @primary-color;
@@ -260,4 +288,14 @@
 
 #course-desc {
   white-space: pre-line;
+}
+
+.btn-take-lesson {
+  border: 1px solid #00BCD4;
+  color: #00BCD4;
+  font-weight: normal !important;
+  &:hover {
+    color: #ffffff;
+    background-color: #26C6DA;
+  }
 }

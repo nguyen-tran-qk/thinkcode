@@ -30,9 +30,10 @@
               <input type="text" class="form-control" id="course-title" placeholder="Nhập tên khóa học" ng-model="vm.tempCourse.title" ng-class="{'used': vm.tempCourse.title}" maxlength="50" required><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
               <label for="course-title">Tiêu đề</label>
             </div>
+              <trix-editor ng-model-options="{ updateOn: 'blur' }" spellcheck="false" class="trix-content" ng-model="vm.tempCourse.description" angular-trix trix-attachment-add="" trix-attachment-remove="" placeholder="Giới thiệu/mô tả ngắn gọn về khóa học"></trix-editor>
             <div class="form-group">
               <label for="course-desc">Mô tả</label>
-              <textarea class="form-control" id="course-desc" placeholder="Giới thiệu/mô tả ngắn gọn về khóa học" ng-model="vm.tempCourse.description" rows="10" required></textarea>
+              <!-- <textarea class="form-control" id="course-desc" placeholder="Giới thiệu/mô tả ngắn gọn về khóa học" ng-model="vm.tempCourse.description" rows="10" required></textarea> -->
             </div>
             <div class="row margin-v-10">
               <div class="btn-group col-md-3" uib-dropdown>

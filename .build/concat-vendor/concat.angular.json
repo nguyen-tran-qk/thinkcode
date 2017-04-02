@@ -18,7 +18,9 @@
 		"ngToast.js",
 		"angularfire.js",
 		"slick.js",
-		"ng-mousedrag.js"
+		"ng-mousedrag.js",
+		"angular-isotope.js",
+		"angular-trix.js"
 	],
 	"themes": ["angular"]
 }

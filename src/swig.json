@@ -8,6 +8,7 @@
 	},
 	"css_vendor": [
 		"vendor/bootstrap",
+		"vendor/bootstrap-slider",
 		"vendor/font-awesome",
 		"vendor/picto",
 		"vendor/material-design-iconic-font",
@@ -27,7 +28,9 @@
 		"vendor/codemirror-custom",
 		"vendor/angular-resizable",
 		"vendor/ngToast",
-		"vendor/ngToast-animations"
+		"vendor/ngToast-animations",
+		"vendor/slick-theme",
+		"vendor/trix"
 	],
 	"js_vendor": [
 		{
@@ -52,6 +55,8 @@
 		"vendor/core/codemirror.custom",
 		"vendor/core/firebase",
 		"vendor/core/firepad",
+		"vendor/core/slick",
+		"vendor/core/trix",
 		"vendor/tables/all",
 		"vendor/forms/all",
 		"vendor/media/slick",

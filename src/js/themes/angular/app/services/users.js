@@ -18,6 +18,9 @@
           $http.post(API_URL + '/signin', auth)
             .then(function(res) {
               if (res.data && res.data.session) {
+                if (!res.data.session.user.admin && !res.data.session.user.instructor && !res.data.session.user.staff) {
+                  res.data.session.user['isLearner'] = true;
+                }
                 localStorage.token = res.data.session.token;
                 localStorage.user = JSON.stringify(res.data.session.user);
               }
@@ -71,6 +74,9 @@
                 errorCallback(res);
               }
             });
+        },
+        checkUser: function() {
+          return $http.get(API_URL + '/expire_check?token=' + localStorage.token);
         }
       };
     }]);

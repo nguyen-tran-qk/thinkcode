@@ -1,29 +1,17 @@
 {% include "src/html/themes/angular/website/_navbar.html" %}
-
-{% include "src/html/themes/html/student/_website-profile-cover.html" %}
-
-<div class="container">
-
-    <div class="page-section">
-        <div class="row">
-
-            <div class="col-md-9">
-
-                {% block content %}{% endblock %}
-
-                <br/>
-                <br/>
-
-            </div>
-            <div class="col-md-3">
-
-                {% include "src/html/themes/html/student/_website-profile-sidebar.html" %}
-
-            </div>
-
-        </div>
+<div class="fullscreen">
+  <div class="loading-overlay" ng-class="{'visible': loading[0]}">
+    <div class="loading-logo" layout="row" layout-align="center center">
+      <img src="images/ThinkCode-04.svg" width="180" height="50" class="display-inline-block" flex>
+      <!-- <div class="showbox"> -->
+      <div class="loader" ng-class="{ 'display-inline-block': loading[0]||waiting, 'display-none': !loading[0] && !waiting }" flex>
+        <svg class="circular" viewBox="25 25 50 50">
+          <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+      </div>
+      <!-- </div> -->
     </div>
-
+  </div>
+  {% block content %}{% endblock %}
 </div>
-
 {% include "lib/layout/html/_footer_copyright.html" %}

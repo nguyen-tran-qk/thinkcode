@@ -76,9 +76,12 @@
                         <li ui-sref-active="active"><a ui-sref="essential.tabs">Tabs</a></li>
                     </ul>
                 </li> -->
-        <li ng-class="{ 'active': $state.includes('main.workspaces') }">
-          <a href ng-click="goTo('main.workspaces')">Workspaces</a>
+        <li ng-class="{ 'active': $state.includes('main.user') }" ng-if="user.username && user.isLearner">
+          <a href ng-click="goTo('main.user', {page: 'dashboard'})">Hồ sơ của tôi</a>
         </li>
+        <!-- <li ng-class="{ 'active': $state.includes('main.workspaces') }">
+          <a href ng-click="goTo('main.workspaces')">Workspaces</a>
+        </li> -->
         <li ng-class="{ 'active': $state.includes('main.courses') && $state.params.type !== 'published' }" uib-dropdown ng-if="user.instructor || user.staff">
           <a href id="simple-dropdown" uib-dropdown-toggle>Quản lý khóa học<span class="caret"></a>
           <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">

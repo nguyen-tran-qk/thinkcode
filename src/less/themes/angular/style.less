@@ -11,6 +11,9 @@ body {
 }
 .btn {
   font-weight: 700 !important;
+  &:not(.btn-circle) {
+    border-radius: 0;
+  }
   &.text-white {
     &:hover {
       color: #ffffff;
@@ -19,6 +22,18 @@ body {
   & + .btn {
     margin: 0 5px;
   }
+  &.btn-close {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 28px;
+    &:hover {
+      color: #0288D1;
+    }
+  }
+}
+button {
+  font-family: inherit;
 }
 .btn-group.disabled {
   cursor: not-allowed;
@@ -74,8 +89,11 @@ textarea {
 .media {
   display: inline-block;
   .media-body {
-    width: initial;
+    // width: initial;
   }
+}
+.parallax-layer .media .media-body {
+  width: 10000px;
 }
 .btn {
   &.dropdown-toggle {
@@ -87,6 +105,10 @@ textarea {
   }
 }
 .label {
+  &.label-sm {
+    padding: 2px 5px;
+    font-size: 10px;
+  }
   a {
     margin-left: 5px;
     .label-close {
@@ -212,6 +234,9 @@ textarea {
 }
 .bg-light-blue-50 {
   background-color: @light-blue-50;
+}
+.no-float {
+  float: none !important;
 }
 i.icon-lg {
   &:before {
@@ -552,5 +577,42 @@ i.icon-close {
   80%,
   90% {
     stroke: @loader-yellow;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .modal {
+    text-align: center;
+  }
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+  .modal-dialog {
+    display: inline-block !important;
+    height: auto !important;
+    text-align: left;
+    vertical-align: middle;
+  }
+  .modal.fade .modal-dialog {
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    transform: scale(0.9);
+    opacity: 0;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+  .modal.fade.in .modal-dialog {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+    //-webkit-transform: translate3d(0, -300px, 0);
+    //transform: translate3d(0, -300px, 0);
+    opacity: 1;
   }
 }

@@ -42,6 +42,7 @@
           }
           UserService.signin(data, function(res) {
             if (res.data.session) {
+              $scope.setUserCheck();
               $state.go('main.courses', { type: 'published' }, { reload: true });
             }
           }, function(res) {
@@ -64,6 +65,7 @@
             }
           }
           UserService.signup(data, function(res) {
+            $scope.setUserCheck();
             $state.go('main.courses', {}, { reload: true });
           }, function(res) {
             showMessage(res);

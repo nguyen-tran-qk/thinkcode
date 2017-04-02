@@ -38,6 +38,7 @@ require('./app/services/workspace');
 require('./app/services/users');
 require('./app/services/course');
 require('./app/services/badge');
+require('./app/services/learner');
 
 // Angular App Controllers
 require('./app/controllers/users.controller.js');
@@ -48,3 +49,4 @@ require('./app/controllers/courseDetails.controller.js');
 require('./app/controllers/badges.controller.js');
 require('./app/controllers/editCourse.controller.js');
 require('./app/controllers/lesson.controller.js');
+require('./app/controllers/learnerDashboard.controller.js');
