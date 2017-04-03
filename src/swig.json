@@ -22,7 +22,6 @@
 		"vendor/select2",
 		"vendor/jquery.countdown",
 		"vendor/codemirror",
-		"vendor/angular-material",
 		"vendor/abn_tree",
 		"vendor/ui-bootstrap-csp",
 		"vendor/codemirror-custom",
