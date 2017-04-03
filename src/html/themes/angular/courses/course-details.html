@@ -24,7 +24,7 @@
     <div class="row" ng-show="!vm.isConfig">
       <div class="col-lg-9 col-md-8">
         <div class="page-section">
-          <div class="description">:: vm.course.description ::</div>
+          <div class="description" ng-bind-html="vm.course.description | trustHtml"></div>
           <br/>
           <div class="info">
             <p class="margin-none">

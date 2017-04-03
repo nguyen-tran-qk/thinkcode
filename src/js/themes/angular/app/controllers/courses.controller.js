@@ -32,6 +32,7 @@
         templateUrl: 'modals/create-course.html',
         backdrop: 'static',
         keyboard: false,
+        size: 'lg',
         controller: function($timeout, $uibModalInstance, courseId, CoursesService, BadgeService) {
           var vm = this;
           var engine_arr = ['Engine', 'Python', 'Ruby'],

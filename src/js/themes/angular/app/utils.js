@@ -99,7 +99,12 @@
       return function(url) {
         return $sce.trustAsResourceUrl(url);
       };
-    });
+    })
+    .filter("trustHtml", ['$sce', function($sce) {
+      return function(htmlCode) {
+        return $sce.trustAsHtml(htmlCode);
+      };
+    }]);
 
   angular.module('app').filter('findBranchByUid', function() {
     return function(list, uid) {

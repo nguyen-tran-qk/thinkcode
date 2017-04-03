@@ -20,15 +20,17 @@
             $scope.userCheck = $interval(function() {
               UserService.checkUser()
                 .then(function(res) {}, function(res) {
-                  localStorage.removeItem('token');
-                  localStorage.removeItem('user');
-                  $scope.$state.go('main.courses', { type: 'published' }, { reload: true });
-                  $scope.unsetUserCheck();
-                  ngToast.create({
-                    className: 'danger',
-                    content: 'Bạn đã bị đăng xuất khỏi hệ thống. Vui lòng đăng nhập lại.',
-                    timeout: '5000'
-                  });
+                  if (res.status === 400) {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    $scope.$state.go('main.courses', { type: 'published' }, { reload: true });
+                    $scope.unsetUserCheck();
+                    ngToast.create({
+                      className: 'danger',
+                      content: 'Bạn đã bị đăng xuất khỏi hệ thống. Vui lòng đăng nhập lại.',
+                      timeout: '5000'
+                    });
+                  }
                 });
             }, 15000);
           }

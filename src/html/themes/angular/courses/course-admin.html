@@ -30,9 +30,9 @@
               <input type="text" class="form-control" id="course-title" placeholder="Nhập tên khóa học" ng-model="vm.tempCourse.title" ng-class="{'used': vm.tempCourse.title}" maxlength="50" required><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
               <label for="course-title">Tiêu đề</label>
             </div>
-              <trix-editor ng-model-options="{ updateOn: 'blur' }" spellcheck="false" class="trix-content" ng-model="vm.tempCourse.description" angular-trix trix-attachment-add="" trix-attachment-remove="" placeholder="Giới thiệu/mô tả ngắn gọn về khóa học"></trix-editor>
             <div class="form-group">
               <label for="course-desc">Mô tả</label>
+              <div text-angular ng-model="vm.tempCourse.description"></div>
               <!-- <textarea class="form-control" id="course-desc" placeholder="Giới thiệu/mô tả ngắn gọn về khóa học" ng-model="vm.tempCourse.description" rows="10" required></textarea> -->
             </div>
             <div class="row margin-v-10">
@@ -129,7 +129,7 @@
                   <div class="display-inline-block lesson-infos">
                     <span class="overlay" ng-if="item.deleteConfirm"></span>
                     <h4 class="text-title media-heading margin-none"><a href="" class="link-text-color">:: item.title ::</a></h4>
-                    <div class="text-caption">:: item.description | limitTo: 50 :: <span ng-if="item.description.length > 50"> ...</span></div>
+                    <!-- <div class="text-caption" ng-bind-html="item.description | trustHtml | limitTo: 50"></div><span ng-if="item.description.length > 50"> ...</span> -->
                   </div>
                   <button class="btn btn-default btn-sm right margin-v-5-0 ripple" ng-click="item.deleteConfirm = null" ng-if="item.deleteConfirm">Hủy</button>
                   <button class="btn btn-warning btn-stroke btn-sm right layout-margin margin-v-5-0" ng-click="vm.deleteLesson(item)">:: item.deleteConfirm ? 'Xác nhận xóa?' : 'Xóa' ::</button>
@@ -148,7 +148,8 @@
           </div>
           <div class="form-group">
             <label for="lesson-desc">Mô tả</label>
-            <textarea class="form-control" id="lesson-desc" placeholder="Mô tả kết quả cần đạt được" ng-model="vm.selectedLesson.description" rows="6" required></textarea>
+            <div text-angular placeholder="Mô tả kết quả cần đạt được" ng-model="vm.selectedLesson.description"></div>
+            <!-- <textarea class="form-control" id="lesson-desc" placeholder="Mô tả kết quả cần đạt được" ng-model="vm.selectedLesson.description" rows="6" required></textarea> -->
           </div>
           <div class="btn-group col-md-3 margin-v-0-10" uib-dropdown ng-class="{'disabled': vm.selectedLesson.id}">
             <button id="lesson-type" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="vm.selectedLesson.id">::vm.selectedLesson.type ? vm.selectedLesson.type : 'Chọn phân loại'::<span class="caret"></span>
@@ -171,13 +172,15 @@
             </div>
             <div class="form-group">
               <label for="teacher-note">Ghi chú</label>
-              <textarea class="form-control" id="teacher-note" placeholder="Ghi chú của giảng viên" ng-model="vm.selectedLesson.teacher_note" rows="3" required></textarea>
+              <div text-angular placeholder="Ghi chú của giảng viên" ng-model="vm.selectedLesson.teacher_note"></div>
+              <!-- <textarea class="form-control" id="teacher-note" placeholder="Ghi chú của giảng viên" ng-model="vm.selectedLesson.teacher_note" rows="3" required></textarea> -->
             </div>
           </div>
           <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'reading'">
             <div class="form-group">
               <label for="lesson-content">Nội dung</label>
-              <textarea class="form-control" id="lesson-content" placeholder="Văn bản" ng-model="vm.selectedLesson.content" rows="6" required></textarea>
+              <div text-angular placeholder="Văn bản" ng-model="vm.selectedLesson.content"></div>
+              <!-- <textarea class="form-control" id="lesson-content" placeholder="Văn bản" ng-model="vm.selectedLesson.content" rows="6" required></textarea> -->
             </div>
           </div>
           <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'code'">
@@ -191,7 +194,8 @@
             <span>::vm.selectedLesson.template.name::</span>
             <div class="form-group">
               <label for="cheat-sheet">Hướng dẫn</label>
-              <textarea class="form-control" id="cheat-sheet" placeholder="Lời giải/cách giải quyết cho bài thực hành code" ng-model="vm.selectedLesson.cheat_sheet" rows="6" required></textarea>
+              <div text-angular placeholder="Lời giải/cách giải quyết cho bài thực hành code" ng-model="vm.selectedLesson.cheat_sheet"></div>
+              <!-- <textarea class="form-control" id="cheat-sheet" placeholder="Lời giải/cách giải quyết cho bài thực hành code" ng-model="vm.selectedLesson.cheat_sheet" rows="6" required></textarea> -->
             </div>
           </div>
           <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'project'">

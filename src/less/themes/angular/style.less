@@ -10,7 +10,9 @@ body {
   font-family: 'NotoSans';
 }
 .btn {
-  font-weight: 700 !important;
+  &:not(.dropdown-toggle) {
+    font-weight: 700 !important;
+  }
   &:not(.btn-circle) {
     border-radius: 0;
   }
@@ -37,6 +39,11 @@ button {
 }
 .btn-group.disabled {
   cursor: not-allowed;
+}
+.ta-toolbar {
+  .btn {
+    margin: auto;
+  }
 }
 textarea {
   resize: vertical;

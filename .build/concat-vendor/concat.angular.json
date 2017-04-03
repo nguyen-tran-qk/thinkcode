@@ -4,7 +4,6 @@
 	"files": [
 		"angular.js",
 		"angular-resource.js",
-		"angular-sanitize.js",
 		"angular-animate.js",
 		"angular-aria.js",
 		"angular-ui-router.js",
@@ -20,7 +19,9 @@
 		"slick.js",
 		"ng-mousedrag.js",
 		"angular-isotope.js",
-		"angular-trix.js"
+		"textAngular-rangy.min.js",
+		"textAngular-sanitize.js",
+		"textAngular.min.js"
 	],
 	"themes": ["angular"]
 }

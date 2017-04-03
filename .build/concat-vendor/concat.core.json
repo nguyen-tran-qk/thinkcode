@@ -28,8 +28,7 @@
 			"codemirror.custom.js",
 			"firebase.js",
 			"firepad.js",
-			"slick.js",
-			"trix.js"
+			"slick.js"
 		]
 	}
 ]

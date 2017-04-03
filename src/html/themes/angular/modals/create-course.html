@@ -16,10 +16,11 @@
     </div>
     <div class="form-group">
       <label for="course-desc">Mô tả</label>
-      <textarea class="form-control" id="course-desc" placeholder="Giới thiệu/mô tả ngắn gọn về khóa học" ng-model="vm.course.description" rows="5"></textarea>
+      <div text-angular ng-model="vm.course.description"></div>
+      <!-- <textarea class="form-control" id="course-desc" placeholder="Giới thiệu/mô tả ngắn gọn về khóa học" ng-model="vm.course.description" rows="5"></textarea> -->
     </div>
     <div class="row margin-v-10">
-      <div class="btn-group col-md-3" uib-dropdown>
+      <div class="btn-group col-md-2" uib-dropdown>
         <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>::vm.course.engine::<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
@@ -27,7 +28,7 @@
           <li role="menuitem"><a href ng-click="vm.selectEngine(2)">Ruby</a></li>
         </ul>
       </div>
-      <div class="btn-group col-md-3" uib-dropdown>
+      <div class="btn-group col-md-2" uib-dropdown>
         <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>::vm.course.level::<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">

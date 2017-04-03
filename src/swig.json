@@ -29,8 +29,7 @@
 		"vendor/angular-resizable",
 		"vendor/ngToast",
 		"vendor/ngToast-animations",
-		"vendor/slick-theme",
-		"vendor/trix"
+		"vendor/slick-theme"
 	],
 	"js_vendor": [
 		{
@@ -56,7 +55,6 @@
 		"vendor/core/firebase",
 		"vendor/core/firepad",
 		"vendor/core/slick",
-		"vendor/core/trix",
 		"vendor/tables/all",
 		"vendor/forms/all",
 		"vendor/media/slick",
