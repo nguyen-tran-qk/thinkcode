@@ -23,7 +23,8 @@
 			"bower_components/ngToast/dist/ngToast-animations.css",
 			"bower_components/slick-carousel/slick/slick.css",
 			"bower_components/slick-carousel/slick/slick-theme.css",
-			"bower_components/trix/dist/trix.css"
+			"bower_components/trix/dist/trix.css",
+			"bower_components/angular-material/angular-material.css"
 		],
 		"dest": "css/vendor",
 		"flatten": true

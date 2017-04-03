@@ -28,7 +28,8 @@
 		"vendor/angular-resizable",
 		"vendor/ngToast",
 		"vendor/ngToast-animations",
-		"vendor/slick-theme"
+		"vendor/slick-theme",
+		"vendor/angular-material"
 	],
 	"js_vendor": [
 		{
