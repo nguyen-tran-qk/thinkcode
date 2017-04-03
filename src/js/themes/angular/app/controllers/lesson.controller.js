@@ -31,6 +31,7 @@
     var vm = this;
     vm.$state = $state;
     vm.minimized = false;
+    vm.firstOpen = true;
 
     vm.workspaceId = vm.$state.params.workspace_id;
     vm.tabs = []; //// array to store files aka. branchs to display as tabs
@@ -420,6 +421,8 @@
         .then(function(res) {
           vm.getWorkspace(res.data.workspace_id);
           vm.$state.transitionTo('main.learn', { course_id: vm.$state.params.course_id, workspace_id: res.data.workspace_id }, { notify: false });
+        	vm.firstOpen = true;
+        	$scope.showLessons = false;
         }, function(res) {
           $scope.showMessage('danger');
         });
@@ -500,6 +503,20 @@
             });
         }
       });
+    };
+    vm.expandSection = function(section) {
+    	// switch (section) {
+    	// 	case 'info':
+    	// 		vm.hideInfo = false;
+    	// 		break;
+    	// 	case 'code':
+    	// 		vm.hideInfo = true;
+    	// 		vm.hideConsole = true;
+    	// 		break;
+    	// 	case 'console':
+    	// 		vm.hideConsole = true;
+    	// 		vm.hideCode = true;
+    	// };
     };
   }
 }());

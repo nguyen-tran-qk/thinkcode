@@ -6,7 +6,6 @@
 		"angular-resource/angular-resource.js",
 		"angular-animate/angular-animate.js",
 		"angular-aria/angular-aria.js",
-		"angular-sanitize/angular-sanitize.js",
 		"angular-ui-router/release/angular-ui-router.js",
 		"angular-ui-utils/ui-utils.js",
 		"angular-bootstrap/ui-bootstrap.js",
@@ -21,6 +20,7 @@
 		"ngMouseDrag/ng-mousedrag.js",
 		"angular-isotope/dist/angular-isotope.js",
 		"textAngular/dist/textAngular-rangy.min.js",
+		"textAngular/dist/textAngular-sanitize.js",
 		"textAngular/dist/textAngular.min.js"
 	],
 	"dest": "js/vendor/angular",

@@ -29,7 +29,8 @@
 		"vendor/ngToast",
 		"vendor/ngToast-animations",
 		"vendor/slick-theme",
-		"vendor/angular-material"
+		"vendor/angular-material",
+		"vendor/textAngular"
 	],
 	"js_vendor": [
 		{

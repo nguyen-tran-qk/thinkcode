@@ -6,7 +6,6 @@
 		"angular-resource.js",
 		"angular-animate.js",
 		"angular-aria.js",
-		"angular-sanitize.js",
 		"angular-ui-router.js",
 		"ui-utils.js",
 		"ui-bootstrap.js",
@@ -21,6 +20,7 @@
 		"ng-mousedrag.js",
 		"angular-isotope.js",
 		"textAngular-rangy.min.js",
+		"textAngular-sanitize.js",
 		"textAngular.min.js"
 	],
 	"themes": ["angular"]

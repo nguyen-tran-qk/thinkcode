@@ -24,7 +24,7 @@
               <div class="panel panel-default paper-shadow" data-z="0.5">
                 <div class="panel-heading">
                   <h4 class="text-headline margin-none">Các khóa học</h4>
-                  <p class="text-subhead text-light">Các khóa học gần đây của tôi</p>
+                  <p class="text-subhead text-light">Các khóa học hiện tại của tôi</p>
                 </div>
                 <div class="panel-body" ng-if="!vm.myCourses.length">
                   <p class="">Bạn chưa có khóa học nào. Hãy đăng ký một khóa học và giành các danh hiệu cao quý <a ui-sref="main.courses">tại đây</a></p>
@@ -104,8 +104,8 @@
             </div>
           </div>
           <div class="row" ng-if="vm.$state.params.page === 'my-courses'" id="my-courses">
-            <div class="col-xs-12 col-sm-6 col-lg-4">
-              <div class="panel panel-default paper-shadow" data-z="0.5" ng-repeat="item in vm.myCourses">
+            <div class="col-xs-12 col-sm-6 col-lg-4" ng-repeat="item in vm.myCourses">
+              <div class="panel panel-default paper-shadow" data-z="0.5">
                 <div class="panel-heading">
                   <div class="media media-clearfix-xs-min v-middle">
                     <div class="media-body text-caption text-light">
@@ -148,7 +148,7 @@
                 </div>
                 <hr class="margin-none">
                 <div class="panel-body">
-                  <p>Bài học tiếp theo: <span class="text-teal-500 next-lesson" ui-sref="main.learn({course_id: item.id, workspace_id: item.current_lesson.workspace_id})">:: item.current_lesson.title ::</span></p>
+                  <p><small>Bài học tiếp theo: </small><br/><span class="text-teal-500 next-lesson" ui-sref="main.learn({course_id: item.id, workspace_id: item.current_lesson.workspace_id})">:: item.current_lesson.title ::</span></p>
                   <!-- <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated >Tiếp tục</a> -->
                 </div>
               </div>

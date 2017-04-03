@@ -527,10 +527,10 @@
             return vm.selectedLesson.content;
           }
           if (vm.selectedLesson.type === 'code') {
-            return vm.selectedLesson.template && vm.selectedLesson.cheat_sheet;
+            return vm.selectedLesson.id || (vm.selectedLesson.template && vm.selectedLesson.cheat_sheet);
           }
           if (vm.selectedLesson.type === 'project') {
-            return vm.selectedLesson.template;
+            return vm.selectedLesson.id || vm.selectedLesson.template;
           }
         }
       };

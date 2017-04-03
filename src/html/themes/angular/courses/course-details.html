@@ -50,7 +50,7 @@
               </div>
               <div class="panel panel-default curriculum paper-shadow lesson-item" data-z="0.5" ng-repeat="lesson in vm.course.lessons" ng-mouseenter="lesson.hover = true" ng-mouseleave="lesson.hover = false">
                 <div class="panel-heading panel-heading-gray">
-                  <div class="media">
+                  <div class="media width-100pc">
                     <div class="media-left">
                       <span class="icon-block img-circle bg-:: lesson.type | lessonTypeClass:'bgColor' ::-300 half text-white" ng-if="lesson.progress !== 'finished'"><i class="fa fa-:: lesson.type | lessonTypeClass:'icon' ::"></i></span>
                       <span class="icon-block img-circle bg-green-A200 half text-white" ng-if="lesson.progress === 'finished'" uib-tooltip="Bạn đã hoàn thành bài học này!"><i class="fa fa-check"></i></span>
@@ -59,7 +59,7 @@
                       <h4 class="text-headline inline-block" data-toggle="collapse" data-target="#curriculum-::$index::">:: lesson.title ::</h4>
                       <button class="btn btn-stroke btn-sm inline-block right margin-v-10-0 btn-take-lesson" ng-click="vm.goToLesson(lesson.id)" ng-if="!user.instructor && !user.staff && !user.admin && vm.course.enrolled && lesson.hover">Vào học</button>
                       <div class="collapse" id="curriculum-::$index::">
-                        <p>:: lesson.description ::</p>
+                        <p ta-bind="text" ng-model="lesson.description" ta-readonly='disabled'></p>
                         <div class="media v-middle">
                           <div class="media-left">
                             <img src="images/people/110/guy-6.jpg" alt="teacher" width="40" class="img-circle">
