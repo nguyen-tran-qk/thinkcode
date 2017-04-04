@@ -77,6 +77,9 @@
         },
         checkUser: function() {
           return $http.get(API_URL + '/expire_check?token=' + localStorage.token);
+        },
+        getUserInfo: function(userId, type) {
+          return $http.get(API_URL + '/users/' + userId + '?type=' + type + '&token=' + localStorage.token);
         }
       };
     }]);
