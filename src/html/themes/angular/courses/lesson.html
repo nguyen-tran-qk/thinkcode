@@ -8,28 +8,29 @@
     </div>
     <div class="col-sm-4 text-right padding-none next"><a href ng-if="vm.lesson.next.title" ng-click="vm.goToLesson(vm.lesson.next.id)">:: vm.lesson.next.title ::<i class="fa fa-chevron-right"></i></a></div>
   </div>
-  <div class="panel panel-default margin-none height-100pc padding-none border-none lesson-info" ng-class="{'minimized': vm.hideInfo}">
-    <!-- <button class="btn btn-expand" ng-click="vm.expandSection('info')"><i class="fa fa-expand"></i></button> -->
-    <div class="panel-body padding-none lesson-desc">
-      <uib-accordion close-others="true">
-        <div uib-accordion-group class="panel-default" heading="Mô tả bài học" is-open="vm.firstOpen">
-          <p ta-bind="text" ng-model="vm.lesson.description" class="overflow-hidden"></p>
-        </div>
-        <div uib-accordion-group class="panel-default" heading="Files" ng-if="!loading[0] && vm.my_data.length">
-          <abn-tree-mod id="workspace-tree" tree-data="vm.my_data" tree-control="vm.my_tree" icon-leaf="fa fa-file" icon-expand="fa fa-folder" icon-collapse="fa fa-folder-open" expand-level="3"></abn-tree-mod>
-        </div>
-        <div uib-accordion-group class="panel-default" heading="Về bài giảng này:" ng-if="vm.lesson.type === 'video'">
-          <div id="lesson-notes" class="">
-            <div class="panel-body padding-v-5">
-              <b class="inline-block">Thời lượng:</b><span class="inline-block">&nbsp;:: vm.lesson.video_duration ::</span>
-              <br/>
-              <b>Ghi chú của giảng viên:</b>
-              <p ta-bind="text" ng-model="vm.lesson.teacher_note"></p>
+  <div class="workspace-grid">
+    <div class="panel panel-default margin-none height-100pc padding-none border-none lesson-info relative" ng-class="{'minimized': vm.hideInfo}">
+      <!-- <button class="btn btn-expand" ng-click="vm.expandSection('info')"><i class="fa fa-expand"></i></button> -->
+      <div class="panel-body padding-none lesson-desc" ng-show="!vm.hideInfo">
+        <uib-accordion close-others="true">
+          <div uib-accordion-group class="panel-default border-none margin-none" heading="Mô tả bài học" is-open="vm.firstOpen">
+            <p ta-bind="text" ng-model="vm.lesson.description" class="overflow-hidden"></p>
+          </div>
+          <div uib-accordion-group class="panel-default border-none margin-none" heading="Files" ng-if="!loading[0] && vm.my_data.length">
+            <abn-tree-mod id="workspace-tree" tree-data="vm.my_data" tree-control="vm.my_tree" icon-leaf="fa fa-file" icon-expand="fa fa-folder" icon-collapse="fa fa-folder-open" expand-level="3"></abn-tree-mod>
+          </div>
+          <div uib-accordion-group class="panel-default border-none margin-none" heading="Về bài giảng này:" ng-if="vm.lesson.type === 'video'">
+            <div id="lesson-notes" class="">
+              <div class="panel-body padding-v-5">
+                <b class="inline-block">Thời lượng:</b><span class="inline-block">&nbsp;:: vm.lesson.video_duration ::</span>
+                <br/>
+                <b>Ghi chú của giảng viên:</b>
+                <p ta-bind="text" ng-model="vm.lesson.teacher_note"></p>
+              </div>
             </div>
           </div>
-        </div>
-      </uib-accordion>
-      <!-- <div class="panel panel-default border-none lesson-notes" data-toggle="panel-collapse" data-open="true" data-z="0.5" data-z="0.5" data-hover-z="1" data-animated="" ng-show="vm.lesson.type === 'video'">
+        </uib-accordion>
+        <!-- <div class="panel panel-default border-none lesson-notes" data-toggle="panel-collapse" data-open="true" data-z="0.5" data-z="0.5" data-hover-z="1" data-animated="" ng-show="vm.lesson.type === 'video'">
         <div class="panel-heading panel-collapse-trigger collapse" data-toggle="collapse" data-target="#lesson-notes" aria-expanded="true">
           <h4 class="panel-title">Về bài giảng này:</h4>
         </div>
@@ -41,56 +42,57 @@
           </div>
         </div>
       </div> -->
-      <div class="panel panel-default bg-blue-50 padding-none cheat-sheet" ng-if="vm.showCheatSheet">
-        <i class="icon-close md md-close" ng-click="vm.showCheatSheet = false"></i>
-        <div class="panel-body">
-          <h5>Gợi ý nhỏ dành cho bạn</h5>
-          <p class="text-light" ta-bind="text" ng-model="vm.lesson.cheat_sheet"></p>
-        </div>
-      </div>
-    </div>
-    <div ng-if="vm.hideInfo" class="resize-notify resize-left" ng-click="vm.hideInfo = false"><i class="md md-fullscreen"></i></div>
-  </div>
-  <chat-box user="user"></chat-box>
-  <div class="height-100pc bg-blue-grey-700 lesson-content" ng-class="{'width-100pc': vm.minimized, 'type-video': vm.lesson.type === 'video'}">
-    <div class="box" ng-if="vm.lesson.type === 'video'">
-      <iframe ng-src="::vm.lesson.video_url | trusted::" frameborder="0" allowfullscreen></iframe>
-    </div>
-    <div class="panel panel-default paper-shadow col-sm-12 padding-none" data-z="0.5" ng-if="vm.lesson.type === 'reading'">
-      <div class="panel-body height-100pc">
-        <p class="reading-content" ta-bind="text" ng-model="vm.lesson.content"></p>
-      </div>
-    </div>
-    <div class="workspace width-100pc" ng-show="vm.lesson.type === 'code' || vm.lesson.type === 'project'">
-      <!-- Tabbable Widget -->
-      <div class="editor-tabs tabbable margin-none height-100pc inline-block relative" ng-show="vm.tabs.length" ng-class="{'minimized': vm.hideCode}">
-        <button class="btn btn-expand" ng-click="vm.expandSection('code')"><i class="fa fa-expand"></i></button>
-        <!-- Tabs -->
-        <ul class="nav nav-tabs">
-          <li ng-repeat="tab in vm.tabs track by tab.data.id" ng-class="{'active': tab.data.id === vm.currentBranch.data.id}">
-            <a href ng-click="vm.openTab(tab)"><i class="fa fa-fw fa-code"></i> ::tab.label::</a>
-            <i class="btn-close md md-close" ng-if="tab.uid !== -1" ng-click="vm.closeFile(tab)"></i>
-          </li>
-        </ul>
-        <!-- // END Tabs -->
-        <!-- Panes -->
-        <div class="tab-content padding-none">
-          <div id="firepad" class="tab-pane active">
+        <div class="panel panel-default bg-blue-50 padding-none cheat-sheet" ng-if="vm.showCheatSheet">
+          <i class="icon-close md md-close" ng-click="vm.showCheatSheet = false"></i>
+          <div class="panel-body">
+            <h5>Gợi ý nhỏ dành cho bạn</h5>
+            <p class="text-light" ta-bind="text" ng-model="vm.lesson.cheat_sheet"></p>
           </div>
         </div>
-        <!-- // END Panes -->
-        <div ng-if="vm.hideCode" class="resize-notify resize-left" ng-click="vm.hideCode = false"><i class="md md-fullscreen"></i></div>
       </div>
-      <div class="panel panel-default padding-none console-panel margin-none inline-block relative" ng-class="{'minimized': vm.hideConsole}">
-        <button class="btn btn-expand" ng-click="vm.expandSection('console')"><i class="fa fa-expand"></i></button>
-        <div id="console" class="height-100pc" ng-class="{'code-error': vm.codeError}" ng-hide="vm.hideConsole">
+      <div ng-if="vm.hideInfo" class="resize-notify resize-left" ng-click="vm.hideInfo = false"><i class="md md-fullscreen"></i></div>
+    </div>
+    <chat-box user="user"></chat-box>
+    <div class="height-100pc bg-blue-grey-700 lesson-content" ng-class="{'width-100pc': vm.minimized, 'type-video': vm.lesson.type === 'video'}">
+      <div class="box" ng-if="vm.lesson.type === 'video'">
+        <iframe ng-src="::vm.lesson.video_url | trusted::" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="panel panel-default paper-shadow col-sm-12 padding-none" data-z="0.5" ng-if="vm.lesson.type === 'reading'">
+        <div class="panel-body height-100pc">
+          <p class="reading-content" ta-bind="text" ng-model="vm.lesson.content"></p>
         </div>
-        <div ng-if="vm.hideConsole" class="resize-notify resize-left" ng-click="vm.hideConsole = false"><i class="md md-fullscreen"></i></div>
+      </div>
+      <div class="workspace width-100pc" ng-show="vm.lesson.type === 'code' || vm.lesson.type === 'project'">
+        <!-- Tabbable Widget -->
+        <div class="editor-tabs tabbable margin-none height-100pc inline-block relative" ng-show="vm.tabs.length" ng-class="{'minimized': vm.hideCode}">
+          <button class="btn btn-expand" ng-click="vm.expandSection('code')" ng-if="!vm.hideCode"><i class="fa fa-expand"></i></button>
+          <!-- Tabs -->
+          <ul class="nav nav-tabs" ng-if="!vm.hideCode">
+            <li ng-repeat="tab in vm.tabs track by tab.data.id" ng-class="{'active': tab.data.id === vm.currentBranch.data.id}">
+              <a href ng-click="vm.openTab(tab)"><i class="fa fa-fw fa-code"></i> ::tab.label::</a>
+              <i class="btn-close md md-close" ng-if="tab.uid !== -1" ng-click="vm.closeFile(tab)"></i>
+            </li>
+          </ul>
+          <!-- // END Tabs -->
+          <!-- Panes -->
+          <div class="tab-content padding-none" ng-show="!vm.hideCode">
+            <div id="firepad" class="tab-pane active">
+            </div>
+          </div>
+          <!-- // END Panes -->
+          <div ng-if="vm.hideCode" class="resize-notify resize-left" ng-click="vm.hideCode = false"><i class="md md-fullscreen"></i></div>
+        </div>
+        <div class="panel panel-default padding-none console-panel margin-none inline-block relative" ng-class="{'minimized': vm.hideConsole}">
+          <button class="btn btn-expand" ng-click="vm.expandSection('console')" ng-if="!vm.hideConsole"><i class="fa fa-expand"></i></button>
+          <div id="console" class="height-100pc" ng-class="{'code-error': vm.codeError}">
+          </div>
+          <div ng-if="vm.hideConsole" class="resize-notify resize-left" ng-click="vm.hideConsole = false"><i class="md md-fullscreen"></i></div>
+        </div>
       </div>
     </div>
   </div>
   <div class="workspace-actions">
-    <div class="media media-grid lesson-title col-sm-3 col-md-3 relative padding-none height-100pc">
+    <div class="media media-grid lesson-title col-sm-3 col-md-3 relative padding-none height-100pc" ng-click="showLessons = !showLessons">
       <div class="current-title">
         <div class="media-left">
           <span class="icon-block s25 bg-:: vm.lesson.type | lessonTypeClass:'bgColor' ::-300 text-white" ng-if="!vm.lesson.finished"><b>::vm.lesson.order::</b></span>
@@ -98,26 +100,17 @@
         </div>
         <div class="media-body v-middle width-100pc">
           <p class="margin-none text-white text-h4" ng-class="{'text-small': vm.lesson.title.length > 35}">:: vm.lesson.title ::</p>
-          <span class="expand-lessons" uib-tooltip="Danh sách bài học" tooltip-placement="left" ng-click="showLessons = !showLessons"><i class="md md-menu"></i></span>
+          <span class="expand-lessons"><i class="md md-menu"></i></span>
         </div>
       </div>
-      <!-- <span class="expand-lessons" data-toggle="collapse" data-target="#lessons-list" uib-tooltip="Danh sách bài học" tooltip-placement="left"><i class="md md-menu"></i></span>
-      <div class="collapse width-100pc" id="lessons-list">
-        <div class="media v-middle width-100pc" ng-repeat="item in vm.course.lessons" ng-class="{'active': item.id === vm.lesson.id || item.hovering }" ng-mouseenter="item.hovering=true" ng-mouseleave="item.hovering=false">
-          <div class="media-left">
-            <span class="icon-block img-circle bg-:: item.type | lessonTypeClass:'bgColor' ::-300 s30 text-white"><i class="fa fa-:: item.type | lessonTypeClass:'icon' ::"></i></span>
-          </div>
-          <div class="media-body">
-            <a href ng-click="vm.goToLesson(item.id)">:: item.title ::</a>
-          </div>
-        </div>
-      </div> -->
     </div>
-    <button class="btn text-white" ng-class="hovering ? 'bg-blue-400' : 'bg-blue-500'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-click="vm.finishLesson()" ng-if="!vm.lesson.finished">Hoàn thành bài học</button>
-    <button class="btn text-white" ng-class="hovering ? 'bg-amber-400' : 'bg-amber-600'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-click="vm.resetLesson()" ng-if="vm.lesson.finished">Học lại</button>
-    <button class="btn btn-sm btn-warning" ng-click="vm.showCheatSheet = true" ng-if="vm.lesson.cheat_sheet">Gợi ý</button>
-    <button class="btn btn-success btn-sm" ng-click="vm.saveFile()" ng-disabled="waiting" ng-if="vm.currentBranch.uid !== -1">Save</button>
-    <button class="btn bg-indigo-A200 btn-sm text-white" ng-click="vm.runFile()" ng-disabled="waiting" ng-if="vm.currentBranch.uid !== -1">Run</button>
+    <div class="text-center col-sm-6 col-md-6">
+      <button class="btn text-white" ng-class="hovering ? 'bg-blue-400' : 'bg-blue-500'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-click="vm.finishLesson()" ng-if="!vm.lesson.finished">Hoàn thành bài học</button>
+      <button class="btn text-white" ng-class="hovering ? 'bg-amber-400' : 'bg-amber-600'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-click="vm.resetLesson()" ng-if="vm.lesson.finished">Học lại</button>
+      <button class="btn btn-sm btn-warning" ng-click="vm.showCheatSheet = true" ng-if="vm.lesson.cheat_sheet">Gợi ý</button>
+      <button class="btn btn-success btn-sm" ng-click="vm.saveFile()" ng-disabled="waiting" ng-if="vm.currentBranch.uid !== -1">Save</button>
+      <button class="btn bg-indigo-A200 btn-sm text-white" ng-click="vm.runFile()" ng-disabled="waiting" ng-if="vm.currentBranch.uid !== -1">Run</button>
+    </div>
   </div>
   <div class="sidebar" ng-class="{'show': showLessons}">
     <ul id="lessons-list">
@@ -128,7 +121,8 @@
       <li ng-repeat="item in vm.course.lessons">
         <div class="media v-middle width-100pc" ng-class="{'active': item.id === vm.lesson.id || item.hovering }" ng-mouseenter="item.hovering=true" ng-mouseleave="item.hovering=false">
           <div class="media-left">
-            <span class="icon-block img-circle bg-:: item.type | lessonTypeClass:'bgColor' ::-300 s30 text-white"><i class="fa fa-:: item.type | lessonTypeClass:'icon' ::"></i></span>
+            <span class="icon-block img-circle bg-:: item.type | lessonTypeClass:'bgColor' ::-300 s30 text-white" ng-if="item.progress !== 'finished'"><i class="fa fa-:: item.type | lessonTypeClass:'icon' ::"></i></span>
+            <span class="icon-block img-circle bg-green-A400 s30 text-white" ng-if="item.progress === 'finished'"><i class="md md-check"></i></span>
           </div>
           <div class="media-body">
             <a ng-click="vm.goToLesson(item.id); showLessons = false;">:: item.title ::</a>

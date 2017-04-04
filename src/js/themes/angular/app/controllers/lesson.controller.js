@@ -32,6 +32,9 @@
     vm.$state = $state;
     vm.minimized = false;
     vm.firstOpen = true;
+    vm.hideInfo = false;
+    vm.hideCode = false;
+    vm.hideConsole = false;
 
     vm.workspaceId = vm.$state.params.workspace_id;
     vm.tabs = []; //// array to store files aka. branchs to display as tabs
@@ -505,18 +508,20 @@
       });
     };
     vm.expandSection = function(section) {
-    	// switch (section) {
-    	// 	case 'info':
-    	// 		vm.hideInfo = false;
-    	// 		break;
-    	// 	case 'code':
-    	// 		vm.hideInfo = true;
-    	// 		vm.hideConsole = true;
-    	// 		break;
-    	// 	case 'console':
-    	// 		vm.hideConsole = true;
-    	// 		vm.hideCode = true;
-    	// };
+    	switch (section) {
+    		case 'info':
+    			vm.hideInfo = false;
+    			break;
+    		case 'code':
+          vm.hideCode = false;
+    			vm.hideInfo = vm.hideInfo ? false : true;
+    			vm.hideConsole = vm.hideConsole ? false : true;
+    			break;
+    		case 'console':
+    			vm.hideConsole = false;
+          vm.hideInfo = vm.hideInfo ? false : true;
+    			vm.hideCode = vm.hideCode ? false : true;
+    	}
     };
   }
 }());

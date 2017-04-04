@@ -7,11 +7,11 @@
     align-items: center;
     background-color: @workspace-actions-bg;
     .previous, .next {
-    	&:hover {
-    		a {
-    			color: #FFCA28;
-    		}
-    	}
+      &:hover {
+        a {
+          color: #FFCA28;
+        }
+      }
     }
     i {
       margin: 0 8px;
@@ -24,10 +24,54 @@
       &.course-title {
         font-size: 20px;
         &:hover {
-          color: #42A5F5;
+          color: #BDBDBD;
         }
         &:focus {
           text-decoration: none;
+        }
+      }
+    }
+  }
+  .workspace-grid {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    width: 100%;
+    height: calc(~'100% - 48px');
+    .lesson-info {
+      flex: 0 0 25%;
+      transition: flex-basis 0.3s ease-in-out;
+    }
+    .lesson-content {
+      flex: 1;
+      .workspace {
+        display: flex;
+        .editor-tabs {
+          flex: 1;
+        }
+        .console-panel {
+          flex: 0 0 45%;
+        }
+      }
+    }
+    .lesson-info, .editor-tabs, .console-panel {
+      &.minimized {
+        flex: 0 0 70px !important;
+      }
+    }
+    .editor-tabs.minimized {
+      .resize-notify {
+        color: #ffffff;
+      }
+      & ~ .console-panel:not(.minimized) {
+        flex: 1;
+      }
+    }
+    .lesson-info.minimized {
+      .resize-notify {
+        background-color: #E0E0E0;
+        &:hover {
+          background-color: #ffffff;
         }
       }
     }
@@ -55,12 +99,12 @@
     padding: 7px 14px;
     z-index: 11;
     &:hover {
-      background-color: rgba(255, 255, 255, 0.05);
+      background-color: rgba(255, 255, 255, 0.2);
     }
   }
   .panel-body {
     &.lesson-desc {
-      height: calc(~"100% - 150px");
+      height: 100%;
       overflow-y: auto;
       overflow-x: hidden;
     }
@@ -70,26 +114,25 @@
     }
   }
   .lesson-info {
-  	width: 25%;
-  	float: left;
     .lesson-title {
       padding: 10px 35px 10px 10px;
       margin-bottom: 15px;
       width: 100%;
+      cursor: pointer;
       .media-body:first-of-type {
         padding-right: 35px;
       }
     }
     .panel-group {
-    	.panel-default > .panel-heading {
-    		background-color: #E0E0E0;
-    	}
+      .panel-default > .panel-heading {
+        background-color: #E0E0E0;
+      }
     }
     // .btn-expand {
-    // 	color: #000;
-    // 	&:hover {
-    // 		background-color: rgba(0, 0, 0, 0.1);
-    // 	}
+    //  color: #000;
+    //  &:hover {
+    //    background-color: rgba(0, 0, 0, 0.1);
+    //  }
     // }
     .panel.lesson-notes {
       .panel-heading {
@@ -116,7 +159,7 @@
     }
   }
   .lesson-content {
-  	width: 75%;
+    width: 75%;
     padding: 0;
     display: flex;
     align-items: flex-start;
@@ -167,24 +210,33 @@
     height: 48px; // the padding bottom of class page-section + 1px to make sure it fills up
     background-color: @workspace-actions-bg;
     z-index: 99;
-    padding: 0 5px;
+    padding: 0;
     // div:nth-of-type(2) {
     //   border-width: 0 14px;
     //   border-color: brown;
     // }
+    .lesson-title {
+      &:hover {
+        background-color: #1A4069;
+      }
+    }
     .btn {
       margin: 0 8px;
+      font-weight: normal !important;
+      font-size: 16px;
+      padding: 5px 12px;
+      line-height: normal;
     }
     .expand-lessons {
       position: absolute;
       color: #ffffff;
       right: 10px;
-      top: 13px;
+      top: 15px;
       font-size: 28px;
       cursor: pointer;
     }
     .current-title {
-      padding: 10px;
+      padding: 12px;
       .media-body {
         p {
           width: 80%;
@@ -192,15 +244,12 @@
       }
     }
   }
-  .minimized {
-  	width: 70px;
-  }
   .sidebar {
     width: 25%;
     min-width: 400px;
     transform: translateX(calc(~"100% * -1"));
     opacity: .5;
-    background: linear-gradient(to bottom right, #303F9F, #64B5F6);
+    background: linear-gradient(to bottom right, #2b5876, #4e4376);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -228,12 +277,20 @@
         .list-heading {
           padding: 0 25px 20px;
           p {
-          	font-size: 14px;
+            font-size: 14px;
           }
         }
         .media {
           margin: 0;
           padding: 10px 20px;
+          .media-left {
+            i.md-check {
+              &:before {
+                font-weight: bolder;
+                font-size: 18px;
+              }
+            }
+          }
           .media-body {
             width: auto;
             a {

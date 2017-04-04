@@ -265,7 +265,7 @@ i.icon-close {
     // flex-flow: row wrap;
     // justify-content: space-around;
     // align-content: space-around;
-    height: calc(~"100% - 48px");
+    height: 100%;
     z-index: 10;
     // & > div {
     //   flex: 1;
@@ -282,21 +282,27 @@ i.icon-close {
     //     flex: 0 0 30%;
     //   } 
     // }
-    .resize-notify {
-      height: 100%; 
-      color: #ccc;
-      font-size: 42px;
-      display: flex; 
-      align-items: center;
-      position: absolute;
-      top: 0;
-      &.resize-right {
-        right: -5px;
-      }
-      &.resize-left {
-        left: -5px;
-      }
+  }
+  .resize-notify {
+    height: 100%;
+    width: 100%;
+    color: #757575;
+    background-color: rgba(224, 224, 224, 0.15);
+    font-size: 42px;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    &:hover {
+      background-color: rgba(224, 224, 224, 0.2);
     }
+    // &.resize-right {
+    //   right: -5px;
+    // }
+    // &.resize-left {
+    //   left: -5px;
+    // }
   }
 	/* tabs */
 	.editor-tabs {
@@ -408,7 +414,7 @@ i.icon-close {
 .console-panel-heading {
 	min-height: 38px;
 }
-.file-tree, .console-panel {
+.editor-tabs, .console-panel {
   transition: flex-basis 0.3s ease-in-out;
   // &.minimized {
   //   overflow: hidden !important;
@@ -488,6 +494,9 @@ i.icon-close {
   }
 }
 .top-navbar-hide {
+  body {
+    padding-top: 0 !important;
+  }
   #lesson-container {
     padding-top: 10px;
   }
