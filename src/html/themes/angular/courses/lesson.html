@@ -92,7 +92,7 @@
     </div>
   </div>
   <div class="workspace-actions">
-    <div class="media media-grid lesson-title col-sm-3 col-md-3 relative padding-none height-100pc" ng-click="showLessons = !showLessons">
+    <div class="media media-grid lesson-title col-sm-3 col-md-3 relative padding-none height-100pc" ng-class="{'show-lessons': showLessons}" ng-click="showLessons = !showLessons">
       <div class="current-title">
         <div class="media-left">
           <span class="icon-block s25 bg-:: vm.lesson.type | lessonTypeClass:'bgColor' ::-300 text-white" ng-if="!vm.lesson.finished"><b>::vm.lesson.order::</b></span>

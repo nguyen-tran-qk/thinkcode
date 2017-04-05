@@ -75,6 +75,11 @@
         }
       }
     }
+    @media (max-width: 1199px) {
+      .lesson-info {
+        flex: 0 0 30%;
+      }
+    }
   }
   .btn-complete {
     position: absolute;
@@ -216,8 +221,9 @@
     //   border-color: brown;
     // }
     .lesson-title {
-      &:hover {
-        background-color: #1A4069;
+      box-shadow: 1px 1px 6px 0px rgba(0,0,0,0.4);
+      &:hover, &.show-lessons {
+        background-color: #1565C0;
       }
     }
     .btn {
@@ -247,9 +253,11 @@
   .sidebar {
     width: 25%;
     min-width: 400px;
+    box-shadow: 1px 1px 6px 0px rgba(0,0,0,0.4);
     transform: translateX(calc(~"100% * -1"));
     opacity: .5;
-    background: linear-gradient(to bottom right, #2b5876, #4e4376);
+    // background: linear-gradient(to bottom right, #2b5876, #4e4376);
+    background-color: #1565C0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -260,7 +268,7 @@
     transition: all .25s ease-out;
     &.show {
       transform: translateX(0);
-      opacity: .98;
+      opacity: 1;
       display: flex !important;
       & ~ .sidebar-backdrop {
         position: fixed;

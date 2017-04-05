@@ -208,7 +208,7 @@
       };
       // Helper to get hash from end of URL or generate a random one.
       function getExampleRef(fileId) {
-        return firebase.database().ref(fileId);
+        return firebase.database().ref('files/' + fileId);
       }
 
       // Helper to get file's extension
@@ -424,8 +424,14 @@
         .then(function(res) {
           vm.getWorkspace(res.data.workspace_id);
           vm.$state.transitionTo('main.learn', { course_id: vm.$state.params.course_id, workspace_id: res.data.workspace_id }, { notify: false });
-        	vm.firstOpen = true;
-        	$scope.showLessons = false;
+          vm.firstOpen = true;
+          $scope.showLessons = false;
+          vm.conversation = res.data;
+          if (vm.tabs.length) {
+            for (var i = 0; i < vm.tabs.length; i++) {
+              vm.closeFile(vm.tabs[i]);
+            }
+          }
         }, function(res) {
           $scope.showMessage('danger');
         });
@@ -463,10 +469,10 @@
               }
             }).result.then(function(result) {
               if (result === 'ok') {
-              	$scope.goTo('main.courses');
+                $scope.goTo('main.courses');
               }
             }, function(result) {
-            	vm.getWorkspace(vm.workspaceId);
+              vm.getWorkspace(vm.workspaceId);
             });
           }
         }, function(res) {
@@ -508,20 +514,20 @@
       });
     };
     vm.expandSection = function(section) {
-    	switch (section) {
-    		case 'info':
-    			vm.hideInfo = false;
-    			break;
-    		case 'code':
+      switch (section) {
+        case 'info':
+          vm.hideInfo = false;
+          break;
+        case 'code':
           vm.hideCode = false;
-    			vm.hideInfo = vm.hideInfo ? false : true;
-    			vm.hideConsole = vm.hideConsole ? false : true;
-    			break;
-    		case 'console':
-    			vm.hideConsole = false;
           vm.hideInfo = vm.hideInfo ? false : true;
-    			vm.hideCode = vm.hideCode ? false : true;
-    	}
+          vm.hideConsole = vm.hideConsole ? false : true;
+          break;
+        case 'console':
+          vm.hideConsole = false;
+          vm.hideInfo = vm.hideInfo ? false : true;
+          vm.hideCode = vm.hideCode ? false : true;
+      }
     };
   }
 }());
