@@ -4,7 +4,7 @@
     <div class="col-sm-4 padding-none previous"><a href ng-if="vm.lesson.previous.title" ng-click="vm.goToLesson(vm.lesson.previous.id)"><i class="fa fa-chevron-left"></i>:: vm.lesson.previous.title ::</a></div>
     <div class="col-sm-4 text-center">
       <a ui-sref="main.courses.details({course_id: vm.lesson.course_id})" class="course-title">:: vm.course.title ::</a>
-      <br/><span class="text-light-blue-300">với :: vm.lesson.teacher ::</span>
+      <br/><span class="text-light-blue-300">với :: vm.lesson.teacher.username ::</span>
     </div>
     <div class="col-sm-4 text-right padding-none next"><a href ng-if="vm.lesson.next.title" ng-click="vm.goToLesson(vm.lesson.next.id)">:: vm.lesson.next.title ::<i class="fa fa-chevron-right"></i></a></div>
   </div>
@@ -52,7 +52,7 @@
       </div>
       <div ng-if="vm.hideInfo" class="resize-notify resize-left" ng-click="vm.hideInfo = false"><i class="md md-fullscreen"></i></div>
     </div>
-    <chat-box user="user"></chat-box>
+    <chat-box user="user" workspace-id="vm.workspaceId" teacher="vm.lesson.teacher" callback="getConvos()"></chat-box>
     <div class="height-100pc bg-blue-grey-700 lesson-content" ng-class="{'width-100pc': vm.minimized, 'type-video': vm.lesson.type === 'video'}">
       <div class="box" ng-if="vm.lesson.type === 'video'">
         <iframe ng-src="::vm.lesson.video_url | trusted::" frameborder="0" allowfullscreen></iframe>
@@ -96,7 +96,7 @@
       <div class="current-title">
         <div class="media-left">
           <span class="icon-block s25 bg-:: vm.lesson.type | lessonTypeClass:'bgColor' ::-300 text-white" ng-if="!vm.lesson.finished"><b>::vm.lesson.order::</b></span>
-          <span class="icon-block s25 bg-green-A200 text-white" ng-if="vm.lesson.finished" uib-tooltip="Bạn đã hoàn thành bài học này!" tooltip-placement="right"><i class="fa fa-check"></i></span>
+          <span class="icon-block s25 bg-green-A400 text-white" ng-if="vm.lesson.finished" uib-tooltip="Bạn đã hoàn thành bài học này!" tooltip-placement="right"><i class="fa fa-check"></i></span>
         </div>
         <div class="media-body v-middle width-100pc">
           <p class="margin-none text-white text-h4" ng-class="{'text-small': vm.lesson.title.length > 35}">:: vm.lesson.title ::</p>
@@ -104,7 +104,7 @@
         </div>
       </div>
     </div>
-    <div class="text-center col-sm-6 col-md-6">
+    <div class="text-center col-sm-6 col-md-6" ng-if="user.isLearner">
       <button class="btn text-white" ng-class="hovering ? 'bg-blue-400' : 'bg-blue-500'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-click="vm.finishLesson()" ng-if="!vm.lesson.finished">Hoàn thành bài học</button>
       <button class="btn text-white" ng-class="hovering ? 'bg-amber-400' : 'bg-amber-600'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-click="vm.resetLesson()" ng-if="vm.lesson.finished">Học lại</button>
       <button class="btn btn-sm btn-warning" ng-click="vm.showCheatSheet = true" ng-if="vm.lesson.cheat_sheet">Gợi ý</button>

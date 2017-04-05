@@ -88,6 +88,19 @@
               } else {
                 request.redirectTo('login');
               }
+            }],
+            lessonParticipants: ['UserService', function(UserService) {
+              var request = this;
+              if (localStorage.token && localStorage.token.length && localStorage.user) {
+                var user = JSON.parse(localStorage.user);
+                if (!user.staff && !user.admin) {
+                  return request.next();
+                } else {
+                  request.redirectTo('main.courses');
+                }
+              } else {
+                request.redirectTo('login');
+              }
             }]
           });
           $middlewareProvider.global('everyone');
@@ -117,7 +130,8 @@
             .state('main', {
               abstract: true,
               url: '/app',
-              template: '<div ui-view="main" id="main" class="main-container ui-view-main" />'
+              template: '<div ui-view="main" id="main" class="main-container ui-view-main" />',
+              controller: 'MainController'
             })
             .state('main.courses', {
               url: '/courses/{type:string}',
@@ -179,7 +193,7 @@
             })
             .state('main.learn', {
               url: '/learn/:course_id/:workspace_id',
-              middleware: 'learner',
+              middleware: 'lessonParticipants',
               views: {
                 'main': {
                   templateUrl: 'courses/lesson.html',

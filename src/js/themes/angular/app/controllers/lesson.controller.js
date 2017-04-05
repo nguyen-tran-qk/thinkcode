@@ -26,7 +26,7 @@
 
     $scope.loading[0] = true;
 
-    $scope.user = UserService.getUser();
+    // $scope.user = UserService.getUser();
 
     var vm = this;
     vm.$state = $state;
@@ -420,21 +420,33 @@
     vm.getCourse();
 
     vm.goToLesson = function(lessonId) {
-      CoursesService.startLesson(vm.$state.params.course_id, lessonId)
-        .then(function(res) {
-          vm.getWorkspace(res.data.workspace_id);
-          vm.$state.transitionTo('main.learn', { course_id: vm.$state.params.course_id, workspace_id: res.data.workspace_id }, { notify: false });
-          vm.firstOpen = true;
-          $scope.showLessons = false;
-          vm.conversation = res.data;
-          if (vm.tabs.length) {
-            for (var i = 0; i < vm.tabs.length; i++) {
-              vm.closeFile(vm.tabs[i]);
+      if ($scope.user.isLearner) {
+        CoursesService.startLesson(vm.$state.params.course_id, lessonId)
+          .then(function(res) {
+            if (vm.tabs.length > 1 || (vm.tabs.length === 1 && vm.tabs[0].uid !== -1)) {
+              for (var i = 0; i < vm.tabs.length; i++) {
+                vm.closeFile(vm.tabs[i]);
+              }
             }
+            CoursesService.registerConversation(res.data);
+            vm.getWorkspace(res.data.workspace_id);
+            vm.$state.transitionTo('main.learn', { course_id: vm.$state.params.course_id, workspace_id: res.data.workspace_id }, { notify: false });
+            vm.firstOpen = true;
+            $scope.showLessons = false;
+          }, function(res) {
+            $scope.showMessage('danger');
+          });
+      } else {
+        vm.getWorkspace(res.data.workspace_id);
+        vm.$state.transitionTo('main.learn', { course_id: vm.$state.params.course_id, workspace_id: res.data.workspace_id }, { notify: false });
+        vm.firstOpen = true;
+        $scope.showLessons = false;
+        if (vm.tabs.length) {
+          for (var i = 0; i < vm.tabs.length; i++) {
+            vm.closeFile(vm.tabs[i]);
           }
-        }, function(res) {
-          $scope.showMessage('danger');
-        });
+        }
+      }
     };
 
     vm.finishLesson = function() {
@@ -519,14 +531,33 @@
           vm.hideInfo = false;
           break;
         case 'code':
-          vm.hideCode = false;
-          vm.hideInfo = vm.hideInfo ? false : true;
-          vm.hideConsole = vm.hideConsole ? false : true;
+          if (vm.hideCode) {
+            vm.hideCode = false;
+          } else {
+            if (!vm.hideInfo && vm.hideConsole) {
+              vm.hideInfo = true;
+            } else if (!vm.hideConsole && vm.hideInfo) {
+              vm.hideConsole = true;
+            } else {
+              vm.hideConsole = !vm.hideConsole;
+              vm.hideInfo = !vm.hideInfo;
+            }
+          }
           break;
         case 'console':
-          vm.hideConsole = false;
-          vm.hideInfo = vm.hideInfo ? false : true;
-          vm.hideCode = vm.hideCode ? false : true;
+          if (vm.hideConsole) {
+            vm.hideConsole = false;
+          } else {
+            if (!vm.hideInfo && vm.hideCode) {
+              vm.hideInfo = true;
+            } else if (!vm.hideCode && vm.hideInfo) {
+              vm.hideCode = true;
+            } else {
+              vm.hideInfo = !vm.hideInfo;
+              vm.hideCode = !vm.hideCode;
+            }
+          }
+          break;
       }
     };
   }

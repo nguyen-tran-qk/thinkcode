@@ -7,7 +7,7 @@
     $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
     $scope.app.settings.bodyClass = '';
     $scope.loading[0] = true;
-    $scope.user = UserService.getUser();
+    // $scope.user = UserService.getUser();
     $('.main-container').tkScrollNavbarTransition();
 
     var vm = this;
@@ -139,6 +139,7 @@
         if (res.status < 300) {
           CoursesService.startLesson(vm.course.id, vm.course.lessons[0].id)
             .then(function(res) {
+              CoursesService.registerConversation(res.data);
               vm.$state.go('main.learn', { course_id: vm.course.id, workspace_id: res.data.workspace_id });
             }, function(res) {
               $scope.showMessage('danger');
@@ -186,6 +187,7 @@
     vm.goToLesson = function(lessonId) {
       CoursesService.startLesson(vm.course.id, lessonId)
         .then(function(res) {
+          CoursesService.registerConversation(res.data);
           vm.$state.go('main.learn', { course_id: vm.course.id, workspace_id: res.data.workspace_id });
         }, function(res) {
           $scope.showMessage('danger');
@@ -247,7 +249,7 @@
     var onInitConfig = function() {
       var engine_arr = ['Engine', 'Python', 'Ruby'],
         level_arr = ['Level', 'Learn', 'Hack'];
-      UserService.searchUser(vm.tempCourse.admin, function(res) {
+      UserService.searchUser(vm.tempCourse.admin, 'instructor', function(res) {
         vm.tempCourse.author_id = res.data[0].id;
       }, function(res) {
         $uibModalInstance.dismiss();
@@ -338,7 +340,7 @@
       vm.delaySearch = debounce(function(type, keyword) {
         // if (keyword && keyword.length) {
         if (type === 'author' || type === 'editor') {
-          UserService.searchUser(keyword, function(res) {
+          UserService.searchUser(keyword, 'instructor', function(res) {
             if (type === 'author') {
               vm.authorList = res.data;
             } else {

@@ -18,11 +18,11 @@
           $http.post(API_URL + '/signin', auth)
             .then(function(res) {
               if (res.data && res.data.session) {
-                if (!res.data.session.user.admin && !res.data.session.user.instructor && !res.data.session.user.staff) {
-                  res.data.session.user['isLearner'] = true;
+                if (!res.data.session.admin && !res.data.session.instructor && !res.data.session.staff) {
+                  res.data.session['isLearner'] = true;
                 }
                 localStorage.token = res.data.session.token;
-                localStorage.user = JSON.stringify(res.data.session.user);
+                localStorage.user = JSON.stringify(res.data.session);
               }
               if (callback) {
                 callback(res);
@@ -38,7 +38,7 @@
             .then(function(res) {
               if (res.data && res.data.session) {
                 localStorage.token = res.data.session.token;
-                localStorage.user = JSON.stringify(res.data.session.user);
+                localStorage.user = JSON.stringify(res.data.session);
               }
               if (callback) {
                 callback(res);
@@ -63,8 +63,8 @@
               }
             });
         },
-        searchUser: function(keyword, callback, errorCallback) {
-          $http.get(API_URL + '/users/search?keyword=' + keyword)
+        searchUser: function(keyword, role, callback, errorCallback) {
+          $http.get(API_URL + '/users/search?keyword=' + keyword + '&role=' + role)
             .then(function(res) {
               if (callback) {
                 callback(res);
@@ -80,6 +80,9 @@
         },
         getUserInfo: function(userId, type) {
           return $http.get(API_URL + '/users/' + userId + '?type=' + type + '&token=' + localStorage.token);
+        },
+        getUserConversations: function() {
+          return $http.get(API_URL + '/workspaces/conversations?token=' + localStorage.token);
         }
       };
     }]);

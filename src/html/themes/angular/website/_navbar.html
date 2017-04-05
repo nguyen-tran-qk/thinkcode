@@ -95,6 +95,28 @@
         </li>
       </ul>
       <div class="navbar-right">
+        <div id="messages-dropdown" class="messages-container" uib-dropdown dropdown-append-to="messages-list" ng-if="user">
+          <div class="center notification icon" uib-dropdown-toggle id="messages-list">
+            <div class="fa fa-envelope"></div>
+            <div class="notification-number" ng-if="unreadCount > 0">:: unreadCount ::</div>
+          </div>
+          <ul uib-dropdown-menu aria-labelledby="messages-list" class="messages-list padding-v-0">
+            <li class="list-group-item" ng-class="{'bg-grey-200': convo.unread}" ng-repeat="convo in user.conversations track by convo.$id" ng-if="convo.chatterName">
+              <a href>
+                <div class="media v-middle">
+                  <div class="media-left">
+                    <img src="images/people/110/woman-5.jpg" width="25" alt="" class="media-object">
+                  </div>
+                  <div class="media-body padding-none">
+                    <span class="date">10:30am</span>
+                    <span class="user">:: convo.chatterName ::</span>
+                    <div class="text-light">Xin chào tôi là...</div>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
         <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right" ng-if="user">
           <!-- user -->
           <li class="dropdown user{% if page.slug|contains('website-student-') %} active{% endif %}">

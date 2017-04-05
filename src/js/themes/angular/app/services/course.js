@@ -236,6 +236,10 @@
         },
         resetLesson: function(courseId, workspaceId) {
           return $http.patch(API_URL + '/courses/' + courseId + '/workspaces/' + workspaceId + '/unfinish', { token: localStorage.token });
+        },
+        registerConversation: function(data) {
+          var ref = firebase.database().ref('chat/' + data.workspace_id);
+          ref.update({ student_id: data.student_id, teacher_id: data.teacher_id });
         }
       };
     }]);

@@ -41,12 +41,12 @@ require('./app/services/badge');
 require('./app/services/learner');
 
 // Angular App Controllers
+require('./app/controllers/main.controller.js');
 require('./app/controllers/users.controller.js');
 require('./app/controllers/workspaces.controller.js');
 require('./app/controllers/workspaceDetails.controller.js');
 require('./app/controllers/courses.controller.js');
 require('./app/controllers/courseDetails.controller.js');
 require('./app/controllers/badges.controller.js');
-require('./app/controllers/editCourse.controller.js');
 require('./app/controllers/lesson.controller.js');
 require('./app/controllers/learnerDashboard.controller.js');

@@ -7,7 +7,7 @@
     $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
     $scope.app.settings.bodyClass = '';
     $scope.loading[0] = true;
-    $scope.user = UserService.getUser();
+    // $scope.user = UserService.getUser();
     $('.main-container').tkScrollNavbarTransition();
 
     var vm = this;

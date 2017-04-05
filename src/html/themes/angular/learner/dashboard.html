@@ -47,7 +47,7 @@
                 </div> -->
               </div>
             </div>
-            <div class="col-xs-12 col-lg-6 masonry-brick">
+            <div class="col-xs-12 col-lg-6 masonry-brick" ng-show="vm.myBadges.length">
               <div class="panel panel-default paper-shadow" data-z="0.5">
                 <div class="panel-body">
                   <h4 class="text-headline margin-none">Danh hiệu</h4>
@@ -81,16 +81,16 @@
                     </div>
                   </li>
                 </ul>
-                <div class="panel-footer text-right" ng-if="vm.myProjects.length">
+                <div class="panel-footer text-right" ng-if="vm.myProjects.length > 5">
                   <a href class="btn btn-white paper-shadow relative" data-z="0" data-hover-z="1" data-animated ng-click="transitionTo('main.user', {page: 'my-projects'})">Xem tất cả (:: vm.myProjects.length ::)</a>
                 </div>
               </div>
             </div>
-            <div class="col-xs-12 col-lg-6 masonry-brick">
+            <!-- <div class="col-xs-12 col-lg-6 masonry-brick">
               <h4 class="text-headline margin-none">Danh sách hội thoại</h4>
               <p class="text-subhead text-light">Các giảng viên luôn sẵn sàng lắng nghe &amp; hỗ trợ khi bạn gặp trở ngại</p>
               {% include "src/html/themes/html/student/_forum-activity.html" %}
-            </div>
+            </div> -->
           </div>
           <div class="row" ng-if="vm.$state.params.page === 'my-courses'" id="my-courses">
             <div class="padding-v-15">

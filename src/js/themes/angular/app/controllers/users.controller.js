@@ -8,6 +8,14 @@
     $scope.app.settings.bodyClass = 'login';
     var vm = this;
     vm.$state = $state;
+    vm.showMessage = function(type, msg) {
+      var message = msg || 'Xin lỗi, thao tác thất bại.';
+      ngToast.create({
+        className: type,
+        content: message,
+        timeout: '5000'
+      });
+    };
 
     function showMessage(res) {
       if (res.data) {
@@ -42,8 +50,8 @@
           }
           UserService.signin(data, function(res) {
             if (res.data.session) {
-              $scope.setUserCheck();
               $scope.user = UserService.getUser();
+              // $scope.setUserCheck();
               if ($scope.user.isLearner) {
                 $state.go('main.user', { page: 'dashboard' }, { reload: true });
               } else {
@@ -51,7 +59,7 @@
               }
             }
           }, function(res) {
-            $scope.showMessage('danger', 'Thông tin đăng nhập không chính xác.');
+            vm.showMessage('danger', 'Thông tin đăng nhập không chính xác.');
           });
         }
       };
