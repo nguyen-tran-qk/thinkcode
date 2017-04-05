@@ -1,27 +1,38 @@
-{
-	"build": "js/vendor/angular/all.js",
-	"cwd": "$THEME_DIR/js/vendor/angular",
-	"files": [
-		"angular.js",
-		"angular-resource.js",
-		"angular-animate.js",
-		"angular-aria.js",
-		"angular-ui-router.js",
-		"ui-utils.js",
-		"ui-bootstrap.js",
-		"ui-bootstrap-tpls.js",
-		"abn_tree_directive.js",
-		"ng-file-upload.js",
-		"angular-resizable.js",
-		"angular-middleware.js",
-		"ngToast.js",
-		"angularfire.js",
-		"slick.js",
-		"ng-mousedrag.js",
-		"angular-isotope.js",
-		"textAngular-rangy.min.js",
-		"textAngular-sanitize.js",
-		"textAngular.min.js"
-	],
-	"themes": ["angular"]
-}
+[
+	{
+        "build": "js/vendor/core/angular-masonry.custom.js",
+        "cwd": "$THEME_DIR/js/vendor/angular/angular-masonry",
+        "files": [
+            "*.js"
+        ]
+    },
+    {
+		"build": "js/vendor/angular/all.js",
+		"cwd": "$THEME_DIR/js/vendor/angular",
+		"files": [
+			"angular-masonry.custom.js",
+			"angular.js",
+			"angular-resource.js",
+			"angular-animate.js",
+			"angular-aria.js",
+			"angular-ui-router.js",
+			"ui-utils.js",
+			"ui-bootstrap.js",
+			"ui-bootstrap-tpls.js",
+			"abn_tree_directive.js",
+			"ng-file-upload.js",
+			"angular-resizable.js",
+			"angular-middleware.js",
+			"ngToast.js",
+			"angularfire.js",
+			"slick.js",
+			"ng-mousedrag.js",
+			"angular-isotope.js",
+			"textAngular-rangy.min.js",
+			"textAngular-sanitize.js",
+			"textAngular.min.js",
+			"angular-masonry.js"
+		],
+		"themes": ["angular"]
+	}
+]

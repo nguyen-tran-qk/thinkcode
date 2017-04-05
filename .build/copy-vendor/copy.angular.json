@@ -1,29 +1,48 @@
-{
-	"task": "copy-vendor-angular-scripts",
-	"cwd": "bower_components",
-	"src": [
-		"angular/angular.js",
-		"angular-resource/angular-resource.js",
-		"angular-animate/angular-animate.js",
-		"angular-aria/angular-aria.js",
-		"angular-ui-router/release/angular-ui-router.js",
-		"angular-ui-utils/ui-utils.js",
-		"angular-bootstrap/ui-bootstrap.js",
-		"angular-bootstrap/ui-bootstrap-tpls.js",
-		"angular-bootstrap-nav-tree/dist/abn_tree_directive.js",
-		"ng-file-upload/ng-file-upload.js",
-		"angular-resizable/src/angular-resizable.js",
-		"angular-middleware/dist/angular-middleware.js",
-		"ngToast/dist/ngToast.js",
-		"angularfire/dist/angularfire.js",
-		"angular-slick/dist/slick.js",
-		"ngMouseDrag/ng-mousedrag.js",
-		"angular-isotope/dist/angular-isotope.js",
-		"textAngular/dist/textAngular-rangy.min.js",
-		"textAngular/dist/textAngular-sanitize.js",
-		"textAngular/dist/textAngular.min.js"
-	],
-	"dest": "js/vendor/angular",
-	"flatten": true,
-	"themes": ["angular"]
-}
+[
+	{
+		"task": "copy-vendor-angular-scripts",
+		"cwd": "bower_components",
+		"src": [
+			"angular/angular.js",
+			"angular-resource/angular-resource.js",
+			"angular-animate/angular-animate.js",
+			"angular-aria/angular-aria.js",
+			"angular-ui-router/release/angular-ui-router.js",
+			"angular-ui-utils/ui-utils.js",
+			"angular-bootstrap/ui-bootstrap.js",
+			"angular-bootstrap/ui-bootstrap-tpls.js",
+			"angular-bootstrap-nav-tree/dist/abn_tree_directive.js",
+			"ng-file-upload/ng-file-upload.js",
+			"angular-resizable/src/angular-resizable.js",
+			"angular-middleware/dist/angular-middleware.js",
+			"ngToast/dist/ngToast.js",
+			"angularfire/dist/angularfire.js",
+			"angular-slick/dist/slick.js",
+			"ngMouseDrag/ng-mousedrag.js",
+			"angular-isotope/dist/angular-isotope.js",
+			"textAngular/dist/textAngular-rangy.min.js",
+			"textAngular/dist/textAngular-sanitize.js",
+			"textAngular/dist/textAngular.min.js",
+			"angular-masonry/angular-masonry.js"
+		],
+		"dest": "js/vendor/angular",
+		"flatten": true,
+		"themes": ["angular"]
+	},
+	{
+	    "task": "copy-vendor-angular-masonry-scripts",
+	    "cwd": "bower_components",
+	    "src": [
+			"ev-emitter/ev-emitter.js",
+	        "desandro-matches-selector/matches-selector.js",
+	        "fizzy-ui-utils/utils.js",
+	        "get-size/get-size.js",
+	        "outlayer/item.js",
+	        "outlayer/outlayer.js",
+			"masonry/masonry.js"
+	    ],
+	    "dest": "js/vendor/angular/angular-masonry",
+	    "flatten": true,
+		"themes": ["angular"]
+	}
+]

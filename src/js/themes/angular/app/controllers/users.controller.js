@@ -43,7 +43,12 @@
           UserService.signin(data, function(res) {
             if (res.data.session) {
               $scope.setUserCheck();
-              $state.go('main.courses', { type: 'published' }, { reload: true });
+              $scope.user = UserService.getUser();
+              if ($scope.user.isLearner) {
+                $state.go('main.user', { page: 'dashboard' }, { reload: true });
+              } else {
+                $state.go('main.courses', { type: 'published' }, { reload: true });
+              }
             }
           }, function(res) {
             $scope.showMessage('danger', 'Thông tin đăng nhập không chính xác.');
