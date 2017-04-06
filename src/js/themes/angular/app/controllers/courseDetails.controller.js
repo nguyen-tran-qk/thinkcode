@@ -35,6 +35,7 @@
         vm.course.engine_id = engine_arr.indexOf(vm.course.engine);
         vm.course.level_id = level_arr.indexOf(vm.course.level);
         if (vm.course.enrolled && vm.course.lessons.length) {
+          vm.lastLesson = vm.course.lessons[0];
           for (var i = 0; i < vm.course.lessons.length; i++) {
             if (vm.course.lessons[i].progress === 'current') {
               vm.lastLesson = vm.course.lessons[i];

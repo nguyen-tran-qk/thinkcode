@@ -79,7 +79,15 @@
           return $http.get(API_URL + '/expire_check?token=' + localStorage.token);
         },
         getUserInfo: function(userId, type) {
-          return $http.get(API_URL + '/users/' + userId + '?type=' + type + '&token=' + localStorage.token);
+          return $http.get(API_URL + '/users/' + userId + '?type=' + type);
+        },
+        updateUserInfo: function(userId, type, userData) {
+          var data = {
+            token: localStorage.token,
+            type: type,
+            user: userData
+          };
+          return $http.put(API_URL + '/users/' + userId, data);
         },
         getUserConversations: function() {
           return $http.get(API_URL + '/workspaces/conversations?token=' + localStorage.token);

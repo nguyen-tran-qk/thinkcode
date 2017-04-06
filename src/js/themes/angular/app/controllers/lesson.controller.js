@@ -140,6 +140,8 @@
           CodeMirror.showHint(cm, CodeMirror.hint.css);
         } else if (mode == 'python') {
           CodeMirror.showHint(cm, CodeMirror.hint.python);
+        } else if (mode == 'ruby') {
+          CodeMirror.showHint(cm, CodeMirror.hint.ruby);
         }
       };
       initCmConsole();
@@ -241,6 +243,8 @@
                   fileMode = 'css';
                 } else if (fileExt === 'html') {
                   fileMode = 'xml';
+                } else if (fileExt === 'rb') {
+                  fileMode = 'ruby';
                 }
               }
               tree[i].data = {

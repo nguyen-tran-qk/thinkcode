@@ -52,7 +52,7 @@
                 <div class="panel-body">
                   <h4 class="text-headline margin-none">Danh hiệu</h4>
                   <p class="text-subhead text-light">Phần thưởng cho bạn khi hoàn thành các khóa học</p>
-                  <img ng-src=":: badge.image ::" alt="badge_image" class="img-circle" height="50" width="50" ng-repeat="badge in vm.myBadges track by item.id" uib-tooltip=":: badge.title ::">
+                  <img ng-src=":: badge.image ::" alt="badge_image" class="img-circle" height="50" width="50" ng-repeat="badge in vm.myBadges track by badge.id" uib-tooltip=":: badge.title ::">
                   <!-- <div class="icon-block half img-circle bg-purple-300">
                     <i class="fa fa-star text-white"></i>
                   </div> -->
@@ -75,7 +75,7 @@
                         <a ui-sref="main.learn({course_id: proj.course_id, workspace_id: proj.id})" class="list-group-link">:: proj.title ::</a>
                       </h4>
                       <div class="caption">
-                        <span class="text-light">Course:</span>
+                        <span class="text-light">thuộc khóa học:</span>
                         <a ui-sref="main.courses.details({course_id: proj.course_id})">:: proj.course_name ::</a>
                       </div>
                     </div>
@@ -255,7 +255,7 @@
                       <a ui-sref="main.courses.details({course_id: item.course_id})">:: item.course_name ::</a> &nbsp;
                       <span class="label label-sm" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
                       <span class="label label-sm" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
-                      <img src="images/people/110/guy-6.jpg" width="25" height="25" class="img-circle"><span class="text-h5 text-light"> :: item.teacher ::</span>
+                      <img src="images/people/110/guy-6.jpg" width="25" height="25" class="img-circle"><span class="text-h5 text-light"> :: item.teacher.username ::</span>
                     </div>
                   </div>
                   <div class="media-right col-md-2 no-float padding-none">

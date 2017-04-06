@@ -70,7 +70,6 @@
             if (index < convo_arr.length) {
               var convo = $firebaseObject(firebase.database().ref().child('chat/' + convo_arr[index++]));
               convo.$loaded().then(function() {
-                console.log(convo);
                 if (convo.messages) {
                   var mKeys = Object.keys(convo.messages);
                   for (var i = 0; i < mKeys.length; i++) {
