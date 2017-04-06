@@ -210,7 +210,7 @@
       } else {
         $scope.tab = 1;
       }
-      vm.editAdminAllowed = $scope.user.username === vm.course.admin || $scope.user.staff;
+      vm.editAdminAllowed = $scope.user.username === vm.course.admin.username || $scope.user.staff;
       vm.tempCourse = angular.copy(vm.course);
     };
 
@@ -249,7 +249,7 @@
     var onInitConfig = function() {
       var engine_arr = ['Engine', 'Python', 'Ruby'],
         level_arr = ['Level', 'Learn', 'Hack'];
-      UserService.searchUser(vm.tempCourse.admin, 'instructor', function(res) {
+      UserService.searchUser(vm.tempCourse.admin.username, 'instructor', function(res) {
         vm.tempCourse.author_id = res.data[0].id;
       }, function(res) {
         $uibModalInstance.dismiss();

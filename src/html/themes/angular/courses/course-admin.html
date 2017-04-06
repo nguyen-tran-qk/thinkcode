@@ -76,7 +76,7 @@
         <div class="panel-body">
           <div class="form-group form-control-material" ng-class="{'open': vm.authorList.length && vm.authorTyping}">
             <input type="text" class="form-control" id="course-author" name="course-author" placeholder="Tìm theo tên" ng-model="vm.aKeyword" ng-keyup="vm.delaySearch('author', vm.aKeyword)" ng-class="{'used': vm.aKeyword}" ng-click="vm.authorTyping = true" autocomplete="off"><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
-            <label for="course-author">Quản trị viên của khóa học: <strong>:: vm.tempCourse.admin ::</strong></label>
+            <label for="course-author">Quản trị viên của khóa học: <strong>:: vm.tempCourse.admin.username ::</strong></label>
             <ul class="dropdown-menu badges-dropdown-list" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
               <li role="menuitem" ng-repeat="author in vm.authorList" ng-click="vm.select('author', author)">
                 <a href>:: author.username ::</a>
