@@ -423,29 +423,42 @@
     };
     vm.getCourse();
 
-    vm.goToLesson = function(lessonId) {
+    vm.goToLesson = function(lesson) {
       if ($scope.user.isLearner) {
-        CoursesService.startLesson(vm.$state.params.course_id, lessonId)
+        CoursesService.startLesson(vm.$state.params.course_id, lesson.id)
           .then(function(res) {
             if (vm.tabs.length > 1 || (vm.tabs.length === 1 && vm.tabs[0].uid !== -1)) {
               for (var i = 0; i < vm.tabs.length; i++) {
                 vm.closeFile(vm.tabs[i]);
               }
             }
-            CoursesService.registerConversation(res.data);
+            if (!$scope.conversations.$getRecord(res.data.workspace_id)) {
+              var data = {
+                workspace_id: res.data.workspace_id,
+                student_id: res.data.student_id,
+                teacher_id: res.data.teacher_id,
+                course_id: vm.$state.params.course_id,
+                lesson_title: lesson.title,
+                updated: (new Date()).toString()
+              };
+              CoursesService.registerConversation(data);
+            }
             vm.getWorkspace(res.data.workspace_id);
             vm.$state.transitionTo('main.learn', { course_id: vm.$state.params.course_id, workspace_id: res.data.workspace_id }, { notify: false });
             vm.firstOpen = true;
             $scope.showLessons = false;
+            vm.hideInfo = false;
+            vm.hideCode = false;
+            vm.hideConsole = false;
           }, function(res) {
             $scope.showMessage('danger');
           });
       } else {
-        vm.getWorkspace(res.data.workspace_id);
-        vm.$state.transitionTo('main.learn', { course_id: vm.$state.params.course_id, workspace_id: res.data.workspace_id }, { notify: false });
+        vm.getWorkspace(vm.workspaceId);
+        vm.$state.transitionTo('main.learn', { course_id: vm.$state.params.course_id, workspace_id: vm.workspaceId }, { notify: false });
         vm.firstOpen = true;
         $scope.showLessons = false;
-        if (vm.tabs.length) {
+        if (vm.tabs.length > 1 || (vm.tabs.length === 1 && vm.tabs[0].uid !== -1)) {
           for (var i = 0; i < vm.tabs.length; i++) {
             vm.closeFile(vm.tabs[i]);
           }
@@ -479,7 +492,7 @@
               controllerAs: 'vm',
               resolve: {
                 data: {
-                  title: vm.lesson.title,
+                  title: vm.course.title,
                   afterCompleted: res.data
                 }
               }

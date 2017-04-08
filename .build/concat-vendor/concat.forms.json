@@ -7,6 +7,7 @@
 		"bootstrap-switch.js",
 		"bootstrap-datepicker.js",
 		"moment.min.js",
+		"vi.js",
 		"daterangepicker.js",
 		"jquery.minicolors.js",
 		"jquery.bootstrap-touchspin.js",

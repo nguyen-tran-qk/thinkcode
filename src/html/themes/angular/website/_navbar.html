@@ -1,5 +1,5 @@
 <!-- Fixed navbar -->
-<div class="navbar {{ navbarSkin or 'navbar-default' }} navbar-fixed-top navbar-size-large navbar-size-xlarge paper-shadow" data-z="0" data-animated role="navigation">
+<div class="navbar navbar-default navbar-fixed-top navbar-size-large navbar-size-xlarge paper-shadow" ng-class="{'auto-hide': $state.is('main.learn')}" data-z="0" data-animated role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
@@ -10,72 +10,10 @@
       </button>
       <div class="navbar-brand navbar-brand-logo">
         <a class="svg" href ng-click="goTo('main.courses', {type: 'published'})"><img src="images/ThinkCode-04.svg"></a>
-        <!-- <a class="svg" ui-sref="website-pages.home"><img src="images/ThinkCode-04.svg"></a> -->
-        <!-- Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a> -->
       </div>
     </div>
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="main-nav">
       <ul class="nav navbar-nav navbar-nav-margin-left">
-        <!-- <li class="dropdown" ng-class="{ 'active': $state.includes('website-pages') || $state.includes('website-forum') || $state.includes('website-blog') }">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li ui-sref-active="active"><a ui-sref="website-pages.home">Home page</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-pages.pricing">Pricing</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-pages.tutors">Tutors</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-pages.survey">Survey</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-forum.home">Forum Home</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-forum.category">Forum Category</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-forum.thread">Forum Thread</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-blog.listing">Blog Listing</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-blog.post">Blog Post</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-pages.contact">Contact</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown" ng-class="{ 'active': $state.includes('website-courses') }">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Courses <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li ui-sref-active="active"><a ui-sref="website-courses.grid">Grid Directory</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-courses.list">List Directory</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-courses.single">Single Course</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown" ng-class="{ 'active': $state.includes('website-student') }">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Student <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li ui-sref-active="active"><a ui-sref="website-student.dashboard">Dashboard</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-student.courses">My Courses</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-student.take-course">Take Course</a></li>
-                        <li ng-class="{ 'active' : $state.is('website-student.course-forums') || $state.is('website-student.course-forum-thread') }"><a ui-sref="website-student.course-forums">Course Forums</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-student.take-quiz">Take Quiz</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-student.messages">Messages</a></li>
-                        <li ng-class="{ 'active' : $state.is('website-student.private-profile') || $state.is('website-student.billing') }"><a ui-sref="website-student.private-profile">Private Profile</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown" ng-class="{ 'active': $state.includes('website-instructor') }">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instructor <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li ui-sref-active="active"><a ui-sref="website-instructor.dashboard">Dashboard</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-instructor.courses">My Courses</a></li>
-                        <li ng-class="{ 'active' : $state.is('website-instructor.edit-course') || $state.is('website-instructor.edit-course-meta') || $state.is('website-instructor.edit-course-lessons') }"><a ui-sref="website-instructor.edit-course">Edit Course</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-instructor.earnings">Earnings</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-instructor.statement">Statement</a></li>
-                        <li ui-sref-active="active"><a ui-sref="website-instructor.messages">Messages</a></li>
-                        <li ng-class="{ 'active' : $state.is('website-instructor.private-profile') || $state.is('website-instructor.billing') }"><a ui-sref="website-instructor.private-profile">Private Profile</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown" ng-class="{ 'active': $state.includes('essential') }">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">UI <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li ui-sref-active="active"><a ui-sref="essential.buttons">Buttons</a></li>
-                        <li ui-sref-active="active"><a ui-sref="essential.icons">Icons</a></li>
-                        <li ui-sref-active="active"><a ui-sref="essential.progress">Progress</a></li>
-                        <li ui-sref-active="active"><a ui-sref="essential.grid">Grid</a></li>
-                        <li ui-sref-active="active"><a ui-sref="essential.forms">Forms</a></li>
-                        <li ui-sref-active="active"><a ui-sref="essential.tables">Tables</a></li>
-                        <li ui-sref-active="active"><a ui-sref="essential.tabs">Tabs</a></li>
-                    </ul>
-                </li> -->
         <li ng-class="{ 'active': $state.includes('main.user') }" ng-if="user.username && user.isLearner">
           <a href ng-click="goTo('main.user', {page: 'dashboard'})">Hồ sơ của tôi</a>
         </li>
@@ -101,18 +39,23 @@
             <div class="notification-number" ng-if="unreadCount > 0">:: unreadCount ::</div>
           </div>
           <ul uib-dropdown-menu aria-labelledby="messages-list" class="messages-list padding-v-0">
-            <li class="list-group-item" ng-class="{'bg-grey-200': convo.unread}" ng-repeat="convo in user.conversations track by convo.$id" ng-if="convo.chatterName">
-              <a href>
-                <div class="media v-middle">
+            <li class="list-group-item border-none" ng-class="{'unread': convo.unread}" ng-repeat="convo in (filteredItems = (conversations | countConversation)) track by convo.$id" ng-if="filteredItems.length">
+              <a ui-sref="main.learn({course_id: convo.course_id, workspace_id: convo.$id})" class="padding-v-10">
+                <div class="media v-middle margin-v-0">
                   <div class="media-left">
                     <img src="images/people/110/woman-5.jpg" width="25" alt="" class="media-object">
                   </div>
                   <div class="media-body padding-none">
-                    <span class="date">10:30am</span>
+                    <span class="date">:: convo.updated | fromNow ::</span>
                     <span class="user">:: convo.chatterName ::</span>
-                    <div class="text-light">Xin chào tôi là...</div>
+                    <div class="text-light">trong :: convo.lesson_title ::</div>
                   </div>
                 </div>
+              </a>
+            </li>
+            <li class="list-group-item" ng-if="!filteredItems.length">
+              <a disabled class="text-light padding-v-10">
+                Bạn không có tin nhắn nào.
               </a>
             </li>
           </ul>

@@ -239,7 +239,7 @@
         },
         registerConversation: function(data) {
           var ref = firebase.database().ref('chat/' + data.workspace_id);
-          ref.update({ student_id: data.student_id, teacher_id: data.teacher_id });
+          ref.update(data);
         }
       };
     }]);

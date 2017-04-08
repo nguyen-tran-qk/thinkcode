@@ -4,7 +4,7 @@
 @import "chat-box";
 @import "badges";
 @import "lesson";
-// @import "user";
+@import "user";
 
 /* common */
 body {
@@ -652,6 +652,21 @@ i.icon-close {
 }
 
 /* End message icon */
+.messages-container .messages-list {
+  width: auto;
+  max-width: 350px;
+  .list-group-item {
+    &.unread {
+      background: rgba(225, 245, 254, 0.5);
+      &:hover {
+        background: rgba(225, 245, 254, 0.8);
+        & > a {
+          background: rgba(225, 245, 254, 0.8);
+        }
+      }
+    }
+  }
+}
 
 @keyframes rotate {
   100% {

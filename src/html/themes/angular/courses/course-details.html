@@ -15,7 +15,7 @@
         <div class="media-right">
           <a class="btn btn-white" ui-sref="main.courses({type: vm.$state.params.type})" ng-if="user.instructor || user.staff || user.admin">Quay lại</a>
           <a class="btn btn-enroll" ng-class="hovering ? 'bg-light-blue-300' : 'bg-light-blue-400'" ng-mouseenter="hovering = true" ng-mouseleave="hovering = false" ng-if="!user.instructor && !user.staff && !user.admin && !vm.course.enrolled" ng-click="vm.enroll()">Nhập học</a>
-          <a class="btn btn-enroll" ng-class="hovering ? 'bg-teal-A400' : 'bg-teal-A700'" ng-mouseenter="hovering = true" ng-mouseleave="hovering = false" ng-if="!user.instructor && !user.staff && !user.admin && vm.course.enrolled" ng-click="vm.goToLesson(vm.lastLesson.id)">:: vm.course.completed ? 'Đã hoàn thành' : 'Tiếp tục' ::</a>
+          <a class="btn btn-enroll" ng-class="hovering ? 'bg-teal-A400' : 'bg-teal-A700'" ng-mouseenter="hovering = true" ng-mouseleave="hovering = false" ng-if="!user.instructor && !user.staff && !user.admin && vm.course.enrolled" ng-click="vm.goToLesson(vm.lastLesson)">:: vm.course.completed ? 'Đã hoàn thành' : 'Tiếp tục' ::</a>
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="media-body v-middle">
                       <h4 class="text-headline inline-block" data-toggle="collapse" data-target="#curriculum-::$index::">:: lesson.title ::</h4>
-                      <button class="btn btn-stroke btn-sm inline-block right margin-v-10-0 btn-take-lesson" ng-click="vm.goToLesson(lesson.id)" ng-if="!user.instructor && !user.staff && !user.admin && vm.course.enrolled && lesson.hover">Vào học</button>
+                      <button class="btn btn-stroke btn-sm inline-block right margin-v-10-0 btn-take-lesson" ng-click="vm.goToLesson(lesson)" ng-if="!user.instructor && !user.staff && !user.admin && vm.course.enrolled && lesson.hover">Vào học</button>
                       <div class="collapse" id="curriculum-::$index::">
                         <p ta-bind="text" ng-model="lesson.description" ta-readonly='disabled'></p>
                         <div class="media v-middle">

@@ -1,12 +1,12 @@
 {% extends "src/html/themes/angular/website/_layout-instructor.html" %} {% block content %}
 <div id="lesson-container" class="" ng-init="showLessons = false">
   <div class="lesson-header col-sm-12">
-    <div class="col-sm-4 padding-none previous"><a href ng-if="vm.lesson.previous.title" ng-click="vm.goToLesson(vm.lesson.previous.id)"><i class="fa fa-chevron-left"></i>:: vm.lesson.previous.title ::</a></div>
+    <div class="col-sm-4 padding-none previous"><a href ng-if="user.isLearner && vm.lesson.previous.title" ng-click="vm.goToLesson(vm.lesson.previous)"><i class="fa fa-chevron-left"></i>:: vm.lesson.previous.title ::</a></div>
     <div class="col-sm-4 text-center">
       <a ui-sref="main.courses.details({course_id: vm.lesson.course_id})" class="course-title">:: vm.course.title ::</a>
       <br/><span class="text-light-blue-300">với :: vm.lesson.teacher.username ::</span>
     </div>
-    <div class="col-sm-4 text-right padding-none next"><a href ng-if="vm.lesson.next.title" ng-click="vm.goToLesson(vm.lesson.next.id)">:: vm.lesson.next.title ::<i class="fa fa-chevron-right"></i></a></div>
+    <div class="col-sm-4 text-right padding-none next"><a href ng-if="user.isLearner && vm.lesson.next.title" ng-click="vm.goToLesson(vm.lesson.next)">:: vm.lesson.next.title ::<i class="fa fa-chevron-right"></i></a></div>
   </div>
   <div class="workspace-grid">
     <div class="panel panel-default margin-none height-100pc padding-none border-none lesson-info relative" ng-class="{'minimized': vm.hideInfo}">
@@ -53,7 +53,8 @@
       <div ng-if="vm.hideInfo" class="resize-notify resize-left" ng-click="vm.hideInfo = false"><i class="md md-fullscreen"></i></div>
     </div>
     <chat-box user="user" workspace-id="vm.workspaceId" teacher="vm.lesson.teacher" callback="getConvos()"></chat-box>
-    <div class="height-100pc bg-blue-grey-700 lesson-content" ng-class="{'width-100pc': vm.minimized, 'type-video': vm.lesson.type === 'video'}">
+    <div class="height-100pc bg-blue-grey-700 relative lesson-content" ng-class="{'type-video': vm.lesson.type === 'video'}">
+      <button class="btn btn-expand inverse" ng-click="vm.expandSection('code')" ng-if="vm.lesson.type === 'video' || vm.lesson.type === 'reading'"><i class="fa fa-expand"></i></button>
       <div class="box" ng-if="vm.lesson.type === 'video'">
         <iframe ng-src="::vm.lesson.video_url | trusted::" frameborder="0" allowfullscreen></iframe>
       </div>
@@ -92,7 +93,7 @@
     </div>
   </div>
   <div class="workspace-actions">
-    <div class="media media-grid lesson-title col-sm-3 col-md-3 relative padding-none height-100pc" ng-class="{'show-lessons': showLessons}" ng-click="showLessons = !showLessons">
+    <div class="media media-grid lesson-title col-sm-3 col-md-3 relative padding-none height-100pc" ng-class="{'show-lessons': showLessons}" ng-click="user.isLearner ? showLessons = !showLessons : ''">
       <div class="current-title">
         <div class="media-left">
           <span class="icon-block s25 bg-:: vm.lesson.type | lessonTypeClass:'bgColor' ::-300 text-white" ng-if="!vm.lesson.finished"><b>::vm.lesson.order::</b></span>
@@ -104,9 +105,9 @@
         </div>
       </div>
     </div>
-    <div class="text-center col-sm-6 col-md-6" ng-if="user.isLearner">
-      <button class="btn text-white" ng-class="hovering ? 'bg-blue-400' : 'bg-blue-500'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-click="vm.finishLesson()" ng-if="!vm.lesson.finished">Hoàn thành bài học</button>
-      <button class="btn text-white" ng-class="hovering ? 'bg-amber-400' : 'bg-amber-600'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-click="vm.resetLesson()" ng-if="vm.lesson.finished">Học lại</button>
+    <div class="text-center col-sm-6 col-md-6">
+      <button class="btn text-white" ng-class="hovering ? 'bg-blue-400' : 'bg-blue-500'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-click="vm.finishLesson()" ng-if="!vm.lesson.finished && user.isLearner">Hoàn thành bài học</button>
+      <button class="btn text-white" ng-class="hovering ? 'bg-amber-400' : 'bg-amber-600'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-click="vm.resetLesson()" ng-if="vm.lesson.finished && user.isLearner">Học lại</button>
       <button class="btn btn-sm btn-warning" ng-click="vm.showCheatSheet = true" ng-if="vm.lesson.cheat_sheet">Gợi ý</button>
       <button class="btn btn-success btn-sm" ng-click="vm.saveFile()" ng-disabled="waiting" ng-if="vm.currentBranch.uid !== -1">Save</button>
       <button class="btn bg-indigo-A200 btn-sm text-white" ng-click="vm.runFile()" ng-disabled="waiting" ng-if="vm.currentBranch.uid !== -1">Run</button>
@@ -125,7 +126,7 @@
             <span class="icon-block img-circle bg-green-A700 s30 text-white" ng-if="item.progress === 'finished'"><i class="md md-check"></i></span>
           </div>
           <div class="media-body">
-            <a ng-click="vm.goToLesson(item.id); showLessons = false;">:: item.title ::</a>
+            <a ng-click="vm.goToLesson(item); showLessons = false;">:: item.title ::</a>
           </div>
         </div>
       </li>

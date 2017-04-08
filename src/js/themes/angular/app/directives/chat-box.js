@@ -13,6 +13,11 @@
           callback: '&callback'
         },
         controller: ['$scope', '$interval', 'UserService', function($scope, $interval, UserService) {
+          $.fn.redraw = function() {
+            return $(this).each(function() {
+              var redraw = this.offsetHeight;
+            });
+          };
           /* behavior handler */
           $('#live-chat header').on('click', function() {
             $('.chat').slideToggle(300, 'swing');
@@ -24,22 +29,33 @@
             $('#live-chat').fadeOut(300);
           });
           /* end behavior handler */
+          var firebaseRef = firebase.database().ref();
+          // $scope.conversation = $firebaseObject(firebaseRef.child('chat/' + $scope.workspaceId));
           $scope.$watch('workspaceId', function() {
-            var conversation = $firebaseObject(firebase.database().ref().child('chat/' + $scope.workspaceId));
-            conversation.$loaded().then(function() {
+            if ($('.chat').css('display') == 'block') {
+              $('.chat').slideToggle(300, 'swing');
+            }
+            $scope.conversation = $firebaseObject(firebaseRef.child('chat/' + $scope.workspaceId));
+            $scope.conversation.$loaded().then(function() {
               if ($scope.user.isLearner) {
-                UserService.getUserInfo(conversation.teacher_id, 'info')
+                UserService.getUserInfo($scope.conversation.teacher_id, 'info')
                   .then(function(res) {
                     $scope.chatterName = res.data.username;
                   });
               } else {
-                UserService.getUserInfo(conversation.student_id, 'info')
+                UserService.getUserInfo($scope.conversation.student_id, 'info')
                   .then(function(res) {
                     $scope.chatterName = res.data.username;
                   });
               }
+              // $scope.conversation.$watch(function(obj) {
+              //   if (obj.event === 'value') {
+              //     $scope.conversation.updated = (new Date()).toString();
+              //     $scope.conversation.$save();
+              //   }
+              // });
             });
-            var ref = firebase.database().ref().child('chat/' + $scope.workspaceId + '/messages');
+            var ref = firebaseRef.child('chat/' + $scope.workspaceId + '/messages');
             var check;
             $scope.active = false;
             $scope.messages = $firebaseArray(ref);
@@ -49,7 +65,7 @@
                 $scope.messages.$watch(function(obj) {
                   if (obj.event === 'child_added') {
                     var newMsg = $scope.messages.$getRecord(obj.key);
-                    if (newMsg.user_id !== $scope.user.id.toString()) {
+                    if (newMsg && newMsg.user_id !== $scope.user.id.toString()) {
                       if ($scope.active) {
                         newMsg.read = true;
                         $scope.messages.$save(newMsg);
@@ -58,6 +74,8 @@
                         $scope.unreadCount++;
                       }
                     }
+                    // var convoObj = firebase.database().ref('chat/' + $scope.workspaceId);
+                    // convoObj.update({ updated: (new Date()).toString() });
                   }
                   $('.chat-history').scrollTop($('.chat-history')[0].scrollHeight);
                 });
@@ -97,7 +115,10 @@
             $scope.messages.$add(chatMessage);
             $scope.chatMes = "";
           };
-
+          $scope.$on('$destroy', function() {
+            $scope.conversation = undefined;
+            $scope.messages = undefined;
+          });
         }]
       };
     }])

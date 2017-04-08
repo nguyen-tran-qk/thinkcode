@@ -140,7 +140,17 @@
         if (res.status < 300) {
           CoursesService.startLesson(vm.course.id, vm.course.lessons[0].id)
             .then(function(res) {
-              CoursesService.registerConversation(res.data);
+              if (!$scope.conversations.$getRecord(res.data.workspace_id)) {
+                var data = {
+                  workspace_id: res.data.workspace_id,
+                  student_id: res.data.student_id,
+                  teacher_id: res.data.teacher_id,
+                  course_id: vm.course.id,
+                  lesson_title: vm.course.lessons[0].title,
+                  updated: (new Date()).toString()
+                }
+                CoursesService.registerConversation(data);
+              }
               vm.$state.go('main.learn', { course_id: vm.course.id, workspace_id: res.data.workspace_id });
             }, function(res) {
               $scope.showMessage('danger');
@@ -185,10 +195,20 @@
       });
     };
 
-    vm.goToLesson = function(lessonId) {
-      CoursesService.startLesson(vm.course.id, lessonId)
+    vm.goToLesson = function(lesson) {
+      CoursesService.startLesson(vm.course.id, lesson.id)
         .then(function(res) {
-          CoursesService.registerConversation(res.data);
+          if (!$scope.conversations.$getRecord(res.data.workspace_id)) {
+            var data = {
+              workspace_id: res.data.workspace_id,
+              student_id: res.data.student_id,
+              teacher_id: res.data.teacher_id,
+              course_id: vm.course.id,
+              lesson_title: lesson.title,
+              updated: (new Date()).toString()
+            }
+            CoursesService.registerConversation(data);
+          }
           vm.$state.go('main.learn', { course_id: vm.course.id, workspace_id: res.data.workspace_id });
         }, function(res) {
           $scope.showMessage('danger');

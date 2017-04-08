@@ -54,9 +54,11 @@
           return response;
         },
         'responseError': function(response) {
-          if (response.status === 401) {
+          if (response.status === 401 && response.data.message === "Haven't logged in.") {
             var state = $injector.get('$state');
-            state.go('main.courses', { type: 'published' }, { reload: true });
+            var scope = $injector.get('$scope');
+            scope.signout();
+            // state.go('main.courses', { type: 'published' }, { reload: true });
           }
           return $q.reject(response);
         }
@@ -74,6 +76,7 @@
           app.service = $provide.service;
           app.constant = $provide.constant;
           app.value = $provide.value;
+          moment.locale('vi');
 
           $interpolateProvider.startSymbol('::');
           $interpolateProvider.endSymbol('::');
@@ -88,7 +91,7 @@
             return taOptions;
           }]);
 
-          // $httpProvider.interceptors.push('authInterceptor');
+          $httpProvider.interceptors.push('authInterceptor');
           ngToastProvider.configure({
             animation: 'slide',
             combineDuplications: true,

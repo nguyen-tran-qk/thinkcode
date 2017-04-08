@@ -8,6 +8,7 @@
 			"bootstrap-switch/dist/js/bootstrap-switch.js",
 			"bootstrap-datepicker/js/bootstrap-datepicker.js",
 			"moment/min/moment.min.js",
+			"moment/locale/vi.js",
 			"bootstrap-daterangepicker/daterangepicker.js",
 			"jquery-minicolors/jquery.minicolors.js",
 			"bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js",

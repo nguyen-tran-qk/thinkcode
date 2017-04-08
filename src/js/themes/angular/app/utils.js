@@ -104,7 +104,18 @@
       return function(htmlCode) {
         return $sce.trustAsHtml(htmlCode);
       };
-    }]);
+    }])
+    .filter('countConversation', function() {
+      return function(arr) {
+        if (!arr) {
+          return [];
+        } else {
+          return arr.filter(function(item) {
+            return item.isInvolved && item.messages;
+          });
+        }
+      };
+    });
 
   angular.module('app').filter('findBranchByUid', function() {
     return function(list, uid) {
