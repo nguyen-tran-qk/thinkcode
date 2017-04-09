@@ -24,17 +24,28 @@
     }
   }
   .convo-list {
-    max-height: 640px;
+    max-height: 800px;
     ul {
       margin: 0;
+      li.list-group-item {
+        &.unread {
+          background: rgba(225, 245, 254, 0.5);
+          &:hover {
+            background: rgba(225, 245, 254, 0.8);
+            & > a {
+              background: rgba(225, 245, 254, 0.8);
+            }
+          }
+        }
+      }
     }
   }
   .material-checkbox {
-  	padding: 20px 0 0 16px;
-  	input[type=checkbox] {
-  		margin: 0;
-  		font-size: 20px;
-  	}
+    padding: 20px 0 0 16px;
+    input[type=checkbox] {
+      margin: 0;
+      font-size: 20px;
+    }
   }
   input[type=checkbox] {
     width: 1em;

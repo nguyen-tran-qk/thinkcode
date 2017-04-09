@@ -115,6 +115,12 @@
           });
         }
       };
+    })
+    .filter('msgSummary', function() {
+      return function(messages) {
+        var keys = Object.keys(messages);
+        return messages[keys[keys.length-1]].message;
+      };
     });
 
   angular.module('app').filter('findBranchByUid', function() {

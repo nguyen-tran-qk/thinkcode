@@ -43,17 +43,18 @@
               <a ui-sref="main.learn({course_id: convo.course_id, workspace_id: convo.$id})" class="padding-v-10">
                 <div class="media v-middle margin-v-0">
                   <div class="media-left">
-                    <img src="images/people/110/woman-5.jpg" width="25" alt="" class="media-object">
+                    <img src="images/people/110/woman-5.jpg" width="40" alt="" class="media-object">
                   </div>
                   <div class="media-body padding-none">
                     <span class="date">:: convo.updated | fromNow ::</span>
-                    <span class="user">:: convo.chatterName ::</span>
-                    <div class="text-light">trong :: convo.lesson_title ::</div>
+                    <div class="user">:: user.isLearner ? convo.teacher_name : convo.student_name ::</div>
+                    <span>:: msg = (convo.messages | msgSummary) | limitTo: 50 ::</span><span ng-if="msg.length > 50">...</span>
+                    <div class="text-light lesson">trong <span class="text-primary">:: convo.lesson_title ::</span></div>
                   </div>
                 </div>
               </a>
             </li>
-            <li class="list-group-item list-info text-center" ng-if="filteredItems.length > 7 && conversations.$resolved">
+            <li class="list-group-item list-info text-center" ng-if="conversations.$resolved">
               <a ui-sref="main.user({page: 'conversations'})">
                 <h5 class="text-primary"><span ng-if="unreadCount > 7">Đang xem 7/:: unreadCount :: tin chưa đọc. </span> <b>Xem tất cả</b></h5>
               </a>

@@ -27,17 +27,17 @@
           }
         }
       }
-      if ($scope.user.isLearner) {
-        UserService.getUserInfo(item.teacher_id, 'info')
-          .then(function(res) {
-            item.chatterName = res.data.username;
-          });
-      } else if ($scope.user.instructor) {
-        UserService.getUserInfo(item.student_id, 'info')
-          .then(function(res) {
-            item.chatterName = res.data.username;
-          });
-      }
+      // if ($scope.user.isLearner) {
+      //   UserService.getUserInfo(item.teacher_id, 'info')
+      //     .then(function(res) {
+      //       item.chatterName = res.data.username;
+      //     });
+      // } else if ($scope.user.instructor) {
+      //   UserService.getUserInfo(item.student_id, 'info')
+      //     .then(function(res) {
+      //       item.chatterName = res.data.username;
+      //     });
+      // }
       return item;
     }
 
@@ -131,43 +131,19 @@
         $scope.conversations.$watch(function(obj) {
           var index = $scope.conversations.$indexFor(obj.key);
           if (obj.event === 'child_added') {
-            if ($scope.conversations[index].student_id == $scope.user.id || $scope.conversations[index].teacher_id == $scope.user.id) {
+            if ($scope.conversations[index] && 
+              ($scope.conversations[index].student_id == $scope.user.id || $scope.conversations[index].teacher_id == $scope.user.id)) {
               $scope.conversations[index] = checkConversation($scope.conversations[index]);
               $scope.conversations[index].isInvolved = true;
             }
           } else if (obj.event === 'child_changed') {
             $('#main-nav').redraw();
             $scope.getConvos();
-            console.log(obj);
-            // if ($scope.conversations[index].student_id == $scope.user.id || $scope.conversations[index].teacher_id == $scope.user.id) {
-            //   var tempStatus = $scope.conversations[index].unread;
-            //   if ($scope.conversations[index].messages) {
-            //     $scope.conversations[index].unread = false;
-            //     var mKeys = Object.keys($scope.conversations[index].messages);
-            //     for (var i = 0; i < mKeys.length; i++) {
-            //       if (checkUnreadMsg($scope.conversations[index].messages[mKeys[i]])) {
-            //         if (tempStatus === false) {
-            //           $scope.unreadCount++;
-            //           $scope.conversations[index].unread = true;
-            //          break;
-            //         }
-            //       }
-            //     }
-            //     if (tempStatus && !$scope.conversations[index].unread && $scope.unreadCount > 0) {
-            //       $scope.unreadCount--;
-            //     }
-            //   }
-            // }
+            // console.log(obj);
           }
         });
         $scope.loading[0] = false;
       });
-      // UserService.getUserConversations()
-      //   .then(function(res) {
-      //     var convo_arr = res.data;
-      //   }, function(res) {
-      //     $scope.showMessage('danger');
-      //   });
     }, 2000);
 
     $scope.allBadges = [];

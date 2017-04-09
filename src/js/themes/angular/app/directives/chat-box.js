@@ -25,6 +25,7 @@
           });
           /* end behavior handler */
           var firebaseRef = firebase.database().ref();
+          var conversation = firebase.database().ref('chat/' + $scope.workspaceId);
           // $scope.conversation = $firebaseObject(firebaseRef.child('chat/' + $scope.workspaceId));
           $scope.$watch('workspaceId', function() {
             if ($('.chat').css('display') == 'block') {
@@ -33,15 +34,9 @@
             $scope.conversation = $firebaseObject(firebaseRef.child('chat/' + $scope.workspaceId));
             $scope.conversation.$loaded().then(function() {
               if ($scope.user.isLearner) {
-                UserService.getUserInfo($scope.conversation.teacher_id, 'info')
-                  .then(function(res) {
-                    $scope.chatterName = res.data.username;
-                  });
+                $scope.chatterName = $scope.conversation.teacher_name;
               } else {
-                UserService.getUserInfo($scope.conversation.student_id, 'info')
-                  .then(function(res) {
-                    $scope.chatterName = res.data.username;
-                  });
+                $scope.chatterName = $scope.conversation.student_name;
               }
               // $scope.conversation.$watch(function(obj) {
               //   if (obj.event === 'value') {
@@ -109,6 +104,7 @@
             };
             $scope.messages.$add(chatMessage);
             $scope.chatMes = "";
+            conversation.update({ updated: (new Date()).toString() });
           };
           $scope.$on('$destroy', function() {
             $scope.conversation = undefined;

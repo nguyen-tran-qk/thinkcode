@@ -382,7 +382,7 @@
     }
     initCodeWorkspace();
     //// retrieve workspace structure
-    vm.getWorkspace = function(workspaceId) {
+    vm.getWorkspace = function(workspaceId, isNew) {
       WorkspaceService.getWorkspaceById(workspaceId, vm.$state.params.course_id, function(res) {
         $timeout(function() {
           vm.lesson = res.data;
@@ -399,6 +399,7 @@
             vm.my_data = [];
           }
           $scope.loading[0] = false;
+          vm.lessonRegistrationNeeded = isNew;
         });
       }, function(res) {
         if (res.status === 401) {
@@ -432,18 +433,7 @@
                 vm.closeFile(vm.tabs[i]);
               }
             }
-            if (!$scope.conversations.$getRecord(res.data.workspace_id)) {
-              var data = {
-                workspace_id: res.data.workspace_id,
-                student_id: res.data.student_id,
-                teacher_id: res.data.teacher_id,
-                course_id: vm.$state.params.course_id,
-                lesson_title: lesson.title,
-                updated: (new Date()).toString()
-              };
-              CoursesService.registerConversation(data);
-            }
-            vm.getWorkspace(res.data.workspace_id);
+            vm.getWorkspace(res.data.workspace_id, true);
             vm.$state.transitionTo('main.learn', { course_id: vm.$state.params.course_id, workspace_id: res.data.workspace_id }, { notify: false });
             vm.firstOpen = true;
             $scope.showLessons = false;
@@ -577,5 +567,21 @@
           break;
       }
     };
+    $scope.$watchGroup(['conversations', 'vm.lessonRegistrationNeeded'], function() {
+      if (vm.lessonRegistrationNeeded && $scope.conversations && !$scope.conversations.$getRecord(vm.workspaceId)) {
+        var data = {
+          workspace_id: vm.workspaceId,
+          student_id: $scope.user.id,
+          student_name: $scope.user.username, // only learner can call this function in this controller -> safe to get user's username
+          teacher_id: vm.lesson.teacher.id,
+          teacher_name: vm.lesson.teacher.username,
+          course_id: vm.$state.params.course_id,
+          lesson_title: vm.lesson.title,
+          updated: (new Date()).toString()
+        };
+        CoursesService.registerConversation(data);
+        vm.lessonRegistrationNeeded = false;
+      }
+    });
   }
 }());
