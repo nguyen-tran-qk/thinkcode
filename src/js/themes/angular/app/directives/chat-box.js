@@ -13,11 +13,6 @@
           callback: '&callback'
         },
         controller: ['$scope', '$interval', 'UserService', function($scope, $interval, UserService) {
-          $.fn.redraw = function() {
-            return $(this).each(function() {
-              var redraw = this.offsetHeight;
-            });
-          };
           /* behavior handler */
           $('#live-chat header').on('click', function() {
             $('.chat').slideToggle(300, 'swing');

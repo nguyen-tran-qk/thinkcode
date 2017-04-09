@@ -105,7 +105,7 @@
         return $sce.trustAsHtml(htmlCode);
       };
     }])
-    .filter('countConversation', function() {
+    .filter('filterConversation', function() {
       return function(arr) {
         if (!arr) {
           return [];

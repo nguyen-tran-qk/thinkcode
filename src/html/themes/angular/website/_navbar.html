@@ -38,8 +38,8 @@
             <div class="fa fa-envelope"></div>
             <div class="notification-number" ng-if="unreadCount > 0">:: unreadCount ::</div>
           </div>
-          <ul uib-dropdown-menu aria-labelledby="messages-list" class="messages-list padding-v-0">
-            <li class="list-group-item border-none" ng-class="{'unread': convo.unread}" ng-repeat="convo in (filteredItems = (conversations | countConversation)) track by convo.$id" ng-if="filteredItems.length">
+          <ul uib-dropdown-menu aria-labelledby="messages-list" class="messages-list padding-v-0" ng-cloak ng-class="{'loaded': conversations.$resolved}">
+            <li class="list-group-item" ng-class="{'unread': convo.unread}" ng-repeat="convo in (filteredItems = (conversations | filterConversation)) | limitTo: 7 track by convo.$id" ng-if="filteredItems.length">
               <a ui-sref="main.learn({course_id: convo.course_id, workspace_id: convo.$id})" class="padding-v-10">
                 <div class="media v-middle margin-v-0">
                   <div class="media-left">
@@ -53,9 +53,19 @@
                 </div>
               </a>
             </li>
-            <li class="list-group-item" ng-if="!filteredItems.length">
+            <li class="list-group-item list-info text-center" ng-if="filteredItems.length > 7 && conversations.$resolved">
+              <a ui-sref="main.user({page: 'conversations'})">
+                <h5 class="text-primary"><span ng-if="unreadCount > 7">Đang xem 7/:: unreadCount :: tin chưa đọc. </span> <b>Xem tất cả</b></h5>
+              </a>
+            </li>
+            <li class="list-group-item list-info text-center" ng-if="!filteredItems.length && conversations.$resolved">
               <a disabled class="text-light padding-v-10">
                 Bạn không có tin nhắn nào.
+              </a>
+            </li>
+            <li class="list-group-item list-info text-center" ng-if="!conversations.$resolved">
+              <a disabled class="text-light padding-v-10">
+                Đang cập nhật danh sách tin nhắn...
               </a>
             </li>
           </ul>

@@ -9,6 +9,12 @@
     $scope.userCheck = undefined;
     $scope.user = UserService.getUser();
 
+    $.fn.redraw = function() {
+      return $(this).each(function() {
+        var redraw = this.offsetHeight;
+      });
+    };
+
     function checkConversation(item) {
       if (item.messages) {
         item.unread = false;
@@ -59,6 +65,15 @@
       }
     }
 
+    function checkUnreadMsg(msg) {
+      if (msg.user_id !== $scope.user.id.toString()) {
+        if (!msg.read) {
+          return true;
+        }
+      }
+      return false;
+    }
+
     function debounce(func, wait, context) {
       var timer;
       return function debounced() {
@@ -101,15 +116,6 @@
       }
     };
 
-
-    function checkUnreadMsg(msg) {
-      if (msg.user_id !== $scope.user.id.toString()) {
-        if (!msg.read) {
-          return true;
-        }
-      }
-    }
-
     $scope.getConvos = debounce(function() {
       $scope.conversations = [];
       $scope.unreadCount = 0;
@@ -130,6 +136,7 @@
               $scope.conversations[index].isInvolved = true;
             }
           } else if (obj.event === 'child_changed') {
+            $('#main-nav').redraw();
             $scope.getConvos();
             console.log(obj);
             // if ($scope.conversations[index].student_id == $scope.user.id || $scope.conversations[index].teacher_id == $scope.user.id) {
@@ -142,7 +149,7 @@
             //         if (tempStatus === false) {
             //           $scope.unreadCount++;
             //           $scope.conversations[index].unread = true;
-            //         	break;
+            //          break;
             //         }
             //       }
             //     }
@@ -153,6 +160,7 @@
             // }
           }
         });
+        $scope.loading[0] = false;
       });
       // UserService.getUserConversations()
       //   .then(function(res) {

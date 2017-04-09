@@ -90,6 +90,10 @@
       if (vm.$state.params.page === 'my-projects') {
         vm.getMyProjects();
       }
+      if (vm.$state.params.page === 'conversations') {
+        $scope.loading[0] = true;
+        $scope.getConvos();
+      }
     });
   }
 }());
