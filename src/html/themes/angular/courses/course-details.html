@@ -3,11 +3,8 @@
     <div class="parallax-layer container" data-opacity="true">
       <div class="media v-middle">
         <div class="media-left">
-          <span class="course-cover" ng-class="vm.course.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'" ng-if="vm.course.cover === 'missing.png'"><i class="mfizz icon-::vm.course.engine | lowercase::"></i></span>
-          <span class="icon-block course-cover" ng-if="vm.course.cover !== 'missing.png'" ng-attr-style="background-image: url(::vm.course.cover::);"></span>
-          <!-- <span class="icon-block course-cover" ng-if="vm.course.cover !== 'missing.png'">
-            <img ng-src="::vm.course.cover::">
-          </span> -->
+          <span class="course-cover" ng-class="vm.course.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'" ng-if="!vm.course.cover.length"><i class="mfizz icon-::vm.course.engine | lowercase::"></i></span>
+          <span class="icon-block course-cover" ng-if="vm.course.cover.length" ng-attr-style="background-image: url(::vm.course.cover::);"></span>
         </div>
         <div class="media-body">
           <h1 class="text-display-1 margin-none">:: vm.course.title ::</h1>
@@ -141,11 +138,11 @@
           <div class="media media-clearfix-xs">
             <div class="media-left">
               <div class="cover width-90 width-100pc-xs overlay cover-image-full hover">
-                <div ng-if="item.cover !== 'missing.png'">
+                <div ng-if="item.cover.length">
                   <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block s90 course-cover" ng-attr-style="background-image: url(::item.cover::);"></span>
                   <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
                 </div>
-                <div ng-if="item.cover == 'missing.png'">
+                <div ng-if="!item.cover.length">
                   <span class="img icon-block s90 bg-primary"></span>
                   <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full padding-none icon-block s90 bg-primary">
                     <span class="v-center"><i class="mfizz icon-::item.engine | lowercase::"></i></span>

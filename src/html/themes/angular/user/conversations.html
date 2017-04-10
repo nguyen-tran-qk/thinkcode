@@ -1,0 +1,29 @@
+<h4 class="text-headline" ng-class="user.isLearner ? 'margin-none' : 'margin-v-0-10'">Danh sách hội thoại</h4>
+<p class="text-subhead text-light" ng-if="user.isLearner">Các giảng viên luôn sẵn sàng lắng nghe &amp; hỗ trợ khi bạn gặp trở ngại</p>
+<div data-scrollable class="convo-list">
+  <ul class="list-group">
+    <li class="list-group-item paper-shadow" ng-class="{'unread': convo.unread}" ng-repeat="convo in (filteredItems = (conversations | filterConversation)) track by convo.$id" ng-if="filteredItems.length" ng-click="goTo('main.learn', {course_id: convo.course_id, workspace_id: convo.workspace_id})">
+      <div class="media v-middle">
+        <div class="media-left">
+          <a>
+            <img src="images/people/110/guy-3.jpg" alt="person" class="img-circle width-40" />
+          </a>
+        </div>
+        <div class="media-body">
+          <div class="text-h4"><strong>:: user.isLearner ? convo.teacher_name : convo.student_name ::</strong></div>
+          <p class="text-subhead margin-none">:: msg = (convo.messages | msgSummary) | limitTo: 100 ::<span ng-if="msg.length > 100">...</span></p>
+          <div class="text-light">
+            Bài học: <a>:: convo.lesson_title ::</a>
+          </div>
+        </div>
+        <div class="media-right">
+          <div class="width-100 text-right">
+            <span class="text-caption text-light">:: convo.updated | fromNow ::</span>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+<br/>
+<br/>

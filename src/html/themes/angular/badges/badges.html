@@ -16,8 +16,8 @@
             <slick class="padding-none" dots=true infinite=false speed=300 slides-to-show=2 touch-move=false slides-to-scroll=1>
               <div class="media v-middle required-course" ng-repeat="item in vm.selectedBadge.required_courses track by item.id">
                 <div class="media-left">
-                  <img ng-src="::item.cover::" alt="Course" class="width-60" ng-if="item.cover !== 'missing.png'">
-                  <span class="icon-block s60" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'" ng-if="item.cover === 'missing.png'"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
+                  <img ng-src="::item.cover::" alt="Course" class="width-60" ng-if="item.cover.length">
+                  <span class="icon-block s60" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'" ng-if="!item.cover.length"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
                 </div>
                 <div class="media-body">
                   <h4><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>

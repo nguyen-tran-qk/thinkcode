@@ -21,7 +21,7 @@
           <form class="create-course" name="form.newCourseForm">
             <div class="form-group ">
               <!-- <div class="btn btn-primary btn-sm" ngf-select ng-model="uploadedFile" ngf-accept="svg" name="template" ngf-change="vm.photoChanged(uploadedFile)" ngf-resize="{width:350, height: 150, centerCrop: true}"><small>Upload ảnh bìa</small></div> -->
-              <div ng-if="vm.tempCourse.cover && vm.tempCourse.cover !== 'missing.png'" class="text-center margin-v-10">
+              <div ng-if="vm.tempCourse.cover && vm.tempCourse.cover.length" class="text-center margin-v-10">
                 <img class="course-cover-preview" height="150" ng-src=":: vm.tempCourse.cover ::">
               </div>
               <div class="btn btn-primary btn-sm" ngf-select ng-model="uploadedFile" ngf-accept="'svg, png'" name="template" ngf-change="vm.photoChanged(uploadedFile)"><small>Upload ảnh bìa</small></div> <span>Kích thước đề nghị: 500x500 (px)</span>

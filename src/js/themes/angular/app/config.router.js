@@ -93,7 +93,10 @@
               var request = this;
               if (localStorage.token && localStorage.token.length && localStorage.user) {
                 var user = JSON.parse(localStorage.user);
-                if (!user.staff && !user.admin) {
+                if (user.admin) {
+                  return request.next();
+                }
+                if (!user.staff) {
                   return request.next();
                 } else {
                   request.redirectTo('main.courses');
@@ -193,7 +196,7 @@
             })
             .state('main.learn', {
               url: '/learn/:course_id/:workspace_id',
-              middleware: 'lessonParticipants',
+              middleware: 'authUser',
               views: {
                 'main': {
                   templateUrl: 'courses/lesson.html',
@@ -211,7 +214,7 @@
               middleware: 'authUser',
               views: {
                 'main': {
-                  templateUrl: 'learner/dashboard.html',
+                  templateUrl: 'user/dashboard.html',
                   controller: 'LearnerDashboardCtrl',
                   controllerAs: 'vm'
                 }
@@ -220,20 +223,6 @@
                 page: 'dashboard'
               }
             });
-            // .state('main.user.dashboard', {
-            //   url: '/:page',
-            //   middleware: 'authUser',
-            //   views: {
-            //     'dashboard': {
-            //       templateUrl: 'learner/dashboard.html',
-            //       controller: 'LearnerDashboardCtrl',
-            //       controllerAs: 'vm'
-            //     }
-            //   },
-            //   params: {
-            //     page: 'dashboard'
-            //   }
-            // });
 
           // $stateProvider
           //   .state('website-pages', {

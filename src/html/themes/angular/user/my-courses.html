@@ -1,0 +1,99 @@
+<div class="padding-v-15">
+  <div class="media v-middle">
+    <div class="media-body">
+      <h1 class="text-headline margin-none">Đang học (:: vm.learningCourses.length ::)</h1>
+    </div>
+  </div>
+</div>
+<div class="col-xs-12 col-sm-6 col-lg-4" ng-repeat="item in vm.learningCourses">
+  <div class="panel panel-default paper-shadow" data-z="0.5">
+    <div class="panel-heading">
+      <div class="media media-clearfix-xs-min v-middle">
+        <div class="media-body text-caption text-light">
+          Đã hoàn thành :: item.finished_count ::/:: item.lessons_count :: bài học
+        </div>
+        <div class="media-right">
+          <div class="progress progress-mini width-100 margin-none">
+            <div class="progress-bar {{ lessonsBar }}" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: :: item.finished_count/item.lessons_count*100 ::%;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cover overlay cover-image-full hover">
+      <div ng-if="item.cover.length">
+        <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block height-100 course-cover width-100pc" ng-attr-style="background-image: url(::item.cover::);"></span>
+        <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
+      </div>
+      <div ng-if="!item.cover.length">
+        <span class="img icon-block height-100 bg-primary width-100pc"></span>
+        <a ui-sref="main.courses.details({course_id: item.id})" class="padding-none overlay overlay-full icon-block bg-primary">
+          <span class="v-center"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
+        </a>
+        <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
+          <span class="v-center">
+                        <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
+          </span>
+        </a>
+      </div>
+    </div>
+    <div class="panel-body padding-v-5-10 course-title">
+      <h4 class="text-title"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
+      <p>
+        <span class="label label-sm" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
+        <span class="label label-sm" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
+        <span class="badge-label">
+                      <img ng-src=":: item.badge.image ::" alt="Badge" class="icon-block s25 img-circle"><a ui-sref="main.badges({id: item.badge.id})"><strong><small> :: item.badge.title ::</small></strong></a>
+                    </span>
+      </p>
+    </div>
+    <hr class="margin-none">
+    <div class="panel-body">
+      <p><small>Bài học tiếp theo: </small>
+        <br/><span class="text-teal-500 next-lesson" ui-sref="main.learn({course_id: item.id, workspace_id: item.current_lesson.workspace_id})">:: item.current_lesson.title ::</span></p>
+      <!-- <a class="btn btn-white btn-flat paper-shadow relative" data-z="0" data-hover-z="1" data-animated >Tiếp tục</a> -->
+    </div>
+  </div>
+</div>
+<div class="padding-v-15">
+  <div class="media v-middle">
+    <div class="media-body">
+      <h1 class="text-headline margin-none">Đã hoàn thành (:: vm.completedCourses.length ::)</h1>
+    </div>
+  </div>
+</div>
+<div class="col-xs-12 col-sm-6 col-lg-4" ng-repeat="item in vm.completedCourses">
+  <div class="panel panel-default paper-shadow" data-z="0.5">
+    <div class="cover overlay cover-image-full hover">
+      <div ng-if="item.cover.length">
+        <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block height-150 course-cover width-100pc" ng-attr-style="background-image: url(::item.cover::);"></span>
+        <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
+      </div>
+      <div ng-if="!item.cover.length">
+        <span class="img icon-block height-150 bg-primary width-100pc"></span>
+        <a ui-sref="main.courses.details({course_id: item.id})" class="padding-none overlay overlay-full icon-block bg-primary">
+          <span class="v-center"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
+        </a>
+        <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
+          <span class="v-center">
+                        <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
+          </span>
+        </a>
+      </div>
+    </div>
+    <div class="panel-body padding-v-5-10 course-title">
+      <h4 class="text-title"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
+      <p>
+        <span class="label label-sm" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
+        <span class="label label-sm" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
+        <span class="badge-label">
+                      <img ng-src=":: item.badge.image ::" alt="Badge" class="icon-block s25 img-circle"><a ui-sref="main.badges({id: item.badge.id})"><strong><small> :: item.badge.title ::</small></strong></a>
+                    </span>
+      </p>
+    </div>
+    <hr class="margin-none">
+    <div class="panel-body">
+      <p><small>Hoàn thành: </small><span class="text-teal-500">:: item.lessons_count ::/:: item.lessons_count :: bài học</span></p>
+    </div>
+  </div>
+</div>
