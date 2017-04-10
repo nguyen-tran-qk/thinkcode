@@ -215,7 +215,7 @@
               views: {
                 'main': {
                   templateUrl: 'user/dashboard.html',
-                  controller: 'LearnerDashboardCtrl',
+                  controller: 'UserProfilesCtrl',
                   controllerAs: 'vm'
                 }
               },

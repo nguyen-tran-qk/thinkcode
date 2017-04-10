@@ -6,7 +6,8 @@
       <div class="media v-middle">
         <div class="media-left">
           <a>
-            <img src="images/people/110/guy-3.jpg" alt="person" class="img-circle width-40" />
+            <img ng-src=":: 'https://api.adorable.io/avatars/50/' + convo.teacher_name + '.png' ::" alt="person" class="img-circle width-50" ng-if="user.isLearner"/>
+            <img ng-src=":: 'https://api.adorable.io/avatars/50/' + convo.student_name + '.png' ::" alt="person" class="img-circle width-50" ng-if="!user.isLearner"/>
           </a>
         </div>
         <div class="media-body">

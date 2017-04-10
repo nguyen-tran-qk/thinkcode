@@ -1,6 +1,6 @@
 {% extends "src/html/themes/angular/website/_layout-student.html" %} {% block content %}
 <div id="user-profiles">
-  <!-- <div class="parallax overflow-hidden bg-blue-400 page-section third">
+  <!-- <div class="parallax overflow-hidden bg-blue-400 page-section third" ng-if="vm.$state.params.page === 'profiles'">
     <div class="container parallax-layer" data-opacity="true">
       <div class="media v-middle">
         <div class="media-left text-center">
@@ -19,7 +19,7 @@
     <div class="page-section">
       <div class="row">
         <div class="col-md-9 col-lg-10">
-          <div masonry="{ transitionDuration: '0.2s' }" load-images="false" class="row" ng-if="vm.$state.params.page === 'dashboard'">
+          <div masonry="{ transitionDuration: '0.2s' }" load-images="false" class="row" ng-if="!loading[0] && vm.$state.params.page === 'dashboard'">
             <div class="col-xs-12 col-lg-6 masonry-brick">
               <div class="panel panel-default paper-shadow" data-z="0.5">
                 <div class="panel-heading">
@@ -30,7 +30,7 @@
                   <p class="">Hãy đăng ký một khóa học và giành các danh hiệu cao quý <a ui-sref="main.courses">tại đây</a></p>
                 </div>
                 <ul class="list-group">
-                  <li class="list-group-item media v-middle" ng-repeat="course in vm.learningCourses track by course.id">
+                  <li class="list-group-item media v-middle" ng-repeat="course in vm.learningCourses | limitTo: 5 track by course.id">
                     <div class="media-body">
                       <a ui-sref="main.courses.details({course_id: course.id})" class="text-subhead list-group-link">:: course.title ::</a>
                     </div>
@@ -42,9 +42,9 @@
                     </div>
                   </li>
                 </ul>
-                <!-- <div class="panel-footer text-right" ng-if="vm.learningCourses.length">
-                  <a href class="btn btn-white paper-shadow relative" data-z="0" data-hover-z="1" data-animated ng-click="transitionTo('main.user', {page: 'my-courses'})">Xem tất cả</a>
-                </div> -->
+                <div class="panel-footer text-right" ng-if="vm.learningCourses.length > 5">
+                  <a href class="btn btn-white paper-shadow relative" data-z="0" data-hover-z="1" data-animated ng-click="transitionTo('main.user', {page: 'my-courses'})">Xem tất cả (:: vm.learningCourses.length ::)</a>
+                </div>
               </div>
             </div>
             <div class="col-xs-12 col-lg-6 masonry-brick" ng-show="vm.myBadges.length">
@@ -87,13 +87,16 @@
               </div>
             </div>
           </div>
-          <div class="row" ng-if="vm.$state.params.page === 'my-courses'" id="my-courses">
+          <div class="row" ng-if="!loading[0] && vm.$state.params.page === 'my-courses'" id="my-courses">
             {% include "src/html/themes/angular/user/my-courses.html" %}
           </div>
-          <div class="row" ng-if="vm.$state.params.page === 'my-projects'">
+          <div class="row" ng-if="!loading[0] && vm.$state.params.page === 'my-projects'">
             {% include "src/html/themes/angular/user/my-projects.html" %}
           </div>
-          <div class="row" ng-if="vm.$state.params.page === 'conversations'">
+          <div class="row" ng-if="!loading[0] && vm.$state.params.page === 'profiles'" id="my-profiles">
+            {% include "src/html/themes/angular/user/profiles.html" %}
+          </div>
+          <div class="row" ng-if="!loading[0] && vm.$state.params.page === 'conversations'">
             {% include "src/html/themes/angular/user/conversations.html" %}
           </div>
         </div>
@@ -104,11 +107,11 @@
             </div>
             <div class="panel-body list-group">
               <ul class="list-group list-group-menu">
-                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'dashboard'}"><a class="link-text-color" href ng-click="transitionTo('main.user', {page: 'dashboard'})">Tổng quan</a></li>
-                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'my-courses'}"><a class="link-text-color" href ng-click="transitionTo('main.user', {page: 'my-courses'})">Khóa học của tôi</a></li>
-                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'my-projects'}"><a class="link-text-color" href ng-click="transitionTo('main.user', {page: 'my-projects'})">Các bài tập lớn</a></li>
-                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'profiles'}"><a class="link-text-color" href ng-click="transitionTo('main.user', {page: 'profiles'})">Thông tin cá nhân</a></li>
-                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'conversations'}"><a class="link-text-color" href ng-click="transitionTo('main.user', {page: 'conversations'})">Danh sách hội thoại</a></li>
+                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'dashboard'}" ng-if="user.isLearner" ng-click="transitionTo('main.user', {page: 'dashboard'})"><a class="link-text-color">Tổng quan</a></li>
+                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'my-courses'}" ng-click="transitionTo('main.user', {page: 'my-courses'})"><a class="link-text-color">Khóa học của tôi</a></li>
+                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'my-projects'}" ng-if="user.isLearner" ng-click="transitionTo('main.user', {page: 'my-projects'})"><a class="link-text-color">Các bài tập lớn</a></li>
+                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'profiles'}" ng-click="transitionTo('main.user', {page: 'profiles'})"><a class="link-text-color">Thông tin cá nhân</a></li>
+                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'conversations'}" ng-click="transitionTo('main.user', {page: 'conversations'})"><a class="link-text-color">Danh sách hội thoại</a></li>
               </ul>
             </div>
           </div>

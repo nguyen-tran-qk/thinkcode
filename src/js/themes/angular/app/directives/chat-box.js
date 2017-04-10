@@ -33,17 +33,28 @@
             }
             $scope.conversation = $firebaseObject(firebaseRef.child('chat/' + $scope.workspaceId));
             $scope.conversation.$loaded().then(function() {
+              $scope.ownAvatar = $scope.user.avatar.preview;
               if ($scope.user.isLearner) {
                 $scope.chatterName = $scope.conversation.teacher_name;
+                UserService.getUserInfo($scope.conversation.teacher_id, 'info')
+                  .then(function(res) {
+                    if (res.data.avatar.preview.length) {
+                      $scope.chatterAvatar = res.data.avatar.preview;
+                    } else {
+                      $scope.chatterAvatar = 'https://api.adorable.io/avatars/40/' + $scope.conversation.teacher_name + '.png';
+                    }
+                  });
               } else {
                 $scope.chatterName = $scope.conversation.student_name;
+                UserService.getUserInfo($scope.conversation.student_id, 'info')
+                  .then(function(res) {
+                    if (res.data.avatar.preview.length) {
+                      $scope.chatterAvatar = res.data.avatar.preview;
+                    } else {
+                      $scope.chatterAvatar = 'https://api.adorable.io/avatars/40/' + $scope.conversation.student_name + '.png';
+                    }
+                  });
               }
-              // $scope.conversation.$watch(function(obj) {
-              //   if (obj.event === 'value') {
-              //     $scope.conversation.updated = (new Date()).toString();
-              //     $scope.conversation.$save();
-              //   }
-              // });
             });
             var ref = firebaseRef.child('chat/' + $scope.workspaceId + '/messages');
             var check;

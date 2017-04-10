@@ -1,0 +1,112 @@
+<div class="tabbable paper-shadow relative" data-z="0.5" ng-init="profileTab = 1">
+  <!-- Tabs -->
+  <ul class="nav nav-tabs">
+    <li ng-class="{'active': profileTab === 1}" ng-click="profileTab = 1">
+      <a><i class="fa fa-fw fa-user"></i> <span class="hidden-sm hidden-xs">Thông tin cá nhân</span></a>
+    </li>
+    <li ng-class="{'active': profileTab === 2}" ng-click="profileTab = 2">
+      <a><i class="fa fa-fw fa-lock"></i> <span class="hidden-sm hidden-xs">Đổi mật khẩu</span></a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div id="account" class="tab-pane" ng-class="{'active': profileTab === 1}">
+      <!-- <div class="panel panel-default">
+        <div class="panel-body"> -->
+      <form class="form-horizontal" name="form.profilesForm">
+        <div class="form-group">
+          <label for="inputEmail3" class="col-sm-2 control-label">Ảnh đại diện</label>
+          <div class="col-md-6">
+            <div class="media v-middle">
+              <div class="media-left">
+                <div class="icon-block width-100 bg-grey-100" ng-if="!vm.profiles.avatar.preview.length">
+                  <i class="fa fa-photo text-light"></i>
+                </div>
+                <img ng-src=":: vm.profiles.avatar.preview ::" class="width-100" ng-if="vm.profiles.avatar.preview.length">
+              </div>
+              <div class="media-body">
+                <a class="btn btn-white btn-sm paper-shadow relative" data-z="0.5" data-hover-z="1" data-animated ngf-select ng-model="uploadedFile" ngf-accept="'svg, png'" name="avatar" ngf-change="vm.photoChanged(uploadedFile)"> Upload ảnh &nbsp;<i class="fa fa-upload"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group padding-v-5">
+          <label for="username" class="col-md-2 text-right">Username</label>
+          <div class="col-md-8">
+            <p class="text-h4">:: vm.profiles.username ::</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="user-email" class="col-md-2 control-label">Email *</label>
+          <div class="col-md-6">
+            <div class="form-control-material">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                <input type="email" class="form-control" id="user-email" ng-model="vm.profiles.email" ng-class="{'used': vm.profiles.email}" ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/" required>
+                <label for="user-email">Địa chỉ email của bạn</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 help-block control-label text-left text-red-500">
+            <span ng-if="form.profilesForm.$error.required">* thông tin bắt buộc</span>
+            <span ng-if="form.profilesForm.$error.email || form.profilesForm.$error.pattern">* vui lòng nhập địa chỉ email hợp lệ</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail3" class="col-md-2 text-right">Về bản thân</label>
+          <div class="col-md-9">
+            <textarea class="form-control" ng-model="vm.profiles.introduction" placeholder="Giới thiệu về bản thân" rows="6"></textarea>
+          </div>
+        </div>
+        <div class="form-group margin-none">
+          <div class="col-md-offset-2 col-md-10">
+            <button ng-click="vm.saveProfiles()" class="btn btn-primary paper-shadow relative" data-z="0.5" data-hover-z="1" data-animated ng-disabled="form.profilesForm.$invalid || vm.saving">Lưu thông tin</button>
+          </div>
+        </div>
+      </form>
+      <!-- </div>
+      </div> -->
+    </div>
+    <div id="password" class="tab-pane" ng-class="{'active': profileTab === 2}">
+      <form class="form-horizontal" name="form.pwdForm">
+        <div class="form-group">
+          <label for="currentPwd" class="col-md-3 control-label">Mật khẩu hiện tại *</label>
+          <div class="col-md-5">
+            <div class="form-control-material">
+              <input type="password" class="form-control" id="currentPwd" ng-model="vm.pwdData.old_password" required>
+              <label for="currentPwd">Mật khẩu hiện tại</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="newPwd" class="col-md-3 control-label">Mật khẩu mới *</label>
+          <div class="col-md-5">
+            <div class="form-control-material">
+              <input type="password" class="form-control" id="newPwd" ng-model="vm.pwdData.password" required minlength="6">
+              <label for="newPwd">Mật khẩu mới</label>
+            </div>
+          </div>
+          <div class="col-md-4 help-block control-label text-left text-red-500">
+            <span ng-if="form.pwdForm.$error.minlength">* mật khẩu phải có ít nhất 6 kí tự</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="confirmPwd" class="col-md-3 control-label">Xác nhận mật khẩu mới *</label>
+          <div class="col-md-5">
+            <div class="form-control-material">
+              <input type="password" class="form-control" id="confirmPwd" ng-model="vm.confirmPwd" required>
+              <label for="confirmPwd">Xác nhận mật khẩu mới</label>
+            </div>
+          </div>
+          <div class="col-md-4 help-block control-label text-left text-red-500">
+            <span ng-if="vm.pwdData.password !== vm.confirmPwd">* mật khẩu xác nhận không trùng khớp</span>
+          </div>
+        </div>
+        <div class="form-group margin-none">
+          <div class="col-md-offset-3 col-md-9">
+            <button ng-click="vm.changePassword()" class="btn btn-primary paper-shadow relative" data-z="0.5" data-hover-z="1" data-animated ng-disabled="form.pwdForm.$invalid || vm.pwdData.password !== vm.confirmPwd || vm.saving">Đổi mật khẩu</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

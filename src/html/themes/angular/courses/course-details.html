@@ -45,17 +45,17 @@
                 <div class="panel-heading panel-heading-gray">
                   <div class="media width-100pc">
                     <div class="media-left">
-                      <span class="icon-block img-circle bg-:: lesson.type | lessonTypeClass:'bgColor' ::-300 half text-white" ng-if="lesson.progress !== 'finished'"><i class="fa fa-:: lesson.type | lessonTypeClass:'icon' ::"></i></span>
-                      <span class="icon-block img-circle bg-green-A200 half text-white" ng-if="lesson.progress === 'finished'" uib-tooltip="Bạn đã hoàn thành bài học này!"><i class="fa fa-check"></i></span>
+                      <span class="icon-block img-circle bg-:: lesson.type | lessonTypeClass:'bgColor' ::-300 half text-white"><i class="fa fa-:: lesson.type | lessonTypeClass:'icon' ::"></i></span>
                     </div>
                     <div class="media-body v-middle">
                       <h4 class="text-headline inline-block" data-toggle="collapse" data-target="#curriculum-::$index::">:: lesson.title ::</h4>
-                      <button class="btn btn-stroke btn-sm inline-block right margin-v-10-0 btn-take-lesson" ng-click="vm.goToLesson(lesson)" ng-if="!user.instructor && !user.staff && !user.admin && vm.course.enrolled && lesson.hover">Vào học</button>
+                      <button class="btn btn-stroke btn-sm inline-block right margin-v-12-0 btn-take-lesson" ng-click="vm.goToLesson(lesson)" ng-if="!user.instructor && !user.staff && !user.admin && vm.course.enrolled && lesson.hover">Vào học</button>
                       <div class="collapse" id="curriculum-::$index::">
                         <p ta-bind="text" ng-model="lesson.description" ta-readonly='disabled'></p>
                         <div class="media v-middle">
                           <div class="media-left">
-                            <img src="images/people/110/guy-6.jpg" alt="teacher" width="40" class="img-circle">
+                            <img ng-src=":: 'https://api.adorable.io/avatars/40/' + lesson.teacher.username + '.png' ::" alt="teacher" class="img-circle width-40" ng-if="!lesson.teacher.avatar.preview.length" />
+                            <img ng-src=":: lesson.teacher.avatar.preview ::" alt="teacher" class="img-circle width-40" ng-if="lesson.teacher.avatar.preview.length" />
                           </div>
                           <div class="media-body">
                             <h4 class="text-title margin-none">:: lesson.teacher.username ::</h4>
@@ -65,8 +65,9 @@
                       </div>
                     </div>
                   </div>
-                  <!-- <span class="collapse-status collapse-open" ng-click="lesson.more = true">Xem thêm</span>
-                  <span class="collapse-status collapse-close" ng-click="lesson.more = false">Thu gọn</span> -->
+                  <div class="absolute top finish-badge" ng-if="lesson.progress === 'finished'" uib-tooltip="Bạn đã hoàn thành bài học này"></div>
+                  <!-- <div class="right">
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -102,8 +103,10 @@
             </div>
           </div>
           <div class="label bg-cyan-500 admin-label width-100pc margin-v-0-15">
-            <small>Quản trị viên:</small>
-            <img src="images/people/110/guy-6.jpg" width="30" height="30" class="img-circle"><span class="text-h5"> :: vm.course.admin.username ::</span>
+            <small>Quản trị viên:</small>&nbsp;
+            <img ng-src=":: 'https://api.adorable.io/avatars/40/' + vm.course.admin.username + '.png' ::" alt="People" class="img-circle width-30" ng-if="!vm.course.admin.avatar.preview.length" />
+            <img ng-src=":: vm.course.admin.avatar.preview ::" alt="People" class="img-circle width-30" ng-if="vm.course.admin.avatar.preview.length" />
+            <span class="text-h5"> :: vm.course.admin.username ::</span>
           </div>
           <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated="">
             <div class="panel-body">
@@ -112,7 +115,8 @@
               </div>
               <div class="media v-middle" ng-repeat="teacher in vm.course.teachers">
                 <div class="media-left">
-                  <img src="images/people/110/guy-{{ random(1,9) }}.jpg" alt="" width="60" class="img-circle">
+                  <img ng-src=":: 'https://api.adorable.io/avatars/40/' + teacher.username + '.png' ::" alt="People" class="img-circle width-40" ng-if="!teacher.avatar.preview.length" />
+                  <img ng-src=":: teacher.avatar.preview ::" alt="People" class="img-circle width-40" ng-if="teacher.avatar.preview.length" />
                 </div>
                 <div class="media-body">
                   <h4 class="margin-none"><a href class="">:: teacher.username ::</a></h4>

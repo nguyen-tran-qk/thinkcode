@@ -82,7 +82,8 @@
         <p class="desc" ng-bind-html="item.description | trustHtml"></p>
         <div class="media v-middle">
           <div class="media-left">
-            <img src="images/people/50/guy-{{ random(1,9) }}.jpg" alt="People" class="img-circle width-40" />
+            <img ng-src=":: 'https://api.adorable.io/avatars/40/' + item.admin.username + '.png' ::" alt="People" class="img-circle width-40" ng-if="!item.admin.avatar.preview.length"/>
+            <img ng-src=":: item.admin.avatar.preview ::" alt="People" class="img-circle width-40" ng-if="item.admin.avatar.preview.length"/>
           </div>
           <div class="media-body">
             Quản trị viên

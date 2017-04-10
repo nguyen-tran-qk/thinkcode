@@ -7,8 +7,8 @@
   <div class="chat">
     <div class="chat-history">
       <div ng-repeat="chatMessage in messages">
-        <div class="chat-message clearfix">
-          <img src="http://lorempixel.com/32/32/people" alt="" width="32" height="32">
+        <div class="chat-message clearfix" ng-class="{'my-own-message': user.id == chatMessage.user_id}">
+          <img ng-src=":: user.id == chatMessage.user_id ? ownAvatar : chatterAvatar ::" alt="" width="32" height="32">
           <div class="chat-message-content clearfix">
             <h5 class="text-light">:: chatMessage.name ::</h5>
             <p>:: chatMessage.message ::</p>

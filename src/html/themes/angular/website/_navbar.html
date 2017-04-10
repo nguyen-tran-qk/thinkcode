@@ -9,12 +9,15 @@
         <span class="icon-bar"></span>
       </button>
       <div class="navbar-brand navbar-brand-logo">
-        <a class="svg" href ng-click="goTo('main.courses', {type: 'published'})"><img src="images/ThinkCode-04.svg"></a>
+        <a class="svg" href ng-click="user.isLearner ? goTo('main.user', {page: 'dashboard'}) : goTo('main.courses', {type: 'published'})"><img src="images/ThinkCode-04.svg"></a>
       </div>
     </div>
     <div class="collapse navbar-collapse" id="main-nav">
       <ul class="nav navbar-nav navbar-nav-margin-left">
-        <li ng-class="{ 'active': $state.includes('main.user') }" ng-if="user.username && user.isLearner">
+        <li ng-class="{ 'active': $state.includes('main.courses') && $state.params.type === 'published' }">
+          <a href ng-click="goTo('main.courses', {type: 'published'})">Thư viện</a>
+        </li>
+        <li ng-class="{ 'active': $state.includes('main.user') }" ng-if="user.username">
           <a href ng-click="goTo('main.user', {page: 'dashboard'})">Hồ sơ của tôi</a>
         </li>
         <!-- <li ng-class="{ 'active': $state.includes('main.workspaces') }">
@@ -42,8 +45,13 @@
             <li class="list-group-item" ng-class="{'unread': convo.unread}" ng-repeat="convo in (filteredItems = (conversations | filterConversation)) | limitTo: 7 track by convo.$id" ng-if="filteredItems.length">
               <a ui-sref="main.learn({course_id: convo.course_id, workspace_id: convo.$id})" class="padding-v-10">
                 <div class="media v-middle margin-v-0">
-                  <div class="media-left">
-                    <img src="images/people/110/woman-5.jpg" width="40" alt="" class="media-object">
+                  <div class="media-left" ng-if="user.isLearner">
+                    <img ng-src=":: 'https://api.adorable.io/avatars/40/' + convo.teacher_name + '.png' ::" alt="" width="40" class="media-object" ng-if="!convo.teacher_avatar.length" />
+                    <img ng-src=":: convo.teacher_avatar ::" alt="" ng-if="convo.teacher_avatar.length" width="40" class="media-object" ng-if="convo.teacher_avatar.length" />
+                  </div>
+                  <div class="media-left" ng-if="!user.isLearner">
+                    <img ng-src=":: 'https://api.adorable.io/avatars/40/' + convo.student_name + '.png' ::" alt="" width="40" class="media-object" ng-if="!convo.student_avatar.length" />
+                    <img ng-src=":: convo.student_avatar ::" alt="" class="img-circle" ng-if="convo.student_avatar.length" width="40" class="media-object" ng-if="convo.student_avatar.length" />
                   </div>
                   <div class="media-body padding-none">
                     <span class="date">:: convo.updated | fromNow ::</span>
@@ -74,14 +82,16 @@
         <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right" ng-if="user">
           <!-- user -->
           <li class="dropdown user{% if page.slug|contains('website-student-') %} active{% endif %}">
-            <a href class="dropdown-toggle" data-toggle="dropdown">
-              <img src="images/people/110/guy-6.jpg" alt="" class="img-circle" /> :: user.username ::<span class="caret"></span>
+            <a class="" data-toggle="dropdown">
+              <img ng-src=":: 'https://api.adorable.io/avatars/40/' + user.username + '.png' ::" alt="" class="img-circle" ng-if="!user.avatar.preview.length" />
+              <img ng-src=":: user.avatar.preview ::" alt="" class="img-circle" ng-if="user.avatar.preview.length" /> :: user.username ::
+              <!-- <span class="caret"></span> -->
             </a>
-            <ul class="dropdown-menu" role="menu">
+            <!-- <ul class="dropdown-menu" role="menu">
               <li ui-sref-active="active"><a ui-sref="website-student.dashboard"><i class="fa fa-bar-chart-o"></i> Dashboard</a></li>
               <li ui-sref-active="active"><a ui-sref="website-student.courses"><i class="fa fa-mortar-board"></i> My Courses</a></li>
               <li ui-sref-active="active"><a ui-sref="website-student.private-profile"><i class="fa fa-user"></i> Profile</a></li>
-            </ul>
+            </ul> -->
           </li>
           <!-- // END user -->
         </ul>

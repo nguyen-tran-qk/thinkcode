@@ -147,6 +147,11 @@
     border-radius: 50%;
     float: left;
   }
+  .chat-message-content {
+    text-align: left;
+    margin-left: 40px;
+    margin-right: 0;
+  }
   .chat-time {
     color: #9a9a9a;
     font-size: 10px;
@@ -158,11 +163,18 @@
       visibility: visible;
     }
   }
+  &.my-own-message {
+    img {
+      float: right;
+    }
+    .chat-message-content {
+      text-align: right;
+      margin-right: 40px;
+      margin-left: 0;
+    }
+  }
 }
 
-.chat-message-content {
-  margin-left: 40px;
-}
 
 .chat-feedback {
   font-style: italic;

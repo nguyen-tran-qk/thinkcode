@@ -13,10 +13,16 @@
       <!-- <button class="btn btn-expand" ng-click="vm.expandSection('info')"><i class="fa fa-expand"></i></button> -->
       <div class="panel-body padding-none lesson-desc" ng-show="!vm.hideInfo">
         <uib-accordion close-others="true">
-          <div uib-accordion-group class="panel-default border-none margin-none" heading="Mô tả bài học" is-open="vm.firstOpen">
+          <div uib-accordion-group class="panel-default border-none margin-none" is-open="vm.firstOpen">
+            <uib-accordion-heading>
+              Mô tả bài học <i class="pull-right fa text-h4" ng-class="{'fa-chevron-down': vm.firstOpen, 'fa-chevron-right': !vm.firstOpen}"></i>
+            </uib-accordion-heading>
             <p ta-bind="text" ng-model="vm.lesson.description" class="overflow-hidden"></p>
           </div>
-          <div uib-accordion-group class="panel-default border-none margin-none" heading="Files" ng-if="!loading[0] && vm.my_data.length">
+          <div uib-accordion-group class="panel-default border-none margin-none" ng-if="!loading[0] && vm.my_data.length" is-open="vm.secondOpen">
+            <uib-accordion-heading>
+              Thư mục <i class="pull-right fa text-h4" ng-class="{'fa-chevron-down': vm.secondOpen, 'fa-chevron-right': !vm.secondOpen}"></i>
+            </uib-accordion-heading>
             <abn-tree-mod id="workspace-tree" tree-data="vm.my_data" tree-control="vm.my_tree" icon-leaf="fa fa-file" icon-expand="fa fa-folder" icon-collapse="fa fa-folder-open" expand-level="3"></abn-tree-mod>
           </div>
           <div uib-accordion-group class="panel-default border-none margin-none" heading="Về bài giảng này:" ng-if="vm.lesson.type === 'video'">
@@ -96,8 +102,7 @@
     <div class="media media-grid lesson-title col-sm-3 col-md-3 relative padding-none height-100pc" ng-class="{'show-lessons': showLessons}" ng-click="user.isLearner ? showLessons = !showLessons : ''">
       <div class="current-title">
         <div class="media-left">
-          <span class="icon-block s25 bg-:: vm.lesson.type | lessonTypeClass:'bgColor' ::-300 text-white" ng-if="!vm.lesson.finished"><b>::vm.lesson.order::</b></span>
-          <span class="icon-block s25 bg-green-A700 text-white" ng-if="vm.lesson.finished" uib-tooltip="Bạn đã hoàn thành bài học này!" tooltip-placement="right"><i class="fa fa-check"></i></span>
+          <span class="icon-block s25 bg-:: vm.lesson.type | lessonTypeClass:'bgColor' ::-300 text-white"><b>::vm.lesson.order::</b></span>
         </div>
         <div class="media-body v-middle width-100pc">
           <p class="margin-none text-white text-h4" ng-class="{'text-small': vm.lesson.title.length > 35}">:: vm.lesson.title ::</p>
@@ -120,14 +125,16 @@
         <p class="text-h4">Danh sách bài học</p>
       </li>
       <li ng-repeat="item in vm.course.lessons">
-        <div class="media v-middle width-100pc" ng-class="{'active': item.id === vm.lesson.id || item.hovering }" ng-mouseenter="item.hovering=true" ng-mouseleave="item.hovering=false">
+        <div class="media v-middle width-auto" ng-class="{'active': item.id === vm.lesson.id || item.hovering }" ng-mouseenter="item.hovering=true" ng-mouseleave="item.hovering=false">
           <div class="media-left">
-            <span class="icon-block img-circle bg-:: item.type | lessonTypeClass:'bgColor' ::-300 s30 text-white" ng-if="item.progress !== 'finished'"><i class="fa fa-:: item.type | lessonTypeClass:'icon' ::"></i></span>
-            <span class="icon-block img-circle bg-green-A700 s30 text-white" ng-if="item.progress === 'finished'"><i class="md md-check"></i></span>
+            <span class="icon-block img-circle bg-:: item.type | lessonTypeClass:'bgColor' ::-300 s30 text-white"><i class="fa fa-:: item.type | lessonTypeClass:'icon' ::"></i></span>
           </div>
           <div class="media-body">
             <a ng-click="vm.goToLesson(item); showLessons = false;">:: item.title ::</a>
           </div>
+        </div>
+        <div class="right">
+          <span class="icon-block img-circle half" ng-if="item.progress === 'finished'"><i class="md md-check text-green-A700"></i></span>
         </div>
       </li>
     </ul>
