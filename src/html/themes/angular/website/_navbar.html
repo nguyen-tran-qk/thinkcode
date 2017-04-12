@@ -62,7 +62,7 @@
                 </div>
               </a>
             </li>
-            <li class="list-group-item list-info text-center" ng-if="conversations.$resolved">
+            <li class="list-group-item list-info text-center" ng-if="conversations.$resolved && filteredItems.length">
               <a ui-sref="main.user({page: 'conversations'})">
                 <h5 class="text-primary"><span ng-if="unreadCount > 7">Đang xem 7/:: unreadCount :: tin chưa đọc. </span> <b>Xem tất cả</b></h5>
               </a>

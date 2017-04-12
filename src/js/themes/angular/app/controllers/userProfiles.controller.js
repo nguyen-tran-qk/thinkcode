@@ -37,8 +37,8 @@
         });
     };
 
-    vm.getMyProjects = function(callback) {
-      LearnerService.getProjects()
+    vm.getMyProjects = function(finished, callback) {
+      LearnerService.getProjects(finished)
         .then(function(res) {
           vm.myProjects = res.data.workspaces;
           $scope.loading[0] = false;
@@ -68,7 +68,7 @@
 
     vm.fetchData = function() {
       vm.getLearningCourses(function() {
-        vm.getMyProjects(function() {
+        vm.getMyProjects(false, function() {
           vm.getMyBadges(function() {
             $timeout(function() {
               $rootScope.$broadcast('masonry.reload');
@@ -167,7 +167,7 @@
       }
       if (vm.$state.params.page === 'my-projects') {
         if ($scope.user.isLearner) {
-          vm.getMyProjects();
+          vm.getMyProjects('all');
         } else {
           $scope.transitionTo('main.user', { page: 'my-courses' });
         }
