@@ -127,15 +127,15 @@
         return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
       };
     })
-    .filter('avatar', function() {
+    .filter('avatar', function($http) {
       return function(userId) {
-        // var url = 'http://d2a6eak7d6dhlh.cloudfront.net/users/' + userId + '/avatar/preview/data.';
-        // $http.get(url)
-        //   .then(function() { // avatar available
-        //     return url;
-        //   }, function() { // no avatar found
-        //     return 'https://api.adorable.io/avatars/40/' + userId + '.png';
-        //   });
+        var url = 'http://d2a6eak7d6dhlh.cloudfront.net/users/' + userId + '/avatar/preview/data.';
+        $http.get(url)
+          .then(function() { // avatar available
+            return url;
+          }, function() { // no avatar found
+            return 'https://api.adorable.io/avatars/40/' + userId + '.png';
+          });
         return 'http://d2a6eak7d6dhlh.cloudfront.net/users/' + userId + '/avatar/preview/data.';
       };
     });
