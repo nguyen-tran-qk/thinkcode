@@ -119,7 +119,12 @@
     .filter('msgSummary', function() {
       return function(messages) {
         var keys = Object.keys(messages);
-        return messages[keys[keys.length-1]].message;
+        return messages[keys[keys.length - 1]].message;
+      };
+    })
+    .filter('capitalize', function() {
+      return function(input) {
+        return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
       };
     });
 

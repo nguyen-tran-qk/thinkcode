@@ -1,12 +1,12 @@
 <div class="modal-header">
-  <h3 class="modal-title text-danger">:: vm.title ::</h3>
+  <h3 class="modal-title text-:: vm.modalType ::">:: vm.title ::</h3>
 </div>
 <div class="modal-body">
   <div class="text-subhead">
-    :: vm.content ::
+    <div ng-bind-html="vm.content | trustHtml"></div>
   </div>
 </div>
 <div class="modal-footer">
   <button class="btn btn-default btn-sm" type="button" ng-click="vm.cancel()">Không</button>
-  <button class="btn btn-danger btn-sm" type="button" ng-click="vm.ok()">Xác nhận</button>
+  <button class="btn btn-:: vm.modalType :: btn-sm" type="button" ng-click="vm.ok()">Xác nhận</button>
 </div>

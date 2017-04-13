@@ -506,8 +506,9 @@
         keyboard: false,
         controller: function($uibModalInstance, data) {
           var vm = this;
+          vm.modalType = 'danger';
           vm.title = 'Học lại';
-          vm.content = 'Mọi tiến trình học liên quan đến bài học này sẽ bị ảnh hưởng. Bạn chắc chắn muốn học lại "' + data.title + '"?';
+          vm.content = 'Mọi tiến trình học liên quan đến bài học này sẽ bị ảnh hưởng. Bạn chắc chắn muốn học lại <strong>' + data.title + '</strong>?';
           vm.ok = function() {
             $uibModalInstance.close('ok');
           };

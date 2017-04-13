@@ -132,12 +132,12 @@
             })
             .state('main', {
               abstract: true,
-              url: '/app',
+              url: '/',
               template: '<div ui-view="main" id="main" class="main-container ui-view-main" />',
               controller: 'MainController'
             })
             .state('main.courses', {
-              url: '/courses/{type:string}',
+              url: 'courses/{type:string}',
               middleware: 'everyone',
               views: {
                 'main': {
@@ -162,7 +162,7 @@
               }
             })
             .state('main.workspaces', {
-              url: '/workspaces',
+              url: 'workspaces',
               middleware: 'authUser',
               views: {
                 'main': {
@@ -184,7 +184,7 @@
               }
             })
             .state('main.badges', {
-              url: '/badges?id=',
+              url: 'badges?id=',
               middleware: 'everyone',
               views: {
                 'main': {
@@ -195,7 +195,7 @@
               }
             })
             .state('main.learn', {
-              url: '/learn/:course_id/:workspace_id',
+              url: 'learn/:course_id/:workspace_id',
               middleware: 'authUser',
               views: {
                 'main': {
@@ -210,7 +210,7 @@
               }
             })
             .state('main.user', {
-              url: '/{page: string}',
+              url: '{page: string}',
               middleware: 'authUser',
               views: {
                 'main': {
@@ -221,6 +221,17 @@
               },
               params: {
                 page: 'dashboard'
+              }
+            })
+            .state('main.profile', {
+              url: '{userId: string}',
+              middleware: 'everyone',
+              views: {
+                'main': {
+                  templateUrl: 'user/public-info.html',
+                  controller: 'UserPublicInfoCtrl',
+                  controllerAs: 'vm'
+                }
               }
             });
 

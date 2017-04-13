@@ -64,22 +64,68 @@
     };
 
     vm.changeCourseStatus = function(status) {
-      CoursesService.changeCourseStatus(vm.course.id, status, function(res) {
-        var msg;
-        if (status === 'reviewing') {
-          msg = 'Khóa học được chuyển sang trạng thái: Chờ kiểm tra.';
-        } else if (status === 'draft') {
-          msg = 'Khóa học đã được đưa về bản nháp.';
-        } else if (status === 'published') {
-          msg = 'Khóa học đã được duyệt thành công.';
+      $uibModal.open({
+        templateUrl: 'modals/confirm.html',
+        backdrop: 'static',
+        keyboard: false,
+        controller: function($uibModalInstance, data) {
+          var vm = this;
+          vm.modalType = 'warning';
+          vm.title = 'Xác nhận thay đổi trạng thái';
+          if (data.status === 'reviewing') {
+            if (data.currentStatus === 'draft') {
+              vm.content = 'Bạn xác nhận muốn nộp khóa học: <strong>' + data.title + '</strong> để kiểm tra chất lượng?';
+            } else {
+              vm.content = 'Mọi học viên sẽ không thể truy cập khóa học được nữa. Bạn xác nhận muốn rút khóa học: <strong>' + data.title + '</strong> khỏi thư viện để kiểm tra chất lượng?';
+            }
+          } else if (data.status === 'draft') {
+            if (data.currentStatus === 'reviewing') {
+              vm.content = 'Bạn xác nhận muốn đưa khóa học: <strong>' + data.title + '</strong> về bản nháp?';
+            } else {
+              vm.content = 'Mọi học viên sẽ không thể truy cập khóa học được nữa. Bạn xác nhận muốn rút khóa học: <strong>' + data.title + '</strong> khỏi thư viện để đưa về bản nháp?';
+            }
+          } else {
+            vm.content = 'Bạn xác nhận muốn duyệt khóa học: <strong>' + data.title + '</strong>? Khóa học sẽ được xuất hiện trong thư viện để các học sinh/sinh viên đăng ký học.';
+          }
+          vm.ok = function() {
+            $uibModalInstance.close('ok');
+          };
+          vm.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+          };
+        },
+        controllerAs: 'vm',
+        resolve: {
+          data: {
+            status: status,
+            currentStatus: vm.course.status,
+            title: vm.course.title
+          }
         }
-        vm.$state.reload();
-        $scope.showMessage('success', msg);
-      }, function(res) {
-        if (res.status === 401) {
-          $scope.showMessage('danger', 'Xin lỗi, bạn không có quyền thực hiện thao tác này!');
-        } else {
-          $scope.showMessage('danger');
+      }).result.then(function(result) {
+        if (result === 'ok') {
+          CoursesService.changeCourseStatus(vm.course.id, status, function(res) {
+            var msg;
+            if (status === 'reviewing') {
+              msg = 'Khóa học được chuyển sang trạng thái: Chờ kiểm tra.';
+            } else if (status === 'draft') {
+              msg = 'Khóa học đã được đưa về bản nháp.';
+            } else if (status === 'published') {
+              msg = 'Khóa học đã được duyệt thành công.';
+            }
+            vm.$state.reload();
+            $scope.showMessage('success', msg);
+          }, function(res) {
+            if (res.status === 401) {
+              if ($scope.user.staff && status === 'reviewing') {
+                $scope.showMessage('danger', 'Xin lỗi, bạn phải là quản trị viên của khóa học để thực hiện thao tác này!');
+              } else {
+                $scope.showMessage('danger', 'Xin lỗi, bạn không có quyền thực hiện thao tác này!');
+              }
+            } else {
+              $scope.showMessage('danger');
+            }
+          });
         }
       });
     };
@@ -170,8 +216,9 @@
         keyboard: false,
         controller: function($uibModalInstance, data) {
           var vm = this;
+          vm.modalType = 'danger';
           vm.title = 'Hủy đăng ký';
-          vm.content = 'Mọi tiến trình học liên quan đến khóa học này, ngoại trừ các danh hiệu, sẽ bị mất. Bạn chắc chắn muốn hủy đăng ký "' + data.title + '"?';
+          vm.content = 'Mọi tiến trình học liên quan đến khóa học này, ngoại trừ các danh hiệu, sẽ bị mất. Bạn chắc chắn muốn hủy đăng ký <strong>' + data.title + '</strong>"?';
           vm.ok = function() {
             $uibModalInstance.close('ok');
           };
