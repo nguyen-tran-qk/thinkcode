@@ -150,7 +150,7 @@
                   course_id: vm.course.id,
                   lesson_title: vm.course.lessons[0].title,
                   updated: (new Date()).toString()
-                }
+                };
                 CoursesService.registerConversation(data);
               }
               vm.$state.go('main.learn', { course_id: vm.course.id, workspace_id: res.data.workspace_id });
@@ -210,7 +210,7 @@
               course_id: vm.course.id,
               lesson_title: lesson.title,
               updated: (new Date()).toString()
-            }
+            };
             CoursesService.registerConversation(data);
           }
           vm.$state.go('main.learn', { course_id: vm.course.id, workspace_id: res.data.workspace_id });
@@ -226,7 +226,7 @@
     vm.editCourse = function() {
       vm.isConfig = true;
       if (vm.course.status === 'draft') {
-        vm.editInfoAllowed = $scope.user.username === vm.course.admin || $filter('existedInArray')($scope.user, vm.course.teachers);
+        vm.editInfoAllowed = $scope.user.username === vm.course.admin.username || $filter('existedInArray')($scope.user, vm.course.teachers);
       } else if (vm.course.status === 'reviewing') {
         vm.editInfoAllowed = $scope.user.staff;
       }
