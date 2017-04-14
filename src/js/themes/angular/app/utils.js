@@ -127,16 +127,37 @@
         return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
       };
     })
-    .filter('avatar', function($http) {
-      return function(userId) {
-        var url = 'http://d2a6eak7d6dhlh.cloudfront.net/users/' + userId + '/avatar/preview/data.';
-        $http.get(url)
-          .then(function() { // avatar available
-            return url;
-          }, function() { // no avatar found
-            return 'https://api.adorable.io/avatars/40/' + userId + '.png';
-          });
-        return 'http://d2a6eak7d6dhlh.cloudfront.net/users/' + userId + '/avatar/preview/data.';
+    .filter('avatar', function(API_URL, $http) {
+      var cached = {};
+      var adorableApiUrl = 'https://api.adorable.io/avatars/40/',
+        cloudfrontApiUrl = 'http://d2a6eak7d6dhlh.cloudfront.net/users/';
+
+      function getAvatar(userId) {
+        // console.log('details for github user', userId, field);
+        if (userId) {
+          if (userId in cached) {
+            // avoid returning a promise!
+            return typeof cached[userId].then !== 'function' ? cached[userId] : undefined;
+          } else {
+            cached[userId] = $http({
+              method: 'GET',
+              url: API_URL + '/users/' + userId + '/avatar'
+            }).then(function(res) {
+              cached[userId] = res.data.preview.length ? res.data.preview : adorableApiUrl + userId + '.png';
+              // console.log('generated result for', info);
+            });
+          }
+        }
+      }
+      getAvatar.$stateful = true;
+      return getAvatar;
+    })
+    .filter('isRecentMsg', function() {
+      return function(curMsg, prevMsg) {
+        if (prevMsg && curMsg.user_id == prevMsg.user_id && moment(curMsg.datetime).diff(prevMsg.datetime, 'seconds') < 15) {
+          return 'recent';
+        }
+        return '';
       };
     });
 

@@ -6,13 +6,12 @@
   </header>
   <div class="chat">
     <div class="chat-history">
-      <div ng-repeat="chatMessage in messages">
-        <div class="chat-message clearfix" ng-class="{'my-own-message': user.id == chatMessage.user_id}">
-          <img ng-src=":: 'https://api.adorable.io/avatars/40/' + user.username + '.png' ::" alt="" width="32" height="32">
+      <div ng-repeat="chatMessage in messages track by $index">
+        <div class="chat-message clearfix :: chatMessage | isRecentMsg: messages[$index-1] ::" ng-class="{'my-own-message': user.id == chatMessage.user_id}">
           <img ng-src=":: chatMessage.user_id | avatar ::" alt="" width="32" height="32">
           <div class="chat-message-content clearfix">
             <h5 class="text-light">:: chatMessage.name ::</h5>
-            <p>:: chatMessage.message ::</p>
+            <p class="chat-text">:: chatMessage.message ::</p>
             <p class="chat-time">::chatMessage.datetime | fromNow ::</p>
           </div>
           <!-- end chat-message-content -->

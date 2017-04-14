@@ -83,8 +83,8 @@
           <!-- user -->
           <li class="dropdown user{% if page.slug|contains('website-student-') %} active{% endif %}">
             <a class="" data-toggle="dropdown">
-              <img ng-src=":: 'https://api.adorable.io/avatars/40/' + user.username + '.png' ::" alt="" class="img-circle" ng-if="!user.avatar.preview.length" />
-              <img ng-src=":: user.id | avatar ::" alt="" class="img-circle" ng-if="user.avatar.preview.length" />
+              <!-- <img ng-src=":: 'https://api.adorable.io/avatars/40/' + user.username + '.png' ::" alt="" class="img-circle" ng-if="!user.avatar.preview.length" /> -->
+              <img ng-src=":: user.id | avatar ::" alt="" class="img-circle" />
               <!-- <img ng-src=":: user.avatar.preview ::" alt="" class="img-circle" ng-if="user.avatar.preview.length" /> --> :: user.username ::
               <!-- <span class="caret"></span> -->
             </a>
