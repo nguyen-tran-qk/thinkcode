@@ -465,7 +465,8 @@
         .then(function(res) {
           if (res.data.next_lesson_id) {
             $scope.showMessage('success', 'Chúc mừng! Bạn đã hoàn thành bài học: ' + vm.lesson.title);
-            vm.goToLesson(res.data.next_lesson_id);
+            var nextLesson = { id : res.data.next_lesson_id };
+            vm.goToLesson(nextLesson);
           } else if (res.data.congrats) {
             $uibModal.open({
               templateUrl: 'modals/complete-course-congrats.html',

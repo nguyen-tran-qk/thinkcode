@@ -42,7 +42,7 @@
                     </div>
                   </li>
                 </ul>
-                <div class="panel-footer text-right">
+                <div class="panel-footer text-right" ng-if="vm.learningCourses.length">
                   <a href class="btn btn-white paper-shadow relative" data-z="0" data-hover-z="1" data-animated ng-click="transitionTo('main.user', {page: 'my-courses'})">Xem tất cả</a>
                 </div>
               </div>
@@ -81,7 +81,7 @@
                     </div>
                   </li>
                 </ul>
-                <div class="panel-footer text-right">
+                <div class="panel-footer text-right" ng-if="vm.myProjects.length">
                   <a href class="btn btn-white paper-shadow relative" data-z="0" data-hover-z="1" data-animated ng-click="transitionTo('main.user', {page: 'my-projects'})">Xem tất cả</a>
                 </div>
               </div>
@@ -107,7 +107,7 @@
                     </div>
                   </li>
                 </ul>
-                <div class="panel-footer text-right">
+                <div class="panel-footer text-right" ng-if="vm.teachingCourses.length">
                   <a href class="btn btn-white paper-shadow relative" data-z="0" data-hover-z="1" data-animated ng-click="transitionTo('main.user', {page: 'teachings'})">Xem tất cả</a>
                 </div>
               </div>
@@ -117,6 +117,9 @@
             {% include "src/html/themes/angular/user/my-courses.html" %}
           </div>
           <div class="row" ng-if="!loading[0] && vm.$state.params.page === 'my-projects'">
+            {% include "src/html/themes/angular/user/my-projects.html" %}
+          </div>
+          <div class="row" ng-if="!loading[0] && vm.$state.params.page === 'teachings'">
             {% include "src/html/themes/angular/user/my-projects.html" %}
           </div>
           <div class="row" ng-if="!loading[0] && vm.$state.params.page === 'profiles'" id="my-profiles">
@@ -134,8 +137,9 @@
             <div class="panel-body list-group">
               <ul class="list-group list-group-menu">
                 <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'dashboard'}" ng-click="transitionTo('main.user', {page: 'dashboard'})"><a class="link-text-color">Tổng quan</a></li>
-                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'my-courses'}" ng-if="user.isLearner" ng-click="transitionTo('main.user', {page: 'my-courses'})"><a class="link-text-color">Khóa học của tôi</a></li>
-                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'my-projects'}" ng-if="user.isLearner" ng-click="transitionTo('main.user', {page: 'my-projects'})"><a class="link-text-color">Các bài tập lớn</a></li>
+                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'my-courses'}" ng-click="transitionTo('main.user', {page: 'my-courses'})"><a class="link-text-color">Khóa học của tôi</a></li>
+                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'my-projects'}" ng-click="transitionTo('main.user', {page: 'my-projects'})"><a class="link-text-color">Các bài tập lớn</a></li>
+                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'teachings'}" ng-click="transitionTo('main.user', {page: 'teachings'})"><a class="link-text-color">Khóa học đang dạy</a></li>
                 <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'profiles'}" ng-click="transitionTo('main.user', {page: 'profiles'})"><a class="link-text-color">Thông tin cá nhân</a></li>
                 <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'conversations'}" ng-click="transitionTo('main.user', {page: 'conversations'})"><a class="link-text-color">Danh sách hội thoại</a></li>
               </ul>

@@ -9,6 +9,9 @@
         },
         getTeachingCourses: function() {
           return $http.get(API_URL + '/progresses/courses' + this.tokenString());
+        },
+        getCourseProgresses: function(courseId) {
+          return $http.get(API_URL + '/courses/' + courseId + '/progresses' + this.tokenString());
         }
       };
     }]);

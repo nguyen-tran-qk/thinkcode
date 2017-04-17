@@ -198,7 +198,7 @@
                   student_id: res.data.student_id,
                   student_name: $scope.user.username, // only learner can call this function in this controller -> safe to get user's username
                   teacher_id: res.data.teacher_id,
-                  teacher_name: lesson.teacher.username,
+                  teacher_name: vm.course.lessons[0].teacher.username,
                   course_id: vm.course.id,
                   lesson_title: vm.course.lessons[0].title,
                   updated: (new Date()).toString()

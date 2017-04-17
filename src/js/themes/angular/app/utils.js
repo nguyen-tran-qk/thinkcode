@@ -190,6 +190,13 @@
         }
         return false;
       };
+    })
+    .filter('publishedCourses', function() {
+      return function(arr) {
+        return arr.filter(function(obj) {
+          return obj.status === 'published';
+        });
+      };
     });
 
   angular.module('app').filter('findBranchByUid', function() {

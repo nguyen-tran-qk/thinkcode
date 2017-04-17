@@ -4,7 +4,7 @@
       <div class="col-xs-6 col-md-5 col-lg-6">
         <div class="form-control-material">
           <input id="forumSearch" type="text" class="form-control" ng-model="vm.search.title" />
-          <label for="forumSearch">Tìm bài tập</label>
+          <label for="forumSearch">:: vm.$state.params.page === 'my-projects' ? 'Tìm bài tập' : 'Tìm khóa học' ::</label>
         </div>
       </div>
       <div class="btn-group col-xs-2" uib-dropdown>
@@ -25,7 +25,7 @@
           <li role="menuitem"><a href ng-click="vm.search.engine = 'Ruby'">Ruby</a></li>
         </ul>
       </div>
-      <div class="col-xs-2 col-md-3 col-lg-2 text-right material-checkbox">
+      <div class="col-xs-2 col-md-3 col-lg-2 text-right material-checkbox" ng-if="vm.$state.params.page === 'my-projects'">
         <input id="isCompleted" type="checkbox" ng-model="vm.search.finished" ng-false-value="undefined">
         <label for="isCompleted" class="text-light">Đã hoàn thành</label>
         <!-- <div class="checkbox checkbox-primary">
@@ -38,13 +38,17 @@
   <ul class="list-group">
     <li class="list-group-item">
       <div class="media v-middle">
-        <div class="media-body">
+        <div class="media-body" ng-if="vm.$state.params.page === 'my-projects'">
           <h4 class="text-headline margin-none">Các bài tập lớn</h4>
           <p class="text-subhead text-light">Tập hợp những thử thách để rèn luyện kỹ năng của bạn</p>
         </div>
+        <div class="media-body" ng-if="vm.$state.params.page === 'teachings'">
+          <h4 class="text-headline margin-none">Các khóa học đang dạy</h4>
+          <p class="text-subhead text-light">Các khóa học trong thư viện mà bạn đang tham gia giảng dạy</p>
+        </div>
       </div>
     </li>
-    <li class="list-group-item media v-middle" ng-repeat="item in (filteredItems = (vm.myProjects | filter: vm.search)) track by item.id">
+    <li class="list-group-item media v-middle" ng-repeat="item in (filteredItems = (vm.myProjects | filter: vm.search)) track by item.id" ng-if="vm.$state.params.page === 'my-projects'">
       <div class="media-left">
         <span class="icon-block img-circle half text-white" ng-if="!item.finished" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
         <span class="icon-block img-circle bg-green-A400 half text-white icon-finished" ng-if="item.finished" uib-tooltip="Bạn đã hoàn thành bài tập này!" tooltip-placement="right"><i class="md md-check"></i></span>
@@ -65,6 +69,29 @@
       </div>
       <div class="media-right col-md-2 no-float padding-none">
         <button class="btn btn-stroke btn-sm inline-block right btn-take-lesson" ui-sref="main.learn({course_id: item.course_id, workspace_id: item.id})">Vào học</button>
+      </div>
+    </li>
+    <li class="list-group-item media v-middle" ng-repeat="item in (filteredItems = (vm.teachingCourses | filter: vm.search)) track by item.id" ng-if="vm.$state.params.page === 'teachings'">
+      <div class="media-body" ng-click="vm.getCourseProgresses(item)">
+        <h4 class="">:: item.title ::</h4>
+        <div class="text-light text-caption">
+          Số học viên: <strong>:: item.students_count ::</strong> &nbsp;
+          <span class="label label-sm" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
+          <span class="label label-sm" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
+          <div class="margin-v-0-10" ng-if="vm.selectedCourse == item.id">Số bài học: <strong>:: item.progress.lessons_count ::</strong></div>
+        </div>
+        <div uib-collapse="vm.selectedCourse != item.id">
+          <div class="media v-middle" ng-repeat="prog in item.progress.students">
+            <div class="media-left">
+              <img ng-src=":: prog.student.id | avatar ::" alt="teacher" class="img-circle width-40" />
+            </div>
+            <div class="media-body">
+              <h4 class="text-title margin-none">:: prog.student.username ::</h4>
+              <div class="caption text-light">Số bài học đã hoàn thành: <strong>:: prog.finished_count ::</strong></div>
+              <div class="caption text-light" ng-if="prog.current_lesson.title">Đang học: <a ui-sref="main.learn({course_id: item.id, workspace_id: prog.current_lesson.workspace_id})">:: prog.current_lesson.title ::</a></div>
+            </div>
+          </div>
+        </div>
       </div>
     </li>
     <li class="list-group-item media v-middle" ng-if="!filteredItems.length">

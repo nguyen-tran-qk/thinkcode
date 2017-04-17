@@ -13,6 +13,7 @@
 
     var vm = this;
     vm.$state = $state;
+    vm.selectedCourse = null;
     vm.getLearningCourses = function(callback) {
       LearnerService.getLearningCourses()
         .then(function(res) {
@@ -48,6 +49,21 @@
           // $scope.loading[0] = false;
           $scope.showMessage('danger');
         });
+    };
+
+    vm.getCourseProgresses = function(course) {
+      if (vm.selectedCourse != course.id) {
+        InstructorService.getCourseProgresses(course.id)
+          .then(function(res) {
+            vm.selectedCourse = course.id;
+            course.progress = res.data;
+          }, function(res) {
+            // $scope.loading[0] = false;
+            $scope.showMessage('danger');
+          });
+      } else {
+        vm.selectedCourse = null;
+      }
     };
 
     vm.getMyProjects = function(finished, callback) {
@@ -179,19 +195,20 @@
         vm.fetchData();
       }
       if (vm.$state.params.page === 'my-courses') {
-        if ($scope.user.isLearner) {
-          vm.getLearningCourses(function() {
-            vm.getCompletedCourses();
-          });
-        } else {
-          $scope.transitionTo('main.user', { page: 'dashboard' });
-        }
+        vm.getLearningCourses(function() {
+          vm.getCompletedCourses();
+        });
       }
       if (vm.$state.params.page === 'my-projects') {
-        if ($scope.user.isLearner) {
-          vm.getMyProjects('all');
+        vm.getMyProjects('all');
+      }
+      if (vm.$state.params.page === 'teachings') {
+        if ($scope.user.instructor) {
+          vm.getTeachingCourses(function() {
+            $scope.loading[0] = false;
+          });
         } else {
-          $scope.transitionTo('main.user', { page: 'my-courses' });
+          vm.$state.go('main.user', { page: 'dashboard' });
         }
       }
       if (vm.$state.params.page === 'profiles') {
