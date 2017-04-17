@@ -7,17 +7,17 @@
   <div class="chat">
     <div class="chat-history">
       <div ng-repeat="chatMessage in messages track by $index">
-        <div class="chat-message clearfix :: chatMessage | isRecentMsg: messages[$index-1] ::" ng-class="{'my-own-message': user.id == chatMessage.user_id}">
-          <img ng-src=":: chatMessage.user_id | avatar ::" alt="" width="32" height="32">
+        <div class="chat-message clearfix" ng-class="{'my-own-message': user.id == chatMessage.user_id, 'recent': :: chatMessage | isRecentMsg: messages[$index-1] ::}">
+          <p class="chat-time" ng-if="!(chatMessage | isRecentMsg: messages[$index-1])">::chatMessage.datetime | fromNowForChat ::</p>
+          <img ng-src=":: chatMessage.user_id | avatar ::" alt="" width="32" height="32" ng-if="!(chatMessage | isRecentMsg: messages[$index-1])">
           <div class="chat-message-content clearfix">
-            <h5 class="text-light">:: chatMessage.name ::</h5>
+            <!-- <h5 class="chatter-name" ng-if="!(chatMessage | isRecentMsg: messages[$index-1])">:: chatMessage.name ::</h5> -->
             <p class="chat-text">:: chatMessage.message ::</p>
-            <p class="chat-time">::chatMessage.datetime | fromNow ::</p>
           </div>
           <!-- end chat-message-content -->
         </div>
         <!-- end chat-message -->
-        <hr ng-if="$index < (messages.length - 1)">
+        <!-- <hr ng-if="$index < (messages.length - 1) && !(chatMessage | isRecentMsg: messages[$index-1])"> -->
       </div>
       <div class="chat-message clearfix" ng-if="!messages.length && user.isLearner">Xin chào, tôi là :: teacher.username ::, giảng viên của bài học này. Tôi có thể giúp gì cho bạn?</div>
     </div>
@@ -25,8 +25,8 @@
     <!-- <p class="chat-feedback">Your partner is typing…</p> -->
     <form>
       <fieldset>
-        <input type="text" placeholder="Type a message…" autofocus ng-model="chatMes" class="col-md-12">
-        <button type="submit" ng-click="sendChat()" hidden>Send</button>
+        <textarea id="chat-field" rows="1" placeholder=":: user.isLearner ? 'Bạn cần hỗ trợ gì?' : 'Hãy viết gì đó...' ::" autofocus ng-model="chatMes" class="col-md-12" ng-keyup="checkSubmit($event)"></textarea>
+        <!-- <button type="submit" ng-click="sendChat()" hidden>Send</button> -->
       </fieldset>
     </form>
   </div>

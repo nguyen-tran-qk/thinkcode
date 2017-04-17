@@ -100,6 +100,7 @@
           }
           $scope.toggleChatBox = function() {
             $scope.unreadCount = 0;
+            document.getElementById('chat-field').focus();
             for (var i = 0; i < $scope.messages.length; i++) {
               checkReadMsg($scope.messages[i]);
             }
@@ -109,13 +110,27 @@
             var chatMessage = {
               user_id: $scope.user.id.toString(),
               name: $scope.user.username,
-              message: $scope.chatMes,
+              message: $scope.chatMes.trim(),
               datetime: datetime.toString(),
               read: false
             };
             $scope.messages.$add(chatMessage);
             $scope.chatMes = "";
             conversation.update({ updated: (new Date()).toString() });
+          };
+          $scope.checkSubmit = function(event) {
+            var element = typeof event === 'object' ? event.target : document.getElementById(event);
+            var scrollHeight = element.scrollHeight - 16; // replace 16 by the sum of padding-top and padding-bottom
+            element.style.height = scrollHeight + "px";
+
+            var code = event.keyCode || event.which;
+            if (code === 13) {
+              if (!event.shiftKey) {
+                event.preventDefault();
+                $scope.sendChat();
+                element.style.height = '35px';
+              }
+            }
           };
           $scope.$on('$destroy', function() {
             $scope.conversation = undefined;

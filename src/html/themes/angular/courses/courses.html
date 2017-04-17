@@ -47,7 +47,7 @@
         <div ng-if="item.cover.length">
           <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block height-150 course-cover width-100pc" ng-attr-style="background-image: url(::item.cover::);"></span>
           <!--  <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block height-150 course-cover width-100pc">
-          	<img ng-src="::item.cover::">
+            <img ng-src="::item.cover::">
           </span> -->
           <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
         </div>
@@ -58,11 +58,11 @@
           </a>
           <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
             <!-- <span class="v-center" ng-if="vm.$state.is('main.courses')">
-	          <span class="btn btn-circle btn-primary btn-lg" ng-click="vm.openCourseModal(item.id)"><i class="fa fa-pencil"></i></span>
-	          <span class="btn btn-circle btn-danger btn-lg" ng-click="vm.deleteCourse(item.id, item.title)"><i class="md md-clear"></i></span>
+            <span class="btn btn-circle btn-primary btn-lg" ng-click="vm.openCourseModal(item.id)"><i class="fa fa-pencil"></i></span>
+            <span class="btn btn-circle btn-danger btn-lg" ng-click="vm.deleteCourse(item.id, item.title)"><i class="md md-clear"></i></span>
           </span> -->
             <span class="v-center">
-	          <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
+            <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
             </span>
           </a>
         </div>
@@ -73,7 +73,7 @@
           <span class="label" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
           <span class="label" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
           <span class="badge-label">
-          	<img ng-src=":: item.badge.id | badgeImage:allBadges ::" alt="Badge" class="icon-block s30 img-circle"><a ui-sref="main.badges({id: item.badge.id})"><strong> :: item.badge.title ::</strong></a>
+            <img ng-src=":: item.badge.id | badgeImage:allBadges ::" alt="Badge" class="icon-block s30 img-circle"><a ui-sref="main.badges({id: item.badge.id})"><strong> :: item.badge.title ::</strong></a>
           </span>
         </p>
       </div>
@@ -82,8 +82,58 @@
         <p class="desc" ng-bind-html="item.description | trustHtml"></p>
         <div class="media v-middle">
           <div class="media-left">
-            <img ng-src=":: 'https://api.adorable.io/avatars/40/' + item.admin.username + '.png' ::" alt="People" class="img-circle width-40" ng-if="!item.admin.avatar.preview.length"/>
-            <img ng-src=":: item.admin.avatar.preview ::" alt="People" class="img-circle width-40" ng-if="item.admin.avatar.preview.length"/>
+            <img ng-src=":: item.admin.id | avatar ::" alt="People" class="img-circle width-40" />
+          </div>
+          <div class="media-body">
+            Quản trị viên
+            <h4><a href>:: item.admin.username ::</a><br/></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="padding-v-15" ng-if="vm.publishedCourses">
+    <div class="media v-middle">
+      <div class="media-body">
+        <h1 class="text-headline margin-none">Đã được duyệt (:: vm.publishedCourses.length ::)</h1>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" ng-repeat="item in vm.publishedCourses | filter: vm.search track by item.id">
+    <div class="panel panel-default paper-shadow">
+      <div class="cover overlay cover-image-full hover">
+        <div ng-if="item.cover.length">
+          <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block height-150 course-cover width-100pc" ng-attr-style="background-image: url(::item.cover::);"></span>
+          <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
+        </div>
+        <div ng-if="!item.cover.length">
+          <span class="img icon-block height-150 bg-primary width-100pc"></span>
+          <a ui-sref="main.courses.details({course_id: item.id})" class="padding-none overlay overlay-full icon-block bg-primary">
+            <span class="v-center"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
+          </a>
+          <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
+            <span class="v-center">
+            <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="panel-body course-title">
+        <h4 class="text-headline margin-none"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
+        <p>
+          <span class="label" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
+          <span class="label" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
+          <span class="badge-label">
+            <img ng-src=":: item.badge.id | badgeImage:allBadges ::" alt="Badge" class="icon-block s30 img-circle"><a ui-sref="main.badges({id: item.badge.id})"><strong> :: item.badge.title ::</strong></a>
+          </span>
+        </p>
+      </div>
+      <hr class="margin-none">
+      <div class="panel-body">
+        <p class="desc" ng-bind-html="item.description | trustHtml"></p>
+        <div class="media v-middle">
+          <div class="media-left">
+            <img ng-src=":: item.admin.id | avatar ::" alt="People" class="img-circle width-40" />
           </div>
           <div class="media-body">
             Quản trị viên

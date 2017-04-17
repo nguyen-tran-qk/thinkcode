@@ -13,11 +13,18 @@
     vm.$state = $state;
 
     vm.fetchCourses = function() {
-    $scope.loading[0] = true;
+      $scope.loading[0] = true;
       var type = vm.$state.params.type || 'published';
       CoursesService.getAllCourses(type, function(res) {
         vm.courses = res.data;
-        $scope.loading[0] = false;
+        if (vm.$state.params.type === 'review') {
+          CoursesService.getAllCourses('published', function(res) {
+            vm.publishedCourses = res.data;
+            $scope.loading[0] = false;
+          });
+        } else {
+          $scope.loading[0] = false;
+        }
       }, function(res) {
         $scope.loading[0] = false;
         if (res.status !== 401) {
@@ -50,7 +57,7 @@
               }, wait || 10);
             };
           }
-          
+
           vm.course = {
             engine: engine_arr[0],
             level: level_arr[0]

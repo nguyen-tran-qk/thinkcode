@@ -6,16 +6,117 @@
   <div class="editor-tabs tabbable tabs-primary col-md-12 margin-none padding-none">
     <ul class="nav nav-tabs">
       <li ng-class="{'active': tab === 1, 'disabled': !vm.editInfoAllowed}">
-        <a href ng-click="vm.editInfoAllowed ? tab=1 : ''">Thông tin khóa học</a>
+        <a href ng-click="vm.editInfoAllowed ? tab=1 : ''">Các bài học</a>
       </li>
-      <li ng-class="{'active': tab === 2, 'disabled': !vm.editAdminAllowed}">
-        <a href ng-click="vm.editAdminAllowed ? tab=2 : ''">Quản trị khóa học</a>
+      <li ng-class="{'active': tab === 2, 'disabled': !vm.editInfoAllowed}">
+        <a href ng-click="vm.editInfoAllowed ? tab=2 : ''">Thông tin khóa học</a>
       </li>
-      <li ng-class="{'active': tab === 3, 'disabled': !vm.editInfoAllowed}">
-        <a href ng-click="vm.editInfoAllowed ? tab=3 : ''">Các bài học</a>
+      <li ng-class="{'active': tab === 3, 'disabled': !vm.editAdminAllowed}">
+        <a href ng-click="vm.editAdminAllowed ? tab=3 : ''">Quản trị khóa học</a>
       </li>
     </ul>
-    <div class="" ng-show="tab === 1">
+    <div class="tab-content course-lessons" ng-show="tab === 1">
+      <!-- <button class="btn btn-sm btn-primary right margin-v-10" ng-click="vm.editing = true; vm.selectedLesson = {};" ng-disabled="vm.editing">Tạo bài học</button> -->
+      <!-- <button class="btn btn-sm btn-success right margin-v-10 layout-margin text-white" ng-click="vm.saveLessonsOrder()" ng-disabled="!vm.orderChanged">Lưu thứ tự</button> -->
+      <div class="nestable display-inline-block margin-v-10" id="lessons-order" on-drop="vm.saveLessonsOrder()" ng-if="vm.tempCourse.lessons.length">
+        <ul class="nestable-list">
+          <li class="nestable-item nestable-item-handle" data-id="::item.order::" data-lesson-id="::item.id::" ng-repeat="item in vm.tempCourse.lessons">
+            <div class="nestable-handle"><i class="md md-menu"></i></div>
+            <div class="nestable-content">
+              <div class="media v-middle width-100pc">
+                <div class="media-body width-100pc block">
+                  <div class="display-inline-block lesson-infos">
+                    <span class="overlay" ng-if="item.deleteConfirm"></span>
+                    <h5 class="text-light margin-none">:: item.type | lessonType ::</h5>
+                    <h4 class="text-title media-heading margin-none"><a href="" class="link-text-color">:: item.title ::</a></h4>
+                    <!-- <div class="text-caption" ng-bind-html="item.description | trustHtml | limitTo: 50"></div><span ng-if="item.description.length > 50"> ...</span> -->
+                  </div>
+                  <button class="btn btn-default btn-sm right margin-v-5-0 ripple" ng-click="item.deleteConfirm = null" ng-if="item.deleteConfirm">Hủy</button>
+                  <button class="btn btn-warning btn-stroke btn-sm right layout-margin margin-v-5-0" ng-click="vm.deleteLesson(item)">:: item.deleteConfirm ? 'Xác nhận xóa?' : 'Xóa' ::</button>
+                  <button class="btn btn-default btn-stroke btn-sm right layout-margin margin-v-5-0" ng-if="!item.deleteConfirm" ng-click="vm.selectLesson(item)">Sửa</button>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="display-inline-block margin-v-10" id="lessons-order" ng-if="!vm.tempCourse.lessons.length">
+        <h4>Chưa có bài học nào trong khóa học này.</h4>
+      </div>
+      <div class="panel panel-default paper-shadow margin-v-10 display-inline-block" data-z="0.5" data-hover-z="1" data-animated="">
+        <div class="panel-body">
+          <div class="form-group form-control-material">
+            <input type="text" class="form-control" id="lesson-title" ng-model="vm.selectedLesson.title" ng-class="{'used': vm.selectedLesson.title}" maxlength="50" required><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+            <label for="lesson-title">Tiêu đề bài học</label>
+          </div>
+          <div class="form-group">
+            <label for="lesson-desc">Mô tả</label>
+            <div text-angular placeholder="Mô tả kết quả cần đạt được" ng-model="vm.selectedLesson.description" class="lesson-desc"></div>
+            <!-- <textarea class="form-control" id="lesson-desc" placeholder="Mô tả kết quả cần đạt được" ng-model="vm.selectedLesson.description" rows="6" required></textarea> -->
+          </div>
+          <div class="btn-group col-md-3 margin-v-0-10" uib-dropdown ng-class="{'disabled': vm.selectedLesson.id}">
+            <button id="lesson-type" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="vm.selectedLesson.id">:: vm.selectedLesson.type | lessonType ::<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="lesson-type">
+              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='video'">Bài giảng</a></li>
+              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='reading'">Bài đọc</a></li>
+              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='code'">Thực hành</a></li>
+              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='project'">Bài tập lớn</a></li>
+            </ul>
+          </div>
+          <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'video'">
+            <div class="form-group form-control-material">
+              <input type="text" class="form-control" id="video-url" placeholder="Liên kết tới video" ng-model="vm.selectedLesson.video_url" ng-class="{'used': vm.selectedLesson.video_url}" required><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+              <label for="video-url">Liên kết tới video</label>
+            </div>
+            <div class="form-group form-control-material">
+              <input type="text" class="form-control" id="video-duration" ng-model="vm.selectedLesson.video_duration" ng-class="{'used': vm.selectedLesson.video_duration}" maxlength="10" required><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
+              <label for="video-duration">Độ dài video</label>
+            </div>
+            <div class="form-group">
+              <label for="teacher-note">Ghi chú</label>
+              <div text-angular placeholder="Ghi chú của giảng viên" ng-model="vm.selectedLesson.teacher_note"></div>
+              <!-- <textarea class="form-control" id="teacher-note" placeholder="Ghi chú của giảng viên" ng-model="vm.selectedLesson.teacher_note" rows="3" required></textarea> -->
+            </div>
+          </div>
+          <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'reading'">
+            <div class="form-group">
+              <label for="lesson-content">Nội dung</label>
+              <div text-angular ta-toolbar="[['h1', 'h2', 'bold', 'italics', 'underline', 'ul', 'ol', 'justifyLeft', 'justifyCenter', 'justifyRight', 'clear'], ['insertImage', 'insertLink', 'insertVideo']]" placeholder="Văn bản" ng-model="vm.selectedLesson.content"></div>
+              <!-- <textarea class="form-control" id="lesson-content" placeholder="Văn bản" ng-model="vm.selectedLesson.content" rows="6" required></textarea> -->
+            </div>
+          </div>
+          <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'code'">
+            <div class="progress" ng-if="vm.uploading">
+              <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" ng-style="{width: vm.uploading}">
+              </div>
+            </div>
+            <div class="sub-header" ng-if="vm.uploading">Uploading :: vm.uploading ::</div>
+            <button class="btn btn-primary btn-stroke btn-sm margin-v-0-10" ng-if="vm.selectedLesson.id" ng-click="vm.downloadTemplate(vm.selectedLesson.id)"><i class="md md-file-download"></i><small> Download</small></button>
+            <div class="btn btn-primary btn-sm margin-v-0-10" ngf-select ng-model="vm.selectedLesson.template" ngf-accept="application/zip" name="template"><small>Upload template</small></div>
+            <span>::vm.selectedLesson.template.name::</span>
+            <div class="form-group">
+              <label for="cheat-sheet">Hướng dẫn</label>
+              <div text-angular placeholder="Lời giải/cách giải quyết cho bài thực hành code" ng-model="vm.selectedLesson.cheat_sheet"></div>
+              <!-- <textarea class="form-control" id="cheat-sheet" placeholder="Lời giải/cách giải quyết cho bài thực hành code" ng-model="vm.selectedLesson.cheat_sheet" rows="6" required></textarea> -->
+            </div>
+          </div>
+          <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'project'">
+            <div class="progress" ng-if="vm.uploading">
+              <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" ng-style="{width: vm.uploading}">
+              </div>
+            </div>
+            <div class="sub-header" ng-if="vm.uploading">Uploading :: vm.uploading ::</div>
+            <button class="btn btn-primary btn-stroke btn-sm margin-v-0-10" ng-if="vm.selectedLesson.id" ng-click="vm.downloadTemplate(vm.selectedLesson.id)"><i class="md md-file-download"></i><small> Download</small></button>
+            <div class="btn btn-primary btn-sm margin-v-0-10" ngf-select ng-model="vm.selectedLesson.template" ngf-accept="application/zip" name="template"><small>Upload template</small></div>
+            <span>::vm.selectedLesson.template.name::</span>
+          </div>
+          <div class="btn btn-primary btn-sm right" ng-click="vm.addLesson()" ng-disabled="!vm.validLesson()">:: vm.selectedLesson.id ? 'Lưu' : 'Tạo bài học' ::</div>
+          <div class="btn btn-default btn-sm right" ng-click="vm.selectedLesson = {}">Hủy</div>
+        </div>
+      </div>
+    </div>
+    <div class="" ng-show="tab === 2">
       <div class="panel panel-default paper-shadow display-inline-block width-100pc" data-z="0.5" data-hover-z="1" data-animated="">
         <div class="panel-body">
           <form class="create-course" name="form.newCourseForm">
@@ -71,7 +172,7 @@
         </div>
       </div>
     </div>
-    <div class="" ng-show="tab === 2">
+    <div class="" ng-show="tab === 3">
       <div class="panel panel-default paper-shadow display-inline-block width-100pc" data-z="0.5" data-hover-z="1" data-animated="">
         <div class="panel-body">
           <div class="form-group form-control-material" ng-class="{'open': vm.authorList.length && vm.authorTyping}">
@@ -113,103 +214,6 @@
         </span>
           </div>
           <button class="btn btn-primary right" type="button" ng-click="vm.saveEdit(vm.tempCourse)" ng-disabled="!form.newCourseForm.$valid || !vm.validForm()" ng-if="tab!==3">Lưu thay đổi</button>
-        </div>
-      </div>
-    </div>
-    <div class="tab-content course-lessons" ng-show="tab === 3">
-      <!-- <button class="btn btn-sm btn-primary right margin-v-10" ng-click="vm.editing = true; vm.selectedLesson = {};" ng-disabled="vm.editing">Tạo bài học</button> -->
-      <!-- <button class="btn btn-sm btn-success right margin-v-10 layout-margin text-white" ng-click="vm.saveLessonsOrder()" ng-disabled="!vm.orderChanged">Lưu thứ tự</button> -->
-      <div class="nestable display-inline-block margin-v-10" id="lessons-order" on-drop="vm.saveLessonsOrder()" ng-if="vm.tempCourse.lessons.length">
-        <ul class="nestable-list">
-          <li class="nestable-item nestable-item-handle" data-id="::item.order::" data-lesson-id="::item.id::" ng-repeat="item in vm.tempCourse.lessons">
-            <div class="nestable-handle"><i class="md md-menu"></i></div>
-            <div class="nestable-content">
-              <div class="media v-middle width-100pc">
-                <div class="media-body width-100pc block">
-                  <div class="display-inline-block lesson-infos">
-                    <span class="overlay" ng-if="item.deleteConfirm"></span>
-                    <h4 class="text-title media-heading margin-none"><a href="" class="link-text-color">:: item.title ::</a></h4>
-                    <!-- <div class="text-caption" ng-bind-html="item.description | trustHtml | limitTo: 50"></div><span ng-if="item.description.length > 50"> ...</span> -->
-                  </div>
-                  <button class="btn btn-default btn-sm right margin-v-5-0 ripple" ng-click="item.deleteConfirm = null" ng-if="item.deleteConfirm">Hủy</button>
-                  <button class="btn btn-warning btn-stroke btn-sm right layout-margin margin-v-5-0" ng-click="vm.deleteLesson(item)">:: item.deleteConfirm ? 'Xác nhận xóa?' : 'Xóa' ::</button>
-                  <button class="btn btn-default btn-stroke btn-sm right layout-margin margin-v-5-0" ng-if="!item.deleteConfirm" ng-click="vm.selectLesson(item)">Sửa</button>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="panel panel-default paper-shadow margin-v-10 display-inline-block" data-z="0.5" data-hover-z="1" data-animated="">
-        <div class="panel-body">
-          <div class="form-group form-control-material">
-            <input type="text" class="form-control" id="lesson-title" ng-model="vm.selectedLesson.title" ng-class="{'used': vm.selectedLesson.title}" maxlength="50" required><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
-            <label for="lesson-title">Tiêu đề bài học</label>
-          </div>
-          <div class="form-group">
-            <label for="lesson-desc">Mô tả</label>
-            <div text-angular placeholder="Mô tả kết quả cần đạt được" ng-model="vm.selectedLesson.description"></div>
-            <!-- <textarea class="form-control" id="lesson-desc" placeholder="Mô tả kết quả cần đạt được" ng-model="vm.selectedLesson.description" rows="6" required></textarea> -->
-          </div>
-          <div class="btn-group col-md-3 margin-v-0-10" uib-dropdown ng-class="{'disabled': vm.selectedLesson.id}">
-            <button id="lesson-type" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="vm.selectedLesson.id">::vm.selectedLesson.type ? vm.selectedLesson.type : 'Chọn phân loại'::<span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="lesson-type">
-              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='video'">Bài giảng</a></li>
-              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='reading'">Bài đọc</a></li>
-              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='code'">Thực hành</a></li>
-              <li role="menuitem"><a href ng-click="vm.selectedLesson.type='project'">Bài tập lớn</a></li>
-            </ul>
-          </div>
-          <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'video'">
-            <div class="form-group form-control-material">
-              <input type="text" class="form-control" id="video-url" placeholder="Liên kết tới video" ng-model="vm.selectedLesson.video_url" ng-class="{'used': vm.selectedLesson.video_url}" required><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
-              <label for="video-url">Liên kết tới video</label>
-            </div>
-            <div class="form-group form-control-material">
-              <input type="text" class="form-control" id="video-duration" ng-model="vm.selectedLesson.video_duration" ng-class="{'used': vm.selectedLesson.video_duration}" maxlength="10" required><span class="ma-form-highlight"></span><span class="ma-form-bar"></span>
-              <label for="video-duration">Độ dài video</label>
-            </div>
-            <div class="form-group">
-              <label for="teacher-note">Ghi chú</label>
-              <div text-angular placeholder="Ghi chú của giảng viên" ng-model="vm.selectedLesson.teacher_note"></div>
-              <!-- <textarea class="form-control" id="teacher-note" placeholder="Ghi chú của giảng viên" ng-model="vm.selectedLesson.teacher_note" rows="3" required></textarea> -->
-            </div>
-          </div>
-          <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'reading'">
-            <div class="form-group">
-              <label for="lesson-content">Nội dung</label>
-              <div text-angular placeholder="Văn bản" ng-model="vm.selectedLesson.content"></div>
-              <!-- <textarea class="form-control" id="lesson-content" placeholder="Văn bản" ng-model="vm.selectedLesson.content" rows="6" required></textarea> -->
-            </div>
-          </div>
-          <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'code'">
-            <div class="progress" ng-if="vm.uploading">
-              <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" ng-style="{width: vm.uploading}">
-              </div>
-            </div>
-            <div class="sub-header" ng-if="vm.uploading">Uploading :: vm.uploading ::</div>
-            <button class="btn btn-primary btn-stroke btn-sm margin-v-0-10" ng-if="vm.selectedLesson.id" ng-click="vm.downloadTemplate(vm.selectedLesson.id)"><i class="md md-file-download"></i><small> Download</small></button>
-            <div class="btn btn-primary btn-sm margin-v-0-10" ngf-select ng-model="vm.selectedLesson.template" ngf-accept="application/zip" name="template"><small>Upload template</small></div>
-            <span>::vm.selectedLesson.template.name::</span>
-            <div class="form-group">
-              <label for="cheat-sheet">Hướng dẫn</label>
-              <div text-angular placeholder="Lời giải/cách giải quyết cho bài thực hành code" ng-model="vm.selectedLesson.cheat_sheet"></div>
-              <!-- <textarea class="form-control" id="cheat-sheet" placeholder="Lời giải/cách giải quyết cho bài thực hành code" ng-model="vm.selectedLesson.cheat_sheet" rows="6" required></textarea> -->
-            </div>
-          </div>
-          <div class="display-inline-block width-100pc" ng-if="vm.selectedLesson.type === 'project'">
-            <div class="progress" ng-if="vm.uploading">
-              <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" ng-style="{width: vm.uploading}">
-              </div>
-            </div>
-            <div class="sub-header" ng-if="vm.uploading">Uploading :: vm.uploading ::</div>
-            <button class="btn btn-primary btn-stroke btn-sm margin-v-0-10" ng-if="vm.selectedLesson.id" ng-click="vm.downloadTemplate(vm.selectedLesson.id)"><i class="md md-file-download"></i><small> Download</small></button>
-            <div class="btn btn-primary btn-sm margin-v-0-10" ngf-select ng-model="vm.selectedLesson.template" ngf-accept="application/zip" name="template"><small>Upload template</small></div>
-            <span>::vm.selectedLesson.template.name::</span>
-          </div>
-          <div class="btn btn-primary btn-sm right" ng-click="vm.addLesson()" ng-disabled="!vm.validLesson()">:: vm.selectedLesson.id ? 'Lưu' : 'Tạo bài học' ::</div>
-          <div class="btn btn-default btn-sm right" ng-click="vm.selectedLesson = {}">Hủy</div>
         </div>
       </div>
     </div>

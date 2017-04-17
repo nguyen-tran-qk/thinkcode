@@ -20,7 +20,8 @@
     margin: 0;
     padding: 0;
   }
-  h4, h5 {
+  h4,
+  h5 {
     line-height: 1.5em;
     margin: 0;
   }
@@ -39,13 +40,20 @@
     height: auto;
     max-width: 100%;
   }
-  input {
+  textarea {
     border: 0;
     color: inherit;
     font-family: inherit;
     font-size: 100%;
     line-height: normal;
     margin: 0;
+    border-radius: 3px;
+    border: 1px solid #cccccc;
+    outline: none;
+    padding: 8px;
+    resize: none;
+    min-height: 35px;
+    max-height: 80px;
   }
   p {
     margin: 0;
@@ -54,7 +62,8 @@
     *zoom: 1;
   }
   /* For IE 6/7 */
-  .clearfix:before, .clearfix:after {
+  .clearfix:before,
+  .clearfix:after {
     content: "";
     display: table;
   }
@@ -88,14 +97,8 @@
   form {
     padding: 10px;
   }
-  input[type="text"] {
-    border-radius: 3px;
-    border: 1px solid #cccccc;
-    outline: none;
-    padding: 8px;
-    // width: 234px;
-  }
 }
+
 .chat-message-counter {
   background: #F44336;
   border-radius: 50%;
@@ -112,6 +115,7 @@
   top: 23px;
   width: 20px;
 }
+
 .chat-close {
   background: #1b2126;
   border-radius: 50%;
@@ -125,17 +129,23 @@
   text-align: center;
   width: 16px;
 }
+
 .chat {
   background: @white-text;
   display: none;
 }
+
 .chat-history {
   height: 252px;
   overflow-y: scroll;
   padding: 8px 10px;
 }
+
 .chat-message {
   margin: 10px 0 0;
+  &.recent {
+    margin-top: 2px;
+  }
   img {
     border-radius: 50%;
     float: left;
@@ -148,28 +158,33 @@
       max-width: 80%;
       background-color: #E0E0E0;
       padding: 5px 10px;
-      border-radius: 7px;
+      border-radius: 10px;
+      white-space: pre-line;
+      float: left;
     }
   }
   .chat-time {
     color: #9a9a9a;
     font-size: 10px;
     text-align: center;
-    visibility: hidden;
+    // visibility: hidden;
   }
   &:hover {
-    .chat-time {
-      visibility: visible;
-    }
+    // .chat-time {
+    //   visibility: visible;
+    // }
   }
   &.my-own-message {
     img {
       float: right;
     }
     .chat-message-content {
-      text-align: right;
       margin-right: 40px;
       margin-left: 0;
+      .chatter-name {
+        text-align: right;
+        font-weight: 700;
+      }
       p.chat-text {
         float: right;
         background-color: #1E88E5;
@@ -178,6 +193,7 @@
     }
   }
 }
+
 .chat-feedback {
   font-style: italic;
   margin: 0 0 0 80px;

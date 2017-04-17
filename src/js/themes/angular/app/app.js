@@ -83,10 +83,7 @@
           $provide.decorator('taOptions', ['taRegisterTool', '$delegate', function(taRegisterTool, taOptions) {
             taOptions.forceTextAngularSanitize = false;
             taOptions.toolbar = [
-              ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
-              ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'clear'],
-              ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent'],
-              ['insertImage', 'insertLink', 'insertVideo']
+              ['h1', 'h2', 'bold', 'italics', 'underline', 'ul', 'ol', 'justifyLeft', 'justifyCenter', 'justifyRight', 'clear']
             ];
             return taOptions;
           }]);

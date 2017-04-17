@@ -39,6 +39,23 @@
         }
       };
     })
+    .filter('fromNowForChat', function() {
+      return function(string, notSuffixed) {
+        if (moment(string).isValid()) {
+          if (moment().diff(string, 'hours', true) < 1) {
+            return moment(string).fromNow(notSuffixed);
+          } else if (moment().diff(string, 'hours', true) < 24) {
+            return moment(string).calendar();
+          } else if (moment().diff(string, 'days') < 7) {
+            return moment(string).format('dddd HH:mm');
+          } else {
+            return moment(string).format('DD/MM/YYYY HH:mm');
+          }
+        } else {
+          return string;
+        }
+      };
+    })
     .filter('courseStatus', function() {
       return function(string) {
         if (string === 'draft') {
@@ -72,6 +89,20 @@
           }
         }
         return false;
+      };
+    })
+    .filter('lessonType', function() {
+      return function(lessonType) {
+        switch (lessonType) {
+          case 'video':
+            return 'Bài giảng';
+          case 'reading':
+            return 'Bài đọc';
+          case 'code':
+            return 'Bài thực hành';
+          case 'project':
+            return 'Bài tập lớn';
+        }
       };
     })
     .filter('lessonTypeClass', function() {
@@ -154,10 +185,10 @@
     })
     .filter('isRecentMsg', function() {
       return function(curMsg, prevMsg) {
-        if (prevMsg && curMsg.user_id == prevMsg.user_id && moment(curMsg.datetime).diff(prevMsg.datetime, 'seconds') < 15) {
-          return 'recent';
+        if (prevMsg && curMsg.user_id == prevMsg.user_id && moment(curMsg.datetime).diff(prevMsg.datetime, 'seconds') < 30) {
+          return true;
         }
-        return '';
+        return false;
       };
     });
 

@@ -46,15 +46,13 @@
               <a ui-sref="main.learn({course_id: convo.course_id, workspace_id: convo.$id})" class="padding-v-10">
                 <div class="media v-middle margin-v-0">
                   <div class="media-left" ng-if="user.isLearner">
-                    <img ng-src=":: 'https://api.adorable.io/avatars/40/' + convo.teacher_name + '.png' ::" alt="" width="40" class="media-object" ng-if="!convo.teacher_avatar.length" />
-                    <img ng-src=":: convo.teacher_avatar ::" alt="" ng-if="convo.teacher_avatar.length" width="40" class="media-object" ng-if="convo.teacher_avatar.length" />
+                    <img ng-src=":: convo.teacher_id | avatar ::" alt="" width="40" class="media-object" />
                   </div>
                   <div class="media-left" ng-if="!user.isLearner">
-                    <img ng-src=":: 'https://api.adorable.io/avatars/40/' + convo.student_name + '.png' ::" alt="" width="40" class="media-object" ng-if="!convo.student_avatar.length" />
-                    <img ng-src=":: convo.student_avatar ::" alt="" class="img-circle" ng-if="convo.student_avatar.length" width="40" class="media-object" ng-if="convo.student_avatar.length" />
+                    <img ng-src=":: convo.student_id | avatar ::" alt="" class="img-circle" width="40" class="media-object" />
                   </div>
                   <div class="media-body padding-none">
-                    <span class="date">:: convo.updated | fromNow ::</span>
+                    <span class="date">:: convo.updated | fromNowForChat ::</span>
                     <div class="user">:: user.isLearner ? convo.teacher_name : convo.student_name ::</div>
                     <span>:: msg = (convo.messages | msgSummary) | limitTo: 50 ::</span><span ng-if="msg.length > 50">...</span>
                     <div class="text-light lesson">trong <span class="text-primary">:: convo.lesson_title ::</span></div>
@@ -83,7 +81,6 @@
           <!-- user -->
           <li class="dropdown user{% if page.slug|contains('website-student-') %} active{% endif %}">
             <a class="" data-toggle="dropdown">
-              <!-- <img ng-src=":: 'https://api.adorable.io/avatars/40/' + user.username + '.png' ::" alt="" class="img-circle" ng-if="!user.avatar.preview.length" /> -->
               <img ng-src=":: user.id | avatar ::" alt="" class="img-circle" />
               <!-- <img ng-src=":: user.avatar.preview ::" alt="" class="img-circle" ng-if="user.avatar.preview.length" /> --> :: user.username ::
               <!-- <span class="caret"></span> -->

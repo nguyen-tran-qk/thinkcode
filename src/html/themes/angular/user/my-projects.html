@@ -59,8 +59,7 @@
           <a ui-sref="main.courses.details({course_id: item.course_id})">:: item.course_name ::</a> &nbsp;
           <span class="label label-sm" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
           <span class="label label-sm" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
-          <img ng-src=":: 'https://api.adorable.io/avatars/40/' + item.teacher.username + '.png' ::" alt="People" class="img-circle width-20" ng-if="!item.teacher.avatar.preview.length" />
-          <img ng-src=":: item.teacher.avatar.preview ::" alt="People" class="img-circle width-20" ng-if="item.teacher.avatar.preview.length" />
+          <img ng-src=":: item.teacher.id | avatar ::" alt="People" class="img-circle width-20" />
           <span class="text-h5 text-light"> :: item.teacher.username ::</span>
         </div>
       </div>

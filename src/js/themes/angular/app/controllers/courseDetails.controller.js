@@ -18,6 +18,12 @@
       vm.$state.go('main.courses', {}, { reload: true });
       return;
     }
+    vm.initLesson = function() {
+      vm.selectedLesson = {
+        type: 'reading'
+      };
+    };
+    vm.initLesson();
 
     var isInstructor = function() {
       if ($scope.user.instructor) {
@@ -278,7 +284,7 @@
         vm.editInfoAllowed = $scope.user.staff;
       }
       if (!vm.editInfoAllowed) {
-        $scope.tab = 2;
+        $scope.tab = 3;
       } else {
         $scope.tab = 1;
       }
@@ -493,8 +499,9 @@
           CoursesService.addOrUpdateLesson(vm.tempCourse.id, lessonId, data, function(res) {
             CoursesService.getCourseById(vm.tempCourse.id, function(res) {
               vm.tempCourse = res.data;
+              $scope.showMessage('success', 'Thành công! Danh sách bài học đã được cập nhật lại.');
               vm.editing = false;
-              vm.selectedLesson = {};
+              vm.initLesson();
             }, function(res) {
               $scope.showMessage('danger');
             });
@@ -517,9 +524,10 @@
             if (res.status < 300) {
               CoursesService.getCourseById(vm.tempCourse.id, function(res) {
                 vm.tempCourse = res.data;
+                $scope.showMessage('success', 'Thành công! Danh sách bài học đã được cập nhật lại.');
                 vm.editing = false;
                 vm.uploading = null;
-                vm.selectedLesson = {};
+                vm.initLesson();
               }, function(res) {
                 $scope.showMessage('danger');
               });
@@ -547,6 +555,7 @@
           CoursesService.deleteLesson(vm.tempCourse.id, lesson.id, function(res) {
             CoursesService.getCourseById(vm.tempCourse.id, function(res) {
               vm.tempCourse = res.data;
+              $scope.showMessage('success', 'Bài học ' + lesson.title + ' đã được xóa!');
             }, function(res) {
               $scope.showMessage('danger');
             });

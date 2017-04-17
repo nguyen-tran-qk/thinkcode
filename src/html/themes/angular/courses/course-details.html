@@ -54,8 +54,7 @@
                         <p ta-bind="text" ng-model="lesson.description" ta-readonly='disabled'></p>
                         <div class="media v-middle">
                           <div class="media-left">
-                            <img ng-src=":: 'https://api.adorable.io/avatars/40/' + lesson.teacher.username + '.png' ::" alt="teacher" class="img-circle width-40" ng-if="!lesson.teacher.avatar.preview.length" />
-                            <img ng-src=":: lesson.teacher.avatar.preview ::" alt="teacher" class="img-circle width-40" ng-if="lesson.teacher.avatar.preview.length" />
+                            <img ng-src=":: lesson.teacher.id | avatar ::" alt="teacher" class="img-circle width-40" />
                           </div>
                           <div class="media-body">
                             <h4 class="text-title margin-none">:: lesson.teacher.username ::</h4>
@@ -104,8 +103,7 @@
           </div>
           <div class="label bg-cyan-500 admin-label width-100pc margin-v-0-15">
             <small>Quản trị viên:</small>&nbsp;
-            <img ng-src=":: 'https://api.adorable.io/avatars/40/' + vm.course.admin.username + '.png' ::" alt="People" class="img-circle width-30" ng-if="!vm.course.admin.avatar.preview.length" />
-            <img ng-src=":: vm.course.admin.avatar.preview ::" alt="People" class="img-circle width-30" ng-if="vm.course.admin.avatar.preview.length" />
+            <img ng-src=":: vm.course.admin.id | avatar ::" alt="People" class="img-circle width-30" />
             <span class="text-h5"> :: vm.course.admin.username ::</span>
           </div>
           <div class="panel panel-default paper-shadow" data-z="0.5" data-hover-z="1" data-animated="">
@@ -115,8 +113,7 @@
               </div>
               <div class="media v-middle" ng-repeat="teacher in vm.course.teachers">
                 <div class="media-left">
-                  <img ng-src=":: 'https://api.adorable.io/avatars/40/' + teacher.username + '.png' ::" alt="People" class="img-circle width-40" ng-if="!teacher.avatar.preview.length" />
-                  <img ng-src=":: teacher.avatar.preview ::" alt="People" class="img-circle width-40" ng-if="teacher.avatar.preview.length" />
+                  <img ng-src=":: teacher.id | avatar ::" alt="People" class="img-circle width-40"/>
                 </div>
                 <div class="media-body">
                   <h4 class="margin-none"><a href class="">:: teacher.username ::</a></h4>
