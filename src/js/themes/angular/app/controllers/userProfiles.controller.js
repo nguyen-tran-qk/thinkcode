@@ -3,7 +3,7 @@
   angular.module('thinkcodeControllers')
     .controller('UserProfilesCtrl', userProfilesCtrl);
 
-  function userProfilesCtrl($scope, $rootScope, $state, $q, $timeout, UserService, LearnerService) {
+  function userProfilesCtrl($scope, $rootScope, $state, $q, $timeout, UserService, LearnerService, InstructorService) {
     $scope.app.settings.htmlClass = $rootScope.htmlClass.website;
     $scope.app.settings.bodyClass = '';
     $scope.loading[0] = true;
@@ -30,7 +30,20 @@
       UserService.getUserInfo($scope.user.id, 'completions')
         .then(function(res) {
           $scope.loading[0] = false;
-          vm.completedCourses = res.data;
+          vm.completedCourses = res.data.completions;
+        }, function(res) {
+          // $scope.loading[0] = false;
+          $scope.showMessage('danger');
+        });
+    };
+
+    vm.getTeachingCourses = function(callback) {
+      InstructorService.getTeachingCourses()
+        .then(function(res) {
+          vm.teachingCourses = res.data;
+          if (callback) {
+            callback();
+          }
         }, function(res) {
           // $scope.loading[0] = false;
           $scope.showMessage('danger');
@@ -54,7 +67,7 @@
     vm.getMyBadges = function(callback) {
       UserService.getUserInfo($scope.user.id, 'achievements')
         .then(function(res) {
-          vm.myBadges = res.data;
+          vm.myBadges = res.data.achievements;
           if (callback) {
             callback();
           } else {
@@ -70,10 +83,19 @@
       vm.getLearningCourses(function() {
         vm.getMyProjects(false, function() {
           vm.getMyBadges(function() {
-            $timeout(function() {
-              $rootScope.$broadcast('masonry.reload');
-              $scope.loading[0] = false;
-            }, 100);
+            if ($scope.user.instructor) {
+              vm.getTeachingCourses(function() {
+                $timeout(function() {
+                  $rootScope.$broadcast('masonry.reload');
+                  $scope.loading[0] = false;
+                }, 100);
+              });
+            } else {
+              $timeout(function() {
+                $rootScope.$broadcast('masonry.reload');
+                $scope.loading[0] = false;
+              }, 100);
+            }
           });
         });
       });
@@ -154,16 +176,16 @@
 
     $scope.$watch('vm.$state.params.page', function(newVal, oldVal) {
       if (vm.$state.params.page === 'dashboard') {
-        if ($scope.user.isLearner) {
-          vm.fetchData();
-        } else {
-          $scope.transitionTo('main.user', { page: 'my-courses' });
-        }
+        vm.fetchData();
       }
       if (vm.$state.params.page === 'my-courses') {
-        vm.getLearningCourses(function() {
-          vm.getCompletedCourses();
-        });
+        if ($scope.user.isLearner) {
+          vm.getLearningCourses(function() {
+            vm.getCompletedCourses();
+          });
+        } else {
+          $scope.transitionTo('main.user', { page: 'dashboard' });
+        }
       }
       if (vm.$state.params.page === 'my-projects') {
         if ($scope.user.isLearner) {

@@ -11,6 +11,10 @@ body {
   background-color: #f0f0f0;
   font-family: 'NotoSans';
 }
+a[disabled] {
+  pointer-events: none;
+  cursor: default;
+}
 .btn {
   &:not(.dropdown-toggle) {
     font-weight: 700 !important;
@@ -60,6 +64,9 @@ textarea {
     }
   }
   &.navbar-size-xlarge {
+    .navbar-nav > li > a {
+      padding: 0 10px;
+    }
     #messages-dropdown {
       .dropdown-menu {
         top: 85%;
@@ -163,6 +170,9 @@ textarea {
   i.fa {
     margin-top: -2px;
   }
+}
+.progress {
+  background-color: #eeeeee;
 }
 #simple-dropdown {
   & ~ ul.dropdown-menu {

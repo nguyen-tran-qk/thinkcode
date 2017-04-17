@@ -13,13 +13,13 @@
       </div>
     </div>
     <div class="collapse navbar-collapse" id="main-nav">
-      <ul class="nav navbar-nav navbar-nav-margin-left">
+      <ul class="nav navbar-nav">
         <li ng-class="{ 'active': $state.includes('main.courses') && $state.params.type === 'published' }">
           <a href ng-click="goTo('main.courses', {type: 'published'})">Thư viện</a>
         </li>
-        <li ng-class="{ 'active': $state.includes('main.user') }" ng-if="user.username">
+        <!-- <li ng-class="{ 'active': $state.includes('main.user') }" ng-if="user.username">
           <a href ng-click="goTo('main.user', {page: 'dashboard'})">Hồ sơ của tôi</a>
-        </li>
+        </li> -->
         <!-- <li ng-class="{ 'active': $state.includes('main.workspaces') }">
           <a href ng-click="goTo('main.workspaces')">Workspaces</a>
         </li> -->
@@ -77,24 +77,24 @@
             </li>
           </ul>
         </div>
-        <ul class="nav navbar-nav navbar-nav-bordered navbar-nav-margin-right" ng-if="user">
+        <ul class="nav navbar-nav" ng-if="user">
           <!-- user -->
-          <li class="dropdown user{% if page.slug|contains('website-student-') %} active{% endif %}">
-            <a class="" data-toggle="dropdown">
+          <li class="dropdown user">
+            <a href class="" data-toggle="dropdown">
               <img ng-src=":: user.id | avatar ::" alt="" class="img-circle" />
-              <!-- <img ng-src=":: user.avatar.preview ::" alt="" class="img-circle" ng-if="user.avatar.preview.length" /> --> :: user.username ::
-              <!-- <span class="caret"></span> -->
+              :: user.username ::
+              <span class="caret"></span>
             </a>
-            <!-- <ul class="dropdown-menu" role="menu">
-              <li ui-sref-active="active"><a ui-sref="website-student.dashboard"><i class="fa fa-bar-chart-o"></i> Dashboard</a></li>
-              <li ui-sref-active="active"><a ui-sref="website-student.courses"><i class="fa fa-mortar-board"></i> My Courses</a></li>
-              <li ui-sref-active="active"><a ui-sref="website-student.private-profile"><i class="fa fa-user"></i> Profile</a></li>
-            </ul> -->
+            <ul class="dropdown-menu" role="menu">
+              <li ng-click="goTo('main.user', {page: 'dashboard'})"><a><i class="fa fa-bar-chart-o"></i> Hồ sơ của tôi</a></li>
+              <li ng-click="goTo('main.user', {page: 'my-courses'})" ng-if="user.isLearner"><a><i class="fa fa-mortar-board"></i> Khóa học của tôi</a></li>
+              <li ng-click="goTo('main.user', {page: 'profiles'})"><a><i class="fa fa-user"></i> Thông tin cá nhân</a></li>
+              <li ng-click="signout()"><a><i class="fa fa-sign-out"></i> Đăng xuất</a></li>
+            </ul>
           </li>
           <!-- // END user -->
         </ul>
         <a ui-sref="login" class="navbar-btn btn btn-primary" ng-if="!user">Đăng nhập</a>
-        <a ng-click="signout()" class="navbar-btn btn btn-primary" ng-if="user">Đăng xuất</a>
       </div>
     </div>
     <!-- /.navbar-collapse -->

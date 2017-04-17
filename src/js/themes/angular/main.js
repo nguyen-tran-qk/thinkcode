@@ -39,6 +39,7 @@ require('./app/services/users');
 require('./app/services/course');
 require('./app/services/badge');
 require('./app/services/learner');
+require('./app/services/instructor');
 
 // Angular App Controllers
 require('./app/controllers/main.controller.js');

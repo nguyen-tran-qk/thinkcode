@@ -87,25 +87,29 @@
       };
     }
 
+    function checkUser() {
+      if (localStorage.token) {
+        UserService.checkUser()
+          .then(function(res) {}, function(res) {
+            if (res.status === 400) {
+              localStorage.removeItem('token');
+              localStorage.removeItem('user');
+              $scope.$state.go('main.courses', { type: 'published' }, { reload: true });
+              $scope.unsetUserCheck();
+              ngToast.create({
+                className: 'danger',
+                content: 'Bạn đã bị đăng xuất khỏi hệ thống. Vui lòng đăng nhập lại.',
+                timeout: '5000'
+              });
+            }
+          });
+      }
+    }
+
     $scope.setUserCheck = function() {
       if (!angular.isDefined($scope.userCheck)) {
         $scope.userCheck = $interval(function() {
-          if (localStorage.token) {
-            UserService.checkUser()
-              .then(function(res) {}, function(res) {
-                if (res.status === 400) {
-                  localStorage.removeItem('token');
-                  localStorage.removeItem('user');
-                  $scope.$state.go('main.courses', { type: 'published' }, { reload: true });
-                  $scope.unsetUserCheck();
-                  ngToast.create({
-                    className: 'danger',
-                    content: 'Bạn đã bị đăng xuất khỏi hệ thống. Vui lòng đăng nhập lại.',
-                    timeout: '5000'
-                  });
-                }
-              });
-          }
+          checkUser();
         }, 15000);
       }
     };
@@ -131,7 +135,7 @@
         $scope.conversations.$watch(function(obj) {
           var index = $scope.conversations.$indexFor(obj.key);
           if (obj.event === 'child_added') {
-            if ($scope.conversations[index] && 
+            if ($scope.conversations[index] &&
               ($scope.conversations[index].student_id == $scope.user.id || $scope.conversations[index].teacher_id == $scope.user.id)) {
               $scope.conversations[index] = checkConversation($scope.conversations[index]);
               $scope.conversations[index].isInvolved = true;
@@ -184,6 +188,7 @@
       $state.transitionTo(state, params, { notify: false });
     };
     if (localStorage.token) {
+      checkUser();
       $scope.getConvos();
       $scope.setUserCheck();
     } else {
