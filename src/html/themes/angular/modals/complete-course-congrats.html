@@ -9,15 +9,15 @@
         <div class="media-left">
           <div class="cover width-60 width-100pc-xs overlay cover-image-full hover">
             <div ng-if="item.cover.length">
-              <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block s60 course-cover" ng-attr-style="background-image: url(::item.cover::);"></span>
-              <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
+              <span ng-click="vm.cancel()" ui-sref="main.courses.details({course_id: item.id})" class="img icon-block s60 course-cover" ng-attr-style="background-image: url(::item.cover::);"></span>
+              <a ng-click="vm.cancel()" ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
             </div>
             <div ng-if="!item.cover.length">
               <span class="img icon-block s60 bg-primary"></span>
-              <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full padding-none icon-block s60 bg-primary">
+              <a ng-click="vm.cancel()" ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full padding-none icon-block s60 bg-primary">
                 <span class="v-center"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
               </a>
-              <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
+              <a ng-click="vm.cancel()" ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
                 <span class="v-center">
             <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
                 </span>
@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="media-body">
-          <h4 class="media-heading margin-v-5-3"><a class="link-text-color" ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
+          <h4 class="media-heading margin-v-5-3"><a class="link-text-color" ng-click="vm.cancel()" ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
         </div>
       </div>
     </slick>

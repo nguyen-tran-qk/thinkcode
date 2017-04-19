@@ -18,8 +18,8 @@
         </div>
       </div>
       <a ng-click="vm.signin()" class="btn btn-primary" ng-disabled="!vm.validForm()">Đăng nhập <i class="fa fa-fw fa-unlock-alt"></i></a>
-      <a href="#" class="forgot-password">Quên mật khẩu?</a>
-      <a {% if angular %}ui-sref="sign-up" {% else %}href="sign-up.html" {% endif %} class="link-text-color">Đăng ký</a>
+      <!-- <a href="#" class="forgot-password">Quên mật khẩu?</a> -->
+      <a ui-sref="sign-up" class="block margin-v-10-0">Đăng ký</a>
     </div>
   </div>
 </div>

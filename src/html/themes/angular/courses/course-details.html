@@ -29,7 +29,7 @@
               <span class="label" ng-class="vm.course.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: vm.course.engine ::</span>
               <span class="label" ng-class="vm.course.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: vm.course.level ::</span>
               <!-- <i class="course-badge fa fa-trophy" aria-hidden="true"></i><a href><strong> :: vm.course.badge.title ::</strong></a> -->
-              <img ng-src=":: vm.course.badge.id | badgeImage:allBadges ::" alt="Badge" class="icon-block s30 img-circle"><a ui-sref="main.badges({id: vm.course.badge.id})"><strong> :: vm.course.badge.title ::</strong></a>
+              <img ng-src=":: vm.course.badge.id | badgeImage:allBadges ::" alt="Badge" class="icon-block s30 img-circle" ng-if="vm.course.badge"><a ui-sref="main.badges({id: vm.course.badge.id})"><strong> :: vm.course.badge.title ::</strong></a>
             </p>
           </div>
         </div>
@@ -123,39 +123,6 @@
             </div>
           </div>
           <button class="btn btn-stroke btn-lg width-100pc btn-unenroll" ng-if="user && vm.$state.params.type === 'published' && vm.course.enrolled" ng-click="vm.unenroll()">Hủy đăng ký</button>
-          <div class="margin-v-15" ng-if="vm.course.recommendations.length && (vm.course.recommendations | publishedCourses).length">
-            <h4 class="margin-v-10-5">Các khóa học đề nghị</h4>
-            <slick dots="true" arrows="false" autoplay="true" infinite="true" speed="300" slides-to-show="1" touch-move="false" slides-to-scroll="1">
-              <div class="panel panel-default paper-shadow padding-none margin-none" data-z="0.5" data-hover-z="1" data-animated ng-repeat="item in vm.course.recommendations | publishedCourses track by item.id">
-                <div class="panel-body padding-v-10">
-                  <div class="media v-middle media-clearfix-xs">
-                    <div class="media-left">
-                      <div class="cover width-90 width-100pc-xs overlay cover-image-full hover">
-                        <div ng-if="item.cover.length">
-                          <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block s90 course-cover" ng-attr-style="background-image: url(::item.cover::);"></span>
-                          <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
-                        </div>
-                        <div ng-if="!item.cover.length">
-                          <span class="img icon-block s90 bg-primary"></span>
-                          <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full padding-none icon-block s90 bg-primary">
-                            <span class="v-center"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
-                          </a>
-                          <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
-                            <span class="v-center">
-                            <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="media-body">
-                      <h4 class="media-heading margin-v-5-3"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </slick>
-          </div>
         </div>
       </div>
     </div>
@@ -163,12 +130,47 @@
       {% include "src/html/themes/angular/courses/course-admin.html" %}
     </div>
   </div>
-  <div class="bg-white page-section padding-v-20-40 course-prerequisites" ng-if="vm.course.prerequisites.length && (vm.course.prerequisites | publishedCourses).length && !vm.isConfig">
+  <div class="bg-white page-section padding-v-20-40" ng-if="vm.course.recommendations.length && (vm.course.recommendations | publishedCourses).length">
+    <div class="container">
+      <h4 class="margin-v-10">Các khóa học đề nghị</h4>
+      <slick dots="true" arrows="false" autoplay="true" infinite="true" speed="300" slides-to-show="3" touch-move="false" slides-to-scroll="1">
+        <div class="panel panel-default paper-shadow padding-none margin-none" data-z="0.5" data-hover-z="1" data-animated ng-repeat="item in vm.course.recommendations | publishedCourses track by item.id">
+          <div class="panel-body padding-v-10">
+            <div class="media v-middle media-clearfix-xs">
+              <div class="media-left">
+                <div class="cover width-90 width-100pc-xs overlay cover-image-full hover">
+                  <div ng-if="item.cover.length">
+                    <span ui-sref="main.courses.details({course_id: item.id})" class="img icon-block s90 course-cover" ng-attr-style="background-image: url(::item.cover::);"></span>
+                    <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white"></a>
+                  </div>
+                  <div ng-if="!item.cover.length">
+                    <span class="img icon-block s90 bg-primary"></span>
+                    <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full padding-none icon-block s90 bg-primary">
+                      <span class="v-center"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
+                    </a>
+                    <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
+                      <span class="v-center">
+                            <span class="btn btn-circle btn-primary btn-lg"><i class="fa fa-graduation-cap"></i></span>
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="media-body">
+                <h4 class="media-heading margin-v-5-3"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </slick>
+    </div>
+  </div>
+  <div class="bg-white page-section padding-v-20-40 course-prerequisites" ng-if="vm.course.prerequisites.length && (vm.course.prerequisites | publishedCourses).length && !vm.isConfig && !vm.course.completed">
     <div class="container">
       <h4 class="margin-none">Các kiến thức nên biết</h4>
       <p class="text-light">Khóa học này yêu cầu một số kiến thức nhất định, do đó trước khi bắt đầu, bạn nên tham gia:</p>
-      <div class="col-sm-4 col-lg-3">
-        <div class="panel panel-default paper-shadow padding-none" data-z="0.5" data-hover-z="1" data-animated ng-repeat="item in vm.course.prerequisites | publishedCourses">
+      <div class="col-sm-4" ng-repeat="item in vm.course.prerequisites | publishedCourses">
+        <div class="panel panel-default paper-shadow padding-none" data-z="0.5" data-hover-z="1" data-animated>
           <div class="panel-body">
             <div class="media media-clearfix-xs">
               <div class="media-left">
