@@ -139,7 +139,7 @@
                 <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'dashboard'}" ng-click="transitionTo('main.user', {page: 'dashboard'})"><a class="link-text-color">Tổng quan</a></li>
                 <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'my-courses'}" ng-click="transitionTo('main.user', {page: 'my-courses'})"><a class="link-text-color">Khóa học của tôi</a></li>
                 <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'my-projects'}" ng-click="transitionTo('main.user', {page: 'my-projects'})"><a class="link-text-color">Các bài tập lớn</a></li>
-                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'teachings'}" ng-click="transitionTo('main.user', {page: 'teachings'})"><a class="link-text-color">Khóa học đang dạy</a></li>
+                <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'teachings'}" ng-click="transitionTo('main.user', {page: 'teachings'})" ng-if="user.instructor"><a class="link-text-color">Khóa học đang dạy</a></li>
                 <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'profiles'}" ng-click="transitionTo('main.user', {page: 'profiles'})"><a class="link-text-color">Thông tin cá nhân</a></li>
                 <li class="list-group-item" ng-class="{'active': vm.$state.params.page === 'conversations'}" ng-click="transitionTo('main.user', {page: 'conversations'})"><a class="link-text-color">Danh sách hội thoại</a></li>
               </ul>

@@ -52,11 +52,11 @@
             if (res.data.session) {
               $scope.user = UserService.getUser();
               // $scope.setUserCheck();
-              if ($scope.user.isLearner) {
-                $state.go('main.user', { page: 'dashboard' }, { reload: true });
-              } else {
-                $state.go('main.courses', { type: 'published' }, { reload: true });
-              }
+              $state.go('main.user', { page: 'dashboard' }, { reload: true });
+              // if ($scope.user.isLearner) {
+              // } else {
+              //   $state.go('main.courses', { type: 'published' }, { reload: true });
+              // }
             }
           }, function(res) {
             vm.showMessage('danger', 'Thông tin đăng nhập không chính xác.');

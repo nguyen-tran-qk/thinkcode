@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('app')
-    .factory('UserService', ['API_URL', '$http', function(API_URL, $http) {
+    .factory('UserService', ['API_URL', '$http', 'Upload', function(API_URL, $http, Upload) {
       var user = null;
       return {
         getUser: function() {
@@ -87,7 +87,15 @@
             type: type,
             user: userData
           };
-          return $http.put(API_URL + '/users/' + userId, data);
+          if (type === 'profile') {
+            return Upload.upload({
+              url: API_URL + '/users/' + userId,
+              method: 'PUT',
+              data: data
+            });
+          } else {
+            return $http.put(API_URL + '/users/' + userId, data);
+          }
         },
         getUserConversations: function() {
           return $http.get(API_URL + '/workspaces/conversations?token=' + localStorage.token);

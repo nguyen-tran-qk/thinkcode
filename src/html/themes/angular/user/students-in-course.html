@@ -1,0 +1,38 @@
+<div class="panel panel-default width-100pc">
+  <div class="panel-body padding-v-10">
+    <div class="media v-middle">
+      <div class="media-body">
+        <h4 class="text-light">Danh sách học viên trong khóa học:</h4>
+        <h2 class="margin-v-10">:: vm.selectedCourse.title ::</h2>
+        <div class="text-light text-caption">
+          <div class="padding-v-0-5">
+            <span class="label label-sm" ng-class="vm.selectedCourse.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: vm.selectedCourse.engine ::</span>
+            <span class="label label-sm" ng-class="vm.selectedCourse.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: vm.selectedCourse.level ::</span>
+          </div>
+          Số học viên: <strong>:: vm.selectedCourse.students_count ::</strong> &nbsp;
+          <span class="margin-v-0-10" ng-if="vm.selectedCourse.id == vm.selectedCourse.id">Số bài học: <strong>:: vm.selectedCourse.progress.lessons_count ::</strong></span>
+        </div>
+      </div>
+      <div class="media-right">
+        <a class="btn btn-white paper-shadow" ng-click="vm.selectedCourse = null">Quay lại</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-xs-12">
+  <div class="panel panel-default paper-shadow col-xs-12" data-z="0.5">
+    <ul class="list-group">
+      <li class="list-group-item media v-middle" ng-repeat="prog in vm.selectedCourse.progress.students">
+        <div class="media-left">
+          <img ng-src=":: prog.student.id | avatar ::" alt="teacher" class="img-circle width-40" />
+        </div>
+        <div class="media-body">
+          <h4 class="text-title margin-none">:: prog.student.username ::</h4>
+          <div class="caption text-light padding-v-5-0">Đã hoàn thành: <strong>:: prog.finished_count ::/:: vm.selectedCourse.progress.lessons_count ::</strong> bài học</div>
+          <div class="caption text-light" ng-if="prog.current_lesson.title">Đang học: <a ui-sref="main.learn({course_id: vm.selectedCourse.id, workspace_id: prog.current_lesson.workspace_id})">:: prog.current_lesson.title ::</a></div>
+          <div class="caption text-light" ng-if="!prog.current_lesson.title">Chưa học bài mới</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

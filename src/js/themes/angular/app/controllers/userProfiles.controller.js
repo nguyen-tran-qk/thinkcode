@@ -52,11 +52,11 @@
     };
 
     vm.getCourseProgresses = function(course) {
-      if (vm.selectedCourse != course.id) {
+      if (!vm.selectedCourse || vm.selectedCourse.id != course.id) {
         InstructorService.getCourseProgresses(course.id)
           .then(function(res) {
-            vm.selectedCourse = course.id;
             course.progress = res.data;
+            vm.selectedCourse = course;
           }, function(res) {
             // $scope.loading[0] = false;
             $scope.showMessage('danger');
@@ -123,10 +123,7 @@
         .then(function(res) {
           vm.profiles = res.data;
           if (isUpdated) {
-            var temp = JSON.parse(localStorage.user);
-            temp.avatar = res.data.avatar;
-            localStorage.user = JSON.stringify(temp);
-            $scope.user = UserService.getUser();
+            location.reload(true);
           }
           vm.profileData = {
             avatar: null
@@ -140,6 +137,7 @@
     vm.photoChanged = function(file) {
       if (file !== null) {
         // var file = files[0];
+        vm.tempAvatar = file;
         if (fileReaderSupported && file.type.indexOf('image') > -1) {
           $timeout(function() {
             var fileReader = new FileReader();
@@ -158,6 +156,7 @@
     vm.saveProfiles = function() {
       vm.saving = true;
       vm.profileData.email = vm.profiles.email;
+      vm.profileData.avatar = vm.tempAvatar;
       vm.profileData.introduction = vm.profiles.introduction;
       UserService.updateUserInfo($scope.user.id, 'profile', vm.profileData)
         .then(function(res) {
@@ -166,6 +165,10 @@
           vm.saving = false;
         }, function(res) {
           $scope.showMessage('danger');
+          if (res.status === 400) {
+            $scope.showMessage('danger', 'Hãy chắc chắn rằng ảnh đại diện có dung lượng dưới 200KB.');
+          }
+          vm.saving = false;
         });
     };
 

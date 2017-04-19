@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
       </button>
       <div class="navbar-brand navbar-brand-logo">
-        <a class="svg" href ng-click="user.isLearner ? goTo('main.user', {page: 'dashboard'}) : goTo('main.courses', {type: 'published'})"><img src="images/ThinkCode-04.svg"></a>
+        <a class="svg" href ng-click="user ? goTo('main.user', {page: 'dashboard'}) : goTo('main.courses', {type: 'published'})"><img src="images/ThinkCode-04.svg"></a>
       </div>
     </div>
     <div class="collapse navbar-collapse" id="main-nav">
@@ -26,9 +26,9 @@
         <li ng-class="{ 'active': $state.includes('main.courses') && $state.params.type !== 'published' }" uib-dropdown ng-if="user.instructor || user.staff">
           <a href id="simple-dropdown" uib-dropdown-toggle>Quản lý khóa học<span class="caret"></a>
           <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
-            <li ng-if="user.instructor"><a href ng-click="goTo('main.courses', {type: 'manage'})">Quản lý</a></li>
-            <li ng-if="user.instructor"><a href ng-click="goTo('main.courses', {type: 'collaborate'})">Biên tập</a></li>
-            <li ng-if="user.staff"><a href ng-click="goTo('main.courses', {type: 'review'})">Kiểm tra chất lượng</a></li>
+            <li ng-if="user.instructor"><a href ng-click="goTo('main.courses', {type: 'manage'})">Quản trị viên</a></li>
+            <li ng-if="user.instructor"><a href ng-click="goTo('main.courses', {type: 'collaborate'})">Giảng viên</a></li>
+            <li ng-if="user.staff"><a href ng-click="goTo('main.courses', {type: 'review'})">Duyệt khóa học</a></li>
           </ul>
         </li>
         <li ng-class="{ 'active': $state.is('main.badges') }">
