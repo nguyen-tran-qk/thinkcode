@@ -51,3 +51,4 @@ require('./app/controllers/courseDetails.controller.js');
 require('./app/controllers/badges.controller.js');
 require('./app/controllers/lesson.controller.js');
 require('./app/controllers/userProfiles.controller.js');
+require('./app/controllers/activate.controller.js');

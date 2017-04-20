@@ -96,10 +96,10 @@
                   <p class="">Bạn chưa tham gia giảng dạy khóa học nào trong thư viện.</p>
                 </div>
                 <ul class="list-group">
-                  <li class="list-group-item media v-middle" ng-repeat="course in vm.teachingCourses | limitTo: 5 track by course.id">
+                  <li class="list-group-item media v-middle" ng-repeat="course in vm.teachingCourses | limitTo: 5 track by course.id" ng-click="vm.$state.params.page = 'teachings'; vm.getCourseProgresses(course)">
                     <div class="media-body">
                       <h4 class="text-subhead margin-none">
-                        <a ui-sref="main.courses.details({course_id: course.id})" class="list-group-link">:: course.title ::</a>
+                        <a class="list-group-link">:: course.title ::</a>
                       </h4>
                       <div class="caption">
                         <span class="text-light">Số học viên: :: course.students_count ::</span>

@@ -130,6 +130,11 @@
               controller: 'UsersController',
               controllerAs: 'vm'
             })
+            .state('activate', {
+              url: '/activate?email&token',
+              templateUrl: 'user/activate.html',
+              controller: 'ActivateController'
+            })
             .state('main', {
               abstract: true,
               url: '/',

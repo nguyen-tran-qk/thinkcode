@@ -79,8 +79,7 @@
             }
           };
           UserService.signup(data, function(res) {
-            $scope.setUserCheck();
-            $state.go('main.courses', {}, { reload: true });
+            $scope.signupSuccess = true;
           }, function(res) {
             showMessage(res);
           });

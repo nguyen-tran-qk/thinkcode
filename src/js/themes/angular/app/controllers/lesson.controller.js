@@ -138,9 +138,9 @@
           CodeMirror.showHint(cm, CodeMirror.hint.javascript);
         } else if (mode == 'css') {
           CodeMirror.showHint(cm, CodeMirror.hint.css);
-        } else if (mode == 'python') {
+        } else if (mode == 'text/x-python') {
           CodeMirror.showHint(cm, CodeMirror.hint.python);
-        } else if (mode == 'ruby') {
+        } else if (mode == 'text/x-ruby') {
           CodeMirror.showHint(cm, CodeMirror.hint.ruby);
         } else if (mode == 'text/x-java') {
           CodeMirror.showHint(cm, CodeMirror.hint.java);
@@ -238,7 +238,7 @@
               fileExt = getFileExtension(tree[i].label);
               if (fileExt) {
                 if (fileExt === 'py') {
-                  fileMode = 'python';
+                  fileMode = 'text/x-python';
                 } else if (fileExt === 'js') {
                   fileMode = 'javascript';
                 } else if (fileExt === 'css') {
@@ -246,7 +246,7 @@
                 } else if (fileExt === 'html') {
                   fileMode = 'xml';
                 } else if (fileExt === 'rb') {
-                  fileMode = 'ruby';
+                  fileMode = 'text/x-ruby';
                 } else if (fileExt === 'java') {
                   fileMode = 'text/x-java';
                 }

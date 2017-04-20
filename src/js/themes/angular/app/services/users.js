@@ -63,6 +63,9 @@
               }
             });
         },
+        activate: function(email, token) {
+          return $http.patch(API_URL + '/account_activations/' + token + '?email=' + email);
+        },
         searchUser: function(keyword, role, callback, errorCallback) {
           $http.get(API_URL + '/users/search?keyword=' + keyword + '&role=' + role)
             .then(function(res) {
