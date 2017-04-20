@@ -142,7 +142,9 @@
           CodeMirror.showHint(cm, CodeMirror.hint.python);
         } else if (mode == 'ruby') {
           CodeMirror.showHint(cm, CodeMirror.hint.ruby);
-        }
+        } else if (mode == 'text/x-java') {
+          CodeMirror.showHint(cm, CodeMirror.hint.java);
+        } 
       };
       initCmConsole();
       vm.currentBranch = defaultBranch;
@@ -245,6 +247,8 @@
                   fileMode = 'xml';
                 } else if (fileExt === 'rb') {
                   fileMode = 'ruby';
+                } else if (fileExt === 'java') {
+                  fileMode = 'text/x-java';
                 }
               }
               tree[i].data = {

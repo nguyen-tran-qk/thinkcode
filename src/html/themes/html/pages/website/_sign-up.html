@@ -24,6 +24,13 @@
         </div>
         <div class="form-group">
           <div class="form-control-material">
+            <input id="email" type="email" name="email" class="form-control" placeholder="Email" ng-model="vm.email" required ng-keyup="$event.keyCode == 13 && vm.signup()">
+            <label for="email">Email</label>
+          </div>
+          <span class="help-block text-red-500" ng-if="form.signUpForm.email.$error.email">Email không hợp lệ</span>
+        </div>
+        <div class="form-group">
+          <div class="form-control-material">
             <input id="password" type="password" name="password" class="form-control" placeholder="Password" ng-model="vm.password" required ng-keyup="$event.keyCode == 13 && vm.signup()">
             <label for="password">Password</label>
           </div>
@@ -36,7 +43,7 @@
         </div>
         <div class="text-center">
           <a ng-click="vm.signup()" class="btn btn-primary" ng-disabled="!vm.validForm()">Đăng ký</a>
-          <div>
+          <div class="margin-v-10-0">
             <a ui-sref="login">Quay lại đăng nhập</a>
           </div>
         </div>

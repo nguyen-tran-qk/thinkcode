@@ -36,6 +36,7 @@
 	        "mode/css/*.js",
 	        "mode/python/*.js",
 	        "mode/ruby/*.js",
+	        "mode/clike/*.js",
 	        "addon/fold/*.js",
 			"addon/edit/*.js",
         	"addon/hint/*.js",

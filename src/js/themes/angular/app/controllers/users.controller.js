@@ -47,7 +47,7 @@
               username: vm.username,
               password: vm.password
             }
-          }
+          };
           UserService.signin(data, function(res) {
             if (res.data.session) {
               $scope.user = UserService.getUser();
@@ -74,9 +74,10 @@
           var data = {
             user: {
               username: vm.username,
+              email: vm.email,
               password: vm.password
             }
-          }
+          };
           UserService.signup(data, function(res) {
             $scope.setUserCheck();
             $state.go('main.courses', {}, { reload: true });
@@ -87,7 +88,7 @@
       };
 
       vm.validForm = function() {
-        return vm.username && vm.password && vm.confirmPassword && vm.pwdMatched;
+        return vm.username && vm.email && vm.password && vm.confirmPassword && vm.pwdMatched;
       };
 
       $scope.$watchGroup(['vm.password', 'vm.confirmPassword'], function() {

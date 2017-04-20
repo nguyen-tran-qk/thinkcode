@@ -10,7 +10,7 @@
           <h1 class="text-display-1 margin-none">:: vm.course.title ::</h1>
         </div>
         <div class="media-right">
-          <a class="btn btn-white" ui-sref="main.courses({type: vm.$state.params.type})" ng-if="!user || vm.$state.params.type !== 'published'">Quay lại</a>
+          <a class="btn btn-white paper-shadow relative" data-z="0" data-hover-z="1" data-animated ui-sref="main.courses({type: vm.$state.params.type})" ng-if="(!user || vm.$state.params.type !== 'published') && !vm.isConfig">Quay lại</a>
           <a class="btn btn-enroll" ng-class="hovering ? 'bg-light-blue-300' : 'bg-light-blue-400'" ng-mouseenter="hovering = true" ng-mouseleave="hovering = false" ng-if="user && vm.$state.params.type === 'published' && !vm.course.enrolled" ng-click="vm.enroll()">Nhập học</a>
           <a class="btn btn-enroll" ng-class="hovering ? 'bg-teal-A400' : 'bg-teal-A700'" ng-mouseenter="hovering = true" ng-mouseleave="hovering = false" ng-if="user && vm.$state.params.type === 'published' && vm.course.enrolled" ng-click="vm.goToLesson(vm.lastLesson)">:: vm.course.completed ? 'Đã hoàn thành' : 'Tiếp tục' ::</a>
         </div>

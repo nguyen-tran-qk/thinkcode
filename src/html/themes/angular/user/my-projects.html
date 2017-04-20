@@ -51,8 +51,8 @@
       </li>
       <li class="list-group-item media v-middle" ng-repeat="item in (filteredProjects = (vm.myProjects | filter: vm.search)) track by item.id" ng-if="vm.$state.params.page === 'my-projects'">
         <div class="media-left">
-          <span class="icon-block img-circle half text-white" ng-if="!item.finished" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
-          <span class="icon-block img-circle bg-green-A400 half text-white icon-finished" ng-if="item.finished" uib-tooltip="Bạn đã hoàn thành bài tập này!" tooltip-placement="right"><i class="md md-check"></i></span>
+          <span class="icon-block img-circle half text-white" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
+          <!-- <span class="icon-block img-circle bg-green-A400 half text-white icon-finished" ng-if="item.finished" uib-tooltip="Bạn đã hoàn thành bài tập này!" tooltip-placement="right"><i class="md md-check"></i></span> -->
         </div>
         <div class="media-body">
           <h4 class="margin-none">
@@ -71,6 +71,7 @@
         <div class="media-right col-md-2 no-float padding-none">
           <button class="btn btn-stroke btn-sm inline-block right btn-take-lesson" ui-sref="main.learn({course_id: item.course_id, workspace_id: item.id})">Vào học</button>
         </div>
+        <div class="absolute top finish-badge" ng-if="item.finished" uib-tooltip="Bạn đã hoàn thành bài học này" tooltip-placement="right"></div>
       </li>
       <li class="list-group-item media v-middle" ng-repeat="item in (filteredCourses = (vm.teachingCourses | filter: vm.search)) track by item.id" ng-if="vm.$state.params.page === 'teachings'">
         <div class="media-body" ng-click="vm.getCourseProgresses(item)">
