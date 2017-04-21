@@ -197,6 +197,66 @@
           return obj.status === 'published';
         });
       };
+    })
+    .filter('courseEngine', function() {
+      return function(engine, isSmall) {
+        if (engine) {
+          var engineColor;
+          switch (engine.id) {
+            case 1:
+              engineColor = 'bg-blue-700';
+              break;
+            case 2:
+              engineColor = 'bg-red-900';
+              break;
+            case 3:
+              engineColor = 'bg-brown-500';
+              break;
+          }
+          var result = '<span class="label ';
+          if (isSmall) {
+            result += 'label-sm ';
+          }
+          return result + engineColor + '">' + engine.name + '</span>';
+        }
+      };
+    })
+    .filter('courseLevel', function() {
+      return function(level, isSmall) {
+        if (level) {
+          var levelColor;
+          switch (level.id) {
+            case 1:
+              levelColor = 'bg-blue-400';
+              break;
+            case 2:
+              levelColor = 'bg-red-500';
+              break;
+            case 3:
+              levelColor = 'bg-gray-dark';
+              break;
+          }
+          var result = '<span class="label ';
+          if (isSmall) {
+            result += 'label-sm ';
+          }
+          return result + levelColor + '">' + level.name + '</span>';
+        }
+      };
+    })
+    .filter('engineBg', function() {
+      return function(engine) {
+        if (engine) {
+          switch (engine.id) {
+            case 1:
+              return 'bg-blue-500';
+            case 2:
+              return 'bg-red-800';
+            case 3:
+              return 'bg-brown-400';
+          }
+        }
+      };
     });
 
   angular.module('app').filter('findBranchByUid', function() {

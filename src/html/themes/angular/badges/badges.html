@@ -12,18 +12,20 @@
             <h4 class="text-headline margin-v-5-0">:: vm.selectedBadge.title ::</h4>
             <p>:: vm.selectedBadge.description ::</p>
             <hr class="margin-v-8">
-            <p class="text-light" ng-if="vm.selectBadge.required_courses.length">Hoàn thành một trong các khóa học sau để đạt được danh hiệu này</p>
-            <slick class="padding-none" dots=true infinite=false speed=300 slides-to-show=2 touch-move=false slides-to-scroll=1>
-              <div class="media v-middle required-course" ng-repeat="item in vm.selectedBadge.required_courses track by item.id">
-                <div class="media-left">
-                  <img ng-src="::item.cover::" alt="Course" class="width-60" ng-if="item.cover.length">
-                  <span class="icon-block s60" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'" ng-if="!item.cover.length"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
+            <div ng-if="vm.selectedBadge">
+              <p class="text-light" ng-if="vm.selectedBadge.required_courses.length && (vm.selectedBadge.required_courses | publishedCourses).length">Hoàn thành một trong các khóa học sau để đạt được danh hiệu này</p>
+              <slick class="padding-none" dots=true infinite=false speed=300 slides-to-show=2 touch-move=false slides-to-scroll=1>
+                <div class="media v-middle required-course" ng-repeat="item in (vm.selectedBadge.required_courses | publishedCourses) track by item.id">
+                  <div class="media-left">
+                    <img ng-src="::item.cover::" alt="Course" class="width-60" ng-if="item.cover.length">
+                    <span class="icon-block s60" ng-class="item.engine | engineBg" ng-if="!item.cover.length"><i class="mfizz icon-::item.engine.name | lowercase::"></i></span>
+                  </div>
+                  <div class="media-body">
+                    <h4><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
+                  </div>
                 </div>
-                <div class="media-body">
-                  <h4><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
-                </div>
-              </div>
-            </slick>
+              </slick>
+            </div>
             <div class="btn btn-primary btn-sm right" ng-click="vm.editing = true" ng-if="user.instructor || user.staff">Chỉnh sửa</div>
           </div>
         </div>

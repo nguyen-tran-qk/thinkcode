@@ -6,8 +6,8 @@
         <h2 class="margin-v-10">:: vm.selectedCourse.title ::</h2>
         <div class="text-light text-caption">
           <div class="padding-v-0-5">
-            <span class="label label-sm" ng-class="vm.selectedCourse.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: vm.selectedCourse.engine ::</span>
-            <span class="label label-sm" ng-class="vm.selectedCourse.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: vm.selectedCourse.level ::</span>
+            <span ng-bind-html="(vm.selectedCourse.engine | courseEngine) | trustHtml"></span>
+            <span ng-bind-html="(vm.selectedCourse.level | courseLevel) | trustHtml"></span>
           </div>
           Số học viên: <strong>:: vm.selectedCourse.students_count ::</strong> &nbsp;
           <span class="margin-v-0-10" ng-if="vm.selectedCourse.id == vm.selectedCourse.id">Số bài học: <strong>:: vm.selectedCourse.progress.lessons_count ::</strong></span>

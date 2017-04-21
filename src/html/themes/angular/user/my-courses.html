@@ -40,11 +40,11 @@
     <div class="panel-body padding-v-5-10 course-title">
       <h4 class="text-title"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
       <p>
-        <span class="label label-sm" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
-        <span class="label label-sm" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
+        <span ng-bind-html="(item.engine | courseEngine:true) | trustHtml"></span>
+        <span ng-bind-html="(item.level | courseLevel:true) | trustHtml"></span>
         <span class="badge-label">
-                      <img ng-src=":: item.badge.image ::" alt="Badge" class="icon-block s25 img-circle"><a ui-sref="main.badges({id: item.badge.id})"><strong><small> :: item.badge.title ::</small></strong></a>
-                    </span>
+          <img ng-src=":: item.badge.image ::" alt="Badge" class="icon-block s25 img-circle"><a ui-sref="main.badges({id: item.badge.id})"><strong><small> :: item.badge.title ::</small></strong></a>
+        </span>
       </p>
     </div>
     <hr class="margin-none">
@@ -84,11 +84,11 @@
     <div class="panel-body padding-v-5-10 course-title">
       <h4 class="text-title"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
       <p>
-        <span class="label label-sm" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
-        <span class="label label-sm" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
+        <span ng-bind-html="(item.engine | courseEngine:true) | trustHtml"></span>
+        <span ng-bind-html="(item.level | courseLevel:true) | trustHtml"></span>
         <span class="badge-label">
-                      <img ng-src=":: item.badge.image ::" alt="Badge" class="icon-block s25 img-circle"><a ui-sref="main.badges({id: item.badge.id})"><strong><small> :: item.badge.title ::</small></strong></a>
-                    </span>
+          <img ng-src=":: item.badge.image ::" alt="Badge" class="icon-block s25 img-circle"><a ui-sref="main.badges({id: item.badge.id})"><strong><small> :: item.badge.title ::</small></strong></a>
+        </span>
       </p>
     </div>
     <hr class="margin-none">

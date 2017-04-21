@@ -2,8 +2,7 @@
 
 /* Courses */
 
-#courses,
-#my-courses {
+#courses, #my-courses {
   .action-bar {
     .dropdown {
       padding: 12px 0 0 16px;
@@ -23,8 +22,12 @@
     .overlay.overlay-full:not(.overlay-hover) {
       i.mfizz {
         display: inline-block;
-        margin-top: 7px;
-        margin-left: 7px;
+        margin-top: 24px;
+        margin-left: 14px;
+        font-size: 80px;
+        &.icon-java {
+          margin-left: 25px;
+        }
       }
     }
     &:hover {
@@ -47,8 +50,7 @@
       }
     }
     .course-cover {
-      &,
-      div:first-of-type {
+      &, div:first-of-type {
         cursor: pointer;
       }
     }
@@ -73,7 +75,6 @@
     text-overflow: ellipsis;
   }
 }
-
 #my-courses {
   .course-title {
     height: 120px;
@@ -88,7 +89,6 @@
     }
   }
 }
-
 #course-details {
   .btn-close {
     position: absolute;
@@ -147,8 +147,7 @@
     white-space: pre-line;
   }
   .info {
-    &,
-    & > p {
+    &, & > p {
       display: flex;
       align-items: center;
       & > span {
@@ -206,7 +205,6 @@
     }
   }
 }
-
 .create-course {
   // textarea {
   //   resize: none;
@@ -222,7 +220,6 @@
     }
   }
 }
-
 .course-cover {
   background-position: 50%;
   background-size: cover;
@@ -239,9 +236,11 @@
     font-size: 48px;
     line-height: 90px;
     margin-left: 10px;
+    &.icon-java {
+      margin-left: 20px;
+    }
   }
 }
-
 .course-admin {
   .editor-tabs {
     .nav-tabs {
@@ -285,19 +284,16 @@
     }
     .lesson-desc {
       .ta-scroll-window {
-        &.form-control,
-        & > .ta-bind {
+        &.form-control, & > .ta-bind {
           min-height: 150px;
         }
       }
     }
   }
 }
-
 #course-desc {
   white-space: pre-line;
 }
-
 .btn-take-lesson {
   border: 1px solid #00BCD4;
   color: #00BCD4;
@@ -307,7 +303,6 @@
     background-color: #26C6DA;
   }
 }
-
 .finish-badge {
   right: 140px;
   -webkit-box-sizing: content-box;

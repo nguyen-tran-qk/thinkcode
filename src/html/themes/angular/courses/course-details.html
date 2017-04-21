@@ -3,7 +3,7 @@
     <div class="parallax-layer container" data-opacity="true">
       <div class="media v-middle">
         <div class="media-left">
-          <span class="course-cover" ng-class="vm.course.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'" ng-if="!vm.course.cover.length"><i class="mfizz icon-::vm.course.engine | lowercase::"></i></span>
+          <span class="course-cover" ng-class="vm.course.engine | engineBg" ng-if="!vm.course.cover.length"><i class="mfizz icon-::vm.course.engine.name | lowercase::"></i></span>
           <span class="icon-block course-cover" ng-if="vm.course.cover.length" ng-attr-style="background-image: url(::vm.course.cover::);"></span>
         </div>
         <div class="media-body">
@@ -25,10 +25,8 @@
           <br/>
           <div class="info">
             <p class="margin-none">
-              <!-- <span class="label bg-gray-dark">New</span> -->
-              <span class="label" ng-class="vm.course.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: vm.course.engine ::</span>
-              <span class="label" ng-class="vm.course.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: vm.course.level ::</span>
-              <!-- <i class="course-badge fa fa-trophy" aria-hidden="true"></i><a href><strong> :: vm.course.badge.title ::</strong></a> -->
+              <span ng-bind-html="(vm.course.engine | courseEngine) | trustHtml"></span>
+              <span ng-bind-html="(vm.course.level | courseLevel) | trustHtml"></span>
               <img ng-src=":: vm.course.badge.id | badgeImage:allBadges ::" alt="Badge" class="icon-block s30 img-circle" ng-if="vm.course.badge"><a ui-sref="main.badges({id: vm.course.badge.id})"><strong> :: vm.course.badge.title ::</strong></a>
             </p>
           </div>

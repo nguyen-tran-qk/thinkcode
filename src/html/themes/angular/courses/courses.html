@@ -18,22 +18,23 @@
     </div>
     <div class="form-group right padding-none col-xs-8">
       <div class="btn-group right" uib-dropdown>
-        <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>::vm.search.level.length ? vm.search.level : 'Độ khó'::<span class="caret"></span>
+        <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>::vm.search.level.id ? vm.search.level.name : 'Độ khó'::<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
-          <li role="menuitem"><a href ng-click="vm.search.level = ''">Tất cả</a></li>
-          <li role="menuitem"><a href ng-click="vm.search.level = 'Learn'">Learn</a></li>
-          <li role="menuitem"><a href ng-click="vm.search.level = 'Hack'">Hack</a></li>
+          <li role="menuitem"><a href ng-click="vm.search.level = {}">Tất cả</a></li>
+          <li role="menuitem"><a href ng-click="vm.search.level={id:1, name:'Mới học'}">Mới học</a></li>
+          <li role="menuitem"><a href ng-click="vm.search.level={id:2, name:'Căn bản'}">Căn bản</a></li>
+          <li role="menuitem"><a href ng-click="vm.search.level={id:3, name:'Nâng cao'}">Nâng cao</a></li>
         </ul>
       </div>
       <div class="btn-group right" uib-dropdown>
-        <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>::vm.search.engine.length ? vm.search.engine : 'Ngôn ngữ'::<span class="caret"></span>
+        <button id="btn-append-to-to-body" type="button" class="btn btn-primary width-100pc" uib-dropdown-toggle>::vm.search.engine.id ? vm.search.engine.name : 'Ngôn ngữ'::<span class="caret"></span>
         </button>
         <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
-          <li role="menuitem"><a href ng-click="vm.search.engine = ''">Tất cả</a></li>
-          <li role="menuitem"><a href ng-click="vm.search.engine = 'Python'">Python</a></li>
-          <li role="menuitem"><a href ng-click="vm.search.engine = 'Ruby'">Ruby</a></li>
-          <li role="menuitem"><a href ng-click="vm.search.engine = 'Java'">Java</a></li>
+          <li role="menuitem"><a href ng-click="vm.search.engine = {}">Tất cả</a></li>
+          <li role="menuitem"><a href ng-click="vm.search.engine={id:1, name:'Python'}">Python</a></li>
+          <li role="menuitem"><a href ng-click="vm.search.engine={id:2, name:'Ruby'}">Ruby</a></li>
+          <li role="menuitem"><a href ng-click="vm.search.engine={id:3, name:'Java'}">Java</a></li>
         </ul>
       </div>
       <div class="form-control-material col-xs-6 right">
@@ -55,7 +56,7 @@
         <div ng-if="!item.cover.length">
           <span class="img icon-block height-150 bg-primary width-100pc"></span>
           <a ui-sref="main.courses.details({course_id: item.id})" class="padding-none overlay overlay-full icon-block bg-primary">
-            <span class="v-center"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
+            <span class="v-center"><i class="mfizz icon-::item.engine.name | lowercase::"></i></span>
           </a>
           <a ui-sref="main.courses.details({course_id: item.id})" class="overlay overlay-full overlay-hover overlay-bg-white">
             <!-- <span class="v-center" ng-if="vm.$state.is('main.courses')">
@@ -71,8 +72,8 @@
       <div class="panel-body course-title">
         <h4 class="text-headline margin-none"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
         <p>
-          <span class="label" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
-          <span class="label" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
+          <span ng-bind-html="(item.engine | courseEngine) | trustHtml"></span>
+          <span ng-bind-html="(item.level | courseLevel) | trustHtml"></span>
           <span class="badge-label" ng-if="item.badge">
             <img ng-src=":: item.badge.id | badgeImage:allBadges ::" alt="Badge" class="icon-block s30 img-circle"><a ui-sref="main.badges({id: item.badge.id})"><strong> :: item.badge.title ::</strong></a>
           </span>
@@ -122,8 +123,8 @@
       <div class="panel-body course-title">
         <h4 class="text-headline margin-none"><a ui-sref="main.courses.details({course_id: item.id})">:: item.title ::</a></h4>
         <p>
-          <span class="label" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
-          <span class="label" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
+          <span ng-bind-html="(item.engine | courseEngine) | trustHtml"></span>
+          <span ng-bind-html="(item.level | courseLevel) | trustHtml"></span>
           <span class="badge-label">
             <img ng-src=":: item.badge.id | badgeImage:allBadges ::" alt="Badge" class="icon-block s30 img-circle"><a ui-sref="main.badges({id: item.badge.id})"><strong> :: item.badge.title ::</strong></a>
           </span>

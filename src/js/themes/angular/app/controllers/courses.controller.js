@@ -42,8 +42,8 @@
         size: 'lg',
         controller: function($timeout, $uibModalInstance, courseId, CoursesService, BadgeService) {
           var vm = this;
-          var engine_arr = ['Engine', 'Python', 'Ruby'],
-            level_arr = ['Level', 'Learn', 'Hack'];
+          var engine_arr = ['Ngôn ngữ', 'Python', 'Ruby', 'Java'],
+            level_arr = ['Độ khó', 'Mới học', 'Căn bản', 'Nâng cao'];
 
           function debounce(func, wait, context) {
             var timer;

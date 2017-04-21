@@ -11,8 +11,8 @@
     $('.main-container').tkScrollNavbarTransition();
 
     var vm = this;
-    var engine_arr = ['Engine', 'Python', 'Ruby'],
-      level_arr = ['Level', 'Learn', 'Hack'];
+    var engine_arr = ['Ngôn ngữ', 'Python', 'Ruby', 'Java'],
+      level_arr = ['Độ khó', 'Mới học', 'Căn bản', 'Nâng cao'];
     vm.$state = $state;
     if (!vm.$state.params.course_id) {
       vm.$state.go('main.courses', {}, { reload: true });
@@ -38,8 +38,8 @@
       $scope.loading[0] = true;
       CoursesService.getCourseById(vm.$state.params.course_id, function(res) {
         vm.course = res.data;
-        vm.course.engine_id = engine_arr.indexOf(vm.course.engine);
-        vm.course.level_id = level_arr.indexOf(vm.course.level);
+        vm.course.engine_id = vm.course.engine.id;
+        vm.course.level_id = vm.course.level.id;
         if (vm.course.enrolled && vm.course.lessons.length) {
           vm.lastLesson = vm.course.lessons[0];
           for (var i = 0; i < vm.course.lessons.length; i++) {
@@ -325,8 +325,8 @@
     };
 
     var onInitConfig = function() {
-      var engine_arr = ['Engine', 'Python', 'Ruby'],
-        level_arr = ['Level', 'Learn', 'Hack'];
+      var engine_arr = ['Ngôn ngữ', 'Python', 'Ruby', 'Java'],
+        level_arr = ['Độ khó', 'Mới học', 'Căn bản', 'Nâng cao'];
       UserService.searchUser(vm.tempCourse.admin.username, 'instructor', function(res) {
         vm.tempCourse.author_id = res.data[0].id;
       }, function(res) {
@@ -365,22 +365,24 @@
         }
         return false;
       }
-      vm.tempCourse.badge_id = vm.tempCourse.badge.id;
-      BadgeService.getBadges(function(res) {
-        vm.currentBadge = res.data.find(function(badge) {
-          return badge.id === vm.tempCourse.badge.id;
+      if (vm.tempCourse.badge) {
+        vm.tempCourse.badge_id = vm.tempCourse.badge.id;
+        BadgeService.getBadges(function(res) {
+          vm.currentBadge = res.data.find(function(badge) {
+            return badge.id === vm.tempCourse.badge.id;
+          });
         });
-      });
+      }
       vm.selectEngine = function(engine_id) {
         vm.tempCourse.engine_id = engine_id;
-        vm.tempCourse.engine = engine_arr[engine_id];
+        vm.tempCourse.engine = { id: engine_id, name: engine_arr[engine_id] };
       };
       vm.selectLevel = function(level_id) {
         vm.tempCourse.level_id = level_id;
-        vm.tempCourse.level = level_arr[level_id];
+        vm.tempCourse.level = { id: level_id, name: level_arr[level_id] };
       };
       vm.validForm = function() {
-        return vm.tempCourse.engine_id && vm.tempCourse.level_id && vm.tempCourse.badge_id && vm.tempCourse.author_id;
+        return vm.tempCourse.engine_id && vm.tempCourse.level_id && vm.tempCourse.author_id;
       };
       vm.searchBadge = debounce(function(keyword) {
         if (keyword && keyword.length) {

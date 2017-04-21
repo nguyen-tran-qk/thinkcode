@@ -9,21 +9,23 @@
           </div>
         </div>
         <div class="btn-group col-xs-2" uib-dropdown>
-          <button id="btn-append-to-to-body" type="button" class="btn btn-default width-100pc" uib-dropdown-toggle>::vm.search.level.length ? vm.search.level : 'Trình độ'::<span class="caret"></span>
+          <button id="btn-append-to-to-body" type="button" class="btn btn-default width-100pc" uib-dropdown-toggle>::vm.search.level.id ? vm.search.level.name : 'Độ khó'::<span class="caret"></span>
           </button>
           <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
-            <li role="menuitem"><a href ng-click="vm.search.level = ''">Tất cả</a></li>
-            <li role="menuitem"><a href ng-click="vm.search.level = 'Learn'">Learn</a></li>
-            <li role="menuitem"><a href ng-click="vm.search.level = 'Hack'">Hack</a></li>
+            <li role="menuitem"><a href ng-click="vm.search.level = {}">Tất cả</a></li>
+            <li role="menuitem"><a href ng-click="vm.search.level={id:1, name:'Mới học'}">Mới học</a></li>
+            <li role="menuitem"><a href ng-click="vm.search.level={id:2, name:'Căn bản'}">Căn bản</a></li>
+            <li role="menuitem"><a href ng-click="vm.search.level={id:3, name:'Nâng cao'}">Nâng cao</a></li>
           </ul>
         </div>
         <div class="btn-group col-xs-2" uib-dropdown>
-          <button id="btn-append-to-to-body" type="button" class="btn btn-default width-100pc" uib-dropdown-toggle>::vm.search.engine.length ? vm.search.engine : 'Ngôn ngữ'::<span class="caret"></span>
+          <button id="btn-append-to-to-body" type="button" class="btn btn-default width-100pc" uib-dropdown-toggle>::vm.search.engine.id ? vm.search.engine.name : 'Ngôn ngữ'::<span class="caret"></span>
           </button>
           <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
-            <li role="menuitem"><a href ng-click="vm.search.engine = ''">Tất cả</a></li>
-            <li role="menuitem"><a href ng-click="vm.search.engine = 'Python'">Python</a></li>
-            <li role="menuitem"><a href ng-click="vm.search.engine = 'Ruby'">Ruby</a></li>
+            <li role="menuitem"><a href ng-click="vm.search.engine = {}">Tất cả</a></li>
+            <li role="menuitem"><a href ng-click="vm.search.engine={id:1, name:'Python'}">Python</a></li>
+            <li role="menuitem"><a href ng-click="vm.search.engine={id:2, name:'Ruby'}">Ruby</a></li>
+            <li role="menuitem"><a href ng-click="vm.search.engine={id:3, name:'Java'}">Java</a></li>
           </ul>
         </div>
         <div class="col-xs-2 col-md-3 col-lg-2 text-right material-checkbox" ng-if="vm.$state.params.page === 'my-projects'">
@@ -51,7 +53,7 @@
       </li>
       <li class="list-group-item media v-middle" ng-repeat="item in (filteredProjects = (vm.myProjects | filter: vm.search)) track by item.id" ng-if="vm.$state.params.page === 'my-projects'">
         <div class="media-left">
-          <span class="icon-block img-circle half text-white" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'"><i class="mfizz icon-::item.engine | lowercase::"></i></span>
+          <span class="icon-block img-circle half text-white" ng-class="item.engine | engineBg"><i class="mfizz icon-::item.engine.name | lowercase::"></i></span>
           <!-- <span class="icon-block img-circle bg-green-A400 half text-white icon-finished" ng-if="item.finished" uib-tooltip="Bạn đã hoàn thành bài tập này!" tooltip-placement="right"><i class="md md-check"></i></span> -->
         </div>
         <div class="media-body">
@@ -62,8 +64,8 @@
           <div class="text-light text-caption">
             thuộc khóa học
             <a ui-sref="main.courses.details({course_id: item.course_id})">:: item.course_name ::</a> &nbsp;
-            <span class="label label-sm" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
-            <span class="label label-sm" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
+            <span ng-bind-html="(item.engine | courseEngine:true) | trustHtml"></span>
+            <span ng-bind-html="(item.level | courseLevel:true) | trustHtml"></span>
             <img ng-src=":: item.teacher.id | avatar ::" alt="People" class="img-circle width-20" />
             <span class="text-h5 text-light"> :: item.teacher.username ::</span>
           </div>
@@ -78,13 +80,13 @@
           <h4 class="">:: item.title ::</h4>
           <div class="text-light text-caption">
             Số học viên: <strong>:: item.students_count ::</strong> &nbsp;
-            <span class="label label-sm" ng-class="item.engine === 'Ruby' ? 'bg-lightred' : 'bg-indigo-300'">:: item.engine ::</span>
-            <span class="label label-sm" ng-class="item.level === 'Learn' ? 'bg-teal-A700' : 'bg-gray-dark'">:: item.level ::</span>
+            <span ng-bind-html="(item.engine | courseEngine:true) | trustHtml"></span>
+            <span ng-bind-html="(item.level | courseLevel:true) | trustHtml"></span>
             <div class="margin-v-0-10" ng-if="vm.selectedCourse == item.id">Số bài học: <strong>:: item.progress.lessons_count ::</strong></div>
           </div>
         </div>
       </li>
-      <li class="list-group-item media v-middle" ng-if="(vm.myProjects.length && !filteredProjects.length) || (vm.teachingCourses.length && !filteredCourses.length)">
+      <li class="list-group-item media v-middle" ng-if="(vm.$state.params.page === 'my-projects' && vm.myProjects.length && !filteredProjects.length) || (vm.$state.params.page === 'teachings' && vm.teachingCourses.length && !filteredCourses.length)">
         <h4>Không tìm thấy kết quả</h4>
       </li>
     </ul>
