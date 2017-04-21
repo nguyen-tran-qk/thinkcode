@@ -144,7 +144,7 @@
           CodeMirror.showHint(cm, CodeMirror.hint.ruby);
         } else if (mode == 'text/x-java') {
           CodeMirror.showHint(cm, CodeMirror.hint.java);
-        } 
+        }
       };
       initCmConsole();
       vm.currentBranch = defaultBranch;
@@ -468,41 +468,70 @@
       CoursesService.finishLesson(vm.$state.params.course_id, vm.workspaceId)
         .then(function(res) {
           vm.getCourse();
-          if (res.data.next_lesson_id) {
+          var hasNextLesson = typeof(res.data.next_lesson_id) == 'number';
+          if (res.data.next_lesson_id && hasNextLesson) {
             $scope.showMessage('success', 'Chúc mừng! Bạn đã hoàn thành bài học: ' + vm.lesson.title);
-            var nextLesson = { id : res.data.next_lesson_id };
+            var nextLesson = { id: res.data.next_lesson_id };
             vm.goToLesson(nextLesson);
-          } else if (res.data.congrats) {
-            $uibModal.open({
-              templateUrl: 'modals/complete-course-congrats.html',
-              backdrop: true,
-              keyboard: true,
-              controller: function($uibModalInstance, data) {
-                var vm = this;
-                vm.badge = data.afterCompleted.badge;
-                vm.recommendations = data.afterCompleted.recommendations || null;
-                vm.courseTitle = data.title;
-                vm.ok = function() {
-                  $uibModalInstance.close('ok');
-                };
-                vm.cancel = function() {
-                  $uibModalInstance.dismiss('cancel');
-                };
-              },
-              controllerAs: 'vm',
-              resolve: {
-                data: {
-                  title: vm.course.title,
-                  afterCompleted: res.data
+          } else if (res.data.congrats || !hasNextLesson) {
+            if (res.data.congrats) {
+              $uibModal.open({
+                templateUrl: 'modals/complete-course-congrats.html',
+                backdrop: true,
+                keyboard: true,
+                controller: function($uibModalInstance, data) {
+                  var vm = this;
+                  vm.badge = data.afterCompleted.badge;
+                  vm.recommendations = data.afterCompleted.recommendations || null;
+                  vm.courseTitle = data.title;
+                  vm.ok = function() {
+                    $uibModalInstance.close('ok');
+                  };
+                  vm.cancel = function() {
+                    $uibModalInstance.dismiss('cancel');
+                  };
+                },
+                controllerAs: 'vm',
+                resolve: {
+                  data: {
+                    title: vm.course.title,
+                    afterCompleted: res.data
+                  }
                 }
-              }
-            }).result.then(function(result) {
-              if (result === 'ok') {
-                $scope.goTo('main.courses');
-              }
-            }, function(result) {
-              vm.getWorkspace(vm.workspaceId);
-            });
+              }).result.then(function(result) {
+                if (result === 'ok') {
+                  $scope.goTo('main.courses');
+                }
+              }, function(result) {
+                vm.getWorkspace(vm.workspaceId);
+              });
+            } else if (!hasNextLesson) {
+              $uibModal.open({
+                templateUrl: 'modals/complete-course-congrats.html',
+                backdrop: true,
+                keyboard: true,
+                controller: function($uibModalInstance, data) {
+                  var vm = this;
+                  vm.incomplete = data.incomplete;
+                  vm.courseTitle = data.title;
+                  vm.ok = function() {
+                    $uibModalInstance.close('ok');
+                  };
+                  vm.cancel = function() {
+                    $uibModalInstance.dismiss('cancel');
+                  };
+                },
+                controllerAs: 'vm',
+                resolve: {
+                  data: {
+                    title: vm.course.title,
+                    incomplete: true
+                  }
+                }
+              }).result.then(function(result) {}, function(result) {
+                vm.getWorkspace(vm.workspaceId);
+              });
+            }
           }
         }, function(res) {
           $scope.showMessage('danger');

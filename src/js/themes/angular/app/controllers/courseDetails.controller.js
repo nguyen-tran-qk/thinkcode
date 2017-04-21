@@ -511,6 +511,11 @@
             $scope.showMessage('danger');
           });
         } else {
+          if (lessonId && vm.selectedLesson.template.length) {
+            var fileName = vm.selectedLesson.template.name;
+            vm.selectedLesson.template = vm.selectedLesson.template.slice(0, vm.selectedLesson.template.size, "application/zip");
+            vm.selectedLesson.template.name = fileName;
+          }
           if (vm.selectedLesson.type === 'code') {
             data.code_task = {
               template: vm.selectedLesson.template,

@@ -25,7 +25,10 @@
             </uib-accordion-heading>
             <abn-tree-mod id="workspace-tree" tree-data="vm.my_data" tree-control="vm.my_tree" icon-leaf="fa fa-file" icon-expand="fa fa-folder" icon-collapse="fa fa-folder-open" expand-level="3"></abn-tree-mod>
           </div>
-          <div uib-accordion-group class="panel-default border-none margin-none" heading="Về bài giảng này:" ng-if="vm.lesson.type === 'video'">
+          <div uib-accordion-group class="panel-default border-none margin-none" ng-if="vm.lesson.type === 'video'" is-open="vm.secondOpen">
+            <uib-accordion-heading>
+              Về bài giảng này: <i class="pull-right fa text-h4" ng-class="{'fa-chevron-down': vm.secondOpen, 'fa-chevron-right': !vm.secondOpen}"></i>
+            </uib-accordion-heading>
             <div id="lesson-notes" class="">
               <div class="panel-body padding-v-5">
                 <b class="inline-block">Thời lượng:</b><span class="inline-block">&nbsp;:: vm.lesson.video_duration ::</span>
@@ -110,7 +113,7 @@
         </div>
       </div>
     </div>
-    <div class="text-center col-sm-6 col-md-6">
+    <div class="text-center col-sm-6 col-md-6" ng-click="showLessons = false">
       <button class="btn text-white" ng-class="hovering ? 'bg-blue-400' : 'bg-blue-500'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-click="vm.finishLesson()" ng-if="!vm.lesson.finished && user.isLearner">Hoàn thành bài học</button>
       <button class="btn text-white" ng-class="hovering ? 'bg-amber-400' : 'bg-amber-600'" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false" ng-click="vm.resetLesson()" ng-if="vm.lesson.finished && user.isLearner">Học lại</button>
       <button class="btn btn-sm btn-warning" ng-click="vm.showCheatSheet = true" ng-if="vm.lesson.cheat_sheet">Gợi ý</button>

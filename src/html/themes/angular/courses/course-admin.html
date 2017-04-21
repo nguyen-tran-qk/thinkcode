@@ -112,7 +112,7 @@
             <span>::vm.selectedLesson.template.name::</span>
           </div>
           <div class="btn btn-primary btn-sm right" ng-click="vm.addLesson()" ng-disabled="!vm.validLesson()">:: vm.selectedLesson.id ? 'Lưu' : 'Tạo bài học' ::</div>
-          <div class="btn btn-default btn-sm right" ng-click="vm.selectedLesson = {}">Hủy</div>
+          <div class="btn btn-default btn-sm right" ng-click="vm.selectedLesson = {type: 'reading'}">Hủy</div>
         </div>
       </div>
     </div>
@@ -137,8 +137,8 @@
               <!-- <textarea class="form-control" id="course-desc" placeholder="Giới thiệu/mô tả ngắn gọn về khóa học" ng-model="vm.tempCourse.description" rows="10" required></textarea> -->
             </div>
             <div class="row margin-v-10">
-              <div class="btn-group col-md-3" uib-dropdown>
-                <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>::vm.tempCourse.engine.name::<span class="caret"></span>
+              <div class="btn-group col-md-2" uib-dropdown>
+                <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="vm.tempCourse.had_been_published">::vm.tempCourse.engine.name::<span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
                   <li role="menuitem"><a href ng-click="vm.selectEngine(1)">Python</a></li>
@@ -146,8 +146,8 @@
                   <li role="menuitem"><a href ng-click="vm.selectEngine(3)">Java</a></li>
                 </ul>
               </div>
-              <div class="btn-group col-md-3" uib-dropdown>
-                <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle>::vm.tempCourse.level.name::<span class="caret"></span>
+              <div class="btn-group col-md-2" uib-dropdown>
+                <button id="btn-append-to-to-body" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="vm.tempCourse.had_been_published">::vm.tempCourse.level.name::<span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-to-body">
                   <li role="menuitem"><a href ng-click="vm.selectLevel(1)">Mới học</a></li>
