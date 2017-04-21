@@ -467,6 +467,7 @@
     vm.finishLesson = function() {
       CoursesService.finishLesson(vm.$state.params.course_id, vm.workspaceId)
         .then(function(res) {
+          vm.getCourse();
           if (res.data.next_lesson_id) {
             $scope.showMessage('success', 'Chúc mừng! Bạn đã hoàn thành bài học: ' + vm.lesson.title);
             var nextLesson = { id : res.data.next_lesson_id };
@@ -535,6 +536,7 @@
         if (result === 'ok') {
           CoursesService.resetLesson(vm.$state.params.course_id, vm.workspaceId)
             .then(function(res) {
+              vm.getCourse();
               vm.getWorkspace(vm.workspaceId);
             }, function(res) {
               $scope.showMessage('danger');

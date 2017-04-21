@@ -126,7 +126,7 @@
       $scope.conversations = $firebaseArray(firebase.database().ref().child('chat/'));
       $scope.conversations.$loaded().then(function() {
         for (var i = 0; i < $scope.conversations.length; i++) {
-          if ($scope.conversations[i].student_id == $scope.user.id || $scope.conversations[i].teacher_id == $scope.user.id) {
+          if ($scope.user && $scope.conversations[i].student_id == $scope.user.id || $scope.conversations[i].teacher_id == $scope.user.id) {
             $scope.conversations[i] = checkConversation($scope.conversations[i]);
             $scope.conversations[i].isInvolved = true;
           }
