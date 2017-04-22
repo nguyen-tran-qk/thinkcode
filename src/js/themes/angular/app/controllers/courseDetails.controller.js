@@ -511,7 +511,7 @@
             $scope.showMessage('danger');
           });
         } else {
-          if (lessonId && vm.selectedLesson.template.length) {
+          if (typeof(vm.selectedLesson.template) == 'object') {
             var fileName = vm.selectedLesson.template.name;
             vm.selectedLesson.template = vm.selectedLesson.template.slice(0, vm.selectedLesson.template.size, "application/zip");
             vm.selectedLesson.template.name = fileName;
