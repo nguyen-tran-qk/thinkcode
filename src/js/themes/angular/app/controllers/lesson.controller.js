@@ -130,7 +130,9 @@
       CodeMirror.commands.autocomplete = function(cm) {
         var doc = cm.getDoc();
         var POS = doc.getCursor();
-        var mode = CodeMirror.innerMode(cm.getMode(), cm.getTokenAt(POS).state).mode.name;
+        // var mode = CodeMirror.innerMode(cm.getMode(), cm.getTokenAt(POS).state).mode.name;
+        var mode = vm.codeMirror.options.mode;
+        // console.log('Mode hien tai la: ' + mode);
 
         if (mode == 'xml') { //html depends on xml
           CodeMirror.showHint(cm, CodeMirror.hint.html);
@@ -138,11 +140,11 @@
           CodeMirror.showHint(cm, CodeMirror.hint.javascript);
         } else if (mode == 'css') {
           CodeMirror.showHint(cm, CodeMirror.hint.css);
-        } else if (mode == 'text/x-python') {
-          CodeMirror.showHint(cm, CodeMirror.hint.python);
+        } else if (mode == 'python') {
+          CodeMirror.showHint(cm, CodeMirror.pythonHint);
         } else if (mode == 'text/x-ruby') {
-          CodeMirror.showHint(cm, CodeMirror.hint.ruby);
-        } else if (mode == 'text/x-java') {
+          CodeMirror.showHint(cm, CodeMirror.hint.anyword);
+        } else if (mode.indexOf('java') !== -1) {
           CodeMirror.showHint(cm, CodeMirror.hint.java);
         }
       };
@@ -238,7 +240,7 @@
               fileExt = getFileExtension(tree[i].label);
               if (fileExt) {
                 if (fileExt === 'py') {
-                  fileMode = 'text/x-python';
+                  fileMode = 'python';
                 } else if (fileExt === 'js') {
                   fileMode = 'javascript';
                 } else if (fileExt === 'css') {

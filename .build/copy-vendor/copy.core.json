@@ -45,5 +45,14 @@
 	    ],
 	    "dest": "js/vendor/core/codemirror",
 	    "flatten": true
+	},
+	{
+	    "task": "copy-codemirror-addons",
+	    "cwd": "lib/codemirror-addons",
+	    "src": [
+			"*.js"
+	    ],
+	    "dest": "js/vendor/core/codemirror",
+	    "flatten": true
 	}
 ]
