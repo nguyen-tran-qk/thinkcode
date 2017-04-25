@@ -94,7 +94,7 @@
         </div>
         <div class="panel panel-default padding-none console-panel margin-none inline-block relative" ng-class="{'minimized': vm.hideConsole}">
           <button class="btn btn-expand" ng-click="vm.expandSection('console')" ng-if="!vm.hideConsole"><i class="fa fa-expand"></i></button>
-          <div id="console" class="height-100pc" ng-class="{'code-error': vm.codeError}">
+          <div id="console" class="height-100pc" ng-class="{'code-error': !waiting && vm.codeError}">
           </div>
           <div ng-if="vm.hideConsole" class="resize-notify resize-left" ng-click="vm.hideConsole = false"><i class="md md-fullscreen"></i></div>
         </div>

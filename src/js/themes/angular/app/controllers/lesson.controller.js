@@ -363,6 +363,11 @@
       };
 
       vm.runFile = function() {
+        if (cmConsoleElement.innerHTML.length) {
+          cmConsoleElement.innerHTML = '';
+          initCmConsole();
+        }
+        vm.cmConsole.setValue('Executing...');
         vm.saveFile(function() {
           WorkspaceService.execute(vm.workspaceId, vm.$state.params.course_id, vm.currentBranch.data.relative_path, function(res) {
             vm.cmConsole.setValue(res.data.result);
@@ -370,6 +375,7 @@
             $scope.waiting = false;
           }, function(res) {
             $scope.waiting = false;
+            vm.cmConsole.setValue('');
             if (res.status === 503) {
               $scope.showMessage('danger', res.data.message);
             } else if (res.status === 501) {
